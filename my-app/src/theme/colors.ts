@@ -1,3 +1,4 @@
+// Tokens semanticos do tema claro usados em toda a UI.
 export const lightTheme = {
   background: '#F5F5F5',
   surface: '#FFFFFF',
@@ -9,6 +10,7 @@ export const lightTheme = {
   danger: '#D32F2F',
 };
 
+// Tokens semanticos do tema escuro com contraste equivalente ao tema claro.
 export const darkTheme = {
   background: '#121212',
   surface: '#1E1E1E',

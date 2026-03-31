@@ -5,16 +5,21 @@ import { lightTheme, darkTheme, ThemeColors } from './colors';
 interface ThemeContextData {
     colors: ThemeColors;
     isDark: boolean;
-    toggleTheme?: () => void;
+    toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextData>({} as ThemeContextData);
+const ThemeContext = createContext<ThemeContextData | undefined>(undefined);
 
+/**
+ * Provedor de tema global.
+ * Usa o tema do sistema por padrao, com possibilidade de override manual do usuario.
+ */
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     const systemColorScheme = useColorScheme();
 
     const [manualTheme, setManualTheme] = useState<'light' | 'dark' | null>(null);
 
+    // Mantem o override manual enquanto houver preferencia local definida.
     const isDark = manualTheme !== null 
     ? manualTheme === 'dark' 
     : systemColorScheme === 'dark';
@@ -32,6 +37,10 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     );
 };
 
+/**
+ * Retorna o tema atual da aplicacao.
+ * Deve ser usado dentro de ThemeProvider.
+ */
 export const useAppTheme = () => {
     const context = useContext(ThemeContext);
 

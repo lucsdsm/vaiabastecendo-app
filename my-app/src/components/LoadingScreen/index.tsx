@@ -6,6 +6,9 @@ interface LoadingScreenProps {
   onFinish: () => void;
 }
 
+/**
+ * Splash de carregamento inicial com fade-out ao finalizar a animacao.
+ */
 export default function LoadingScreen({ onFinish }: LoadingScreenProps) {
     const { colors } = useAppTheme();
 
@@ -14,6 +17,7 @@ export default function LoadingScreen({ onFinish }: LoadingScreenProps) {
 
     useEffect(() => {
 
+      // width nao suporta useNativeDriver, por isso a barra usa animacao no thread JS.
         Animated.timing(progressAnim, {
         toValue: 100,
         duration: 2000,
@@ -21,6 +25,7 @@ export default function LoadingScreen({ onFinish }: LoadingScreenProps) {
         useNativeDriver: false, 
         }).start(() => {
 
+      // Opacidade usa native driver para garantir transicao suave no encerramento.
         Animated.timing(opacityAnim, {
             toValue: 0,
             duration: 500,

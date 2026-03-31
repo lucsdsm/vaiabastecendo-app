@@ -9,6 +9,10 @@ import Header from './src/components/Header';
 
 import { useFonts, StoryScript_400Regular } from '@expo-google-fonts/story-script';
 
+/**
+ * Componente raiz do app.
+ * Carrega fontes antes de montar a interface para evitar flicker visual.
+ */
 export default function App() {
 
   const [fontsLoaded] = useFonts({
@@ -18,12 +22,13 @@ export default function App() {
   const [isAppReady, setIsAppReady] = useState(false);
 
   if (!fontsLoaded) {
-    return null; 
+    return null;
   }
 
   return (
     <ThemeProvider>
       <AppContent />
+      {/* Overlay temporario de splash controlado pelo estado local da aplicacao. */}
       {!isAppReady && (
         <LoadingScreen onFinish={() => setIsAppReady(true)} />
       )}
@@ -31,6 +36,9 @@ export default function App() {
   );
 }
 
+/**
+ * Conteudo principal da tela com tema dinamico.
+ */
 function AppContent() {
   const { colors, isDark } = useAppTheme();
 

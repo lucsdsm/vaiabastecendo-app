@@ -6,6 +6,10 @@ import { useAppTheme } from '../../theme/ThemeProvider';
 
 import { Feather } from '@expo/vector-icons';
 
+/**
+ * Header principal da aplicacao.
+ * Exibe marca, titulo centralizado e controle manual de tema.
+ */
 export default function Header() {
     const { colors, isDark, toggleTheme } = useAppTheme();
     
@@ -23,6 +27,7 @@ export default function Header() {
         ]}>
             <View style={styles.content}>
 
+                {/* Camada absoluta para manter o titulo centralizado independente dos itens laterais. */}
                 <View style={styles.titleContainer} pointerEvents="none">
                     <Text style={[styles.title, { color: colors.textPrimary }]}>
                         Carnolina
