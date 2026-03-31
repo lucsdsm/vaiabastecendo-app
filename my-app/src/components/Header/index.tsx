@@ -30,7 +30,7 @@ export default function Header() {
                 </View>
 
                 <Image 
-                    source={require('../../../assets/logo_alternative.png')} 
+                    source={require('../../../assets/logo.png')} 
                     style={styles.logo} 
                     resizeMode="contain"
                 />
@@ -87,9 +87,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        letterSpacing: 1,
+        fontSize: 32,
+        fontFamily: 'StoryScript_400Regular',
     },
     themeButton: {
         padding: 10,

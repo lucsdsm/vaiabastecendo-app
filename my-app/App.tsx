@@ -1,12 +1,32 @@
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+
 import { ThemeProvider, useAppTheme } from './src/theme/ThemeProvider';
+
+import LoadingScreen from './src/components/LoadingScreen';
 import Header from './src/components/Header';
 
+import { useFonts, StoryScript_400Regular } from '@expo-google-fonts/story-script';
+
 export default function App() {
+
+  const [fontsLoaded] = useFonts({
+    StoryScript_400Regular,
+  });
+
+  const [isAppReady, setIsAppReady] = useState(false);
+
+  if (!fontsLoaded) {
+    return null; 
+  }
+
   return (
     <ThemeProvider>
       <AppContent />
+      {!isAppReady && (
+        <LoadingScreen onFinish={() => setIsAppReady(true)} />
+      )}
     </ThemeProvider>
   );
 }
@@ -18,7 +38,7 @@ function AppContent() {
     <View style={[styles.container, { backgroundColor: colors.background }]}>
 
       <StatusBar style={isDark ? 'light' : 'dark'} />
-      
+
       <Header />
 
       <View style={styles.content}>
