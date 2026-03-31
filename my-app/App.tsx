@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { ThemeProvider, useAppTheme } from './src/theme/ThemeProvider';
+import Header from './src/components/Header';
 
 export default function App() {
   return (
@@ -15,15 +16,25 @@ function AppContent() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text style={{ color: colors.textPrimary }}>Open up App.tsx to start working on your app!</Text>
-      <Text style={{ color: colors.textPrimary }}>O tema atual e {isDark ? 'escuro' : 'claro'}.</Text>
+
       <StatusBar style={isDark ? 'light' : 'dark'} />
+      
+      <Header />
+
+      <View style={styles.content}>
+        <Text style={{ color: colors.textPrimary }}> {isDark ? '🌙' : '☀️'} </Text>
+        
+      </View>
+      
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  content: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
