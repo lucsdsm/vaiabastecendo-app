@@ -6,6 +6,7 @@ import { ThemeProvider, useAppTheme } from './src/theme/ThemeProvider';
 
 import LoadingScreen from './src/components/LoadingScreen';
 import Header from './src/components/Header';
+import Footer from './src/components/Footer';
 
 import { useFonts, StoryScript_400Regular } from '@expo-google-fonts/story-script';
 
@@ -51,9 +52,9 @@ function AppContent() {
 
       <View style={styles.content}>
         <Text style={{ color: colors.textPrimary }}> {isDark ? '🌙' : '☀️'} </Text>
-        
       </View>
       
+      <Footer />
     </View>
   );
 }

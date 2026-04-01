@@ -46,9 +46,9 @@ export default function Header() {
                     style={styles.themeButton}
                 >
                     <Feather 
-                        name={isDark ? "sun" : "moon"} 
+                        name={isDark ? "moon" : "sun"} 
                         size={24} 
-                        color={colors.textPrimary} 
+                        color={colors.textSecondary} 
                     />
                 </TouchableOpacity>
             </View>
