@@ -8,7 +8,7 @@ interface LoadingScreenProps {
 
 /**
  * Splash de carregamento inicial com fade-out ao finalizar a animacao.
- */
+*/
 export default function LoadingScreen({ onFinish }: LoadingScreenProps) {
     const { colors } = useAppTheme();
 

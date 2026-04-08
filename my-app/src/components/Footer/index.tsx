@@ -6,12 +6,11 @@ import { Feather } from '@expo/vector-icons';
 /**
  * Footer da aplicacao com navegação principal.
  * Contem botões para Mapa, Ranking, Informar Preço (central destacado), Alertas e Perfil.
- */
-
+*/
 export default function Footer() {
     const { colors, isDark } = useAppTheme();
 
-    return (
+    return ( 
         <View style={[
             styles.container,
             {

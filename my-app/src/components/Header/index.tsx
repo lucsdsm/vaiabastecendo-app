@@ -9,7 +9,7 @@ import { Feather } from '@expo/vector-icons';
 /**
  * Header principal da aplicacao.
  * Exibe marca, titulo centralizado e controle manual de tema.
- */
+*/
 export default function Header() {
     const { colors, isDark, toggleTheme } = useAppTheme();
     
