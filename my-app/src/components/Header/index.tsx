@@ -26,8 +26,7 @@ export default function Header() {
             }
         ]}>
             <View style={styles.content}>
-
-                {/* Camada absoluta para manter o titulo centralizado independente dos itens laterais. */}
+                {/* Mantem o titulo visualmente central mesmo com logo e acoes de larguras diferentes. */}
                 <View style={styles.titleContainer} pointerEvents="none">
                     <Text style={[styles.title, { color: colors.textPrimary }]}>
                         Carnolina

@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
 import axios from 'axios';
-import { PostoProps } from '../components/PostoCard'; // Ajuste o caminho se necessário
+import { PostoProps } from '../components/PostoCard';
 
+/**
+ * Normaliza a URL base da API para evitar requests malformados.
+ * Garante protocolo http/https e remove barras finais duplicadas.
+ */
 function normalizeApiBaseUrl(rawUrl?: string) {
     const trimmed = rawUrl?.trim();
 
@@ -17,6 +21,10 @@ function normalizeApiBaseUrl(rawUrl?: string) {
     return `http://${trimmed}`.replace(/\/+$/, '');
 }
 
+/**
+ * Carrega postos da API e, quando permitido, envia a localizacao atual
+ * para priorizar resultados por proximidade.
+ */
 export function usePostos() {
     const [postos, setPostos] = useState<PostoProps[]>([]);
     const [loading, setLoading] = useState(true);
@@ -51,6 +59,7 @@ export function usePostos() {
                 
                 const mappedPostos = response.data.map((p: any) => {
                     let textoDistancia = "Calculando...";
+                    // Mantem fallback para casos em que a API ainda nao calculou distancia.
                     if (p.distancia_metros !== null) {
                         textoDistancia = p.distancia_metros < 1000 
                             ? `${Math.round(p.distancia_metros)}m` 
@@ -60,6 +69,9 @@ export function usePostos() {
                     return {
                         id: String(p.id),
                         nome: p.nome,
+                        endereco: p.endereco,
+                        latitude: p.latitude,
+                        longitude: p.longitude,
                         distancia: textoDistancia,
                         precoGasolina: 0,
                         precoEtanol: 0,
@@ -89,6 +101,5 @@ export function usePostos() {
         loadData();
     }, []);
 
-    // O hook retorna apenas o que a tela precisa saber
     return { postos, loading };
 }

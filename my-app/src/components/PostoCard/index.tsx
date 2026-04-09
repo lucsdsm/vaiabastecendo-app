@@ -1,27 +1,42 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Platform, Linking } from 'react-native';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { Feather } from '@expo/vector-icons';
 
+/**
+ * Estrutura de dados exibida no card de posto.
+ */
 export interface PostoProps {
     id: string;
     nome: string;
+    latitude: number;
+    longitude: number;
     distancia: string;
+    endereco: string;
     precoGasolina: number;
     precoEtanol: number;
     ultimaAtualizacao: string;
     likes: number;
 }
 
+/**
+ * Card de exibicao de preco e status de atualizacao do posto.
+ */
 export default function PostoCard({ data }: { data: PostoProps }) {
     const { colors, isDark } = useAppTheme();
 
-    // Estado local para controle de curtida (true se curtiu, false caso contrário).
     const [isLiked, setIsLiked] = useState(false);
 
-    // Função para alternar o estado de curtida ao pressionar o botão de like.
     const handleLike = () => {
         setIsLiked(!isLiked);
+    };
+
+    const handleGetDirections = () => {
+        const { latitude, longitude, nome } = data;
+
+        const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}&destination_place_id=${nome}`;
+
+        Linking.openURL(url).catch(err => console.error('Erro ao abrir o mapa:', err));
     };
 
     return (
@@ -29,11 +44,14 @@ export default function PostoCard({ data }: { data: PostoProps }) {
             backgroundColor: colors.surface,
             borderColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)'
         }]}>
-            {/* Cabeçalho do Cartão: Nome e Distância */}
             <View style={styles.header}>
                 <View style={styles.headerLeft}>
                     <Text style={[styles.title, { color: colors.textPrimary }]} numberOfLines={1}>
                         {data.nome}
+                    </Text>
+                    {/* NOVO: Exibição do Endereço */}
+                    <Text style={[styles.addressText, { color: colors.textSecondary }]} numberOfLines={1}>
+                        {data.endereco}
                     </Text>
                     <View style={styles.distanceBadge}>
                         <Feather name="map-pin" size={10} color={colors.textSecondary} />
@@ -43,7 +61,6 @@ export default function PostoCard({ data }: { data: PostoProps }) {
                     </View>
                 </View>
 
-                {/* Botão de Curtida */}
                 <TouchableOpacity
                     style={[styles.likeButton, {
                         backgroundColor: isLiked 
@@ -68,7 +85,6 @@ export default function PostoCard({ data }: { data: PostoProps }) {
                 </TouchableOpacity>
             </View>
 
-            {/* Corpo: Preços ou Alerta */}
             <View style={styles.priceContainer}>
                 {data.precoGasolina > 0 || data.precoEtanol > 0 ? (
                     <>
@@ -103,8 +119,14 @@ export default function PostoCard({ data }: { data: PostoProps }) {
                 )}
             </View>
 
-            {/* Rodapé: Tempo e Botão de Ação */}
             <View style={styles.footer}>
+                <TouchableOpacity
+                    style={[styles.directionsButton, { borderColor: colors.primary }]}
+                    onPress={handleGetDirections}
+                >
+                    <Feather name="navigation" size={12} color={colors.primary} />
+                </TouchableOpacity>
+
                 <View style={styles.updateInfo}>
                     <Feather name="clock" size={10} color={colors.textSecondary} />
                     <Text style={[styles.timeText, { color: colors.textSecondary }]}>
@@ -156,6 +178,12 @@ const styles = StyleSheet.create({
     headerLeft: {
         flex: 1,
         gap: 6,
+    },
+    addressText: {
+        fontSize: 12,
+        fontWeight: '400',
+        marginTop: -2,
+        marginBottom: 4,
     },
     title: {
         fontSize: 18,
@@ -229,6 +257,15 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         gap: 12,
+    },
+    directionsButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        paddingHorizontal: 12,
+        paddingVertical: 9,
+        borderRadius: 12,
+        borderWidth: 1,
     },
     updateInfo: {
         flexDirection: 'row',

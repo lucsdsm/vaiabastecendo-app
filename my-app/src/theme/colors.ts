@@ -1,3 +1,6 @@
+/**
+ * Tokens de cor para tema claro.
+ */
 export const lightTheme = {
   background: '#F5F5F5',
   surface: '#FFFFFF',
@@ -14,6 +17,9 @@ export const lightTheme = {
   dieselComum: '#D32F2F',
 };
 
+/**
+ * Tokens de cor para tema escuro.
+ */
 export const darkTheme = {
   background: '#121212',
   surface: '#1E1E1E',

@@ -10,7 +10,6 @@ import Footer from './src/components/Footer';
 import { useFonts, StoryScript_400Regular } from '@expo-google-fonts/story-script';
 import PostoCard from './src/components/PostoCard';
 
-// Importando a nossa inteligência modularizada
 import { usePostos } from './src/hooks/usePostos';
 
 export default function App() {
@@ -30,7 +29,6 @@ export default function App() {
 function AppContent() {
   const { colors, isDark } = useAppTheme();
   
-  // Apenas chamamos o Hook e pegamos os dados! Magia pura.
   const { postos, loading } = usePostos();
 
   return (
