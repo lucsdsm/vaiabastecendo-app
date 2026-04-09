@@ -28,11 +28,17 @@ function normalizeApiBaseUrl(rawUrl?: string) {
 export function usePostos() {
     const [postos, setPostos] = useState<PostoProps[]>([]);
     const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
 
-    useEffect(() => {
-        async function loadData() {
-            try {
-                let { status } = await Location.requestForegroundPermissionsAsync();
+    const fetchPostos = async (isRefreshing = false) => {
+        if (isRefreshing) {
+            setRefreshing(true);
+        }
+        else {
+            setLoading(true);
+        }
+        try {
+            let { status } = await Location.requestForegroundPermissionsAsync();
                 let lat = "";
                 let lng = "";
                 
@@ -59,11 +65,17 @@ export function usePostos() {
                 
                 const mappedPostos = response.data.map((p: any) => {
                     let textoDistancia = "Calculando...";
-                    // Mantem fallback para casos em que a API ainda nao calculou distancia.
                     if (p.distancia_metros !== null) {
                         textoDistancia = p.distancia_metros < 1000 
                             ? `${Math.round(p.distancia_metros)}m` 
                             : `${(p.distancia_metros / 1000).toFixed(1)}km`;
+                    }
+
+                    let ultimaData = "Pendente";
+                    if (p.precos_atuais && p.precos_atuais.length > 0) {
+                        const datas = p.precos_atuais.map((item: any) => new Date(item.data).getTime());
+                        const maxData = new Date(Math.max(...datas));
+                        ultimaData = maxData.toLocaleDateString('pt-BR') + ' ' + maxData.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
                     }
 
                     return {
@@ -73,9 +85,8 @@ export function usePostos() {
                         latitude: p.latitude,
                         longitude: p.longitude,
                         distancia: textoDistancia,
-                        precoGasolina: 0,
-                        precoEtanol: 0,
-                        ultimaAtualizacao: "Pendente",
+                        precos_atuais: p.precos_atuais, 
+                        ultimaAtualizacao: ultimaData,
                         likes: 0
                     };
                 });
@@ -93,13 +104,15 @@ export function usePostos() {
                 } else {
                     console.error('Erro ao carregar postos da API:', error);
                 }
-            } finally {
+            } 
+            finally {
                 setLoading(false);
+                setRefreshing(false);
             }
-        }
-
-        loadData();
+    };
+    useEffect(() => {
+        fetchPostos();
     }, []);
 
-    return { postos, loading };
+    return { postos, loading, refreshing, refetch: () => fetchPostos(true) };
 }

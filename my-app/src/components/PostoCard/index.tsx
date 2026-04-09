@@ -3,6 +3,15 @@ import { StyleSheet, View, Text, TouchableOpacity, Platform, Linking } from 'rea
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { Feather } from '@expo/vector-icons';
 
+import UpdatePriceModal from '../UpdatePriceModal';
+
+export interface PrecoAtual {
+    tipo: string;
+    cor: string;
+    preco: number;
+    data: string;
+}
+
 /**
  * Estrutura de dados exibida no card de posto.
  */
@@ -17,15 +26,18 @@ export interface PostoProps {
     precoEtanol: number;
     ultimaAtualizacao: string;
     likes: number;
+    precos_atuais: PrecoAtual[];
 }
 
 /**
  * Card de exibicao de preco e status de atualizacao do posto.
  */
-export default function PostoCard({ data }: { data: PostoProps }) {
+export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRefresh: () => void }) {
     const { colors, isDark } = useAppTheme();
 
     const [isLiked, setIsLiked] = useState(false);
+
+    const [modalVisible, setModalVisible] = useState(false);
 
     const handleLike = () => {
         setIsLiked(!isLiked);
@@ -86,26 +98,28 @@ export default function PostoCard({ data }: { data: PostoProps }) {
             </View>
 
             <View style={styles.priceContainer}>
-                {data.precoGasolina > 0 || data.precoEtanol > 0 ? (
-                    <>
-                        <View style={styles.priceBlock}>
-                            <View style={[styles.priceBadge, { backgroundColor: colors.gasolinaComum + (isDark ? '1A' : '0D') }]}>
-                                <Text style={[styles.fuelLabel, { color: colors.textSecondary }]}>Gasolina</Text>
-                                <Text style={[styles.priceValue, { color: colors.gasolinaComum }]}>
-                                    {data.precoGasolina.toFixed(2)}
+                {data.precos_atuais && data.precos_atuais.length > 0 ? (
+                    data.precos_atuais.map((item, index) => (
+                        <View key={index} style={styles.priceBlock}>
+                            <View style={[styles.priceBadge, { backgroundColor: item.cor + (isDark ? '1A' : '0D') }]}>
+                                <View style={styles.fuelLabelContainer}>
+                                    <Text
+                                        style={[styles.fuelLabel, { color: colors.textSecondary }]}
+                                        numberOfLines={2}
+                                        adjustsFontSizeToFit
+                                        minimumFontScale={0.85}
+                                        allowFontScaling={false}
+                                        maxFontSizeMultiplier={1}
+                                    >
+                                        {item.tipo}
+                                    </Text>
+                                </View>
+                                <Text style={[styles.priceValue, { color: item.cor }]}>
+                                    {item.preco.toFixed(2)}
                                 </Text>
                             </View>
                         </View>
-
-                        <View style={styles.priceBlock}>
-                            <View style={[styles.priceBadge, { backgroundColor: colors.etanol + (isDark ? '1A' : '0D') }]}>
-                                <Text style={[styles.fuelLabel, { color: colors.textSecondary }]}>Etanol</Text>
-                                <Text style={[styles.priceValue, { color: colors.etanol }]}>
-                                    {data.precoEtanol.toFixed(2)}
-                                </Text> 
-                            </View>
-                        </View>
-                    </>
+                    ))
                 ) : (
                     <View style={[styles.noPriceContainer, { 
                         backgroundColor: colors.primary + (isDark ? '1A' : '0D'),
@@ -140,11 +154,25 @@ export default function PostoCard({ data }: { data: PostoProps }) {
                         opacity: 0.9
                     }]}
                     activeOpacity={0.8}
+                    onPress={() => setModalVisible(true)}
                 >
                     <Feather name="refresh-cw" size={12} color="#FFF" />
-                    <Text style={styles.updateButtonText}>Atualizar</Text>
+                    <Text style={styles.updateButtonText}>
+                        Atualizar
+                    </Text>
                 </TouchableOpacity>
             </View>
+
+            <UpdatePriceModal
+                visible={modalVisible}
+                onClose={() => setModalVisible(false)}
+                postoId={data.id}
+                postoNome={data.nome}
+                onSuccess={() => {
+                    setModalVisible(false);
+                    onRefresh();            
+                }}
+            />
         </View>
     );
 }
@@ -223,7 +251,13 @@ const styles = StyleSheet.create({
     priceBadge: {
         borderRadius: 16,
         padding: 16,
+        minHeight: 112,
+        justifyContent: 'space-between',
         gap: 8,
+    },
+    fuelLabelContainer: {
+        minHeight: 32,
+        justifyContent: 'center',
     },
     noPriceContainer: {
         flex: 1,
@@ -243,14 +277,18 @@ const styles = StyleSheet.create({
     },
     fuelLabel: {
         fontSize: 11,
+        lineHeight: 14,
         fontWeight: '600',
         textTransform: 'uppercase',
         letterSpacing: 0.8,
+        textAlign: 'center',
+        includeFontPadding: false,
     },
     priceValue: {
         fontSize: 28,
         fontWeight: '800',
         letterSpacing: -0.5,
+        textAlign: 'center',
     },
     footer: {
         flexDirection: 'row',

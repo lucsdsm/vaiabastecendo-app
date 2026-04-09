@@ -29,7 +29,7 @@ export default function App() {
 function AppContent() {
   const { colors, isDark } = useAppTheme();
   
-  const { postos, loading } = usePostos();
+  const { postos, loading, refreshing, refetch } = usePostos();
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -48,7 +48,10 @@ function AppContent() {
           <FlatList
             data={postos}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <PostoCard data={item} />}
+            renderItem={({ item }) => <PostoCard data={item} onRefresh={refetch} />}
+            refreshing={refreshing}
+            onRefresh={refetch}
+
             ListHeaderComponent={
               <View style={styles.listHeader}>
                 <Text style={[styles.listTitle, { color: colors.textPrimary }]}> 
