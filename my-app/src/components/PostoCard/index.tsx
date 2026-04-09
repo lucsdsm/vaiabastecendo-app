@@ -68,33 +68,39 @@ export default function PostoCard({ data }: { data: PostoProps }) {
                 </TouchableOpacity>
             </View>
 
-            {/* Corpo: Preços dos Combustíveis */}
+            {/* Corpo: Preços ou Alerta */}
             <View style={styles.priceContainer}>
-                <View style={styles.priceBlock}>
-                    <View style={[styles.priceBadge, {
-                        backgroundColor: colors.gasolinaComum + (isDark ? '1A' : '0D')
-                    }]}>
-                        <Text style={[styles.fuelLabel, { color: colors.textSecondary }]}>
-                            Gasolina
-                        </Text>
-                        <Text style={[styles.priceValue, { color: colors.gasolinaComum }]}>
-                            {data.precoGasolina.toFixed(2)}
-                        </Text>
-                    </View>
-                </View>
+                {data.precoGasolina > 0 || data.precoEtanol > 0 ? (
+                    <>
+                        <View style={styles.priceBlock}>
+                            <View style={[styles.priceBadge, { backgroundColor: colors.gasolinaComum + (isDark ? '1A' : '0D') }]}>
+                                <Text style={[styles.fuelLabel, { color: colors.textSecondary }]}>Gasolina</Text>
+                                <Text style={[styles.priceValue, { color: colors.gasolinaComum }]}>
+                                    {data.precoGasolina.toFixed(2)}
+                                </Text>
+                            </View>
+                        </View>
 
-                <View style={styles.priceBlock}>
-                    <View style={[styles.priceBadge, {
-                        backgroundColor: colors.etanol + (isDark ? '1A' : '0D')
+                        <View style={styles.priceBlock}>
+                            <View style={[styles.priceBadge, { backgroundColor: colors.etanol + (isDark ? '1A' : '0D') }]}>
+                                <Text style={[styles.fuelLabel, { color: colors.textSecondary }]}>Etanol</Text>
+                                <Text style={[styles.priceValue, { color: colors.etanol }]}>
+                                    {data.precoEtanol.toFixed(2)}
+                                </Text> 
+                            </View>
+                        </View>
+                    </>
+                ) : (
+                    <View style={[styles.noPriceContainer, { 
+                        backgroundColor: colors.primary + (isDark ? '1A' : '0D'),
+                        borderColor: colors.primary + '40'
                     }]}>
-                        <Text style={[styles.fuelLabel, { color: colors.textSecondary }]}>
-                            Etanol
+                        <Feather name="info" size={18} color={colors.primary} />
+                        <Text style={[styles.noPriceText, { color: colors.textPrimary }]}>
+                            Este posto ainda não foi precificado. Seja o primeiro a informar!
                         </Text>
-                        <Text style={[styles.priceValue, { color: colors.etanol }]}>
-                            {data.precoEtanol.toFixed(2)}
-                        </Text> 
                     </View>
-                </View>
+                )}
             </View>
 
             {/* Rodapé: Tempo e Botão de Ação */}
@@ -190,6 +196,22 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         padding: 16,
         gap: 8,
+    },
+    noPriceContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 16,
+        borderRadius: 16,
+        borderWidth: 1,
+        borderStyle: 'dashed',
+        gap: 12,
+    },
+    noPriceText: {
+        flex: 1,
+        fontSize: 13,
+        lineHeight: 18,
+        fontWeight: '500',
     },
     fuelLabel: {
         fontSize: 11,

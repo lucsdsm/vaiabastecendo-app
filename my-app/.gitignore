@@ -42,3 +42,6 @@ yarn-error.*
 
 # arquivos de documentação
 /docs
+
+# .env
+.env
