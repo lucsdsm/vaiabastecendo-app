@@ -39,6 +39,14 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
 
     const [modalVisible, setModalVisible] = useState(false);
 
+    // Organiza os preços atuais em linhas de até 4 itens para exibição
+    const priceRows = [] as PrecoAtual[][];
+    if (data.precos_atuais && data.precos_atuais.length > 0) {
+        for (let i = 0; i < data.precos_atuais.length; i += 4) {
+            priceRows.push(data.precos_atuais.slice(i, i + 4));
+        }
+    }
+
     const handleLike = () => {
         setIsLiked(!isLiked);
     };
@@ -65,12 +73,20 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                     <Text style={[styles.addressText, { color: colors.textSecondary }]} numberOfLines={1}>
                         {data.endereco}
                     </Text>
-                    <View style={styles.distanceBadge}>
+                    <View style={styles.infoBadge}>
+                        {/* distância */}
                         <Feather name="map-pin" size={10} color={colors.textSecondary} />
                         <Text style={[styles.distanceText, { color: colors.textSecondary }]}>
                             {data.distancia}
                         </Text>
+                        
+                        {/* hora e criador da última atualização */}
+                        <Feather name="clock" size={10} color={colors.textSecondary} style={{ marginLeft: 8 }} />
+                        <Text style={[styles.timeText, { color: colors.textSecondary }]}>
+                            {data.ultimaAtualizacao}
+                        </Text>
                     </View>
+                    
                 </View>
 
                 <TouchableOpacity
@@ -99,25 +115,29 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
 
             <View style={styles.priceContainer}>
                 {data.precos_atuais && data.precos_atuais.length > 0 ? (
-                    data.precos_atuais.map((item, index) => (
-                        <View key={index} style={styles.priceBlock}>
-                            <View style={[styles.priceBadge, { backgroundColor: item.cor + (isDark ? '1A' : '0D') }]}>
-                                <View style={styles.fuelLabelContainer}>
-                                    <Text
-                                        style={[styles.fuelLabel, { color: colors.textSecondary }]}
-                                        numberOfLines={2}
-                                        adjustsFontSizeToFit
-                                        minimumFontScale={0.85}
-                                        allowFontScaling={false}
-                                        maxFontSizeMultiplier={1}
-                                    >
-                                        {item.tipo}
-                                    </Text>
+                    priceRows.map((row, rowIndex) => (
+                        <View key={rowIndex} style={styles.priceRow}>
+                            {row.map((item, index) => (
+                                <View key={`${rowIndex}-${index}`} style={styles.priceBlock}>
+                                    <View style={[styles.priceBadge, { backgroundColor: item.cor + (isDark ? '1A' : '0D') }]}>
+                                        <View style={styles.fuelLabelContainer}>
+                                            <Text
+                                                style={[styles.fuelLabel, { color: colors.textSecondary }]}
+                                                numberOfLines={2}
+                                                adjustsFontSizeToFit
+                                                minimumFontScale={0.85}
+                                                allowFontScaling={false}
+                                                maxFontSizeMultiplier={1}
+                                            >
+                                                {item.tipo}
+                                            </Text>
+                                        </View>
+                                        <Text style={[styles.priceValue, { color: item.cor }]}>
+                                            {item.preco.toFixed(2)}
+                                        </Text>
+                                    </View>
                                 </View>
-                                <Text style={[styles.priceValue, { color: item.cor }]}>
-                                    {item.preco.toFixed(2)}
-                                </Text>
-                            </View>
+                            ))}
                         </View>
                     ))
                 ) : (
@@ -140,13 +160,6 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                 >
                     <Feather name="navigation" size={12} color={colors.primary} />
                 </TouchableOpacity>
-
-                <View style={styles.updateInfo}>
-                    <Feather name="clock" size={10} color={colors.textSecondary} />
-                    <Text style={[styles.timeText, { color: colors.textSecondary }]}>
-                        {data.ultimaAtualizacao}
-                    </Text>
-                </View>
 
                 <TouchableOpacity
                     style={[styles.updateButton, {
@@ -218,7 +231,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         letterSpacing: -0.3,
     },
-    distanceBadge: {
+    infoBadge: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 4,
@@ -227,6 +240,10 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: '500',
         letterSpacing: 0.2,
+    },
+        timeText: {
+        fontSize: 12,
+        fontWeight: '500',
     },
     likeButton: {
         flexDirection: 'row',
@@ -241,9 +258,12 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     priceContainer: {
-        flexDirection: 'row',
         gap: 12,
         marginBottom: 20,
+    },
+    priceRow: {
+        flexDirection: 'row',
+        gap: 12,
     },
     priceBlock: {
         flex: 1,
@@ -310,10 +330,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 5,
         flex: 1,
-    },
-    timeText: {
-        fontSize: 12,
-        fontWeight: '500',
     },
     updateButton: {
         flexDirection: 'row',

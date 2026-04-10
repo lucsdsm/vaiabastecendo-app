@@ -29,7 +29,7 @@ export default function Header() {
                 {/* Mantem o titulo visualmente central mesmo com logo e acoes de larguras diferentes. */}
                 <View style={styles.titleContainer} pointerEvents="none">
                     <Text style={[styles.title, { color: colors.textPrimary }]}>
-                        Carnolina
+                        Vai Abastecendo
                     </Text>
                 </View>
 

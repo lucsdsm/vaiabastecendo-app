@@ -43,9 +43,20 @@ export function usePostos() {
                 let lng = "";
                 
                 if (status === 'granted') {
-                    let location = await Location.getCurrentPositionAsync({});
-                    lat = location.coords.latitude.toString();
-                    lng = location.coords.longitude.toString();
+                    // tenta pegar a última posição salva (instantâneo)
+                    let location = await Location.getLastKnownPositionAsync({});
+                    
+                    // 2. se não tiver, pede a atual, mas sem exigir precisão alta (para ser mais rápido)
+                    if (!location) {
+                        location = await Location.getCurrentPositionAsync({ 
+                            accuracy: Location.Accuracy.Balanced 
+                        });
+                    }
+                    
+                    if (location) {
+                        lat = location.coords.latitude.toString();
+                        lng = location.coords.longitude.toString();
+                    }
                 }
 
                 const baseURL = normalizeApiBaseUrl(process.env.EXPO_PUBLIC_API_URL);
@@ -63,7 +74,9 @@ export function usePostos() {
 
                 const response = await axios.get(urlAPI);
                 
-                const mappedPostos = response.data.map((p: any) => {
+                const dadosParaMapear = response.data.results ? response.data.results : response.data;
+                
+                const mappedPostos = dadosParaMapear.map((p: any) => {
                     let textoDistancia = "Calculando...";
                     if (p.distancia_metros !== null) {
                         textoDistancia = p.distancia_metros < 1000 
@@ -71,11 +84,13 @@ export function usePostos() {
                             : `${(p.distancia_metros / 1000).toFixed(1)}km`;
                     }
 
-                    let ultimaData = "Pendente";
+                    let ultimaAtualizacao = "Pendente";
                     if (p.precos_atuais && p.precos_atuais.length > 0) {
                         const datas = p.precos_atuais.map((item: any) => new Date(item.data).getTime());
                         const maxData = new Date(Math.max(...datas));
-                        ultimaData = maxData.toLocaleDateString('pt-BR') + ' ' + maxData.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                        ultimaAtualizacao = maxData.toLocaleDateString('pt-BR') + ' ' + maxData.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) 
+                        + ' por ' +
+                        (p.autor_ultima_atualizacao);
                     }
 
                     return {
@@ -86,7 +101,7 @@ export function usePostos() {
                         longitude: p.longitude,
                         distancia: textoDistancia,
                         precos_atuais: p.precos_atuais, 
-                        ultimaAtualizacao: ultimaData,
+                        ultimaAtualizacao: ultimaAtualizacao,
                         likes: 0
                     };
                 });

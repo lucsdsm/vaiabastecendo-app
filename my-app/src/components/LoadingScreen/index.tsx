@@ -51,7 +51,7 @@ export default function LoadingScreen({ onFinish }: LoadingScreenProps) {
           resizeMode="contain"
         />
         <Text style={[styles.title, { color: colors.textPrimary }]}>
-          Carnolina
+          Vai Abastecendo
         </Text>
 
         <View style={[styles.progressBarContainer, { borderColor: colors.border }]}>
