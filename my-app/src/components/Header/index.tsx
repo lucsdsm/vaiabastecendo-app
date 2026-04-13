@@ -47,7 +47,8 @@ export default function Header() {
                     <Feather 
                         name={isDark ? "moon" : "sun"} 
                         size={24} 
-                        color={colors.textSecondary} 
+                        color={colors.textSecondary}
+                        style={{ marginRight: 15 }} 
                     />
                 </TouchableOpacity>
             </View>
@@ -58,8 +59,8 @@ export default function Header() {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        paddingHorizontal: 20,
-        paddingBottom: 10, 
+        paddingHorizontal: 5,
+        paddingBottom: 5, 
 
         ...Platform.select({
         ios: {
@@ -82,7 +83,7 @@ const styles = StyleSheet.create({
     },
     
     logo: {
-        width: 64,
+        width: 96,
         height: 64,
     },
     titleContainer: {

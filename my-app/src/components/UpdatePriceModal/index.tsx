@@ -63,11 +63,10 @@ export default function UpdatePriceModal({ visible, onClose, postoId, postoNome,
         setPrice(cleaned);
     };
 
-    // ATUALIZE sua função handleUpdate para esta:
     const handleUpdate = async () => {
         if (!selectedFuel || !price) return;
 
-        // Converte a nossa string "5,89" em um número real 5.89 para o Python
+        // Converte a string "5,89" em um número real 5.89 para o Python
         const numericPrice = parseFloat(price.replace(',', '.'));
 
         // Validação de segurança antes de chamar a API
@@ -84,20 +83,17 @@ export default function UpdatePriceModal({ visible, onClose, postoId, postoNome,
                 preco: numericPrice
             });
             
-            // Se chegou aqui, a API aceitou!
             setPrice('');
-            onSuccess(); // Dispara a atualização da FlatList
-            onClose();   // Fecha o popup
+            onSuccess();
+            onClose(); 
             
         } catch (error: any) {
-            // Se a API recusar, nós pegamos o erro e avisamos o usuário!
             console.error("Erro da API:", error.response?.data || error.message);
             Alert.alert(
                 "Erro ao salvar",
                 "Não foi possível atualizar o preço. Verifique sua conexão e tente novamente."
             );
         } finally {
-            // O finally SEMPRE roda (dando erro ou sucesso), garantindo que o spinner do botão pare.
             setLoading(false);
         }
     };
@@ -164,17 +160,71 @@ export default function UpdatePriceModal({ visible, onClose, postoId, postoNome,
 }
 
 const styles = StyleSheet.create({
-    overlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
-    modalContent: { borderTopLeftRadius: 30, borderTopRightRadius: 30, padding: 25, paddingBottom: 40 },
-    header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 5 },
-    title: { fontSize: 22, fontWeight: '800' },
-    subtitle: { fontSize: 14, marginBottom: 25 },
-    section: { marginBottom: 20 },
-    label: { fontSize: 16, fontWeight: '600', marginBottom: 12 },
-    fuelGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
-    fuelOption: { paddingHorizontal: 16, paddingVertical: 10, borderRadius: 12, borderWidth: 2 },
-    fuelOptionText: { fontWeight: '700', fontSize: 14 },
-    input: { borderRadius: 15, padding: 18, fontSize: 24, fontWeight: '800', textAlign: 'center', borderWidth: 1 },
-    submitButton: { borderRadius: 15, padding: 18, alignItems: 'center', marginTop: 10 },
-    submitButtonText: { color: '#FFF', fontSize: 16, fontWeight: '700' }
+    overlay: { 
+        flex: 1, 
+        backgroundColor: 'rgba(0,0,0,0.5)', 
+        justifyContent: 'flex-end' 
+    },
+    modalContent: { 
+        borderTopLeftRadius: 30, 
+        borderTopRightRadius: 30, 
+        padding: 25, 
+        paddingBottom: 40 
+    },
+    header: { 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        marginBottom: 5 
+    },
+    title: { 
+        fontSize: 22, 
+        fontWeight: '800' 
+    },
+    subtitle: { 
+        fontSize: 14, 
+        marginBottom: 25 
+    },
+    section: { 
+        marginBottom: 20 
+    },
+    label: { 
+        fontSize: 16, 
+        fontWeight: '600', 
+        marginBottom: 12 
+    },
+    fuelGrid: { 
+        flexDirection: 'row', 
+        flexWrap: 'wrap', 
+        gap: 10 
+    },
+    fuelOption: { 
+        paddingHorizontal: 16, 
+        paddingVertical: 10, 
+        borderRadius: 12, 
+        borderWidth: 2 
+    },
+    fuelOptionText: { 
+        fontWeight: '700', 
+        fontSize: 14 
+    },
+    input: { 
+        borderRadius: 15, 
+        padding: 18, 
+        fontSize: 24, 
+        fontWeight: '800', 
+        textAlign: 'center', 
+        borderWidth: 1 
+    },
+    submitButton: { 
+        borderRadius: 15, 
+        padding: 18, 
+        alignItems: 'center', 
+        marginTop: 10 
+    },
+    submitButtonText: { 
+        color: '#FFF', 
+        fontSize: 16, 
+        fontWeight: '700' 
+    }
 });

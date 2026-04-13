@@ -155,10 +155,10 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
 
             <View style={styles.footer}>
                 <TouchableOpacity
-                    style={[styles.directionsButton, { borderColor: colors.primary }]}
+                    style={[styles.directionsButton, { borderColor: colors.danger }]}
                     onPress={handleGetDirections}
                 >
-                    <Feather name="navigation" size={12} color={colors.primary} />
+                    <Feather name="map-pin" size={12} color={colors.danger} />
                 </TouchableOpacity>
 
                 <TouchableOpacity

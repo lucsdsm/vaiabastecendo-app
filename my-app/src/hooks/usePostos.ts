@@ -29,6 +29,7 @@ export function usePostos() {
     const [postos, setPostos] = useState<PostoProps[]>([]);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     const fetchPostos = async (isRefreshing = false) => {
         if (isRefreshing) {
@@ -37,6 +38,7 @@ export function usePostos() {
         else {
             setLoading(true);
         }
+        setError(null);
         try {
             let { status } = await Location.requestForegroundPermissionsAsync();
                 let lat = "";
@@ -108,17 +110,8 @@ export function usePostos() {
 
                 setPostos(mappedPostos);
             } catch (error) {
-                if (axios.isAxiosError(error)) {
-                    console.error('Erro ao carregar postos da API:', {
-                        message: error.message,
-                        code: error.code,
-                        url: error.config?.url,
-                        status: error.response?.status,
-                        data: error.response?.data
-                    });
-                } else {
-                    console.error('Erro ao carregar postos da API:', error);
-                }
+                console.error("Erro da API:", error);
+                setError("Verifique sua conexão ou se o servidor do Codespaces está ativo.");
             } 
             finally {
                 setLoading(false);
@@ -129,5 +122,5 @@ export function usePostos() {
         fetchPostos();
     }, []);
 
-    return { postos, loading, refreshing, refetch: () => fetchPostos(true) };
+    return { postos, loading, refreshing, error, refetch: () => fetchPostos(true) };
 }
