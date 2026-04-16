@@ -1,18 +1,22 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { useAppTheme } from '../../theme/ThemeProvider';
+import { styles } from './styles';
+import { useEmptyState } from './useEmptyState';
 
 interface EmptyStateProps {
   message?: string;
   onRetry?: () => void;
 }
 
+/**
+ * Estado vazio para falha de conectividade com opcao de nova tentativa.
+ */
 export default function EmptyState({ 
     message = 'Não foi possível conectar-se ao servidor no momento.', 
     onRetry }: 
         EmptyStateProps) {
-            const { colors, isDark } = useAppTheme();
+            const { colors, isDark } = useEmptyState();
 
             return (
         <View style={[styles.container, { 
@@ -42,48 +46,3 @@ export default function EmptyState({
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        margin: 16,
-        padding: 24,
-        borderRadius: 16,
-        borderWidth: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    iconContainer: {
-        width: 64,
-        height: 64,
-        borderRadius: 32,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 16,
-    },
-    title: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 8,
-        textAlign: 'center',
-    },
-    message: {
-        fontSize: 14,
-        textAlign: 'center',
-        marginBottom: 24,
-        lineHeight: 20,
-    },
-    button: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 8,
-        paddingHorizontal: 24,
-        paddingVertical: 12,
-        borderRadius: 12,
-    },
-    buttonText: {
-        color: '#FFF',
-        fontSize: 14,
-        fontWeight: 'bold',
-    }
-});

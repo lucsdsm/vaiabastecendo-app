@@ -1,19 +1,16 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image, Platform, TouchableOpacity } from 'react-native';
-
-import Constants from 'expo-constants'; 
-import { useAppTheme } from '../../theme/ThemeProvider';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 
 import { Feather } from '@expo/vector-icons';
+import { useHeader } from './useHeader';
+import { styles } from './styles';
 
 /**
  * Header principal da aplicacao.
  * Exibe marca, titulo centralizado e controle manual de tema.
 */
 export default function Header() {
-    const { colors, isDark, toggleTheme } = useAppTheme();
-    
-    const statusBarHeight = Constants.statusBarHeight;
+    const { colors, isDark, toggleTheme, statusBarHeight } = useHeader();
 
     return (
         <View style={[
@@ -26,7 +23,6 @@ export default function Header() {
             }
         ]}>
             <View style={styles.content}>
-                {/* Mantem o titulo visualmente central mesmo com logo e acoes de larguras diferentes. */}
                 <View style={styles.titleContainer} pointerEvents="none">
                     <Text style={[styles.title, { color: colors.textPrimary }]}>
                         Vai Abastecendo
@@ -55,48 +51,4 @@ export default function Header() {
         </View>
     )
 };
-
-const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        paddingHorizontal: 5,
-        paddingBottom: 5, 
-
-        ...Platform.select({
-        ios: {
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 4,
-        },
-        android: {
-            elevation: 4,
-        },
-        }),
-
-        zIndex: 10,
-    },
-    content: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    
-    logo: {
-        width: 96,
-        height: 64,
-    },
-    titleContainer: {
-        ...StyleSheet.absoluteFillObject,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    title: {
-        fontSize: 32,
-        fontFamily: 'StoryScript_400Regular',
-    },
-    themeButton: {
-        padding: 10,
-    },
-});
 

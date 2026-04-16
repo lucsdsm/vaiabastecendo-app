@@ -1,20 +1,28 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
+import { Text, View, FlatList, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
-import { useAppTheme } from '../../theme/ThemeProvider';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import PostoCard from '../../components/PostoCard';
 import EmptyState from '../../components/EmptyState';
+import { styles } from './styles';
+import { useHomeScreen } from './useHomeScreen';
 
-import { usePostos } from '../../hooks/usePostos';
-
+/**
+ * Tela inicial com lista de postos proximos e suporte a recarregamento.
+ */
 export default function HomeScreen() {
-  const { colors, isDark } = useAppTheme();
-  const { postos, loading, refreshing, error, refetch } = usePostos();
-  
-  const shouldShowErrorCard = !loading && !!error && postos.length === 0;
+  const {
+    colors,
+    isDark,
+    postos,
+    loading,
+    refreshing,
+    error,
+    refetch,
+    shouldShowErrorCard,
+  } = useHomeScreen();
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -54,12 +62,3 @@ export default function HomeScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  content: { flex: 1 },
-  centerLoading: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  listHeader: { paddingHorizontal: 25, paddingTop: 16, paddingBottom: 16, alignItems: 'center' },
-  listTitle: { fontSize: 24, fontFamily: 'StoryScript_400Regular' },
-  listContainer: { paddingHorizontal: 20, paddingBottom: 20 }
-});

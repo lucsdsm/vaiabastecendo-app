@@ -10,11 +10,6 @@ export const lightTheme = {
   border: '#E0E0E0',
   success: '#2E7D32',
   danger: '#D32F2F',
-
-  gasolinaComum: '#de5c2d',
-  gasolinaAditivada: '#1a43c7',
-  etanol: '#5cbf00',
-  dieselComum: '#D32F2F',
 };
 
 /**
@@ -29,11 +24,6 @@ export const darkTheme = {
   border: '#333333',
   success: '#81C784',
   danger: '#EF5350',
-
-  gasolinaComum: '#de5c2d',
-  gasolinaAditivada: '#1a43c7',
-  etanol: '#5cbf00',
-  dieselComum: '#D32F2F',
 };
 
 export type ThemeColors = typeof lightTheme;
