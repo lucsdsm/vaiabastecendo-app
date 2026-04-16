@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Platform } from 'react-native';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { Feather } from '@expo/vector-icons';
+
+import UserProfileModal from '../UserProfileModal';
 
 /**
  * Footer principal da aplicacao.
@@ -9,6 +11,7 @@ import { Feather } from '@expo/vector-icons';
 */
 export default function Footer() {
     const { colors, isDark } = useAppTheme();
+    const [profileModalVisible, setProfileModalVisible] = useState(false);
 
     return ( 
         <View style={[
@@ -37,9 +40,18 @@ export default function Footer() {
                     <Feather name="bell" size={24} color={colors.textSecondary} />
                 </TouchableOpacity> */}
 
-                <TouchableOpacity style={styles.button} activeOpacity={0.6}>
+                <TouchableOpacity
+                    style={styles.button}
+                    activeOpacity={0.6}
+                    onPress={() => setProfileModalVisible(true)}
+                >
                     <Feather name="user" size={24} color={colors.textSecondary} />
                 </TouchableOpacity>
+
+                <UserProfileModal 
+                    visible={profileModalVisible} 
+                    onClose={() => setProfileModalVisible(false)} 
+                />
                 
             </View>
         </View>

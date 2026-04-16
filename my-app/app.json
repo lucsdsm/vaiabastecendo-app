@@ -2,6 +2,7 @@
   "expo": {
     "name": "Vai Abastecendo",
     "slug": "vaiabastecendo",
+    "scheme": "vaiabastecendo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,7 +29,9 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-secure-store",
+      "expo-web-browser"
     ],
     "extra": {
       "eas": {
