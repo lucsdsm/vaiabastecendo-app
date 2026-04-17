@@ -20,12 +20,14 @@ export const styles = StyleSheet.create({
     },
     content: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         alignItems: 'center',
     },
     logo: {
-        width: 96,
+        marginLeft: 10,
+        width: 64,
         height: 64,
+        borderRadius: 360
     },
     titleContainer: {
         ...StyleSheet.absoluteFillObject,

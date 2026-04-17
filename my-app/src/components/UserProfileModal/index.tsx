@@ -25,7 +25,7 @@ export default function UserProfileModal({ visible, onClose }: UserProfileModalP
         promptAsync, 
         handleLogout,
         handleMockLogin
-    } = useUserProfile(visible);
+    } = useUserProfile();
 
     return (
         <Modal visible={visible} animationType="fade" transparent onRequestClose={onClose}>

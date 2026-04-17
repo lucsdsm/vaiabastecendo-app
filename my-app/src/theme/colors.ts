@@ -10,6 +10,7 @@ export const lightTheme = {
   border: '#E0E0E0',
   success: '#2E7D32',
   danger: '#D32F2F',
+  info: '#1976D2',
 };
 
 /**
@@ -22,8 +23,9 @@ export const darkTheme = {
   textPrimary: '#F5F5F5',
   textSecondary: '#A0A0A0',
   border: '#333333',
-  success: '#81C784',
-  danger: '#EF5350',
+  success: '#2E7D32',
+  danger: '#D32F2F',
+  info: '#1976D2',
 };
 
 export type ThemeColors = typeof lightTheme;

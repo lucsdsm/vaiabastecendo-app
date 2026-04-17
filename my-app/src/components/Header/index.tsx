@@ -29,11 +29,11 @@ export default function Header() {
                     </Text>
                 </View>
 
-                <Image 
-                    source={require('../../../assets/logo.png')} 
+                {/* <Image 
+                    source={require('../../../assets/adaptive-icon.png')} 
                     style={styles.logo} 
                     resizeMode="contain"
-                />
+                /> */}
 
                 <TouchableOpacity 
                     onPress={toggleTheme} 

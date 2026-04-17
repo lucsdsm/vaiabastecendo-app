@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
-import * as SecureStore from 'expo-secure-store';
 import * as AuthSession from 'expo-auth-session';
 import axios from 'axios';
+import { useAuth } from '../../contexts/AuthContext';
 
 // Necessario para concluir corretamente o fluxo de autenticacao no app nativo.
 WebBrowser.maybeCompleteAuthSession();
@@ -11,10 +11,9 @@ WebBrowser.maybeCompleteAuthSession();
 /**
  * Gerencia autenticacao Google e carregamento do perfil do usuario.
  */
-export function useUserProfile(visible: boolean) {
+export function useUserProfile() {
     const [loading, setLoading] = useState(false);
-    const [token, setToken] = useState<string | null>(null);
-    const [userData, setUserData] = useState<{ primeiro_nome: string; ultimo_nome: string; foto: string } | null>(null);
+    const { token, userData, signIn, signOut } = useAuth();
 
     const redirectUri = AuthSession.makeRedirectUri({
         scheme: 'com.lucsdsm.vaiabastecendo',
@@ -25,37 +24,6 @@ export function useUserProfile(visible: boolean) {
         webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
         redirectUri: redirectUri,
     });
-
-    /**
-     * Busca os dados do usuario autenticado usando o token JWT fornecido pelo backend
-     */
-    const buscarDadosDoUsuario = async (jwtToken: string) => {
-        try {
-            const res = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/auth/me/`, {
-                headers: {
-                    Authorization: `Token ${jwtToken}`
-                }
-            });
-            setUserData(res.data);
-        } catch (error) {
-            console.error("Erro ao buscar dados do usuário:", error);
-        }
-    };
-
-    /**
-     * Ao abrir o modal, verifica se ja existe um token salvo e, se houver, tenta carregar os dados do usuario.
-     * Tambem monitora as respostas do fluxo de autenticacao do Google para obter o token e buscar os dados do usuario
-     */
-    useEffect(() => {
-        if (visible) {
-            SecureStore.getItemAsync('userToken').then(savedToken => {
-                if (savedToken) {
-                    setToken(savedToken);
-                    buscarDadosDoUsuario(savedToken);
-                }
-            });
-        }
-    }, [visible]);
 
     /**
      * Monitora as respostas do fluxo de autenticacao do Google para obter o token e buscar os dados do usuario
@@ -83,9 +51,7 @@ export function useUserProfile(visible: boolean) {
             });
             
             const jwtToken = res.data.key;
-            await SecureStore.setItemAsync('userToken', jwtToken);
-            setToken(jwtToken);
-            await buscarDadosDoUsuario(jwtToken);
+            await signIn(jwtToken);
         } catch (error) {
             console.error("Erro na validação do backend:", error);
         } finally {
@@ -97,9 +63,7 @@ export function useUserProfile(visible: boolean) {
      * Limpa o token salvo e os dados do usuario para efetuar logout
      */
     const handleLogout = async () => {
-        await SecureStore.deleteItemAsync('userToken');
-        setToken(null);
-        setUserData(null);
+        await signOut();
     };
 
     /**
@@ -108,7 +72,7 @@ export function useUserProfile(visible: boolean) {
      */
     const handleMockLogin = () => {
         if (__DEV__) {
-            const mockToken = "ya29.a0Aa7MYiofnESqwVL2wyhIMdaMvztTo46VD2VdKeGsAjRLz1xtPO-Z_PutoquxfMoiWF8u0GhNG96mDEy9nnMnEYHSHuNS0nkOEFIVekps0IieLH7P2RQF0tJz-7g5dECGfF_FINxu0scBkvvFdciSDW9rtcl2-fyCahyKgXWkKcc61rx-rjjUlQwGNjVlQh2VvhVFwwQaCgYKAVcSARQSFQHGX2Mi_AWOXbbARjyxieBlwR10eg0206"
+            const mockToken = "ya29.a0Aa7MYiosIYXqU7wWRLAGEZPUULjKxoDed0slAy36AqIkN1XeG8ce10NMXmb8yxedanc_VMgn79fu95eeoTYFKyWnIMvPGlCiGvV4-aCxlkLPz3362RouM3SWpJq7MlgEiIeyQY69K-LLHsueWshfGHXdYrlD6ffr4sSQP-Hk5sdf-aW3ek1Puniv4IVgU1hh8BYvtcsaCgYKAccSARQSFQHGX2MiCyZjlOqhExcX8v6BSW1sDQ0206"
             console.log("Login simulado com token:", mockToken);
             enviarTokenParaDjango(mockToken);
         }

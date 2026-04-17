@@ -4,6 +4,10 @@ import { useFonts, StoryScript_400Regular } from '@expo-google-fonts/story-scrip
 import { ThemeProvider } from './src/theme/ThemeProvider';
 import LoadingScreen from './src/components/LoadingScreen';
 import HomeScreen from './src/screens/Home';
+
+import { ToastProvider } from './src/contexts/ToastContext';
+import { Toast } from './src/components/Toast';
+
 import { AuthProvider } from './src/contexts/AuthContext';
 
 export default function App() {
@@ -15,10 +19,13 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <AuthProvider>
-        <HomeScreen />
-      </AuthProvider>
-      {/* O LoadingScreen fica por cima de tudo até a animação terminar */}
+      <ToastProvider>
+        <AuthProvider>
+          <HomeScreen />
+        </AuthProvider>
+        <Toast />
+      </ToastProvider>
+      
       {!isAppReady && <LoadingScreen onFinish={() => setIsAppReady(true)} />}
     </ThemeProvider>
   );

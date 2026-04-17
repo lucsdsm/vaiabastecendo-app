@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Alert } from 'react-native';
 
 import axios from 'axios';
+import { useToast } from '../../contexts/ToastContext';
 
 interface FuelType {
     id: number;
@@ -25,6 +25,7 @@ export function useUpdatePriceModal({
     onClose,
     onSuccess,
 }: UseUpdatePriceModalParams) {
+    const { showToast } = useToast();
     const [fuelTypes, setFuelTypes] = useState<FuelType[]>([]);
     const [selectedFuel, setSelectedFuel] = useState<number | null>(null);
     const [price, setPrice] = useState('');
@@ -68,12 +69,13 @@ export function useUpdatePriceModal({
 
     const handleUpdate = async (fuelId: number | null, fuelPrice: string) => {
         if (!fuelId || !fuelPrice) {
+            showToast('Selecione o combustível e informe um preço.', 'danger');
             return;
         }
 
         const numericPrice = parseFloat(fuelPrice.replace(',', '.'));
         if (Number.isNaN(numericPrice) || numericPrice <= 0) {
-            Alert.alert('Ops!', 'Por favor, insira um preco valido maior que zero.');
+            showToast('Informe um preço válido maior que zero.', 'danger');
             return;
         }
 
@@ -88,12 +90,10 @@ export function useUpdatePriceModal({
             setPrice('');
             onSuccess();
             onClose();
+            showToast('Preço atualizado com sucesso!', 'success');
         } catch (error: any) {
             console.error('Erro da API:', error.response?.data || error.message);
-            Alert.alert(
-                'Erro ao salvar',
-                'Nao foi possivel atualizar o preco. Verifique sua conexao e tente novamente.'
-            );
+            showToast('Não foi possível atualizar o preço. Tente novamente.', 'danger');
         } finally {
             setLoading(false);
         }

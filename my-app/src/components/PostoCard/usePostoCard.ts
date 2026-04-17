@@ -3,6 +3,9 @@ import { Linking } from 'react-native';
 
 import { useAppTheme } from '../../theme/ThemeProvider';
 
+/**
+ * Estrutura de dados para preços atuais exibidos no modal de detalhes do posto
+ */
 export interface PrecoAtual {
     tipo: string;
     cor: string;
@@ -11,7 +14,7 @@ export interface PrecoAtual {
 }
 
 /**
- * Estrutura de dados exibida no card de posto.
+ * Estrutura de dados exibida no card de posto
  */
 export interface PostoProps {
     id: string;
@@ -28,13 +31,16 @@ export interface PostoProps {
 }
 
 /**
- * Encapsula estado local e comportamentos de interacao do card de posto.
+ * Encapsula estado local e comportamentos de interacao do card de posto
  */
 export function usePostoCard(data: PostoProps) {
     const { colors, isDark } = useAppTheme();
     const [isLiked, setIsLiked] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
 
+    /*
+     * Organiza os precos atuais em linhas de ate 4 itens para exibicao no modal de detalhes
+    */
     const priceRows = useMemo(() => {
         const rows: PrecoAtual[][] = [];
         const currentPrices = Array.isArray(data.precos_atuais) ? data.precos_atuais : [];
@@ -46,9 +52,12 @@ export function usePostoCard(data: PostoProps) {
         return rows;
     }, [data.precos_atuais]);
 
+    /*
+     * Abre o aplicativo de mapas com direcoes para o posto
+    */
     const handleGetDirections = () => {
-        const { latitude, longitude, nome } = data;
-        const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}&destination_place_id=${nome}`;
+        const { latitude, longitude } = data;
+        const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
 
         Linking.openURL(url).catch((err) => console.error('Erro ao abrir o mapa:', err));
     };
