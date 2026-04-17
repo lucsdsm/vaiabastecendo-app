@@ -23,7 +23,8 @@ export default function UserProfileModal({ visible, onClose }: UserProfileModalP
         token, 
         request, 
         promptAsync, 
-        handleLogout 
+        handleLogout,
+        handleMockLogin
     } = useUserProfile(visible);
 
     return (
@@ -31,7 +32,10 @@ export default function UserProfileModal({ visible, onClose }: UserProfileModalP
             <View style={styles.overlay}>
                 <View style={[styles.modalContainer, { backgroundColor: colors.surface }]}>
                     <View style={styles.header}>
-                        <Text style={[styles.title, { color: colors.textPrimary }]}>Meu Perfil</Text>
+                        <Text style={[styles.title, { color: colors.textPrimary }]}
+                        onLongPress={__DEV__ ? handleMockLogin : undefined} 
+                        
+                        >Meu Perfil</Text>
                         <TouchableOpacity onPress={onClose}>
                             <Feather name="x" size={24} color={colors.textSecondary} />
                         </TouchableOpacity>

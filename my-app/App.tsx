@@ -4,6 +4,7 @@ import { useFonts, StoryScript_400Regular } from '@expo-google-fonts/story-scrip
 import { ThemeProvider } from './src/theme/ThemeProvider';
 import LoadingScreen from './src/components/LoadingScreen';
 import HomeScreen from './src/screens/Home';
+import { AuthProvider } from './src/contexts/AuthContext';
 
 export default function App() {
   const [fontsLoaded] = useFonts({ StoryScript_400Regular });
@@ -14,7 +15,9 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <HomeScreen />
+      <AuthProvider>
+        <HomeScreen />
+      </AuthProvider>
       {/* O LoadingScreen fica por cima de tudo até a animação terminar */}
       {!isAppReady && <LoadingScreen onFinish={() => setIsAppReady(true)} />}
     </ThemeProvider>

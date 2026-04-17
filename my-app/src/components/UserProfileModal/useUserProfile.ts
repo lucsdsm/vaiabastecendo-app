@@ -17,7 +17,7 @@ export function useUserProfile(visible: boolean) {
     const [userData, setUserData] = useState<{ primeiro_nome: string; ultimo_nome: string; foto: string } | null>(null);
 
     const redirectUri = AuthSession.makeRedirectUri({
-        scheme: 'vaiabastecendo',
+        scheme: 'com.lucsdsm.vaiabastecendo',
     });
 
     const [request, response, promptAsync] = Google.useAuthRequest({
@@ -26,6 +26,9 @@ export function useUserProfile(visible: boolean) {
         redirectUri: redirectUri,
     });
 
+    /**
+     * Busca os dados do usuario autenticado usando o token JWT fornecido pelo backend
+     */
     const buscarDadosDoUsuario = async (jwtToken: string) => {
         try {
             const res = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/auth/me/`, {
@@ -39,6 +42,10 @@ export function useUserProfile(visible: boolean) {
         }
     };
 
+    /**
+     * Ao abrir o modal, verifica se ja existe um token salvo e, se houver, tenta carregar os dados do usuario.
+     * Tambem monitora as respostas do fluxo de autenticacao do Google para obter o token e buscar os dados do usuario
+     */
     useEffect(() => {
         if (visible) {
             SecureStore.getItemAsync('userToken').then(savedToken => {
@@ -50,6 +57,9 @@ export function useUserProfile(visible: boolean) {
         }
     }, [visible]);
 
+    /**
+     * Monitora as respostas do fluxo de autenticacao do Google para obter o token e buscar os dados do usuario
+     */
     useEffect(() => {
         if (response?.type === 'success') {
             const { authentication } = response;
@@ -61,6 +71,10 @@ export function useUserProfile(visible: boolean) {
         }
     }, [response]);
 
+    /**
+     * Envia o token de acesso do Google para o backend Django, que valida o token, cria ou atualiza 
+     * o usuario e retorna um token JWT do proprio backend para ser usado nas requisicoes autenticadas
+     */
     const enviarTokenParaDjango = async (googleToken: string) => {
         setLoading(true);
         try {
@@ -79,11 +93,26 @@ export function useUserProfile(visible: boolean) {
         }
     };
 
+    /**
+     * Limpa o token salvo e os dados do usuario para efetuar logout
+     */
     const handleLogout = async () => {
         await SecureStore.deleteItemAsync('userToken');
         setToken(null);
         setUserData(null);
     };
+
+    /**
+     * Funcao de mock login para desenvolvimento, que simula a obtencao de um token JWT valido e o processo de login sem passar pela autenticacao real do Google. 
+     * O token usado aqui deve ser um token JWT valido gerado pelo backend para um usuario de teste.
+     */
+    const handleMockLogin = () => {
+        if (__DEV__) {
+            const mockToken = "ya29.a0Aa7MYiofnESqwVL2wyhIMdaMvztTo46VD2VdKeGsAjRLz1xtPO-Z_PutoquxfMoiWF8u0GhNG96mDEy9nnMnEYHSHuNS0nkOEFIVekps0IieLH7P2RQF0tJz-7g5dECGfF_FINxu0scBkvvFdciSDW9rtcl2-fyCahyKgXWkKcc61rx-rjjUlQwGNjVlQh2VvhVFwwQaCgYKAVcSARQSFQHGX2Mi_AWOXbbARjyxieBlwR10eg0206"
+            console.log("Login simulado com token:", mockToken);
+            enviarTokenParaDjango(mockToken);
+        }
+    }
 
     return {
         userData,
@@ -91,6 +120,7 @@ export function useUserProfile(visible: boolean) {
         token,
         request,
         promptAsync,
-        handleLogout
+        handleLogout,
+        handleMockLogin,
     };
 }
