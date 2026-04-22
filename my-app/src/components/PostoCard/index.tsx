@@ -52,29 +52,31 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                     
                 </View>
 
-                <TouchableOpacity
-                    style={[styles.likeButton, {
-                        backgroundColor: isLiked 
-                            ? colors.danger + (isDark ? '33' : '1A')
-                            : colors.surface + (isDark ? '1F' : '0D'),
-                        opacity: isLiked ? 1 : 0.5,
-                    }]}
-                    onPress={toggleLike}
-                    activeOpacity={0.7}
-                >
-                    <Feather
-                        name={isLiked ? "heart" : "heart"}
-                        size={16}
-                        color={isLiked ? colors.danger : colors.textSecondary}
-                        style={{ fill: isLiked ? colors.danger : 'transparent' }}
-                    />
-                    <Text style={[
-                        styles.likeCount,
-                        { color: isLiked ? colors.danger : colors.textSecondary }
-                    ]}>
-                        {data.likes + (isLiked ? 1 : 0)}
-                    </Text>
-                </TouchableOpacity>
+                {data.precos_atuais && data.precos_atuais.length > 0 && (
+                    <TouchableOpacity
+                        style={[styles.likeButton, {
+                            backgroundColor: isLiked 
+                                ? colors.danger + (isDark ? '33' : '1A')
+                                : colors.surface + (isDark ? '1F' : '0D'),
+                            opacity: isLiked ? 1 : 0.5,
+                        }]}
+                        onPress={toggleLike}
+                        activeOpacity={0.7}
+                    >
+                        <Feather
+                            name={isLiked ? "heart" : "heart"}
+                            size={16}
+                            color={isLiked ? colors.danger : colors.textSecondary}
+                            style={{ fill: isLiked ? colors.danger : 'transparent' }}
+                        />
+                        <Text style={[
+                            styles.likeCount,
+                            { color: isLiked ? colors.danger : colors.textSecondary }
+                        ]}>
+                            {data.likes + (isLiked ? 1 : 0)}
+                        </Text>
+                    </TouchableOpacity>
+                )}
             </View>
 
             <View style={styles.priceContainer}>
