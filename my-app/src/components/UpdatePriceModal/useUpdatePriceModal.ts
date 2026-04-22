@@ -1,13 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import axios from 'axios';
+import { useCombustivel } from '../../contexts/CombustivelContext';
 import { useToast } from '../../contexts/ToastContext';
-
-interface FuelType {
-    id: number;
-    nome: string;
-    cor: string;
-}
 
 interface UseUpdatePriceModalParams {
     visible: boolean;
@@ -26,29 +21,19 @@ export function useUpdatePriceModal({
     onSuccess,
 }: UseUpdatePriceModalParams) {
     const { showToast } = useToast();
-    const [fuelTypes, setFuelTypes] = useState<FuelType[]>([]);
+    const { fuelTypes } = useCombustivel();
     const [selectedFuel, setSelectedFuel] = useState<number | null>(null);
     const [price, setPrice] = useState('');
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if (visible) {
-            fetchFuelTypes();
-        }
-    }, [visible]);
-
-    const fetchFuelTypes = async () => {
-        try {
-            const response = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/tipos-combustivel/`);
-            const list = Array.isArray(response.data) ? response.data : [];
-            setFuelTypes(list);
-            if (list.length > 0) {
-                setSelectedFuel(list[0].id);
+            setPrice('');
+            if (fuelTypes.length > 0 &&!selectedFuel) {
+                setSelectedFuel(fuelTypes[0].id);
             }
-        } catch (error) {
-            console.error('Erro ao buscar tipos de combustivel', error);
         }
-    };
+    }, [visible, fuelTypes]);
 
     const handlePriceChange = (text: string) => {
         let cleaned = text.replace(/[^0-9.,]/g, '');

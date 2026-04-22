@@ -9,6 +9,7 @@ import { ToastProvider } from './src/contexts/ToastContext';
 import { Toast } from './src/components/Toast';
 
 import { AuthProvider } from './src/contexts/AuthContext';
+import { CombustivelProvider } from './src/contexts/CombustivelContext';
 
 export default function App() {
   const [fontsLoaded] = useFonts({ StoryScript_400Regular });
@@ -21,7 +22,9 @@ export default function App() {
     <ThemeProvider>
       <ToastProvider>
         <AuthProvider>
-          <HomeScreen />
+          <CombustivelProvider>
+            <HomeScreen />
+          </CombustivelProvider>
         </AuthProvider>
         <Toast />
       </ToastProvider>

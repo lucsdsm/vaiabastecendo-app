@@ -10,6 +10,10 @@ interface ToastContextData {
 
 const ToastContext = createContext<ToastContextData>({} as ToastContextData);
 
+/**
+ * Provedor global de notificacoes toast.
+ * Mantem um estado unico para mensagens de feedback da aplicacao.
+ */
 export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [toastData, setToastData] = useState({ message: '', type: 'info' as ToastType, visible: false });
 
@@ -28,4 +32,8 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     );
 };
 
+/**
+ * Hook de acesso ao estado e acoes de toast.
+ * Deve ser usado dentro de ToastProvider.
+ */
 export const useToast = () => useContext(ToastContext);

@@ -4,9 +4,15 @@ import axios from 'axios';
 
 import { useToast } from './ToastContext';
 
+interface UserData {
+    primeiro_nome: string;
+    ultimo_nome: string;
+    foto: string;
+}
+
 interface AuthContextData {
     token: string | null;
-    userData: { primeiro_nome: string; ultimo_nome: string; foto: string } | null;
+    userData: UserData | null;
     loading: boolean;
     signIn: (jwtToken: string) => Promise<void>;
     signOut: () => Promise<void>;
@@ -14,10 +20,14 @@ interface AuthContextData {
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
+/**
+ * Provedor global de autenticacao.
+ * Centraliza persistencia de token, perfil e feedback de login/logout via toast.
+ */
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { showToast } = useToast();
     const [token, setToken] = useState<string | null>(null);
-    const [userData, setUserData] = useState<any | null>(null);
+    const [userData, setUserData] = useState<UserData | null>(null);
     const [loading, setLoading] = useState(true);
 
     const buscarDadosDoUsuario = async (jwtToken: string) => {
@@ -29,6 +39,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         } catch (error) {
             console.error("Erro ao buscar perfil:", error);
             showToast('Erro ao buscar perfil', 'danger');
+            // Se o perfil falha com token presente, limpamos sessao para evitar estado inconsistente.
             signOut();
         }
     };
@@ -66,4 +77,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
 };
 
+/**
+ * Hook de acesso ao estado de autenticacao da aplicacao.
+ * Deve ser usado dentro de AuthProvider.
+ */
 export const useAuth = () => useContext(AuthContext);
