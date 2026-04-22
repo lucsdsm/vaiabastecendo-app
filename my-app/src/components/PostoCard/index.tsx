@@ -16,6 +16,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
         colors,
         isDark,
         isLiked,
+        likesCount,
         modalVisible,
         priceRows,
         toggleLike,
@@ -44,10 +45,15 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                             {data.distancia}
                         </Text>
 
-                        <Feather name="clock" size={10} color={colors.textSecondary} style={{ marginLeft: 8 }} />
-                        <Text style={[styles.timeText, { color: colors.textSecondary }]}>
-                            {data.ultimaAtualizacao}
-                        </Text>
+                        {data.precos_atuais && data.precos_atuais.length > 0 && (
+                            <>
+                                <Feather name="clock" size={10} color={colors.textSecondary} style={{ marginLeft: 8 }} />
+                                <Text style={[styles.timeText, { color: colors.textSecondary }]}>
+                                    {data.ultimaAtualizacao}
+                                </Text>
+                            </>
+                        )}
+                        
                     </View>
                     
                 </View>
@@ -73,7 +79,8 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                             styles.likeCount,
                             { color: isLiked ? colors.danger : colors.textSecondary }
                         ]}>
-                            {data.likes + (isLiked ? 1 : 0)}
+                            {/* Apenas exiba o valor que o Hook está gerenciando */}
+                            {likesCount}
                         </Text>
                     </TouchableOpacity>
                 )}
