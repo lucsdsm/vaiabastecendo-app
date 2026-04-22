@@ -69,6 +69,9 @@ export function usePostoCard(data: PostoProps) {
         Linking.openURL(url).catch((err) => console.error('Erro ao abrir o mapa:', err));
     };
 
+    /*
+     * Verifica se usuario esta logado antes de permitir acesso ao modal de atualizacao de preco
+    */
     const handleOpenUpdateModal = () => {
         if (!token) {
             showToast('Faça login para atualizar os preços.', 'info');
@@ -76,6 +79,18 @@ export function usePostoCard(data: PostoProps) {
         }
     };
 
+    /*
+     * Verifica se usuario esta logado antes de permitir acesso as curtidas
+    */
+    const handleToggleLike = () => {
+        if (!token) {
+            showToast('Faça login para reagir a essa informação.', 'info');
+            return;
+        }
+    
+        setIsLiked((prev) => !prev);
+    };
+    
     return {
         colors,
         isDark,
@@ -83,7 +98,7 @@ export function usePostoCard(data: PostoProps) {
         modalVisible,
         priceRows,
         isLoggedIn: !!token,
-        toggleLike: () => setIsLiked((prev) => !prev),
+        toggleLike: handleToggleLike,
         closeModal: () => setModalVisible(false),
         handleGetDirections,
         handleOpenUpdateModal,

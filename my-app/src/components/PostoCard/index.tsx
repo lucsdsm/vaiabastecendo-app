@@ -56,7 +56,8 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                     style={[styles.likeButton, {
                         backgroundColor: isLiked 
                             ? colors.danger + (isDark ? '33' : '1A')
-                            : colors.surface + (isDark ? '1F' : '0D')
+                            : colors.surface + (isDark ? '1F' : '0D'),
+                        opacity: isLiked ? 1 : 0.5,
                     }]}
                     onPress={toggleLike}
                     activeOpacity={0.7}
