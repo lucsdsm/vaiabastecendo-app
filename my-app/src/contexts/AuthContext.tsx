@@ -55,7 +55,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         await SecureStore.deleteItemAsync('userToken');
         setToken(null);
         setUserData(null);
-        showToast('Você saiu da sua conta.', 'danger');
+        showToast('Você saiu da sua conta.', 'info');
     };
 
     useEffect(() => {

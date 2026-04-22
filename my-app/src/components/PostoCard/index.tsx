@@ -19,9 +19,10 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
         modalVisible,
         priceRows,
         toggleLike,
-        openModal,
+        isLoggedIn,
         closeModal,
         handleGetDirections,
+        handleOpenUpdateModal,
     } = usePostoCard(data);
 
     return (
@@ -125,11 +126,10 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
 
                 <TouchableOpacity
                     style={[styles.updateButton, {
-                        backgroundColor: colors.primary,
-                        opacity: 0.9
+                        backgroundColor: isLoggedIn ? colors.primary : colors.textPrimary + (isDark ? '1A' : '4D'),
                     }]}
                     activeOpacity={0.8}
-                    onPress={openModal}
+                    onPress={handleOpenUpdateModal}
                 >
                     <Feather name="refresh-cw" size={12} color="#FFF" />
                     <Text style={styles.updateButtonText}>

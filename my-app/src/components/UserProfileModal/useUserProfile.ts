@@ -72,7 +72,7 @@ export function useUserProfile() {
      */
     const handleMockLogin = () => {
         if (__DEV__) {
-            const mockToken = "ya29.a0Aa7MYiosIYXqU7wWRLAGEZPUULjKxoDed0slAy36AqIkN1XeG8ce10NMXmb8yxedanc_VMgn79fu95eeoTYFKyWnIMvPGlCiGvV4-aCxlkLPz3362RouM3SWpJq7MlgEiIeyQY69K-LLHsueWshfGHXdYrlD6ffr4sSQP-Hk5sdf-aW3ek1Puniv4IVgU1hh8BYvtcsaCgYKAccSARQSFQHGX2MiCyZjlOqhExcX8v6BSW1sDQ0206"
+            const mockToken = "ya29.a0Aa7MYipG5MZhMVZ1Pf638-huj11ce2z0BppN-RDFwBGC-co0XFWUIJDcKejXFszYK63QapJgE5YtQj4QMuN94VMMofneU7jsaZKY4eHLPiycPZeNOaSlS8hx8H7vSQJGeSzv-LkMduWvKHM45KjPNHt4BFXL56kdAlg2H4rxqwfj8Aun5Xbd8dHBXMItxHvRFyt9VswaCgYKAY0SARQSFQHGX2MigpwZV4TNSfvzoeZL_tYqXw0206"
             console.log("Login simulado com token:", mockToken);
             enviarTokenParaDjango(mockToken);
         }

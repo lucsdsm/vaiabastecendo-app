@@ -3,6 +3,9 @@ import { Linking } from 'react-native';
 
 import { useAppTheme } from '../../theme/ThemeProvider';
 
+import { useAuth } from '../../contexts/AuthContext';
+import { useToast } from '../../contexts/ToastContext';
+
 /**
  * Estrutura de dados para preços atuais exibidos no modal de detalhes do posto
  */
@@ -35,6 +38,10 @@ export interface PostoProps {
  */
 export function usePostoCard(data: PostoProps) {
     const { colors, isDark } = useAppTheme();
+
+    const { token } = useAuth();
+    const { showToast } = useToast();
+
     const [isLiked, setIsLiked] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -62,15 +69,23 @@ export function usePostoCard(data: PostoProps) {
         Linking.openURL(url).catch((err) => console.error('Erro ao abrir o mapa:', err));
     };
 
+    const handleOpenUpdateModal = () => {
+        if (!token) {
+            showToast('Faça login para atualizar os preços.', 'info');
+            return;
+        }
+    };
+
     return {
         colors,
         isDark,
         isLiked,
         modalVisible,
         priceRows,
+        isLoggedIn: !!token,
         toggleLike: () => setIsLiked((prev) => !prev),
-        openModal: () => setModalVisible(true),
         closeModal: () => setModalVisible(false),
         handleGetDirections,
+        handleOpenUpdateModal,
     };
 }
