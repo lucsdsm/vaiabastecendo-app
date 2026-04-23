@@ -3,20 +3,21 @@ import { View, Text, Modal, TouchableOpacity, TextInput, ActivityIndicator, Keyb
 import { Feather } from '@expo/vector-icons';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
-import { useUpdatePriceModal } from './useUpdatePriceModal';
+import { PrecoAtualResumo, useUpdatePriceModal } from './useUpdatePriceModal';
 
 interface UpdatePriceModalProps {
     visible: boolean;
     onClose: () => void;
     postoId: string;
     postoNome: string;
+    precosAtuais: PrecoAtualResumo[];
     onSuccess: () => void;
 }
 
 /**
  * Modal para envio de atualizacao de preco por tipo de combustivel.
  */
-export default function UpdatePriceModal({ visible, onClose, postoId, postoNome, onSuccess }: UpdatePriceModalProps) {
+export default function UpdatePriceModal({ visible, onClose, postoId, postoNome, precosAtuais, onSuccess }: UpdatePriceModalProps) {
     const { colors } = useAppTheme();
     const {
         fuelTypes,
@@ -26,7 +27,7 @@ export default function UpdatePriceModal({ visible, onClose, postoId, postoNome,
         setSelectedFuel,
         handlePriceChange,
         handleUpdate,
-    } = useUpdatePriceModal({ visible, postoId, onClose, onSuccess });
+    } = useUpdatePriceModal({ visible, postoId, precosAtuais, onClose, onSuccess });
 
     return (
         <Modal visible={visible} animationType="fade" transparent>

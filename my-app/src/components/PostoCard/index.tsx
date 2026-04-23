@@ -153,6 +153,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                 onClose={closeModal}
                 postoId={data.id}
                 postoNome={data.nome}
+                precosAtuais={data.precos_atuais}
                 onSuccess={() => {
                     closeModal();
                     onRefresh();            
