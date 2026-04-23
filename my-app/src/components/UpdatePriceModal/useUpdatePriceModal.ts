@@ -83,20 +83,14 @@ export function useUpdatePriceModal({
             return;
         }
 
-        // --- INÍCIO DAS TRAVAS DE SEGURANÇA ---
-        
-        // Trava 1: Valores irreais de mercado (Abaixo de 1 real ou acima de 15)
         if (numericPrice < 1 || numericPrice > 15) {
             showToast('Informe um preço real de mercado (entre R$ 1,00 e R$ 15,00).', 'info');
             return;
         }
 
-        // Trava 2: Variação de 30%
-        // A Ponte: Descobrimos o NOME do combustível usando o ID selecionado
         const combustivelSelecionado = fuelTypes.find(f => f.id === fuelId);
         
         if (combustivelSelecionado && precosAtuais) {
-            // Agora procuramos na lista de preços atuais usando o NOME
             const precoAnteriorObj = precosAtuais.find(p => p.tipo === combustivelSelecionado.nome);
 
             if (precoAnteriorObj) {
@@ -106,11 +100,10 @@ export function useUpdatePriceModal({
 
                 if (numericPrice > limiteSuperior || numericPrice < limiteInferior) {
                     showToast(`Valor suspeito. O preço atual é R$ ${precoAnterior.toFixed(2)}.`, 'info');
-                    return; // Bloqueia a requisição aqui
+                    return; 
                 }
             }
         }
-        // --- FIM DAS TRAVAS ---
 
         setLoading(true);
         try {
