@@ -33,7 +33,7 @@ export default function UpdatePriceModal({ visible, onClose, postoId, postoNome,
     } = useUpdatePriceModal({ visible, postoId, precosAtuais, onClose, onSuccess });
 
     return (
-        <Modal visible={visible} animationType="fade" transparent>
+        <Modal visible={visible} animationType="fade" transparent statusBarTranslucent>
         
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}

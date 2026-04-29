@@ -116,7 +116,7 @@ export function usePostos() {
             setPostos(mappedPostos);
             } catch (error) {
                 console.error("Erro da API:", error);
-                setError("Verifique sua conexão ou se o servidor do Codespaces está ativo.");
+                setError("Verifique sua conexão ou confirme com o suporte a disponibilidade da aplicação.");
             } 
             finally {
                 setLoading(false);

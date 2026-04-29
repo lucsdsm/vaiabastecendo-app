@@ -25,8 +25,11 @@ export default function Header() {
             <View style={styles.content}>
                 <View style={styles.titleContainer} pointerEvents="none">
                     <Text style={[styles.title, { color: colors.textPrimary }]}>
-                        Vai Abastecendo
+                        Vai
+                        <Text style={[styles.subtitle, { color: colors.textPrimary }]}>
+                        Abastecendo </Text>
                     </Text>
+                    
                 </View>
 
                 {/* <Image 

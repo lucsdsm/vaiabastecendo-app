@@ -15,14 +15,12 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
     const {
         colors,
         isDark,
-        isLiked,
-        likesCount,
         modalVisible,
         priceRows,
-        toggleLike,
         isLoggedIn,
         closeModal,
         handleGetDirections,
+        toggleLike,
         handleOpenUpdateModal,
     } = usePostoCard(data);
 
@@ -53,37 +51,9 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                                 </Text>
                             </>
                         )}
-                        
                     </View>
-                    
                 </View>
-
-                {data.precos_atuais && data.precos_atuais.length > 0 && (
-                    <TouchableOpacity
-                        style={[styles.likeButton, {
-                            backgroundColor: isLiked 
-                                ? colors.danger + (isDark ? '33' : '1A')
-                                : colors.surface + (isDark ? '1F' : '0D'),
-                            opacity: isLiked ? 1 : 0.5,
-                        }]}
-                        onPress={toggleLike}
-                        activeOpacity={0.7}
-                    >
-                        <Feather
-                            name={isLiked ? "heart" : "heart"}
-                            size={16}
-                            color={isLiked ? colors.danger : colors.textSecondary}
-                            style={{ fill: isLiked ? colors.danger : 'transparent' }}
-                        />
-                        <Text style={[
-                            styles.likeCount,
-                            { color: isLiked ? colors.danger : colors.textSecondary }
-                        ]}>
-                            {/* Apenas exiba o valor que o Hook está gerenciando */}
-                            {likesCount}
-                        </Text>
-                    </TouchableOpacity>
-                )}
+                {/* O botão de Like global foi removido daqui */}
             </View>
 
             <View style={styles.priceContainer}>
@@ -108,6 +78,26 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                                         <Text style={[styles.priceValue, { color: item.cor }]}>
                                             {item.preco.toFixed(2)}
                                         </Text>
+                                        
+                                        <TouchableOpacity 
+                                            style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}
+                                            onPress={() => toggleLike(item.id)}
+                                            activeOpacity={0.7}
+                                            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                                        >
+                                            <Feather
+                                                name="arrow-up-circle"
+                                                size={14}
+                                                color={item.is_liked ? colors.success : colors.textSecondary}
+                                                style={{ fill: item.is_liked ? colors.success : 'transparent' }}
+                                            />
+                                            <Text style={[
+                                                styles.likeCount, 
+                                                { color: item.is_liked ? colors.success : colors.textSecondary, marginLeft: 4, fontSize: 12 }
+                                            ]}>
+                                                {item.likes}
+                                            </Text>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
                             ))}

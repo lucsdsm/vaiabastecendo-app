@@ -38,6 +38,8 @@ export const styles = StyleSheet.create({
         fontSize: 32,
         fontFamily: 'StoryScript_400Regular',
     },
+    subtitle: {
+    },
     themeButton: {
         padding: 10,
     },

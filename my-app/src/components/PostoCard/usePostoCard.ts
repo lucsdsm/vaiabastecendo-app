@@ -17,6 +17,8 @@ export interface PrecoAtual {
     cor: string;
     preco: number;
     data: string;
+    likes: number;
+    is_liked: boolean;
 }
 
 /**
@@ -32,8 +34,6 @@ export interface PostoProps {
     precoGasolina: number;
     precoEtanol: number;
     ultimaAtualizacao: string;
-    likes: number;
-    is_liked: boolean;
     precos_atuais: PrecoAtual[];
     id_da_atualizacao: number;
 }
@@ -47,29 +47,24 @@ export function usePostoCard(data: PostoProps) {
     const { token } = useAuth();
     const { showToast } = useToast();
 
-    const [isLiked, setIsLiked] = useState(data.is_liked);
-    const [likesCount, setLikesCount] = useState(data.likes);
+    const [precosLocais, setPrecosLocais] = useState<PrecoAtual[]>(data.precos_atuais || []);
 
     const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
-        setIsLiked(data.is_liked ?? false);
-        setLikesCount(data.likes ?? 0);
-    }, [data.is_liked, data.likes]);
+        setPrecosLocais(data.precos_atuais || []);
+    }, [data.precos_atuais]);
 
     /*
      * Organiza os precos atuais em linhas de ate 4 itens para exibicao no modal de detalhes
     */
     const priceRows = useMemo(() => {
         const rows: PrecoAtual[][] = [];
-        const currentPrices = Array.isArray(data.precos_atuais) ? data.precos_atuais : [];
-
-        for (let i = 0; i < currentPrices.length; i += 4) {
-            rows.push(currentPrices.slice(i, i + 4));
+            for (let i = 0; i < precosLocais.length; i += 4) {
+            rows.push(precosLocais.slice(i, i + 4));
         }
-
         return rows;
-    }, [data.precos_atuais]);
+    }, [precosLocais])
 
     /*
      * Abre o aplicativo de mapas com direcoes para o posto
@@ -94,49 +89,53 @@ export function usePostoCard(data: PostoProps) {
     };
 
     /*
-     * Verifica se usuario esta logado antes de permitir acesso as curtidas
+     * Realiza o toggle visual de like/deslike e atualiza a contagem de likes 
+       localmente para resposta imediata do UI. Em seguida, faz a chamada real 
+       a API para registrar a reacao do usuario.
     */
-    const handleToggleLike = async () => {
+    const handleToggleLike = async (atualizacaoId: number) => {
         if (!token) {
             showToast('Faça login para reagir a essa informação.', 'info');
             return;
         }
-    
-        const ultimaAtualizacao = data.precos_atuais[0];
-        if (!ultimaAtualizacao) return;
+
+        setPrecosLocais(prevPrecos => prevPrecos.map(preco => {
+            if (preco.id === atualizacaoId) {
+                const wasLiked = preco.is_liked;
+                return {
+                    ...preco,
+                    is_liked: !wasLiked,
+                    likes: wasLiked ? preco.likes - 1 : preco.likes + 1
+                };
+            }
+            return preco;
+        }));
 
         try {
-            const response = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/reacoes/`, {
-                atualizacao: ultimaAtualizacao.id,
+            await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/reacoes/`, {
+                atualizacao: atualizacaoId,
                 tipo: 'like'
             }, {
                 headers: { Authorization: `Token ${token}` }
             });
-
-            if (response.status === 201) {
-                setLikesCount(prev => prev + 1);
-                setIsLiked(true);
-            } else if (response.status === 204) {
-                setLikesCount(prev => prev - 1);
-                setIsLiked(false);
-            }
         } catch (error) {
             console.error('Erro ao reagir à atualização:', error);
             showToast('Erro ao enviar sua reação. Tente novamente.', 'danger');
+
+            // Em caso de erro, desfaz a alteração visual (Rollback)
+            setPrecosLocais(data.precos_atuais || []);
         }
     };
     
     return {
         colors,
         isDark,
-        isLiked,
-        likesCount,
         modalVisible,
         priceRows,
         isLoggedIn: !!token,
-        toggleLike: handleToggleLike,
         closeModal: () => setModalVisible(false),
         handleGetDirections,
+        toggleLike: handleToggleLike,
         handleOpenUpdateModal,
     };
 }
