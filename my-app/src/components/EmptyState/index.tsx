@@ -5,44 +5,52 @@ import { styles } from './styles';
 import { useEmptyState } from './useEmptyState';
 
 interface EmptyStateProps {
-  message?: string;
-  onRetry?: () => void;
+    title?: string;
+    message?: string;
+    iconName?: keyof typeof Feather.glyphMap;
+    onRetry?: () => void;
+    buttonText?: string;
 }
 
 /**
- * Estado vazio para falha de conectividade com opcao de nova tentativa.
+ * Estado vazio para falha de conectividade com opcao de nova tentativa .
  */
 export default function EmptyState({ 
+    title = 'Servidor Indisponível',
     message = 'Não foi possível conectar-se ao servidor no momento.', 
-    onRetry }: 
-        EmptyStateProps) {
-            const { colors, isDark } = useEmptyState();
+    iconName = 'wifi-off',
+    buttonText = 'Tentar Novamente',
+    onRetry 
+}: EmptyStateProps) {
+    const { colors, isDark } = useEmptyState();
 
-            return (
+    return (
         <View style={[styles.container, { 
-            backgroundColor: colors.surface,
-            borderColor: colors.danger + '40'
+            backgroundColor: colors.background,
         }]}>
             <View style={[styles.iconContainer, { backgroundColor: colors.danger + (isDark ? '33' : '1A') }]}>
-                <Feather name="wifi-off" size={32} color={colors.danger} />
+                <Feather name={iconName} size={32} color={colors.danger} />
             </View>
             
             <Text style={[styles.title, { color: colors.textPrimary }]}>
-                Servidor Indisponível
+                {title}
             </Text>
             
             <Text style={[styles.message, { color: colors.textSecondary }]}>
                 {message}
             </Text>
 
-            <TouchableOpacity 
-                style={[styles.button, { backgroundColor: colors.primary }]} 
-                onPress={onRetry}
-                activeOpacity={0.8}
-            >
-                <Feather name="refresh-cw" size={16} color="#FFF" />
-                <Text style={styles.buttonText}>Tentar Novamente</Text>
-            </TouchableOpacity>
+            {/* Renderiza o botão apenas se a função onRetry for passada */}
+            {onRetry && (
+                <TouchableOpacity 
+                    style={[styles.button, { backgroundColor: colors.primary }]} 
+                    onPress={onRetry}
+                    activeOpacity={0.8}
+                >
+                    <Feather name="refresh-cw" size={16} color="#FFF" />
+                    <Text style={styles.buttonText}>{buttonText}</Text>
+                </TouchableOpacity>
+            )}
         </View>
     );
 }

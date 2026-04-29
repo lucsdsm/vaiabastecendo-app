@@ -46,14 +46,30 @@ export default function HomeScreen() {
             renderItem={({ item }) => <PostoCard data={item} onRefresh={refetch} />}
             refreshing={refreshing}
             onRefresh={refetch}
+
             ListHeaderComponent={
-              <View style={styles.listHeader}>
-                <Text style={[styles.listTitle, { color: colors.textPrimary }]}> 
-                  Postos + próximos de você:
-                </Text>
-              </View>
+              postos.length > 0 ? (
+                <View style={styles.listHeader}>
+                  <Text style={[styles.listTitle, { color: colors.textPrimary }]}>
+                    Postos + próximos de você:
+                  </Text>
+                </View>
+              ) : null
             }
-            contentContainerStyle={styles.listContainer}
+
+            ListEmptyComponent={
+              <EmptyState
+                title="Nenhum posto encontrado"
+                message="Ainda não há postos cadastrados no sistema. Puxe para baixo para atualizar ou seja o primeiro a adicionar um!"
+                iconName="map"
+              />
+            }
+
+            // DICA DE OURO: Para o EmptyState centralizar direito se a lista estiver vazia
+            contentContainerStyle={[
+              styles.listContainer,
+              postos.length === 0 && { flexGrow: 1, justifyContent: 'center' }
+            ]}
             showsVerticalScrollIndicator={false}
           />
         )}

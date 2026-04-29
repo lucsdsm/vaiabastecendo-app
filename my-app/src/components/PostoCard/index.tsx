@@ -53,7 +53,6 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                         )}
                     </View>
                 </View>
-                {/* O botão de Like global foi removido daqui */}
             </View>
 
             <View style={styles.priceContainer}>
