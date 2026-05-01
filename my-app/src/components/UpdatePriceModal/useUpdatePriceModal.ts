@@ -30,19 +30,31 @@ export function useUpdatePriceModal({
 }: UseUpdatePriceModalParams) {
     const { token } = useAuth();
     const { showToast } = useToast();
-    const { fuelTypes } = useCombustivel();
+    const { fuelTypes, refetchFuelTypes, loading: isFuelLoading } = useCombustivel();
     const [selectedFuel, setSelectedFuel] = useState<number | null>(null);
     const [price, setPrice] = useState('');
     const [loading, setLoading] = useState(false);
 
+    // Gatilho de abertura do modal
     useEffect(() => {
         if (visible) {
             setPrice('');
-            if (fuelTypes.length > 0 &&!selectedFuel) {
-                setSelectedFuel(fuelTypes[0].id);
+            // Se abriu e a lista está vazia, força a busca
+            if (fuelTypes.length === 0 && !isFuelLoading) {
+                refetchFuelTypes();
             }
+        } else {
+            // Limpa a seleção ao fechar para evitar sujeira de estado
+            setSelectedFuel(null);
         }
-    }, [visible, fuelTypes]);
+    }, [visible]);
+
+    // Gatilho de auto-seleção (escuta mudanças na lista)
+    useEffect(() => {
+        if (visible && fuelTypes.length > 0 && !selectedFuel) {
+            setSelectedFuel(fuelTypes[0].id);
+        }
+    }, [visible, fuelTypes, selectedFuel]);
 
     const normalizePriceInput = (text: string) => {
         const digitsOnly = text.replace(/\D/g, '');

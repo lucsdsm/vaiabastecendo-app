@@ -10,6 +10,7 @@ interface FuelType {
 interface CombustivelContextData {
     fuelTypes: FuelType[];
     loading: boolean;
+    refetchFuelTypes: () => Promise<void>;
 }
 
 const CombustivelContext = createContext<CombustivelContextData>({} as CombustivelContextData);
@@ -22,25 +23,25 @@ export const CombustivelProvider: React.FC<{ children: React.ReactNode }> = ({ c
     const [fuelTypes, setFuelTypes] = useState<FuelType[]>([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchFuelTypes = async () => {
-            try {
-                const response = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/tipos-combustivel/`);
-                // A API pode retornar payload inesperado; garantimos array para nao quebrar a UI.
-                const list = Array.isArray(response.data) ? response.data : [];
-                setFuelTypes(list);
-            } catch (error) {
-                console.error("Erro ao buscar tipos de combustível:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    const refetchFuelTypes = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/tipos-combustivel/`);
+            const list = Array.isArray(response.data) ? response.data : [];
+            setFuelTypes(list);
+        } catch (error) {
+            console.error("Erro ao buscar tipos de combustível:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-        fetchFuelTypes();
+    useEffect(() => {
+        refetchFuelTypes();
     }, []);
 
     return (
-        <CombustivelContext.Provider value={{ fuelTypes, loading }}>
+        <CombustivelContext.Provider value={{ fuelTypes, loading, refetchFuelTypes }}>
             {children}
         </CombustivelContext.Provider>
     );
