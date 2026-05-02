@@ -90,13 +90,13 @@ export function usePostos() {
                         : `${(p.distancia_metros / 1000).toFixed(1)}km`;
                 }
 
-                let ultimaAtualizacao = "Pendente";
+                let data_ultimaAtualizacao = "Pendente";
+                let autor_ultimaAtualizacao = "";
                 if (p.precos_atuais && p.precos_atuais.length > 0) {
                     const datas = p.precos_atuais.map((item: any) => new Date(item.data).getTime());
                     const maxData = new Date(Math.max(...datas));
-                    ultimaAtualizacao = maxData.toLocaleDateString('pt-BR') + ' ' + maxData.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
-                        + ' por ' +
-                        (p.autor_ultima_atualizacao);
+                    data_ultimaAtualizacao = maxData.toISOString();
+                    autor_ultimaAtualizacao = p.autor_ultima_atualizacao || "";
                 }
 
                 return {
@@ -107,7 +107,8 @@ export function usePostos() {
                     longitude: p.longitude,
                     distancia: textoDistancia,
                     precos_atuais: p.precos_atuais,
-                    ultimaAtualizacao: ultimaAtualizacao,
+                    data_ultimaAtualizacao: data_ultimaAtualizacao,
+                    autor_ultimaAtualizacao: autor_ultimaAtualizacao,
                     likes: p.likes ?? 0, 
                     is_liked: p.is_liked ?? false
                 };

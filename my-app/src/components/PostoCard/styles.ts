@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        marginBottom: 20,
+        marginBottom: 10,
         gap: 12,
     },
     headerLeft: {
@@ -69,7 +69,6 @@ export const styles = StyleSheet.create({
     },
     priceContainer: {
         gap: 12,
-        marginBottom: 20,
     },
     priceRow: {
         flexDirection: 'row',
@@ -120,39 +119,15 @@ export const styles = StyleSheet.create({
         letterSpacing: -0.5,
         textAlign: 'center',
     },
-    footer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        gap: 12,
-    },
     directionsButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 6,
-        paddingHorizontal: 12,
-        paddingVertical: 9,
-        borderRadius: 12,
+        borderRadius: 10,
         borderWidth: 1,
+        padding: 4,
     },
     updateInfo: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 5,
         flex: 1,
-    },
-    updateButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 6,
-        paddingHorizontal: 14,
-        paddingVertical: 9,
-        borderRadius: 12,
-    },
-    updateButtonText: {
-        color: '#FFFFFF',
-        fontSize: 12,
-        fontWeight: '700',
-        letterSpacing: 0.2,
     },
 });

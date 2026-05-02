@@ -31,11 +31,9 @@ export interface PostoProps {
     longitude: number;
     distancia: string;
     endereco: string;
-    precoGasolina: number;
-    precoEtanol: number;
-    ultimaAtualizacao: string;
+    data_ultimaAtualizacao: string;
+    autor_ultimaAtualizacao: string;
     precos_atuais: PrecoAtual[];
-    id_da_atualizacao: number;
 }
 
 /**
