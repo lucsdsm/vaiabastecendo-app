@@ -66,14 +66,15 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                                         )}
                                     </Text>
 
-                                    {userData?.foto ? (
+                                    {/* TODO: Implementar a exibicao da foto do usuario que atualizou o preco */}
+                                    {/* {userData?.foto ? (
                                         <Image
                                             source={{ uri: userData.foto }}
                                             style={[styles.userAvatar]}
                                         />
                                     ) : (
                                         <Feather name="user" style={[styles.userAvatar]} />
-                                    )}
+                                    )} */}
                                     
                                 </>
                             )}
