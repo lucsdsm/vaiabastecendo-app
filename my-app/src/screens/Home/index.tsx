@@ -47,16 +47,6 @@ export default function HomeScreen() {
             refreshing={refreshing}
             onRefresh={refetch}
 
-            ListHeaderComponent={
-              postos.length > 0 ? (
-                <View style={styles.listHeader}>
-                  <Text style={[styles.listTitle, { color: colors.textPrimary }]}>
-                    Postos + próximos de você:
-                  </Text>
-                </View>
-              ) : null
-            }
-
             ListEmptyComponent={
               <EmptyState
                 title="Nenhum posto encontrado"
@@ -65,7 +55,6 @@ export default function HomeScreen() {
               />
             }
 
-            // DICA DE OURO: Para o EmptyState centralizar direito se a lista estiver vazia
             contentContainerStyle={[
               styles.listContainer,
               postos.length === 0 && { flexGrow: 1, justifyContent: 'center' }

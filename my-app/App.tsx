@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useFonts, StoryScript_400Regular } from '@expo-google-fonts/story-script';
+// import { useFonts, GoogleSans_400Regular, GoogleSans_500Medium, GoogleSans_700Bold } from '@expo-google-fonts/google-sans';
 
 import { ThemeProvider } from './src/theme/ThemeProvider';
 import LoadingScreen from './src/components/LoadingScreen';
@@ -12,11 +12,15 @@ import { AuthProvider } from './src/contexts/AuthContext';
 import { CombustivelProvider } from './src/contexts/CombustivelContext';
 
 export default function App() {
-  const [fontsLoaded] = useFonts({ StoryScript_400Regular });
+  // const [fontsLoaded] = useFonts({ 
+  //   GoogleSans_400Regular,
+  //   GoogleSans_500Medium,
+  //   GoogleSans_700Bold
+  // });
   const [isAppReady, setIsAppReady] = useState(false);
 
   // Só renderiza o app quando a fonte nativa estiver pronta
-  if (!fontsLoaded) return null;
+  // if (!fontsLoaded) return null;
 
   return (
     <ThemeProvider>

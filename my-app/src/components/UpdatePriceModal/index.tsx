@@ -22,7 +22,7 @@ export default function UpdatePriceModal({ visible, onClose, postoId, postoNome,
     const [keyboardPadding, setKeyboardPadding] = useState(0);
     
     const {
-        fuelTypes,
+        fuelTypeRows,
         selectedFuel,
         price,
         loading,
@@ -80,19 +80,32 @@ export default function UpdatePriceModal({ visible, onClose, postoId, postoNome,
                             <View style={styles.section}>
                                 <Text style={[styles.label, { color: colors.textPrimary }]}>Selecione o Combustível:</Text>
                                 <View style={styles.fuelGrid}>
-                                    {fuelTypes.map((type) => (
-                                        <TouchableOpacity
-                                            key={type.id}
-                                            style={[
-                                                styles.fuelOption,
-                                                { borderColor: selectedFuel === type.id ? type.cor : 'transparent', backgroundColor: type.cor + '15' }
-                                            ]}
-                                            onPress={() => setSelectedFuel(type.id)}
-                                        >
-                                            <Text style={[styles.fuelOptionText, { color: selectedFuel === type.id ? type.cor : colors.textSecondary }]}>
-                                                {type.nome}
-                                            </Text>
-                                        </TouchableOpacity>
+                                    {fuelTypeRows.map((row, rowIndex) => (
+                                        <View key={rowIndex} style={styles.fuelRow}>
+                                            {row.map((type) => (
+                                                <View key={type.id} style={styles.fuelOptionBlock}>
+                                                    <TouchableOpacity
+                                                        style={[
+                                                            styles.fuelOption,
+                                                            {
+                                                                borderColor: selectedFuel === type.id ? type.cor : 'transparent',
+                                                                backgroundColor: type.cor + '15',
+                                                            },
+                                                        ]}
+                                                        onPress={() => setSelectedFuel(type.id)}
+                                                    >
+                                                        <Text
+                                                            style={[
+                                                                styles.fuelOptionText,
+                                                                { color: selectedFuel === type.id ? type.cor : colors.textSecondary },
+                                                            ]}
+                                                        >
+                                                            {type.nome}
+                                                        </Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                            ))}
+                                        </View>
                                     ))}
                                 </View>
                             </View>

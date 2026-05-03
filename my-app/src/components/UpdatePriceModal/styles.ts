@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     modalContent: {
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        padding: 25,
+        padding: 15,
         paddingBottom: 40,
     },
     header: {
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
     },
     subtitle: {
         fontSize: 14,
-        marginBottom: 25,
+        marginBottom: 15,
     },
     section: {
         marginBottom: 20,
@@ -35,19 +35,28 @@ export const styles = StyleSheet.create({
         marginBottom: 12,
     },
     fuelGrid: {
+        gap: 5,
+    },
+    fuelRow: {
         flexDirection: 'row',
-        flexWrap: 'wrap',
-        gap: 10,
+        gap: 5,
+    },
+    fuelOptionBlock: {
+        flex: 1,
+        minWidth: 0,
     },
     fuelOption: {
-        paddingHorizontal: 16,
+        paddingHorizontal: 10,
         paddingVertical: 10,
-        borderRadius: 12,
+        borderRadius: 15,
         borderWidth: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     fuelOptionText: {
         fontWeight: '700',
         fontSize: 14,
+        textAlign: 'center',
     },
     input: {
         borderRadius: 15,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
 import UpdatePriceModal from '../UpdatePriceModal';
@@ -7,6 +7,8 @@ import { styles } from './styles';
 import { PostoProps, usePostoCard } from './usePostoCard';
 
 import { formatarTempoDecorrido } from '../../utils/dateFormatter';
+
+import UserProfileModal from '../UserProfileModal';
 
 export type { PostoProps, PrecoAtual } from './usePostoCard';
 
@@ -20,6 +22,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
         modalVisible,
         priceRows,
         isLoggedIn,
+        userData,
         closeModal,
         handleGetDirections,
         toggleLike,
@@ -62,6 +65,15 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                                             </Text>
                                         )}
                                     </Text>
+
+                                    {userData?.foto ? (
+                                        <Image
+                                            source={{ uri: userData.foto }}
+                                            style={[styles.userAvatar]}
+                                        />
+                                    ) : (
+                                        <Feather name="user" style={[styles.userAvatar]} />
+                                    )}
                                     
                                 </>
                             )}

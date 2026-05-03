@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { Image } from 'react-native';
 
 import UserProfileModal from '../UserProfileModal';
 import { styles } from './styles';

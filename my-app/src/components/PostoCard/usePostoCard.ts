@@ -6,6 +6,7 @@ import { useAppTheme } from '../../theme/ThemeProvider';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 
+
 import axios from 'axios';
 
 /**
@@ -48,6 +49,8 @@ export function usePostoCard(data: PostoProps) {
     const [precosLocais, setPrecosLocais] = useState<PrecoAtual[]>(data.precos_atuais || []);
 
     const [modalVisible, setModalVisible] = useState(false);
+
+    const { userData } = useAuth();
 
     useEffect(() => {
         setPrecosLocais(data.precos_atuais || []);
@@ -131,6 +134,7 @@ export function usePostoCard(data: PostoProps) {
         modalVisible,
         priceRows,
         isLoggedIn: !!token,
+        userData,
         closeModal: () => setModalVisible(false),
         handleGetDirections,
         toggleLike: handleToggleLike,

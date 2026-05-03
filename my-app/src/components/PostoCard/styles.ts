@@ -24,7 +24,6 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-start',
         marginBottom: 10,
-        gap: 12,
     },
     headerLeft: {
         flex: 1,
@@ -44,7 +43,12 @@ export const styles = StyleSheet.create({
     infoBadge: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 4,
+        gap: 3,
+    },
+    directionsButton: {
+        borderRadius: 10,
+        borderWidth: 1,
+        padding: 4,
     },
     distanceText: {
         fontSize: 12,
@@ -54,6 +58,12 @@ export const styles = StyleSheet.create({
     timeText: {
         fontSize: 12,
         fontWeight: '500',
+    },
+    userAvatar: {
+        width: 16,
+        height: 16,
+        borderRadius: 12,
+        marginLeft: 2,
     },
     likeButton: {
         flexDirection: 'row',
@@ -118,11 +128,6 @@ export const styles = StyleSheet.create({
         fontWeight: '800',
         letterSpacing: -0.5,
         textAlign: 'center',
-    },
-    directionsButton: {
-        borderRadius: 10,
-        borderWidth: 1,
-        padding: 4,
     },
     updateInfo: {
         flexDirection: 'row',

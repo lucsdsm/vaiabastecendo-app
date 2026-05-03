@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import axios from 'axios';
 import { useCombustivel } from '../../contexts/CombustivelContext';
@@ -55,6 +55,14 @@ export function useUpdatePriceModal({
             setSelectedFuel(fuelTypes[0].id);
         }
     }, [visible, fuelTypes, selectedFuel]);
+
+    const fuelTypeRows = useMemo(() => {
+        const rows: (typeof fuelTypes)[] = [];
+        for (let i = 0; i < fuelTypes.length; i += 3) {
+            rows.push(fuelTypes.slice(i, i + 3));
+        }
+        return rows;
+    }, [fuelTypes]);
 
     const normalizePriceInput = (text: string) => {
         const digitsOnly = text.replace(/\D/g, '');
@@ -149,6 +157,7 @@ export function useUpdatePriceModal({
 
     return {
         fuelTypes,
+        fuelTypeRows,
         selectedFuel,
         price,
         loading,

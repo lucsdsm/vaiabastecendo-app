@@ -2,18 +2,17 @@ import { Platform, StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     container: {
-        width: '100%',
         paddingHorizontal: 5,
         paddingBottom: 5,
         ...Platform.select({
             ios: {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.1,
-                shadowRadius: 4,
+                // shadowColor: '#000',
+                // shadowOffset: { width: 0, height: 2 },
+                // shadowOpacity: 0.1,
+                // shadowRadius: 4,
             },
             android: {
-                elevation: 4,
+                // elevation: 4,
             },
         }),
         zIndex: 10,
@@ -23,22 +22,19 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
     },
-    logo: {
-        marginLeft: 10,
-        width: 64,
-        height: 64,
-        borderRadius: 360
-    },
     titleContainer: {
         ...StyleSheet.absoluteFillObject,
-        alignItems: 'center',
         justifyContent: 'center',
+        marginLeft: 20,
     },
     title: {
         fontSize: 32,
-        fontFamily: 'StoryScript_400Regular',
+        fontWeight: '900',
     },
     subtitle: {
+        fontSize: 14,
+        fontWeight: '400',
+        marginTop: 10,
     },
     themeButton: {
         padding: 10,

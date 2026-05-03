@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
     },
     title: {
         fontSize: 32,
-        fontFamily: 'StoryScript_400Regular',
+        fontFamily: 'OpenSans_500Medium',
         marginBottom: 40,
     },
     progressBarContainer: {

@@ -6,7 +6,7 @@ export function formatarTempoDecorrido(dataString: string): string {
     const diffSegundos = Math.floor((dataAtual.getTime() - dataAtualizacao.getTime()) / 1000);
 
     if (diffSegundos < 60) {
-        return 'agora mesmo';
+        return 'agora mesmo ';
     }
 
     const diffMinutos = Math.floor(diffSegundos / 60);

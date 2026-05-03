@@ -5,6 +5,8 @@ import { Feather } from '@expo/vector-icons';
 import { useHeader } from './useHeader';
 import { styles } from './styles';
 
+import { useUserProfile } from '../UserProfileModal/useUserProfile';
+
 /**
  * Header principal da aplicacao.
  * Exibe marca, titulo centralizado e controle manual de tema.
@@ -16,7 +18,7 @@ export default function Header() {
         <View style={[
             styles.container,
             {
-                backgroundColor: colors.surface,
+                backgroundColor: colors.background,
                 paddingTop: statusBarHeight + 15,
                 borderBottomLeftRadius: 24,
                 borderBottomRightRadius: 24
@@ -24,25 +26,20 @@ export default function Header() {
         ]}>
             <View style={styles.content}>
                 <View style={styles.titleContainer} pointerEvents="none">
-                    <Text style={[styles.title, { color: colors.textPrimary }]}>
-                        Vai
-                        <Text style={[styles.subtitle, { color: colors.textPrimary }]}>
-                        Abastecendo </Text>
+                    <Text style={[styles.title, { color: colors.primary }]}>
+                        Olá, {useUserProfile().userData?.primeiro_nome || 'Motorista'}!
+                        
+                        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+                            {'\n'}Encontre os melhores preços de combustíveis perto de você.
+                        </Text>
                     </Text>
                     
                 </View>
 
-                {/* <Image 
-                    source={require('../../../assets/adaptive-icon.png')} 
-                    style={styles.logo} 
-                    resizeMode="contain"
-                /> */}
-
                 <TouchableOpacity 
                     onPress={toggleTheme} 
                     activeOpacity={0.3}
-                    style={styles.themeButton}
-                >
+                    style={styles.themeButton}>
                     <Feather 
                         name={isDark ? "moon" : "sun"} 
                         size={24} 
