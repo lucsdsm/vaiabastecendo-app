@@ -4,7 +4,8 @@ export const styles = StyleSheet.create({
     container: {
         width: '100%',
         borderRadius: 20,
-        padding: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 12.5,
         marginBottom: 12,
         borderWidth: 1,
         ...Platform.select({
@@ -32,8 +33,7 @@ export const styles = StyleSheet.create({
     addressText: {
         fontSize: 12,
         fontWeight: '400',
-        marginTop: -2,
-        marginBottom: 4,
+        marginTop: -5,
     },
     title: {
         fontSize: 18,

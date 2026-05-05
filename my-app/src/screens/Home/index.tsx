@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, FlatList, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -25,7 +26,7 @@ export default function HomeScreen() {
   } = useHomeScreen();
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
       <Header />
 
@@ -64,6 +65,6 @@ export default function HomeScreen() {
         )}
       </View>
       <Footer />
-    </View>
+    </SafeAreaView>
   );
 }

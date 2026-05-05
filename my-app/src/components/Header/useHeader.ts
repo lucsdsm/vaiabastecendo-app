@@ -1,5 +1,3 @@
-import Constants from 'expo-constants';
-
 import { useAppTheme } from '../../theme/ThemeProvider';
 
 /**
@@ -12,6 +10,5 @@ export function useHeader() {
         colors,
         isDark,
         toggleTheme,
-        statusBarHeight: Constants.statusBarHeight,
     };
 }

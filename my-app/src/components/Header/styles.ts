@@ -3,7 +3,6 @@ import { Platform, StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
     container: {
         paddingHorizontal: 5,
-        paddingBottom: 5,
         ...Platform.select({
             ios: {
                 // shadowColor: '#000',
@@ -19,22 +18,32 @@ export const styles = StyleSheet.create({
     },
     content: {
         flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
+        alignItems: 'flex-start',
+        justifyContent: 'space-between',
+        marginLeft: 20,
+        marginTop: 10,
+        marginBottom: 10,
     },
     titleContainer: {
-        ...StyleSheet.absoluteFillObject,
+        flexDirection: 'column',
         justifyContent: 'center',
-        marginLeft: 20,
+        flex: 1,
     },
     title: {
         fontSize: 32,
         fontWeight: '900',
     },
     subtitle: {
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: '400',
-        marginTop: 10,
+        lineHeight: 18,
+    },
+    // characterImage: {
+    //     width: 96,
+    //     height: 96,
+    // },
+    themeButtonContainer: {
+        padding: 10,
     },
     themeButton: {
         padding: 10,

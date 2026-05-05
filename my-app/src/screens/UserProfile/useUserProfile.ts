@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
@@ -13,7 +14,7 @@ WebBrowser.maybeCompleteAuthSession();
  */
 export function useUserProfile() {
     const [loading, setLoading] = useState(false);
-    const { token, userData, signIn, signOut } = useAuth();
+    const { token, userData, signIn, signOut, updateUserData } = useAuth();
 
     const redirectUri = AuthSession.makeRedirectUri({
         scheme: 'com.lucsdsm.vaiabastecendo',
@@ -60,6 +61,33 @@ export function useUserProfile() {
     };
 
     /**
+     * Busca os dados do perfil (com likes atualizados e username) no backend.
+     */
+    const carregarEstatisticas = async () => {
+        if (!token) return;
+        
+        try {
+            const res = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/auth/me/`, {
+                headers: { Authorization: `Token ${token}` }
+            });
+            updateUserData(res.data);
+        } catch (error) {
+            console.error("Erro ao carregar estatísticas do perfil:", error);
+        }
+    };
+
+    /**
+     * Garante que as estatísticas sejam atualizadas 
+     * toda vez que o usuário abrir esta tela de perfil.
+     */
+    useFocusEffect(
+        useCallback(() => {
+            carregarEstatisticas();
+        }, [token])
+    );
+
+
+    /**
      * Limpa o token salvo e os dados do usuario para efetuar logout
      */
     const handleLogout = async () => {
@@ -72,7 +100,7 @@ export function useUserProfile() {
      */
     const handleMockLogin = () => {
         if (__DEV__) {
-            const mockToken = "ya29.a0AQvPyIOPjxcJpUG4Y6dLIBl8ICrAcFblBSK_nY_9i62CspP2El1FgejsrAIV3DyJJuNvOPTYt4rT-H55goK5qa5_isSxAZ7T2EgD12nIhkP9ZChC_srYYzaZMPg8f8EqNkv3D7Ul1mzTHEJEiujbhduCNNq_HP5pUxV6fzvVoh2vA0Oq0MewVONCpjQinDBEEpYZ5D0aCgYKAc8SARQSFQHGX2MiuCEkzr9ZIsvO87z0Nsk4Bw0206"
+            const mockToken = "ya29.a0AQvPyINyWvzBkCJJyLlUq2DqYqz-7wRqtOaw-BXzffrpaHd9IDjoKA_NzIF29jDBY7JMFQ1PfqLoTDvBVv7CDBPaddZZKM_zOZ-MEi8DToCviP5hD6LsRkpSLMkYzKgnDDTvtdIzydiBbKo33vARjcKbWYGKfCVeqrm6GLdLYM24l7AhU0Aa0O4i8DhzOsbNrE4YO3waCgYKAesSARQSFQHGX2MiPul68R-cl-jz-I9bkJ6K0Q0206"
             console.log("Login simulado com token:", mockToken);
             enviarTokenParaDjango(mockToken);
         }

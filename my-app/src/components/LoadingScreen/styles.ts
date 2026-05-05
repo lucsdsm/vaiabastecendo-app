@@ -23,13 +23,12 @@ export const styles = StyleSheet.create({
         width: '80%',
     },
     logo: {
-        width: 256,
-        height: 256,
-        marginBottom: 16,
+        width: 296,
+        height: 296,
     },
     title: {
-        fontSize: 32,
-        fontFamily: 'OpenSans_500Medium',
+        fontSize: 24,
+        fontWeight: 'bold',
         marginBottom: 40,
     },
     progressBarContainer: {

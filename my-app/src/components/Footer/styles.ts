@@ -24,10 +24,11 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        paddingHorizontal: 10,
     },
     button: {
-        padding: 10,
+        alignItems: 'center', 
+        justifyContent: 'center',
+        flex: 1,
     },
     centerButton: {
         width: 56,
@@ -35,7 +36,7 @@ export const styles = StyleSheet.create({
         borderRadius: 28,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: -20,
+        marginTop: -35,
         ...Platform.select({
             ios: {
                 shadowColor: '#000',
@@ -47,5 +48,9 @@ export const styles = StyleSheet.create({
                 elevation: 6,
             },
         }),
+    },
+    label: {
+        fontSize: 12,
+        marginTop: 4,
     },
 });

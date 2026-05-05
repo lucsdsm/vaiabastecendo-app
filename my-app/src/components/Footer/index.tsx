@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
+import { View, TouchableOpacity, Image, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 import { Feather } from '@expo/vector-icons';
 
-import UserProfileModal from '../UserProfileModal';
 import { styles } from './styles';
 import { useFooter } from './useFooter';
 
@@ -16,10 +17,9 @@ export default function Footer() {
     const {
         userData,
         colors,
-        profileModalVisible,
-        openProfileModal,
-        closeProfileModal,
     } = useFooter();
+
+    const navigation = useNavigation<any>(); 
 
     return ( 
         <View style={[
@@ -31,6 +31,7 @@ export default function Footer() {
             <View style={styles.content}>
                 <TouchableOpacity style={styles.button} activeOpacity={0.6}>
                     <Feather name="map" size={24} color={colors.textSecondary} />
+                    <Text style={[styles.label, { color: colors.textSecondary }]}> Mapa </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity 
@@ -43,22 +44,12 @@ export default function Footer() {
                 <TouchableOpacity
                     style={styles.button}
                     activeOpacity={0.6}
-                    onPress={openProfileModal}
-                >
-                    {userData?.foto ? (
-                        <Image
-                            source={{ uri: userData.foto }}
-                            style={{ width: 26, height: 26, borderRadius: 13, borderWidth: 1, borderColor: colors.textSecondary }}
-                        />
-                    ) : (
-                        <Feather name="user" size={24} color={colors.textSecondary} />
-                    )}
-                </TouchableOpacity>
 
-                <UserProfileModal 
-                    visible={profileModalVisible} 
-                    onClose={closeProfileModal}
-                />
+                    onPress={() => navigation.navigate('UserProfile')} 
+                >
+                    <Feather name="user" size={24} color={colors.textSecondary} />
+                    <Text style={[styles.label, { color: colors.textSecondary }]}> Perfil </Text>
+                </TouchableOpacity>
                 
             </View>
         </View>
