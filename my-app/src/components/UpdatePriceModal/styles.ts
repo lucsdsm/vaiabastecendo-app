@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     modalContent: {
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        padding: 15,
+        padding: 20,
         paddingBottom: 40,
     },
     header: {
@@ -28,6 +28,16 @@ export const styles = StyleSheet.create({
     },
     section: {
         marginBottom: 20,
+    },
+    currencyPrefix: {
+        fontSize: 18,
+        fontWeight: '600',
+        marginRight: 8,
+    },
+    currencySuffix: {
+        fontSize: 14,
+        fontWeight: '500',
+        marginLeft: 8,
     },
     label: {
         fontSize: 16,
@@ -58,13 +68,19 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         textAlign: 'center',
     },
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 20,
+        borderWidth: 1.5,
+        paddingHorizontal: 20,
+    },
     input: {
-        borderRadius: 15,
-        padding: 18,
-        fontSize: 24,
-        fontWeight: '800',
+        flex: 1,
+        fontSize: 32,
+        fontWeight: '700',
         textAlign: 'center',
-        borderWidth: 1,
+        letterSpacing: -1,
     },
     submitButton: {
         borderRadius: 15,

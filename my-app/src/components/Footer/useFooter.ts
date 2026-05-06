@@ -7,7 +7,7 @@ import { useAuth } from '../../contexts/AuthContext';
  * Centraliza estado de tema e controle do modal de perfil no rodape.
  */
 export function useFooter() {
-    const { colors } = useAppTheme();
+    const { colors, toggleTheme } = useAppTheme();
     const { userData } = useAuth();
     const [profileModalVisible, setProfileModalVisible] = useState(false);
 
@@ -17,6 +17,7 @@ export function useFooter() {
     return {
         userData,
         colors,
+        toggleTheme,
         profileModalVisible,
         openProfileModal,
         closeProfileModal,

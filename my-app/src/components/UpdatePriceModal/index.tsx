@@ -31,7 +31,6 @@ export default function UpdatePriceModal({ visible, onClose, postoId, postoNome,
         handleUpdate,
     } = useUpdatePriceModal({ visible, postoId, precosAtuais, onClose, onSuccess });
 
-    // O nosso próprio motor de teclado, à prova de falhas!
     useEffect(() => {
         // iOS avisa antes do teclado aparecer (WillShow), Android avisa logo depois (DidShow)
         const showEvent = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
@@ -53,7 +52,7 @@ export default function UpdatePriceModal({ visible, onClose, postoId, postoNome,
         };
     }, []);
 
-    // Se o modal for fechado abruptamente, garantimos que o padding vai zerar para a próxima vez
+    // Se o modal for fechado abruptamente, garante que o padding vai zerar para a próxima vez
     useEffect(() => {
         if (!visible) setKeyboardPadding(0);
     }, [visible]);
@@ -62,7 +61,6 @@ export default function UpdatePriceModal({ visible, onClose, postoId, postoNome,
         <Modal visible={visible} animationType="fade" transparent statusBarTranslucent>
             
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                {/* Aqui está a mágica: o paddingBottom dinâmico entra no overlay */}
                 <View style={[styles.overlay, { paddingBottom: keyboardPadding }]}>
                     
                     <TouchableWithoutFeedback>
@@ -75,7 +73,7 @@ export default function UpdatePriceModal({ visible, onClose, postoId, postoNome,
                                 </TouchableOpacity>
                             </View>
 
-                            <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{postoNome}</Text>
+                            <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{postoNome} </Text>
 
                             <View style={styles.section}>
                                 <Text style={[styles.label, { color: colors.textPrimary }]}>Selecione o Combustível:</Text>
@@ -110,16 +108,34 @@ export default function UpdatePriceModal({ visible, onClose, postoId, postoNome,
                                 </View>
                             </View>
 
-                            <View style={styles.section}>
-                                <Text style={[styles.label, { color: colors.textPrimary }]}>Preço por Litro (R$):</Text>
-                                <TextInput
-                                    style={[styles.input, { backgroundColor: colors.background, color: colors.textPrimary, borderColor: colors.primary + '33' }]}
-                                    placeholder="0,00"
-                                    placeholderTextColor={colors.textSecondary}
-                                    keyboardType="numeric"
-                                    value={price}
-                                    onChangeText={handlePriceChange}
-                                />
+                             <View style={styles.section}>
+                                <Text style={[styles.label, { color: colors.textSecondary }]}>
+                                    Preco por litro
+                                </Text>
+                                <View 
+                                    style={[
+                                        styles.inputContainer, 
+                                        { 
+                                            backgroundColor: colors.background, 
+                                            borderColor: colors.primary + '40' 
+                                        }
+                                    ]}
+                                >
+                                    <Text style={[styles.currencyPrefix, { color: colors.textSecondary }]}>
+                                        R$
+                                    </Text>
+                                    <TextInput
+                                        style={[styles.input, { color: colors.textPrimary }]}
+                                        placeholder="0,00"
+                                        placeholderTextColor={colors.textSecondary + '60'}
+                                        keyboardType="numeric"
+                                        value={price}
+                                        onChangeText={handlePriceChange}
+                                    />
+                                    <Text style={[styles.currencySuffix, { color: colors.textSecondary }]}>
+                                        /L
+                                    </Text>
+                                </View>
                             </View>
 
                             <TouchableOpacity
