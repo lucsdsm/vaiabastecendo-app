@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, FlatList, ActivityIndicator } from 'react-native';
+import { Text, View, FlatList, ActivityIndicator, RefreshControl } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -45,8 +45,17 @@ export default function HomeScreen() {
             data={postos}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => <PostoCard data={item} onRefresh={refetch} />}
-            refreshing={refreshing}
-            onRefresh={refetch}
+            // refreshing={refreshing}
+            // onRefresh={refetch}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={refetch}
+                colors={[colors.primary]}
+                progressViewOffset={80}
+                style={{ backgroundColor: colors.background }}
+              />
+            }
 
             ListEmptyComponent={
               <EmptyState

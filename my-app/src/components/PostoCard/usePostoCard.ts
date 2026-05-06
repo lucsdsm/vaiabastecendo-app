@@ -32,6 +32,7 @@ export interface PostoProps {
     longitude: number;
     distancia: string;
     endereco: string;
+    bandeira: string;
     data_ultimaAtualizacao: string;
     autor_ultimaAtualizacao: string;
     precos_atuais: PrecoAtual[];

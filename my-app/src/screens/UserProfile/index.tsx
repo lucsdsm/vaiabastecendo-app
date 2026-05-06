@@ -7,9 +7,12 @@ import { useAppTheme } from '../../theme/ThemeProvider';
 import { useUserProfile } from './useUserProfile';
 import { styles } from './styles';
 
+import { useNavigation } from '@react-navigation/native';
+
 export default function UserProfileScreen() {
     const { colors } = useAppTheme();
-    
+    const navigation = useNavigation();
+
     const { 
         userData, 
         loading, 
@@ -24,6 +27,9 @@ export default function UserProfileScreen() {
         <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
             <View style={styles.header}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Feather name="arrow-left" size={24} color={colors.textPrimary} />
+                </TouchableOpacity>
                 <Text 
                     style={[styles.headerTitle, { color: colors.textPrimary }]}
                     onLongPress={__DEV__ ? handleMockLogin : undefined}

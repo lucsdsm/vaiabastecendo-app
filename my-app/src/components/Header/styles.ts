@@ -22,7 +22,6 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginLeft: 20,
         marginTop: 10,
-        marginBottom: 10,
     },
     titleContainer: {
         flexDirection: 'column',

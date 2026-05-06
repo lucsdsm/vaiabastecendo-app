@@ -12,7 +12,7 @@ import UserProfileScreen from './src/screens/UserProfile';
 import { ToastProvider } from './src/contexts/ToastContext';
 import { Toast } from './src/components/Toast';
 
-import { AuthProvider } from './src/contexts/AuthContext';
+import { AuthProvider, useAuth } from './src/contexts/AuthContext';
 import { CombustivelProvider } from './src/contexts/CombustivelContext';
 
 const Stack = createNativeStackNavigator();
@@ -32,7 +32,7 @@ const AppNavigator = () => {
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
-          animation: 'fade',
+          animation: 'none',
           contentStyle: { backgroundColor: colors.background },
         }}
       >
@@ -43,14 +43,29 @@ const AppNavigator = () => {
   );
 };
 
+const AppContent = () => {
+  const { loading } = useAuth();
+  const [isAppReady, setIsAppReady] = useState(false);
+
+  return (
+    <>
+      <AppNavigator />
+      {!isAppReady && (
+        <LoadingScreen
+          onFinish={() => setIsAppReady(true)}
+          canFinish={!loading}
+        />
+      )}
+    </>
+  );
+};
+
 export default function App() {
   // const [fontsLoaded] = useFonts({ 
   //   GoogleSans_400Regular,
   //   GoogleSans_500Medium,
   //   GoogleSans_700Bold
   // });
-  const [isAppReady, setIsAppReady] = useState(false);
-
   // Só renderiza o app quando a fonte nativa estiver pronta
   // if (!fontsLoaded) return null;
 
@@ -60,13 +75,11 @@ export default function App() {
         <ToastProvider>
           <AuthProvider>
             <CombustivelProvider>
-              <AppNavigator />
+              <AppContent />
             </CombustivelProvider>
           </AuthProvider>
           <Toast />
         </ToastProvider>
-        
-        {!isAppReady && <LoadingScreen onFinish={() => setIsAppReady(true)} />}
       </ThemeProvider>
     </SafeAreaProvider>
   );

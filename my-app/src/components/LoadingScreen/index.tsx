@@ -5,13 +5,14 @@ import { useLoadingScreen } from './useLoadingScreen';
 
 interface LoadingScreenProps {
   onFinish: () => void;
+  canFinish: boolean;
 }
 
 /**
  * Splash de carregamento inicial com fade-out ao finalizar a animacao.
 */
-export default function LoadingScreen({ onFinish }: LoadingScreenProps) {
-  const { colors, opacityAnim, widthInterpolated } = useLoadingScreen(onFinish);
+export default function LoadingScreen({ onFinish, canFinish }: LoadingScreenProps) {
+  const { colors, opacityAnim, widthInterpolated } = useLoadingScreen(onFinish, canFinish);
 
   return (
     <Animated.View style={[

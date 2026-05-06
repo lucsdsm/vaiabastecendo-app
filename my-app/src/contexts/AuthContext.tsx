@@ -7,8 +7,8 @@ import { useToast } from './ToastContext';
 interface UserData {
     id: number;
     username: string;
-    first_name: string;
-    last_name: string;
+    primeiro_nome: string;
+    ultimo_nome: string;
     foto: string | null;
     likes_recebidos?: number;
     likes_deferidos?: number;
@@ -35,9 +35,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [userData, setUserData] = useState<UserData | null>(null);
     const [loading, setLoading] = useState(true);
 
+    const fetchUserData = async (authToken: string) => {
+        try {
+            const res = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/auth/me/`, {
+                headers: { Authorization: `Token ${authToken}` }
+            });
+            setUserData(res.data);
+        } catch (error) {
+            console.error('Erro ao carregar dados do usuario:', error);
+        }
+    };
+
     const signIn = async (jwtToken: string) => {
         await SecureStore.setItemAsync('userToken', jwtToken);
         setToken(jwtToken);
+        await fetchUserData(jwtToken);
         showToast('Login realizado com sucesso!', 'success');
     };
 
@@ -50,11 +62,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     useEffect(() => {
         const inicializarAuth = async () => {
-            const savedToken = await SecureStore.getItemAsync('userToken');
-            if (savedToken) {
-                setToken(savedToken);
+            try {
+                const savedToken = await SecureStore.getItemAsync('userToken');
+                if (savedToken) {
+                    setToken(savedToken);
+                    await fetchUserData(savedToken);
+                }
+            } finally {
+                setLoading(false);
             }
-            setLoading(false);
         };
         inicializarAuth();
     }, []);

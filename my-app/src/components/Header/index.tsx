@@ -6,6 +6,7 @@ import { styles } from './styles';
 
 import { useAuth } from '../../contexts/AuthContext';
 import { useAppTheme } from '../../theme/ThemeProvider';
+
 /**
  * Header principal da aplicacao.
  * Exibe marca, titulo centralizado e controle manual de tema.
@@ -13,6 +14,7 @@ import { useAppTheme } from '../../theme/ThemeProvider';
 export default function Header() {
     const { colors, toggleTheme, isDark } = useHeader();
     const { userData } = useAuth();
+    const displayName = userData?.primeiro_nome || 'Motorista';
 
     return (
         <View style={[
@@ -27,7 +29,7 @@ export default function Header() {
                     pointerEvents="none"
                 >
                     <Text style={[styles.title, { color: colors.primary }]}>
-                        Olá, {userData?.primeiro_nome || 'Motorista'}!
+                        Olá, {displayName}!
                     </Text>
 
                     <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
