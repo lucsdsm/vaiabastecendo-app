@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, Text } from 'react-native';
+import { Animated, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
 import { useToast } from './useToast';
@@ -15,7 +15,9 @@ export function Toast() {
                 { backgroundColor: bg, transform: [{ translateY }] },
             ]}
         >
-            <Feather name={icon as any} size={20} color="#FFF" />
+            <View style={styles.iconContainer}>
+                <Feather name={icon as any} size={18} color="#FFF" />
+            </View>
             <Text style={styles.message}>{toastData.message}</Text>
         </Animated.View>
     );

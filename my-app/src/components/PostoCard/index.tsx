@@ -65,11 +65,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                         <View style={[styles.logoContainer]}>
                             {logoSource ? (
                                 <Image source={logoSource} style={styles.logoImage} />
-                            ) : (
-                                <View style={[styles.logoContainer, styles.emojiContainer]}>
-                                    <Text style={styles.emojiText}>⚪</Text>
-                                </View>
-                            )}
+                            ) : null}
                         </View>
 
                         {/* Botão de Direções */}
