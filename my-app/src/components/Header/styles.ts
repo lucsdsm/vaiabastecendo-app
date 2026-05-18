@@ -1,8 +1,9 @@
 import { Platform, StyleSheet } from 'react-native';
+import { radius, spacing, typography } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 5,
+        paddingHorizontal: spacing.xs,
         ...Platform.select({
             ios: {
                 // shadowColor: '#000',
@@ -20,8 +21,8 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-start',
         justifyContent: 'space-between',
-        marginLeft: 20,
-        marginTop: 10,
+        marginLeft: spacing.xl,
+        marginTop: spacing.sm,
     },
     titleContainer: {
         flexDirection: 'column',
@@ -29,22 +30,30 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     title: {
-        fontSize: 32,
-        fontWeight: '900',
+        fontSize: typography.size.hero,
+        fontWeight: typography.weight.black,
+        marginBottom: spacing.xs,
     },
     subtitle: {
-        fontSize: 16,
-        fontWeight: '400',
-        lineHeight: 18,
+        fontSize: typography.size.sm,
+        fontWeight: typography.weight.regular,
+        lineHeight: 20,
     },
     // characterImage: {
     //     width: 96,
     //     height: 96,
     // },
     themeButtonContainer: {
-        padding: 10,
+        padding: spacing.xs,
     },
     themeButton: {
-        padding: 10,
+        width: 44,
+        height: 44,
+        borderRadius: radius.md,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    themeButtonPressed: {
+        opacity: 0.7,
     },
 });

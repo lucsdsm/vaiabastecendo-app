@@ -1,12 +1,13 @@
 import { Platform, StyleSheet } from 'react-native';
+import { radius, spacing, typography } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
         width: '100%',
-        paddingBottom: Platform.OS === 'ios' ? 30 : 20,
-        paddingTop: 15,
-        borderTopLeftRadius: 24,
-        borderTopRightRadius: 24,
+        paddingBottom: Platform.OS === 'ios' ? spacing.xxl : spacing.xl,
+        paddingTop: spacing.md,
+        borderTopLeftRadius: radius.xl,
+        borderTopRightRadius: radius.xl,
         ...Platform.select({
             ios: {
                 shadowColor: '#000',
@@ -29,11 +30,17 @@ export const styles = StyleSheet.create({
         alignItems: 'center', 
         justifyContent: 'center',
         flex: 1,
+        minHeight: 44,
+    },
+    centerButtonWrapper: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
     },
     centerButton: {
         width: 56,
         height: 56,
-        borderRadius: 28,
+        borderRadius: radius.pill,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: -35,
@@ -49,8 +56,13 @@ export const styles = StyleSheet.create({
             },
         }),
     },
+    centerLabel: {
+        fontSize: typography.size.xs,
+        marginTop: spacing.sm,
+        fontWeight: typography.weight.medium,
+    },
     label: {
-        fontSize: 12,
-        marginTop: 4,
+        fontSize: typography.size.xs,
+        marginTop: spacing.xs,
     },
 });

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { radius, spacing, typography } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     overlay: {
@@ -7,90 +8,66 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     modalContent: {
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        padding: 20,
-        paddingBottom: 40,
+        borderTopLeftRadius: radius.xl,
+        borderTopRightRadius: radius.xl,
+        padding: spacing.xl,
+        paddingBottom: spacing.xxxl,
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 5,
+        marginBottom: spacing.xs,
     },
     title: {
-        fontSize: 22,
-        fontWeight: '800',
+        fontSize: typography.size.xl,
+        fontWeight: typography.weight.black,
     },
     subtitle: {
-        fontSize: 14,
-        marginBottom: 15,
+        fontSize: typography.size.sm,
+        marginBottom: spacing.sm,
+    },
+    helperText: {
+        fontSize: typography.size.xs,
+        marginBottom: spacing.lg,
+        lineHeight: 18,
     },
     section: {
-        marginBottom: 20,
-    },
-    currencyPrefix: {
-        fontSize: 18,
-        fontWeight: '600',
-        marginRight: 8,
-    },
-    currencySuffix: {
-        fontSize: 14,
-        fontWeight: '500',
-        marginLeft: 8,
+        marginBottom: spacing.xl,
     },
     label: {
-        fontSize: 16,
-        fontWeight: '600',
-        marginBottom: 12,
+        fontSize: typography.size.md,
+        fontWeight: typography.weight.semibold,
+        marginBottom: spacing.md,
     },
     fuelGrid: {
-        gap: 5,
+        gap: spacing.xs,
     },
     fuelRow: {
         flexDirection: 'row',
-        gap: 5,
+        gap: spacing.xs,
     },
     fuelOptionBlock: {
         flex: 1,
         minWidth: 0,
     },
     fuelOption: {
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        borderRadius: 15,
+        paddingHorizontal: spacing.md,
+        paddingVertical: spacing.md,
+        borderRadius: radius.lg,
         borderWidth: 2,
         alignItems: 'center',
         justifyContent: 'center',
+        minHeight: 44,
     },
-    fuelOptionText: {
-        fontWeight: '700',
-        fontSize: 14,
-        textAlign: 'center',
-    },
-    inputContainer: {
+    fuelOptionContent: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: 20,
-        borderWidth: 1.5,
-        paddingHorizontal: 20,
+        gap: spacing.sm,
     },
-    input: {
-        flex: 1,
-        fontSize: 32,
-        fontWeight: '700',
+    fuelOptionText: {
+        fontWeight: typography.weight.bold,
+        fontSize: typography.size.sm,
         textAlign: 'center',
-        letterSpacing: -1,
-    },
-    submitButton: {
-        borderRadius: 15,
-        padding: 18,
-        alignItems: 'center',
-        marginTop: 10,
-    },
-    submitButtonText: {
-        color: '#FFF',
-        fontSize: 16,
-        fontWeight: '700',
     },
 });

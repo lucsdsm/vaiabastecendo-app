@@ -1,13 +1,10 @@
 import { Platform, StyleSheet } from 'react-native';
+import { radius, spacing, typography } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
-    container: {
+    card: {
         width: '100%',
-        borderRadius: 24,
-        paddingVertical: 16,
-        paddingHorizontal: 16,
-        marginBottom: 16,
-        borderWidth: 1,
+        marginBottom: spacing.lg,
         ...Platform.select({
             ios: {
                 shadowColor: '#000',
@@ -24,7 +21,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        marginBottom: 16,
+        marginBottom: spacing.md,
     },
     headerLeft: {
         flex: 1,
@@ -38,7 +35,7 @@ export const styles = StyleSheet.create({
     logoContainer: {
         width: 40,
         height: 40,
-        borderRadius: 360,
+        borderRadius: radius.pill,
         overflow: 'hidden',
         justifyContent: 'center',
         alignItems: 'center',
@@ -46,7 +43,7 @@ export const styles = StyleSheet.create({
     logoImage: {
         width: 32,
         height: 32,
-        borderRadius: 360,
+        borderRadius: radius.pill,
         resizeMode: 'contain',
     },
     emojiContainer: {
@@ -57,14 +54,21 @@ export const styles = StyleSheet.create({
         fontSize: 24,
     },
     title: {
-        fontSize: 17,
-        fontWeight: '600',
-        letterSpacing: -0.4,
+        fontSize: typography.size.lg,
+        fontWeight: typography.weight.bold,
+        letterSpacing: typography.letterSpacing.tight,
+    },
+    addressRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        minWidth: 0,
     },
     addressText: {
-        fontSize: 13,
-        fontWeight: '400',
+        fontSize: typography.size.sm,
+        fontWeight: typography.weight.regular,
         lineHeight: 18,
+        flex: 1,
     },
     metaRow: {
         flexDirection: 'row',
@@ -78,8 +82,8 @@ export const styles = StyleSheet.create({
         gap: 4,
     },
     metaText: {
-        fontSize: 12,
-        fontWeight: '500',
+        fontSize: typography.size.xs,
+        fontWeight: typography.weight.medium,
     },
     metaDivider: {
         width: 3,
@@ -88,27 +92,27 @@ export const styles = StyleSheet.create({
         opacity: 0.3,
     },
     directionsButton: {
-        width: 36,
-        height: 36,
-        borderRadius: 12,
+        width: 44,
+        height: 44,
+        borderRadius: radius.md,
         borderWidth: 1.5,
         justifyContent: 'center',
         alignItems: 'center',
     },
     priceContainer: {
-        gap: 10,
+        gap: spacing.md,
     },
     priceRow: {
         flexDirection: 'row',
-        gap: 10,
+        gap: spacing.md,
     },
     priceBlock: {
         flex: 1,
     },
     priceBadge: {
-        borderRadius: 16,
-        padding: 14,
-        minHeight: 100,
+        borderRadius: radius.lg,
+        padding: spacing.md,
+        minHeight: 104,
         justifyContent: 'space-between',
     },
     priceBadgeHeader: {
@@ -120,74 +124,76 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     fuelLabel: {
-        fontSize: 10,
+        fontSize: typography.size.xs,
         lineHeight: 14,
-        fontWeight: '700',
+        fontWeight: typography.weight.bold,
         textTransform: 'uppercase',
-        letterSpacing: 0.6,
+        letterSpacing: typography.letterSpacing.wide,
     },
     priceValue: {
-        fontSize: 26,
-        fontWeight: '700',
-        letterSpacing: -1,
+        fontSize: typography.size.xxl,
+        fontWeight: typography.weight.bold,
+        letterSpacing: typography.letterSpacing.tighter,
         textAlign: 'center',
-        marginVertical: 4,
+        marginVertical: spacing.xs,
     },
     priceUnit: {
-        fontSize: 13,
-        fontWeight: '500',
-        letterSpacing: -0.3,
+        fontSize: typography.size.sm,
+        fontWeight: typography.weight.medium,
+        letterSpacing: typography.letterSpacing.tight,
     },
     likeButton: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 4,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderRadius: 20,
+        gap: spacing.xs,
+        paddingHorizontal: spacing.md,
+        paddingVertical: spacing.sm,
+        borderRadius: radius.pill,
         alignSelf: 'center',
+        minHeight: 44,
     },
     likeCount: {
-        fontSize: 11,
-        fontWeight: '600',
+        fontSize: typography.size.xs,
+        fontWeight: typography.weight.semibold,
     },
     noPriceContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 16,
-        borderRadius: 16,
+        padding: spacing.lg,
+        borderRadius: radius.lg,
         borderWidth: 1.5,
         borderStyle: 'dashed',
-        gap: 12,
+        gap: spacing.md,
     },
     noPriceTextContainer: {
         flex: 1,
     },
     noPriceTitle: {
-        fontSize: 14,
-        fontWeight: '600',
+        fontSize: typography.size.sm,
+        fontWeight: typography.weight.semibold,
         marginBottom: 2,
     },
     noPriceText: {
-        fontSize: 12,
+        fontSize: typography.size.xs,
         lineHeight: 16,
-        fontWeight: '400',
+        fontWeight: typography.weight.regular,
     },
     updateInfo: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 12,
-        paddingTop: 12,
+        marginTop: spacing.md,
+        paddingTop: spacing.md,
         borderTopWidth: 1,
+        gap: spacing.xs,
     },
     updateText: {
-        fontSize: 11,
-        fontWeight: '500',
+        fontSize: typography.size.xs,
+        fontWeight: typography.weight.medium,
     },
     authorText: {
-        fontSize: 11,
-        fontWeight: '600',
+        fontSize: typography.size.xs,
+        fontWeight: typography.weight.semibold,
     },
 });

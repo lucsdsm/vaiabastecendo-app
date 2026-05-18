@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { radius, spacing, typography } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
@@ -8,12 +9,12 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 16,
-        paddingVertical: 12,
+        paddingHorizontal: spacing.lg,
+        paddingVertical: spacing.md,
     },
     headerTitle: {
-        fontSize: 24,
-        fontWeight: 'bold',
+        fontSize: typography.size.xl,
+        fontWeight: typography.weight.bold,
     },
     content: {
         flex: 1,
@@ -24,89 +25,89 @@ export const styles = StyleSheet.create({
     profileSection: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: 16,
-        marginTop: 16,
-        marginBottom: 16
+        paddingHorizontal: spacing.lg,
+        marginTop: spacing.lg,
+        marginBottom: spacing.lg
     },
     avatar: {
         width: 86,
         height: 86,
-        borderRadius: 43,
+        borderRadius: radius.pill,
     },
     avatarPlaceholder: {
         width: 86,
         height: 86,
-        borderRadius: 43,
+        borderRadius: radius.pill,
         alignItems: 'center',
         justifyContent: 'center',
     },
     infoSection: {
         flex: 1,
-        marginLeft: 20,
+        marginLeft: spacing.xl,
         justifyContent: 'center',
     },
     usernameText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 8,
+        fontSize: typography.size.lg,
+        fontWeight: typography.weight.bold,
+        marginBottom: spacing.sm,
     },
     statsContainer: {
         flexDirection: 'row',
-        gap: 24, 
+        gap: spacing.xxl, 
     },
     statItem: {
         alignItems: 'flex-start',
     },
     statNumber: {
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: typography.size.lg,
+        fontWeight: typography.weight.bold,
     },
     statLabel: {
-        fontSize: 13,
+        fontSize: typography.size.xs,
         marginTop: 2,
     },
     bioText: {
-        fontSize: 14,
-        paddingHorizontal: 16,
-        marginTop: 16,
-        marginBottom: 20,
+        fontSize: typography.size.sm,
+        paddingHorizontal: spacing.lg,
+        marginTop: spacing.lg,
+        marginBottom: spacing.xl,
         lineHeight: 20,
     },
     actionButton: {
-        marginHorizontal: 16,
-        paddingVertical: 8,
+        marginHorizontal: spacing.lg,
+        paddingVertical: spacing.sm,
         borderWidth: 1,
-        borderRadius: 6,
+        borderRadius: radius.sm,
         alignItems: 'center',
         justifyContent: 'center',
     },
     actionButtonText: {
-        fontWeight: '600',
-        fontSize: 14,
+        fontWeight: typography.weight.semibold,
+        fontSize: typography.size.sm,
     },
     guestContainer: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: 24,
+        paddingHorizontal: spacing.xxl,
     },
     guestIconContainer: {
         width: 100,
         height: 100,
-        borderRadius: 50,
+        borderRadius: radius.pill,
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 24,
+        marginBottom: spacing.xxl,
     },
     guestTitle: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        marginBottom: 12,
+        fontSize: typography.size.xl,
+        fontWeight: typography.weight.bold,
+        marginBottom: spacing.md,
     },
     guestText: {
-        fontSize: 15,
+        fontSize: typography.size.sm,
         textAlign: 'center',
-        marginBottom: 32,
+        marginBottom: spacing.xxxl,
         lineHeight: 22,
     },
     googleButton: {
@@ -115,13 +116,13 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        paddingVertical: 14,
-        borderRadius: 12,
-        gap: 12,
+        paddingVertical: spacing.md,
+        borderRadius: radius.md,
+        gap: spacing.md,
     },
     googleButtonText: {
         color: '#FFF',
-        fontSize: 16,
-        fontWeight: 'bold',
+        fontSize: typography.size.md,
+        fontWeight: typography.weight.bold,
     },
 });

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { 
-    View, Text, Modal, TouchableOpacity, TextInput, ActivityIndicator, 
+    View, Text, Modal, TouchableOpacity,
     Platform, TouchableWithoutFeedback, Keyboard 
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
 import { PrecoAtualResumo, useUpdatePriceModal } from './useUpdatePriceModal';
+import { getReadableColor } from '../../utils/color';
+import { Button, Input } from '../ui';
 
 interface UpdatePriceModalProps {
     visible: boolean;
@@ -18,7 +20,7 @@ interface UpdatePriceModalProps {
 }
 
 export default function UpdatePriceModal({ visible, onClose, postoId, postoNome, precosAtuais, onSuccess }: UpdatePriceModalProps) {
-    const { colors } = useAppTheme();
+    const { colors, isDark } = useAppTheme();
     const [keyboardPadding, setKeyboardPadding] = useState(0);
     
     const {
@@ -68,12 +70,15 @@ export default function UpdatePriceModal({ visible, onClose, postoId, postoNome,
                             
                             <View style={styles.header}>
                                 <Text style={[styles.title, { color: colors.textPrimary }]}>Atualizar Preço</Text>
-                                <TouchableOpacity onPress={onClose}>
+                                <TouchableOpacity onPress={onClose} accessibilityLabel="Fechar modal de atualizacao">
                                     <Feather name="x" size={24} color={colors.textSecondary} />
                                 </TouchableOpacity>
                             </View>
 
                             <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{postoNome} </Text>
+                            <Text style={[styles.helperText, { color: colors.textSecondary }]}>
+                                Sua atualizacao sera exibida para toda a comunidade.
+                            </Text>
 
                             <View style={styles.section}>
                                 <Text style={[styles.label, { color: colors.textPrimary }]}>Selecione o Combustível:</Text>
@@ -82,25 +87,38 @@ export default function UpdatePriceModal({ visible, onClose, postoId, postoNome,
                                         <View key={rowIndex} style={styles.fuelRow}>
                                             {row.map((type) => (
                                                 <View key={type.id} style={styles.fuelOptionBlock}>
+                                                    {(() => {
+                                                        const accentColor = getReadableColor(type.cor, isDark);
+                                                        const isSelected = selectedFuel === type.id;
+                                                        return (
                                                     <TouchableOpacity
                                                         style={[
                                                             styles.fuelOption,
                                                             {
-                                                                borderColor: selectedFuel === type.id ? type.cor : 'transparent',
-                                                                backgroundColor: type.cor + '15',
+                                                                borderColor: isSelected ? accentColor : colors.border,
+                                                                backgroundColor: isSelected
+                                                                    ? accentColor + '20'
+                                                                    : colors.background,
                                                             },
                                                         ]}
                                                         onPress={() => setSelectedFuel(type.id)}
                                                     >
-                                                        <Text
-                                                            style={[
-                                                                styles.fuelOptionText,
-                                                                { color: selectedFuel === type.id ? type.cor : colors.textSecondary },
-                                                            ]}
-                                                        >
-                                                            {type.nome}
-                                                        </Text>
+                                                        <View style={styles.fuelOptionContent}>
+                                                            <Text
+                                                                style={[
+                                                                    styles.fuelOptionText,
+                                                                    { color: isSelected ? accentColor : colors.textSecondary },
+                                                                ]}
+                                                            >
+                                                                {type.nome}
+                                                            </Text>
+                                                            {isSelected ? (
+                                                                <Feather name="check" size={14} color={accentColor} />
+                                                            ) : null}
+                                                        </View>
                                                     </TouchableOpacity>
+                                                        );
+                                                    })()}
                                                 </View>
                                             ))}
                                         </View>
@@ -112,39 +130,22 @@ export default function UpdatePriceModal({ visible, onClose, postoId, postoNome,
                                 <Text style={[styles.label, { color: colors.textSecondary }]}>
                                     Preco por litro
                                 </Text>
-                                <View 
-                                    style={[
-                                        styles.inputContainer, 
-                                        { 
-                                            backgroundColor: colors.background, 
-                                            borderColor: colors.primary + '40' 
-                                        }
-                                    ]}
-                                >
-                                    <Text style={[styles.currencyPrefix, { color: colors.textSecondary }]}>
-                                        R$
-                                    </Text>
-                                    <TextInput
-                                        style={[styles.input, { color: colors.textPrimary }]}
-                                        placeholder="0,00"
-                                        placeholderTextColor={colors.textSecondary + '60'}
-                                        keyboardType="numeric"
-                                        value={price}
-                                        onChangeText={handlePriceChange}
-                                    />
-                                    <Text style={[styles.currencySuffix, { color: colors.textSecondary }]}>
-                                        /L
-                                    </Text>
-                                </View>
+                                <Input
+                                    prefix="R$"
+                                    suffix="/L"
+                                    keyboardType="numeric"
+                                    value={price}
+                                    onChangeText={handlePriceChange}
+                                    placeholder="0,00"
+                                />
                             </View>
 
-                            <TouchableOpacity
-                                style={[styles.submitButton, { backgroundColor: colors.primary }]}
+                            <Button
+                                label="Confirmar Atualizacao"
                                 onPress={() => handleUpdate(selectedFuel, price)}
-                                disabled={loading}
-                            >
-                                {loading ? <ActivityIndicator color="#FFF" /> : <Text style={styles.submitButtonText}>Confirmar Atualização</Text>}
-                            </TouchableOpacity>
+                                loading={loading}
+                                accessibilityLabel="Confirmar atualizacao de preco"
+                            />
 
                         </View>
                     </TouchableWithoutFeedback>

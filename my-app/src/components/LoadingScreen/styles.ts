@@ -1,4 +1,5 @@
 import { Platform, StyleSheet } from 'react-native';
+import { radius, spacing, typography } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
@@ -23,23 +24,29 @@ export const styles = StyleSheet.create({
         width: '80%',
     },
     logo: {
-        width: 296,
-        height: 296,
+        width: 220,
+        height: 220,
     },
     title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 40,
+        fontSize: typography.size.xl,
+        fontWeight: typography.weight.bold,
+        marginBottom: spacing.sm,
+        letterSpacing: typography.letterSpacing.tight,
+    },
+    subtitle: {
+        fontSize: typography.size.sm,
+        marginBottom: spacing.xxl,
+        textAlign: 'center',
     },
     progressBarContainer: {
         width: '100%',
         height: 8,
-        borderRadius: 4,
+        borderRadius: radius.sm,
         borderWidth: 1,
         overflow: 'hidden',
     },
     progressBar: {
         height: '100%',
-        borderRadius: 4,
+        borderRadius: radius.sm,
     },
 });

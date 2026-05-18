@@ -17,9 +17,15 @@ export default function Footer() {
     const {
         userData,
         colors,
+        activeRoute,
+        handleOpenMap,
     } = useFooter();
 
     const navigation = useNavigation<any>(); 
+    const isHomeActive = activeRoute === 'Home';
+    const isProfileActive = activeRoute === 'UserProfile';
+    const activeColor = colors.primary;
+    const inactiveColor = colors.textSecondary;
 
     return ( 
         <View style={[
@@ -29,26 +35,41 @@ export default function Footer() {
             }
         ]}>
             <View style={styles.content}>
-                <TouchableOpacity style={styles.button} activeOpacity={0.6}>
-                    <Feather name="map" size={24} color={colors.textSecondary} />
-                    <Text style={[styles.label, { color: colors.textSecondary }]}> Mapa </Text>
+                <TouchableOpacity
+                    style={styles.button}
+                    activeOpacity={0.6}
+                    accessibilityRole="button"
+                    accessibilityLabel="Abrir mapa"
+                    onPress={handleOpenMap}
+                >
+                    <Feather name="map" size={22} color={isHomeActive ? activeColor : inactiveColor} />
+                    <Text style={[styles.label, { color: isHomeActive ? activeColor : inactiveColor }]}>
+                        Mapa
+                    </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity 
-                    style={[styles.centerButton, { backgroundColor: colors.primary }]} 
-                    activeOpacity={0.8}
-                >
-                    <Feather name="plus" size={28} color="#FFFFFF" />
-                </TouchableOpacity>
+                <View style={styles.centerButtonWrapper}>
+                    <TouchableOpacity 
+                        style={[styles.centerButton, { backgroundColor: colors.primary }]} 
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                        accessibilityLabel="Atualizar preco"
+                    >
+                        <Feather name="plus" size={26} color="#FFFFFF" />
+                    </TouchableOpacity>
+                    <Text style={[styles.centerLabel, { color: colors.textSecondary }]}>Atualizar</Text>
+                </View>
 
                 <TouchableOpacity
                     style={styles.button}
                     activeOpacity={0.6}
 
                     onPress={() => navigation.navigate('UserProfile')} 
+                    accessibilityRole="button"
+                    accessibilityLabel="Ir para perfil"
                 >
-                    <Feather name="user" size={24} color={colors.textSecondary} />
-                    <Text style={[styles.label, { color: colors.textSecondary }]}> Perfil </Text>
+                    <Feather name="user" size={22} color={isProfileActive ? activeColor : inactiveColor} />
+                    <Text style={[styles.label, { color: isProfileActive ? activeColor : inactiveColor }]}>Perfil</Text>
                 </TouchableOpacity>
                 
             </View>

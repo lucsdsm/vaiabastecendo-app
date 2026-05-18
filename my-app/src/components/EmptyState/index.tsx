@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { styles } from './styles';
 import { useEmptyState } from './useEmptyState';
+import { Button } from '../ui';
 
 interface EmptyStateProps {
     title?: string;
@@ -42,14 +43,12 @@ export default function EmptyState({
 
             {/* Renderiza o botão apenas se a função onRetry for passada */}
             {onRetry && (
-                <TouchableOpacity 
-                    style={[styles.button, { backgroundColor: colors.primary }]} 
+                <Button
+                    label={buttonText}
                     onPress={onRetry}
-                    activeOpacity={0.8}
-                >
-                    <Feather name="refresh-cw" size={16} color="#FFF" />
-                    <Text style={styles.buttonText}>{buttonText}</Text>
-                </TouchableOpacity>
+                    icon={<Feather name="refresh-cw" size={16} color="#FFF" />}
+                    accessibilityLabel={buttonText}
+                />
             )}
         </View>
     );

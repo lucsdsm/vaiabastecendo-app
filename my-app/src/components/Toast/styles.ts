@@ -1,16 +1,17 @@
 import { Platform, StyleSheet } from 'react-native';
+import { radius, spacing, typography } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         top: 0,
-        left: 20,
-        right: 20,
+        left: spacing.xl,
+        right: spacing.xl,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 5,
-        paddingHorizontal: 5,
-        borderRadius: 20,
+        paddingVertical: spacing.sm,
+        paddingHorizontal: spacing.sm,
+        borderRadius: radius.lg,
         zIndex: 9999,
         ...Platform.select({
             ios: {
@@ -27,17 +28,27 @@ export const styles = StyleSheet.create({
     iconContainer: {
         width: 36,
         height: 36,
-        borderRadius: 12,
+        borderRadius: radius.md,
         backgroundColor: 'transparent',
         justifyContent: 'center',
         alignItems: 'center',
     },
-    message: {
+    textContainer: {
         flex: 1,
+        marginLeft: spacing.sm,
+    },
+    title: {
         color: '#FFF',
-        fontSize: 14,
-        fontWeight: '600',
-        letterSpacing: -0.2,
-        lineHeight: 20,
+        fontSize: typography.size.xs,
+        fontWeight: typography.weight.bold,
+        letterSpacing: typography.letterSpacing.wide,
+        marginBottom: 2,
+    },
+    message: {
+        color: '#FFF',
+        fontSize: typography.size.sm,
+        fontWeight: typography.weight.semibold,
+        letterSpacing: typography.letterSpacing.tight,
+        lineHeight: 18,
     },
 });

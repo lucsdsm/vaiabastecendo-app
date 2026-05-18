@@ -8,6 +8,8 @@ import { PostoProps, usePostoCard } from './usePostoCard';
 
 import { formatarTempoDecorrido } from '../../utils/dateFormatter';
 import { dicionarioBandeiras } from '../../utils/dictFlags';
+import { getReadableColor } from '../../utils/color';
+import { Badge, Card } from '../ui';
 
 export type { PostoProps, PrecoAtual } from './usePostoCard';
 
@@ -31,11 +33,10 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
     const hasPrecos = data.precos_atuais && data.precos_atuais.length > 0;
 
     return (
-        <View
+        <Card
             style={[
-                styles.container,
+                styles.card,
                 {
-                    backgroundColor: colors.surface,
                     borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)',
                 },
             ]}
@@ -49,12 +50,18 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                             numberOfLines={1}>
                             {data.nome} 
                         </Text>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, minWidth: 0 }}>
-                            <Feather name="navigation" size={12} color={colors.primary} />
-                            <Text style={[styles.addressText, { color: colors.textSecondary, marginLeft: 2 }]} numberOfLines={1} ellipsizeMode="tail">
-                                {data.distancia}
-                            </Text>
-                            <Text style={[styles.addressText, { color: colors.textSecondary, marginLeft: 6, flexShrink: 1 }]} numberOfLines={1} ellipsizeMode="tail">
+                        <View style={styles.addressRow}>
+                            <Badge
+                                label={data.distancia}
+                                color={colors.primary + (isDark ? '22' : '12')}
+                                textColor={colors.primary}
+                                icon={<Feather name="navigation" size={12} color={colors.primary} />}
+                            />
+                            <Text
+                                style={[styles.addressText, { color: colors.textSecondary }]}
+                                numberOfLines={1}
+                                ellipsizeMode="tail"
+                            >
                                 {data.endereco}
                             </Text>
                         </View>
@@ -79,6 +86,8 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                             ]}
                             onPress={handleGetDirections}
                             activeOpacity={0.7}
+                            accessibilityRole="button"
+                            accessibilityLabel="Abrir direcoes no mapa"
                         >
                             <Feather name="map-pin" size={16} color={colors.primary} />
                         </TouchableOpacity>
@@ -95,22 +104,25 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                                         key={`${rowIndex}-${index}`}
                                         style={styles.priceBlock}
                                     >
-                                        <View
-                                            style={[
-                                                styles.priceBadge,
-                                                {
-                                                    backgroundColor:
-                                                        item.cor + (isDark ? '1A' : '0A'),
-                                                },
-                                            ]}
-                                        >
+                                        {(() => {
+                                            const accentColor = getReadableColor(item.cor, isDark);
+                                            return (
+                                                <View
+                                                    style={[
+                                                        styles.priceBadge,
+                                                        {
+                                                            backgroundColor:
+                                                                accentColor + (isDark ? '1A' : '0A'),
+                                                        },
+                                                    ]}
+                                                >
                                             {/* Header do Badge */}
                                             <View style={styles.priceBadgeHeader}>
                                                 <View style={styles.fuelLabelContainer}>
                                                     <Text
                                                         style={[
                                                             styles.fuelLabel,
-                                                            { color: item.cor },
+                                                            { color: accentColor },
                                                         ]}
                                                         numberOfLines={2}
                                                         adjustsFontSizeToFit
@@ -126,7 +138,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                                                 <Text
                                                     style={[
                                                         styles.priceValue,
-                                                        { color: item.cor },
+                                                        { color: accentColor },
                                                     ]}
                                                 >
                                                     R$ {item.preco.toFixed(2)}
@@ -147,6 +159,8 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                                                 ]}
                                                 onPress={() => toggleLike(item.id)}
                                                 activeOpacity={0.7}
+                                                accessibilityRole="button"
+                                                accessibilityLabel={`Curtir preco de ${item.tipo}`}
                                             >
                                                 <Feather
                                                     name={item.is_liked ? 'heart' : 'thumbs-up'}
@@ -171,6 +185,8 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                                                 </Text>
                                             </TouchableOpacity>
                                         </View>
+                                            );
+                                        })()}
                                     </View>
                                 ))}
                             </View>
@@ -225,16 +241,14 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                         ]}>
                         <Feather name="user" size={11} color={colors.textSecondary} style={{ marginRight: 4 }}/>
                         <Text style={[styles.updateText, { color: colors.textSecondary }]}>
-                            Atualizado por{' '}
+                            Atualizado por
                         </Text>
                         <Text style={[styles.authorText, { color: colors.textPrimary }]}>
-                            {data.autor_ultimaAtualizacao}{' '}
+                            {data.autor_ultimaAtualizacao}
                         </Text>
-                        
                         <Text style={[styles.metaText, { color: colors.textSecondary },]}>
                             {formatarTempoDecorrido(data.data_ultimaAtualizacao)}
                         </Text>
-                        <Feather name="clock" size={11} color={colors.textSecondary} />
                     </View>
                 )}
 
@@ -250,6 +264,6 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                     }}
                 />
             </TouchableOpacity>
-        </View>
+        </Card>
     );
 }

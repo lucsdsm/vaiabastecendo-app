@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useToast as useToastContext } from '../../contexts/ToastContext';
 import { useAppTheme } from '../../theme/ThemeProvider';
@@ -11,11 +12,13 @@ export function useToast() {
     const { toastData, hideToast } = useToastContext();
     const { colors } = useAppTheme();
     const translateY = useRef(new Animated.Value(-100)).current;
+    const insets = useSafeAreaInsets();
+    const topOffset = Math.max(insets.top, 8) + 8;
 
     useEffect(() => {
         if (toastData.visible) {
             Animated.spring(translateY, {
-                toValue: 50,
+                toValue: topOffset,
                 useNativeDriver: true,
                 speed: 12,
             }).start();
@@ -32,7 +35,7 @@ export function useToast() {
                 useNativeDriver: true,
             }).start();
         }
-    }, [toastData.visible, hideToast, translateY]);
+    }, [toastData.visible, hideToast, translateY, topOffset]);
 
     const getToastStyle = () => {
         switch (toastData.type) {
@@ -45,12 +48,25 @@ export function useToast() {
         }
     };
 
+    const getToastTitle = () => {
+        switch (toastData.type) {
+            case 'success':
+                return 'Sucesso';
+            case 'danger':
+                return 'Erro';
+            default:
+                return 'Aviso';
+        }
+    };
+
     const { bg, icon } = getToastStyle();
+    const title = getToastTitle();
 
     return {
         toastData,
         translateY,
         bg,
         icon,
+        title,
     };
 }

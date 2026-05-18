@@ -28,11 +28,12 @@ export default function LoadingScreen({ onFinish, canFinish }: LoadingScreenProp
         <Text style={[styles.title, { color: colors.textPrimary }]}>
           Vai Abastecendo
         </Text>
+        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>Carregando postos proximos...</Text>
 
         <View style={[styles.progressBarContainer, { borderColor: colors.border }]}>
           <Animated.View style={[
             styles.progressBar, 
-            { backgroundColor: colors.textPrimary, width: widthInterpolated }
+            { backgroundColor: colors.primary, width: widthInterpolated }
           ]} />
         </View>
       </View>

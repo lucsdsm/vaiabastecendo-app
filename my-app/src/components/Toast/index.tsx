@@ -6,7 +6,7 @@ import { useToast } from './useToast';
 import { styles } from './styles';
 
 export function Toast() {
-    const { toastData, translateY, bg, icon } = useToast();
+    const { toastData, translateY, bg, icon, title } = useToast();
 
     return (
         <Animated.View
@@ -18,7 +18,10 @@ export function Toast() {
             <View style={styles.iconContainer}>
                 <Feather name={icon as any} size={18} color="#FFF" />
             </View>
-            <Text style={styles.message}>{toastData.message}</Text>
+            <View style={styles.textContainer}>
+                <Text style={styles.title}>{title}</Text>
+                <Text style={styles.message}>{toastData.message}</Text>
+            </View>
         </Animated.View>
     );
 }
