@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: spacing.xs,
+        marginBottom: spacing.sm,
     },
     title: {
         fontSize: typography.size.xl,
@@ -25,11 +25,11 @@ export const styles = StyleSheet.create({
     },
     subtitle: {
         fontSize: typography.size.sm,
-        marginBottom: spacing.sm,
+        marginBottom: spacing.md,
     },
     helperText: {
         fontSize: typography.size.xs,
-        marginBottom: spacing.lg,
+        marginBottom: spacing.xl,
         lineHeight: 18,
     },
     section: {

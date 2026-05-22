@@ -43,6 +43,11 @@ export default function Header() {
                         onPress={toggleTheme}
                         style={({ pressed }) => [
                             styles.themeButton,
+                            styles.themeButtonActive,
+                            {
+                                backgroundColor: colors.primary + (isDark ? '14' : '0D'),
+                                borderColor: colors.primary + '40',
+                            },
                             pressed && styles.themeButtonPressed,
                         ]}
                         accessibilityRole="button"

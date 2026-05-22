@@ -20,6 +20,9 @@ export function useFooter() {
     const handleOpenMap = () => {
         showToast('Mapa em breve.', 'info');
     };
+    const handleUpdatePrice = () => {
+        showToast('Atualização de preço em breve.', 'info');
+    };
 
     return {
         userData,
@@ -30,5 +33,6 @@ export function useFooter() {
         closeProfileModal,
         activeRoute,
         handleOpenMap,
+        handleUpdatePrice,
     };
 }

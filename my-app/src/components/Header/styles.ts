@@ -53,6 +53,9 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    themeButtonActive: {
+        borderWidth: 1,
+    },
     themeButtonPressed: {
         opacity: 0.7,
     },

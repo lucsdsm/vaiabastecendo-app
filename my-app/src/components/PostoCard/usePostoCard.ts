@@ -58,12 +58,12 @@ export function usePostoCard(data: PostoProps) {
     }, [data.precos_atuais]);
 
     /*
-     * Organiza os precos atuais em linhas de ate 4 itens para exibicao no modal de detalhes
+     * Organiza os precos atuais em linhas de ate 2 itens para manter legibilidade no card
     */
     const priceRows = useMemo(() => {
         const rows: PrecoAtual[][] = [];
-            for (let i = 0; i < precosLocais.length; i += 4) {
-            rows.push(precosLocais.slice(i, i + 4));
+        for (let i = 0; i < precosLocais.length; i += 2) {
+            rows.push(precosLocais.slice(i, i + 2));
         }
         return rows;
     }, [precosLocais])

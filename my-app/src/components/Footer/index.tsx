@@ -19,6 +19,7 @@ export default function Footer() {
         colors,
         activeRoute,
         handleOpenMap,
+        handleUpdatePrice,
     } = useFooter();
 
     const navigation = useNavigation<any>(); 
@@ -40,10 +41,11 @@ export default function Footer() {
                     activeOpacity={0.6}
                     accessibilityRole="button"
                     accessibilityLabel="Abrir mapa"
+                    accessibilityState={{ selected: isHomeActive }}
                     onPress={handleOpenMap}
                 >
                     <Feather name="map" size={22} color={isHomeActive ? activeColor : inactiveColor} />
-                    <Text style={[styles.label, { color: isHomeActive ? activeColor : inactiveColor }]}>
+                    <Text style={[styles.label, { color: isHomeActive ? activeColor : inactiveColor }]}> 
                         Mapa
                     </Text>
                 </TouchableOpacity>
@@ -54,10 +56,11 @@ export default function Footer() {
                         activeOpacity={0.8}
                         accessibilityRole="button"
                         accessibilityLabel="Atualizar preco"
+                        onPress={handleUpdatePrice}
                     >
                         <Feather name="plus" size={26} color="#FFFFFF" />
                     </TouchableOpacity>
-                    <Text style={[styles.centerLabel, { color: colors.textSecondary }]}>Atualizar</Text>
+                    <Text style={[styles.centerLabel, { color: colors.textSecondary }]}>Atualizar preco</Text>
                 </View>
 
                 <TouchableOpacity
@@ -67,6 +70,7 @@ export default function Footer() {
                     onPress={() => navigation.navigate('UserProfile')} 
                     accessibilityRole="button"
                     accessibilityLabel="Ir para perfil"
+                    accessibilityState={{ selected: isProfileActive }}
                 >
                     <Feather name="user" size={22} color={isProfileActive ? activeColor : inactiveColor} />
                     <Text style={[styles.label, { color: isProfileActive ? activeColor : inactiveColor }]}>Perfil</Text>

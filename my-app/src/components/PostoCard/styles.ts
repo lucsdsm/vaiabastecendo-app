@@ -2,6 +2,34 @@ import { Platform, StyleSheet } from 'react-native';
 import { radius, spacing, typography } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
+    // Estilos transferidos do localStyles
+    localCardBase: {
+        borderRadius: radius.xl,
+        padding: spacing.lg,
+        borderWidth: 1,
+    },
+    badge: {
+        paddingHorizontal: spacing.xs,
+        paddingVertical: spacing.xs,
+        borderRadius: radius.pill,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    badgeContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: spacing.xs,
+    },
+    badgeIcon: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    badgeText: {
+        fontSize: typography.size.xs,
+        fontWeight: typography.weight.semibold,
+    },
+
+    // Estilos do Card Principal
     card: {
         width: '100%',
         marginBottom: spacing.lg,
@@ -25,7 +53,7 @@ export const styles = StyleSheet.create({
     },
     headerLeft: {
         flex: 1,
-        gap: 4,
+        gap: spacing.xs,
     },
     headerRight: {
         flexDirection: 'row',
@@ -35,7 +63,7 @@ export const styles = StyleSheet.create({
     logoContainer: {
         width: 40,
         height: 40,
-        borderRadius: radius.pill,
+        borderRadius: radius.sm,
         overflow: 'hidden',
         justifyContent: 'center',
         alignItems: 'center',
@@ -43,53 +71,26 @@ export const styles = StyleSheet.create({
     logoImage: {
         width: 32,
         height: 32,
-        borderRadius: radius.pill,
+        borderRadius: radius.sm,
         resizeMode: 'contain',
-    },
-    emojiContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',     
-    },
-    emojiText: {
-        fontSize: 24,
     },
     title: {
         fontSize: typography.size.lg,
         fontWeight: typography.weight.bold,
-        letterSpacing: typography.letterSpacing.tight,
+        letterSpacing: typography.letterSpacing.normal,
+        marginBottom: spacing.xs,
     },
     addressRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 8,
+        gap: spacing.sm,
         minWidth: 0,
     },
     addressText: {
-        fontSize: typography.size.sm,
-        fontWeight: typography.weight.regular,
-        lineHeight: 18,
-        flex: 1,
-    },
-    metaRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 12,
-        marginTop: 8,
-    },
-    metaItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 4,
-    },
-    metaText: {
         fontSize: typography.size.xs,
-        fontWeight: typography.weight.medium,
-    },
-    metaDivider: {
-        width: 3,
-        height: 3,
-        borderRadius: 1.5,
-        opacity: 0.3,
+        fontWeight: typography.weight.regular,
+        lineHeight: 16,
+        flex: 1,
     },
     directionsButton: {
         width: 44,
@@ -99,15 +100,17 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    
+    // Área de Preços (Agora Carrossel)
     priceContainer: {
-        gap: spacing.md,
+        marginTop: spacing.xs,
     },
-    priceRow: {
-        flexDirection: 'row',
-        gap: spacing.md,
+    pricesScrollContent: {
+        gap: spacing.md, // Adiciona o espaço entre os blocos durante o scroll
+        paddingRight: spacing.lg, // Dá um respiro no final do carrossel
     },
     priceBlock: {
-        flex: 1,
+        width: 140, // Largura fixa para formar os cartões no carrossel
     },
     priceBadge: {
         borderRadius: radius.lg,
@@ -124,23 +127,17 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     fuelLabel: {
-        fontSize: typography.size.xs,
-        lineHeight: 14,
-        fontWeight: typography.weight.bold,
-        textTransform: 'uppercase',
-        letterSpacing: typography.letterSpacing.wide,
+        fontSize: typography.size.sm,
+        lineHeight: 18,
+        fontWeight: typography.weight.semibold,
+        letterSpacing: typography.letterSpacing.normal,
     },
     priceValue: {
         fontSize: typography.size.xxl,
         fontWeight: typography.weight.bold,
-        letterSpacing: typography.letterSpacing.tighter,
+        letterSpacing: typography.letterSpacing.normal,
         textAlign: 'center',
         marginVertical: spacing.xs,
-    },
-    priceUnit: {
-        fontSize: typography.size.sm,
-        fontWeight: typography.weight.medium,
-        letterSpacing: typography.letterSpacing.tight,
     },
     likeButton: {
         flexDirection: 'row',
@@ -152,11 +149,14 @@ export const styles = StyleSheet.create({
         borderRadius: radius.pill,
         alignSelf: 'center',
         minHeight: 44,
+        minWidth: 44,
     },
     likeCount: {
         fontSize: typography.size.xs,
         fontWeight: typography.weight.semibold,
     },
+
+    // Estado Sem Preço
     noPriceContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -165,6 +165,13 @@ export const styles = StyleSheet.create({
         borderWidth: 1.5,
         borderStyle: 'dashed',
         gap: spacing.md,
+    },
+    noPriceIconContainer: {
+        width: 36,
+        height: 36,
+        borderRadius: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     noPriceTextContainer: {
         flex: 1,
@@ -179,6 +186,8 @@ export const styles = StyleSheet.create({
         lineHeight: 16,
         fontWeight: typography.weight.regular,
     },
+
+    // Informações de Atualização
     updateInfo: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -188,7 +197,14 @@ export const styles = StyleSheet.create({
         borderTopWidth: 1,
         gap: spacing.xs,
     },
+    updateIcon: {
+        marginRight: 4,
+    },
     updateText: {
+        fontSize: typography.size.xs,
+        fontWeight: typography.weight.medium,
+    },
+    metaText: {
         fontSize: typography.size.xs,
         fontWeight: typography.weight.medium,
     },

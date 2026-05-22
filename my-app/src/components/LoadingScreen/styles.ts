@@ -24,8 +24,8 @@ export const styles = StyleSheet.create({
         width: '80%',
     },
     logo: {
-        width: 220,
-        height: 220,
+        width: 180,
+        height: 180,
     },
     title: {
         fontSize: typography.size.xl,

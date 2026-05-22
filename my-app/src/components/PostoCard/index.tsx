@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { Image, StyleProp, ScrollView, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
 import UpdatePriceModal from '../UpdatePriceModal';
@@ -9,9 +9,35 @@ import { PostoProps, usePostoCard } from './usePostoCard';
 import { formatarTempoDecorrido } from '../../utils/dateFormatter';
 import { dicionarioBandeiras } from '../../utils/dictFlags';
 import { getReadableColor } from '../../utils/color';
-import { Badge, Card } from '../ui';
 
 export type { PostoProps, PrecoAtual } from './usePostoCard';
+
+interface LocalBadgeProps {
+    label: string;
+    color: string;
+    textColor?: string;
+    icon?: React.ReactNode;
+}
+
+function LocalBadge({ label, color, textColor = '#111111', icon }: LocalBadgeProps) {
+    return (
+        <View style={[styles.badge, { backgroundColor: color }]}>
+            <View style={styles.badgeContent}>
+                {icon ? <View style={styles.badgeIcon}>{icon}</View> : null}
+                <Text style={[styles.badgeText, { color: textColor }]}>{label}</Text>
+            </View>
+        </View>
+    );
+}
+
+interface LocalCardProps {
+    children: React.ReactNode;
+    style?: StyleProp<ViewStyle>;
+}
+
+function LocalCard({ children, style }: LocalCardProps) {
+    return <View style={[styles.localCardBase, style]}>{children}</View>;
+}
 
 /**
  * Card elegante e minimalista para exibição de posto de combustível.
@@ -22,7 +48,6 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
         colors,
         isDark,
         modalVisible,
-        priceRows,
         closeModal,
         handleGetDirections,
         toggleLike,
@@ -33,16 +58,17 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
     const hasPrecos = data.precos_atuais && data.precos_atuais.length > 0;
 
     return (
-        <Card
+        <LocalCard
             style={[
                 styles.card,
                 {
+                    backgroundColor: colors.surface,
                     borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)',
                 },
             ]}
         >
+            {/* Header - Isolado como clicável */}
             <TouchableOpacity activeOpacity={0.7} onPress={handleOpenUpdateModal}>
-                {/* Header */}
                 <View style={styles.header}>
                     <View style={styles.headerLeft}>
                         <Text
@@ -51,7 +77,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                             {data.nome} 
                         </Text>
                         <View style={styles.addressRow}>
-                            <Badge
+                            <LocalBadge
                                 label={data.distancia}
                                 color={colors.primary + (isDark ? '22' : '12')}
                                 textColor={colors.primary}
@@ -68,14 +94,12 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                     </View>
 
                     <View style={styles.headerRight}>
-                        {/* Logo da Bandeira */}
-                        <View style={[styles.logoContainer]}>
+                        <View style={styles.logoContainer}>
                             {logoSource ? (
                                 <Image source={logoSource} style={styles.logoImage} />
                             ) : null}
                         </View>
 
-                        {/* Botão de Direções */}
                         <TouchableOpacity
                             style={[
                                 styles.directionsButton,
@@ -87,111 +111,110 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                             onPress={handleGetDirections}
                             activeOpacity={0.7}
                             accessibilityRole="button"
-                            accessibilityLabel="Abrir direcoes no mapa"
+                            accessibilityLabel="Abrir direções no mapa"
                         >
                             <Feather name="map-pin" size={16} color={colors.primary} />
                         </TouchableOpacity>
                     </View>
                 </View>
+            </TouchableOpacity>
 
-                {/* Preços */}
-                <View style={styles.priceContainer}>
-                    {hasPrecos ? (
-                        priceRows.map((row, rowIndex) => (
-                            <View key={rowIndex} style={styles.priceRow}>
-                                {row.map((item, index) => (
-                                    <View
-                                        key={`${rowIndex}-${index}`}
-                                        style={styles.priceBlock}
-                                    >
-                                        {(() => {
-                                            const accentColor = getReadableColor(item.cor, isDark);
-                                            return (
-                                                <View
-                                                    style={[
-                                                        styles.priceBadge,
-                                                        {
-                                                            backgroundColor:
-                                                                accentColor + (isDark ? '1A' : '0A'),
-                                                        },
-                                                    ]}
-                                                >
-                                            {/* Header do Badge */}
-                                            <View style={styles.priceBadgeHeader}>
-                                                <View style={styles.fuelLabelContainer}>
-                                                    <Text
-                                                        style={[
-                                                            styles.fuelLabel,
-                                                            { color: accentColor },
-                                                        ]}
-                                                        numberOfLines={2}
-                                                        adjustsFontSizeToFit
-                                                        minimumFontScale={0.85}
-                                                    >
-                                                        {item.tipo}
-                                                    </Text>
-                                                </View>
-                                            </View>
-
-                                            {/* Preço */}
-                                            <View>
-                                                <Text
-                                                    style={[
-                                                        styles.priceValue,
-                                                        { color: accentColor },
-                                                    ]}
-                                                >
-                                                    R$ {item.preco.toFixed(2)}
-                                                </Text>
-                                            </View>
-
-                                            {/* Like Button */}
-                                            <TouchableOpacity
+            {/* Carrossel de Preços - Fora do TouchableOpacity para o Scroll funcionar perfeitamente */}
+            <View style={styles.priceContainer}>
+                {hasPrecos ? (
+                    <ScrollView 
+                        horizontal 
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={styles.pricesScrollContent}
+                    >
+                        {data.precos_atuais.map((item, index) => {
+                            const accentColor = getReadableColor(item.cor, isDark);
+                            return (
+                                <View
+                                    key={index}
+                                    style={[
+                                        styles.priceBlock,
+                                        styles.priceBadge,
+                                        {
+                                            backgroundColor: accentColor + (isDark ? '1A' : '0A'),
+                                        },
+                                    ]}
+                                >
+                                    <View style={styles.priceBadgeHeader}>
+                                        <View style={styles.fuelLabelContainer}>
+                                            <Text
                                                 style={[
-                                                    styles.likeButton,
-                                                    {
-                                                        backgroundColor: item.is_liked
-                                                            ? colors.danger + '15'
-                                                            : isDark
-                                                                ? 'rgba(255,255,255,0.08)'
-                                                                : 'rgba(0,0,0,0.04)',
-                                                    },
+                                                    styles.fuelLabel,
+                                                    { color: accentColor },
                                                 ]}
-                                                onPress={() => toggleLike(item.id)}
-                                                activeOpacity={0.7}
-                                                accessibilityRole="button"
-                                                accessibilityLabel={`Curtir preco de ${item.tipo}`}
+                                                numberOfLines={2}
+                                                adjustsFontSizeToFit
+                                                minimumFontScale={0.85}
                                             >
-                                                <Feather
-                                                    name={item.is_liked ? 'heart' : 'thumbs-up'}
-                                                    size={12}
-                                                    color={
-                                                        item.is_liked
-                                                            ? colors.danger
-                                                            : colors.textSecondary
-                                                    }
-                                                />
-                                                <Text
-                                                    style={[
-                                                        styles.likeCount,
-                                                        {
-                                                            color: item.is_liked
-                                                                ? colors.danger
-                                                                : colors.textSecondary,
-                                                        },
-                                                    ]}
-                                                >
-                                                    {item.likes}
-                                                </Text>
-                                            </TouchableOpacity>
+                                                {item.tipo}
+                                            </Text>
                                         </View>
-                                            );
-                                        })()}
                                     </View>
-                                ))}
-                            </View>
-                        ))
-                    ) : (
+
+                                    <View>
+                                        <Text
+                                            style={[
+                                                styles.priceValue,
+                                                { color: accentColor },
+                                            ]}
+                                            numberOfLines={1}
+                                            adjustsFontSizeToFit
+                                            minimumFontScale={0.9}
+                                        >
+                                            R$ {item.preco.toFixed(2)}
+                                        </Text>
+                                    </View>
+
+                                    <TouchableOpacity
+                                        style={[
+                                            styles.likeButton,
+                                            {
+                                                backgroundColor: item.is_liked
+                                                    ? colors.danger + '15'
+                                                    : isDark
+                                                        ? 'rgba(255,255,255,0.08)'
+                                                        : 'rgba(0,0,0,0.04)',
+                                            },
+                                        ]}
+                                        onPress={() => toggleLike(item.id)}
+                                        activeOpacity={0.7}
+                                        accessibilityRole="button"
+                                        accessibilityLabel={`Curtir preço de ${item.tipo}`}
+                                    >
+                                        <Feather
+                                            name={item.is_liked ? 'heart' : 'thumbs-up'}
+                                            size={12}
+                                            color={
+                                                item.is_liked
+                                                    ? colors.danger
+                                                    : colors.textSecondary
+                                            }
+                                        />
+                                        <Text
+                                            style={[
+                                                styles.likeCount,
+                                                {
+                                                    color: item.is_liked
+                                                        ? colors.danger
+                                                        : colors.textSecondary,
+                                                },
+                                            ]}
+                                        >
+                                            {item.likes}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            );
+                        })}
+                    </ScrollView>
+                ) : (
+                    /* Se não tem preços, a área tracejada inteira vira o botão de adicionar */
+                    <TouchableOpacity activeOpacity={0.7} onPress={handleOpenUpdateModal}>
                         <View
                             style={[
                                 styles.noPriceContainer,
@@ -201,69 +224,55 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                                 },
                             ]}
                         >
-                            <View
-                                style={{
-                                    width: 36,
-                                    height: 36,
-                                    borderRadius: 12,
-                                    backgroundColor: colors.primary + '20',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}
-                            >
+                            <View style={[styles.noPriceIconContainer, { backgroundColor: colors.primary + '20' }]}>
                                 <Feather name="plus" size={18} color={colors.primary} />
                             </View>
                             <View style={styles.noPriceTextContainer}>
-                                <Text
-                                    style={[styles.noPriceTitle, { color: colors.textPrimary }]}
-                                >
+                                <Text style={[styles.noPriceTitle, { color: colors.textPrimary }]}>
                                     Sem preços cadastrados
                                 </Text>
-                                <Text
-                                    style={[styles.noPriceText, { color: colors.textSecondary }]}
-                                >
+                                <Text style={[styles.noPriceText, { color: colors.textSecondary }]}>
                                     Seja o primeiro a informar os preços!
                                 </Text>
                             </View>
                         </View>
-                    )}
-                </View>
+                    </TouchableOpacity>
+                )}
+            </View>
 
-                {/* Update Info */}
-                {hasPrecos && data.autor_ultimaAtualizacao && (
+            {/* Rodapé de Informações - Isolado como clicável */}
+            {hasPrecos && data.autor_ultimaAtualizacao && (
+                <TouchableOpacity activeOpacity={0.7} onPress={handleOpenUpdateModal}>
                     <View
-                        style={[styles.updateInfo,
+                        style={[
+                            styles.updateInfo,
                             {
                                 borderTopColor: isDark
                                     ? 'rgba(255,255,255,0.06)'
                                     : 'rgba(0,0,0,0.04)',
                             },
                         ]}>
-                        <Feather name="user" size={11} color={colors.textSecondary} style={{ marginRight: 4 }}/>
-                        <Text style={[styles.updateText, { color: colors.textSecondary }]}>
-                            Atualizado por
-                        </Text>
-                        <Text style={[styles.authorText, { color: colors.textPrimary }]}>
-                            {data.autor_ultimaAtualizacao}
-                        </Text>
-                        <Text style={[styles.metaText, { color: colors.textSecondary },]}>
-                            {formatarTempoDecorrido(data.data_ultimaAtualizacao)}
+                        <Feather name="user" size={11} color={colors.textSecondary} style={styles.updateIcon}/>
+                        <Text style={[styles.updateText, { color: colors.textSecondary }]}>Atualizado</Text>
+                        <Text style={[styles.metaText, { color: colors.textSecondary }]}>
+                            {formatarTempoDecorrido(data.data_ultimaAtualizacao)}por <Text style={[styles.authorText, { color: colors.textPrimary }]}>
+                            {data.autor_ultimaAtualizacao} </Text>                            
                         </Text>
                     </View>
-                )}
+                </TouchableOpacity>
+            )}
 
-                <UpdatePriceModal
-                    visible={modalVisible}
-                    onClose={closeModal}
-                    postoId={data.id}
-                    postoNome={data.nome}
-                    precosAtuais={data.precos_atuais}
-                    onSuccess={() => {
-                        closeModal();
-                        onRefresh();
-                    }}
-                />
-            </TouchableOpacity>
-        </Card>
+            <UpdatePriceModal
+                visible={modalVisible}
+                onClose={closeModal}
+                postoId={data.id}
+                postoNome={data.nome}
+                precosAtuais={data.precos_atuais}
+                onSuccess={() => {
+                    closeModal();
+                    onRefresh();
+                }}
+            />
+        </LocalCard>
     );
 }

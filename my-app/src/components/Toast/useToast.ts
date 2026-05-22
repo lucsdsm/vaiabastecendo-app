@@ -31,7 +31,7 @@ export function useToast() {
         } else {
             Animated.timing(translateY, {
                 toValue: -100,
-                duration: 300,
+                duration: 250,
                 useNativeDriver: true,
             }).start();
         }
