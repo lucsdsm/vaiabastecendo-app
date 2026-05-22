@@ -48,6 +48,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
         colors,
         isDark,
         modalVisible,
+        modalPosto,
         closeModal,
         handleGetDirections,
         toggleLike,
@@ -265,9 +266,9 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
             <UpdatePriceModal
                 visible={modalVisible}
                 onClose={closeModal}
-                postoId={data.id}
-                postoNome={data.nome}
-                precosAtuais={data.precos_atuais}
+                postoId={(modalPosto ?? data).id}
+                postoNome={(modalPosto ?? data).nome}
+                precosAtuais={(modalPosto ?? data).precos_atuais}
                 onSuccess={() => {
                     closeModal();
                     onRefresh();

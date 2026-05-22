@@ -65,7 +65,8 @@ export function getReadableColor(hex: string, isDark: boolean) {
     }
 
     const minLuminance = isDark ? 0.58 : 0.2;
-    const maxLuminance = isDark ? 0.95 : 0.62;
+    // Reduzido para detectar mais tons muito claros em tema claro
+    const maxLuminance = isDark ? 0.95 : 0.5;
 
     let current = rgb;
     let luminance = relativeLuminance(current);
@@ -78,11 +79,42 @@ export function getReadableColor(hex: string, isDark: boolean) {
     }
 
     if (!isDark && luminance > maxLuminance) {
-        for (let step = 0; step < 6 && luminance > maxLuminance; step += 1) {
-            current = blendColors(current, { r: 0, g: 0, b: 0 }, 0.18);
+        // Aumenta numero de iteracoes e intensidade do blend para escurecer
+        for (let step = 0; step < 8 && luminance > maxLuminance; step += 1) {
+            current = blendColors(current, { r: 0, g: 0, b: 0 }, 0.28);
             luminance = relativeLuminance(current);
+        }
+
+        // Fallback: se ainda estiver muito claro, retornar um tom seguro escuro
+        if (luminance > 0.6) {
+            return '#111111';
         }
     }
 
     return rgbToHex(current);
+}
+
+/**
+ * Retorna a cor de texto (`#111111` ou `#ffffff`) que fornece maior contraste
+ * para a cor de fundo recebida em `hex`.
+ */
+export function getContrastTextColor(hex: string) {
+    const rgb = hexToRgb(hex);
+    if (!rgb) return '#111111';
+
+    const lum = relativeLuminance(rgb);
+
+    const contrastRatio = (l1: number, l2: number) => {
+        const a = Math.max(l1, l2);
+        const b = Math.min(l1, l2);
+        return (a + 0.05) / (b + 0.05);
+    };
+
+    const whiteLum = 1;
+    const blackLum = 0;
+
+    const contrastWithWhite = contrastRatio(whiteLum, lum);
+    const contrastWithBlack = contrastRatio(lum, blackLum);
+
+    return contrastWithBlack >= contrastWithWhite ? '#111111' : '#ffffff';
 }

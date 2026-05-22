@@ -50,6 +50,7 @@ export function usePostoCard(data: PostoProps) {
     const [precosLocais, setPrecosLocais] = useState<PrecoAtual[]>(data.precos_atuais || []);
 
     const [modalVisible, setModalVisible] = useState(false);
+    const [modalPosto, setModalPosto] = useState<PostoProps | null>(null);
 
     const { userData } = useAuth();
 
@@ -87,6 +88,7 @@ export function usePostoCard(data: PostoProps) {
             return;
         }
 
+        setModalPosto(data);
         setModalVisible(true);
     };
 
@@ -133,10 +135,14 @@ export function usePostoCard(data: PostoProps) {
         colors,
         isDark,
         modalVisible,
+        modalPosto,
         priceRows,
         isLoggedIn: !!token,
         userData,
-        closeModal: () => setModalVisible(false),
+        closeModal: () => {
+            setModalVisible(false);
+            setModalPosto(null);
+        },
         handleGetDirections,
         toggleLike: handleToggleLike,
         handleOpenUpdateModal,

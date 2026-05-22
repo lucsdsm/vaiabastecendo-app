@@ -101,16 +101,15 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
     },
     
-    // Área de Preços (Agora Carrossel)
     priceContainer: {
         marginTop: spacing.xs,
     },
     pricesScrollContent: {
-        gap: spacing.md, // Adiciona o espaço entre os blocos durante o scroll
-        paddingRight: spacing.lg, // Dá um respiro no final do carrossel
+        gap: spacing.md, 
+        paddingRight: spacing.lg, 
     },
     priceBlock: {
-        width: 140, // Largura fixa para formar os cartões no carrossel
+        width: 125,
     },
     priceBadge: {
         borderRadius: radius.lg,
@@ -121,7 +120,7 @@ export const styles = StyleSheet.create({
     priceBadgeHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'flex-start',
+        alignItems: 'center',
     },
     fuelLabelContainer: {
         flex: 1,
@@ -131,6 +130,7 @@ export const styles = StyleSheet.create({
         lineHeight: 18,
         fontWeight: typography.weight.semibold,
         letterSpacing: typography.letterSpacing.normal,
+        textAlign: 'center',
     },
     priceValue: {
         fontSize: typography.size.xxl,
@@ -156,7 +156,6 @@ export const styles = StyleSheet.create({
         fontWeight: typography.weight.semibold,
     },
 
-    // Estado Sem Preço
     noPriceContainer: {
         flexDirection: 'row',
         alignItems: 'center',
