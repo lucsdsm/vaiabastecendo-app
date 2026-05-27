@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { useHeader } from './useHeader';
 import { styles } from './styles';
 
 import { useAuth } from '../../contexts/AuthContext';
@@ -12,7 +11,7 @@ import { useAppTheme } from '../../theme/ThemeProvider';
  * Exibe marca, titulo centralizado e controle manual de tema.
 */
 export default function Header() {
-    const { colors, toggleTheme, isDark } = useHeader();
+    const { colors, toggleTheme, isDark } = useAppTheme();
     const { userData } = useAuth();
     const displayName = userData?.primeiro_nome || 'Motorista';
 

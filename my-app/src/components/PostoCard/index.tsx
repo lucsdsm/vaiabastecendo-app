@@ -40,7 +40,7 @@ function LocalCard({ children, style }: LocalCardProps) {
 }
 
 /**
- * Card elegante e minimalista para exibição de posto de combustível.
+ * Card para exibição de posto de combustível.
  * Mostra preços, localização, likes e informações de atualização.
  */
 export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRefresh: () => void }) {
@@ -49,6 +49,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
         isDark,
         modalVisible,
         modalPosto,
+        precosLocais,
         closeModal,
         handleGetDirections,
         toggleLike,
@@ -56,7 +57,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
     } = usePostoCard(data);
 
     const logoSource = dicionarioBandeiras[data.bandeira];
-    const hasPrecos = data.precos_atuais && data.precos_atuais.length > 0;
+    const hasPrecos = precosLocais.length > 0;
 
     return (
         <LocalCard
@@ -68,7 +69,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                 },
             ]}
         >
-            {/* Header - Isolado como clicável */}
+            {/* Header */}
             <TouchableOpacity activeOpacity={0.7} onPress={handleOpenUpdateModal}>
                 <View style={styles.header}>
                     <View style={styles.headerLeft}>
@@ -120,7 +121,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                 </View>
             </TouchableOpacity>
 
-            {/* Carrossel de Preços - Fora do TouchableOpacity para o Scroll funcionar perfeitamente */}
+            {/* Carrossel de Preços */}
             <View style={styles.priceContainer}>
                 {hasPrecos ? (
                     <ScrollView 
@@ -128,7 +129,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                         showsHorizontalScrollIndicator={false}
                         contentContainerStyle={styles.pricesScrollContent}
                     >
-                        {data.precos_atuais.map((item, index) => {
+                        {precosLocais.map((item, index) => {
                             const accentColor = getReadableColor(item.cor, isDark);
                             return (
                                 <View
@@ -241,7 +242,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                 )}
             </View>
 
-            {/* Rodapé de Informações - Isolado como clicável */}
+            {/* Rodapé */}
             {hasPrecos && data.autor_ultimaAtualizacao && (
                 <TouchableOpacity activeOpacity={0.7} onPress={handleOpenUpdateModal}>
                     <View

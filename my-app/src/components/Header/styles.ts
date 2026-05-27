@@ -22,7 +22,9 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'space-between',
         marginLeft: spacing.xl,
+        marginRight: spacing.xl,
         marginTop: spacing.sm,
+        
     },
     titleContainer: {
         flexDirection: 'column',

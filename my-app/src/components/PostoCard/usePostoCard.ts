@@ -136,7 +136,7 @@ export function usePostoCard(data: PostoProps) {
         isDark,
         modalVisible,
         modalPosto,
-        priceRows,
+        precosLocais,
         isLoggedIn: !!token,
         userData,
         closeModal: () => {

@@ -9,6 +9,8 @@ import { styles } from './styles';
 
 import { useNavigation } from '@react-navigation/native';
 
+import Footer from '../../components/Footer';
+
 export default function UserProfileScreen() {
     const { colors } = useAppTheme();
     const navigation = useNavigation();
@@ -24,7 +26,7 @@ export default function UserProfileScreen() {
     } = useUserProfile();
 
     return (
-        <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+        <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
             {/* Header */}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -123,6 +125,8 @@ export default function UserProfileScreen() {
                     </View>
                 )}
             </View>
+
+            <Footer />
         </SafeAreaView>
     );
 }

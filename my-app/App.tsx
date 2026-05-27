@@ -7,6 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider, useAppTheme } from './src/theme/ThemeProvider';
 import LoadingScreen from './src/components/LoadingScreen';
 import HomeScreen from './src/screens/Home';
+import MapScreen from './src/screens/Map';
 import UserProfileScreen from './src/screens/UserProfile';
 
 import { ToastProvider } from './src/contexts/ToastContext';
@@ -37,6 +38,7 @@ const AppNavigator = () => {
         }}
       >
         <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Map" component={MapScreen} />
         <Stack.Screen name="UserProfile" component={UserProfileScreen} />
       </Stack.Navigator>
     </NavigationContainer>

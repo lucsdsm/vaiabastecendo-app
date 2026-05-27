@@ -1,10 +1,8 @@
 import React from 'react';
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { styles } from './styles';
-import { useEmptyState } from './useEmptyState';
 import { useAppTheme } from '../../theme/ThemeProvider';
-import { radius, spacing, typography } from '../../theme/tokens';
 
 interface EmptyStateProps {
     title?: string;
@@ -45,10 +43,10 @@ function Button({
     const isDisabled = disabled || loading;
 
     const containerStyles = [
-        localStyles.base,
-        localStyles[size],
-        localStyles[variant],
-        isDisabled && localStyles.disabled,
+        styles.buttonBase,
+        styles[`button${size.toUpperCase()}` as 'buttonSM' | 'buttonMD' | 'buttonLG'],
+        styles[`button${variant.toUpperCase()}` as 'buttonPRIMARY' | 'buttonSECONDARY' | 'buttonGHOST'],
+        isDisabled && styles.buttonDisabled,
         variant === 'primary' && { backgroundColor: colors.primary },
         variant === 'secondary' && { borderColor: colors.border, backgroundColor: colors.surface },
     ];
@@ -61,14 +59,14 @@ function Button({
             accessibilityLabel={accessibilityLabel || label}
             onPress={onPress}
             disabled={isDisabled}
-            style={({ pressed }) => [containerStyles, pressed && !isDisabled && localStyles.pressed]}
+            style={({ pressed }) => [containerStyles, pressed && !isDisabled && styles.buttonPressed]}
         >
             {loading ? (
                 <ActivityIndicator color={textColor} />
             ) : (
-                <View style={localStyles.content}>
-                    {icon ? <View style={localStyles.icon}>{icon}</View> : null}
-                    <Text style={[localStyles.label, { color: textColor }]}>{label}</Text>
+                <View style={styles.buttonContent}>
+                    {icon ? <View style={styles.buttonIcon}>{icon}</View> : null}
+                    <Text style={[styles.buttonLabel, { color: textColor }]}>{label}</Text>
                 </View>
             )}
         </Pressable>
@@ -85,7 +83,7 @@ export default function EmptyState({
     buttonText = 'Tentar Novamente',
     onRetry 
 }: EmptyStateProps) {
-    const { colors, isDark } = useEmptyState();
+    const { colors, isDark } = useAppTheme();
 
     return (
         <View style={[styles.container, { 
@@ -115,51 +113,3 @@ export default function EmptyState({
         </View>
     );
 }
-
-const localStyles = StyleSheet.create({
-    base: {
-        minHeight: 44,
-        borderRadius: radius.md,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: 'transparent',
-        paddingHorizontal: spacing.xl,
-    },
-    sm: {
-        minHeight: 36,
-        paddingVertical: spacing.sm,
-        paddingHorizontal: spacing.lg,
-    },
-    md: {
-        paddingVertical: spacing.md,
-    },
-    lg: {
-        paddingVertical: spacing.lg,
-    },
-    primary: {},
-    secondary: {},
-    ghost: {
-        backgroundColor: 'transparent',
-        borderColor: 'transparent',
-    },
-    disabled: {
-        opacity: 0.6,
-    },
-    pressed: {
-        opacity: 0.85,
-    },
-    content: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: spacing.sm,
-    },
-    icon: {
-        marginRight: 0,
-    },
-    label: {
-        fontSize: typography.size.sm,
-        fontWeight: typography.weight.bold,
-        letterSpacing: typography.letterSpacing.tight,
-    },
-});

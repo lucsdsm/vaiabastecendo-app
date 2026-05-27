@@ -28,14 +28,14 @@ export function useToast() {
             }, 3000);
 
             return () => clearTimeout(timer);
-        } else {
-            Animated.timing(translateY, {
-                toValue: -100,
-                duration: 250,
-                useNativeDriver: true,
-            }).start();
         }
-    }, [toastData.visible, hideToast, translateY, topOffset]);
+
+        Animated.timing(translateY, {
+            toValue: -100,
+            duration: 250,
+            useNativeDriver: true,
+        }).start();
+    }, [toastData.visible, toastData.message, toastData.type, hideToast, translateY, topOffset]);
 
     const getToastStyle = () => {
         switch (toastData.type) {

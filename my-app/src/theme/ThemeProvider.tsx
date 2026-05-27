@@ -1,4 +1,4 @@
-import React, { createContext, useContext, ReactNode, useState } from 'react';
+import React, { createContext, useCallback, useContext, ReactNode, useMemo, useState } from 'react';
 import { useColorScheme } from 'react-native';
 import { lightTheme, darkTheme, ThemeColors } from './colors';
 
@@ -26,12 +26,17 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
     const colors = isDark ? darkTheme : lightTheme;
 
-    const toggleTheme = () => {
-        setManualTheme(isDark ? 'light' : 'dark');
-    };
+    const toggleTheme = useCallback(() => {
+        setManualTheme((prev) => {
+            const resolvedIsDark = prev ? prev === 'dark' : systemColorScheme === 'dark';
+            return resolvedIsDark ? 'light' : 'dark';
+        });
+    }, [systemColorScheme]);
+
+    const value = useMemo(() => ({ colors, isDark, toggleTheme }), [colors, isDark, toggleTheme]);
 
     return (
-        <ThemeContext.Provider value={{ colors, isDark, toggleTheme }}>
+        <ThemeContext.Provider value={value}>
             {children}
         </ThemeContext.Provider>
     );

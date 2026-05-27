@@ -105,8 +105,11 @@ export const styles = StyleSheet.create({
         marginTop: spacing.xs,
     },
     pricesScrollContent: {
-        gap: spacing.md, 
-        paddingRight: spacing.lg, 
+        gap: spacing.md,
+        paddingRight: spacing.lg,
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     priceBlock: {
         width: 125,

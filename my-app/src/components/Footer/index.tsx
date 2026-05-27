@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Image, Text } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { Feather } from '@expo/vector-icons';
@@ -7,7 +7,6 @@ import { Feather } from '@expo/vector-icons';
 import { styles } from './styles';
 import { useFooter } from './useFooter';
 
-import { useAuth } from '../../contexts/AuthContext';
 
 /**
  * Footer principal da aplicacao.
@@ -15,15 +14,14 @@ import { useAuth } from '../../contexts/AuthContext';
 */
 export default function Footer() {
     const {
-        userData,
         colors,
         activeRoute,
         handleOpenMap,
-        handleUpdatePrice,
     } = useFooter();
 
     const navigation = useNavigation<any>(); 
     const isHomeActive = activeRoute === 'Home';
+    const isMapActive = activeRoute === 'Map';
     const isProfileActive = activeRoute === 'UserProfile';
     const activeColor = colors.primary;
     const inactiveColor = colors.textSecondary;
@@ -41,11 +39,11 @@ export default function Footer() {
                     activeOpacity={0.6}
                     accessibilityRole="button"
                     accessibilityLabel="Abrir mapa"
-                    accessibilityState={{ selected: isHomeActive }}
+                    accessibilityState={{ selected: isMapActive }}
                     onPress={handleOpenMap}
                 >
-                    <Feather name="map" size={22} color={isHomeActive ? activeColor : inactiveColor} />
-                    <Text style={[styles.label, { color: isHomeActive ? activeColor : inactiveColor }]}> 
+                    <Feather name="map" size={22} color={isMapActive ? activeColor : inactiveColor} />
+                    <Text style={[styles.label, { color: isMapActive ? activeColor : inactiveColor }]}> 
                         Mapa
                     </Text>
                 </TouchableOpacity>
@@ -55,12 +53,12 @@ export default function Footer() {
                         style={[styles.centerButton, { backgroundColor: colors.primary }]} 
                         activeOpacity={0.8}
                         accessibilityRole="button"
-                        accessibilityLabel="Atualizar preco"
-                        onPress={handleUpdatePrice}
+                        accessibilityLabel="Ir para lista de postos"
+                        onPress={() => navigation.navigate('Home')}
                     >
-                        <Feather name="plus" size={26} color="#FFFFFF" />
+                        <Feather name="home" size={26} color="#FFFFFF" />
                     </TouchableOpacity>
-                    <Text style={[styles.centerLabel, { color: colors.textSecondary }]}>Atualizar preco</Text>
+                    <Text style={[styles.centerLabel, { color: colors.textSecondary }]}>Postos</Text>
                 </View>
 
                 <TouchableOpacity
