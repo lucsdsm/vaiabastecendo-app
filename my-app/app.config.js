@@ -1,4 +1,6 @@
-{
+import 'dotenv/config';
+
+export default {
   "expo": {
     "name": "Vai Abastecendo",
     "slug": "vaiabastecendo",
@@ -23,7 +25,12 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.lucsdsm.vaiabastecendo"
+      "package": "com.lucsdsm.vaiabastecendo",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDvt2-inWK2ShtBWL2iK-7roPHVzL5psLw"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -31,7 +38,19 @@
     "plugins": [
       "expo-font",
       "expo-secure-store",
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "@rnmapbox/maps",
+        {
+          "RNMAPBOX_MAPS_DOWNLOAD_TOKEN": process.env.MAPBOX_PRIVATE_KEY
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Permita que o Vai Abastecendo use sua localização para encontrar os postos de combustível mais próximos de você."
+        }
+      ]
     ],
     "extra": {
       "eas": {

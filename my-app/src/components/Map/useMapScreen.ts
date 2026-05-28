@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import { useAppTheme } from '../../theme/ThemeProvider';
@@ -19,7 +19,7 @@ export function useMapScreen() {
 
     // Coordenadas iniciais (Você pode puxar a localização atual do dispositivo depois)
     const initialRegion = {
-        latitude: -5.79448, // Centro aproximado de Natal/Parnamirim
+        latitude: -5.79448,
         longitude: -35.2110,
         latitudeDelta: 0.05,
         longitudeDelta: 0.05,
@@ -32,6 +32,17 @@ export function useMapScreen() {
     const handleCloseCard = () => {
         setSelectedPosto(null);
     };
+
+    // Solicita permissão e obtém a localização do usuário quando a tela é focada
+    useEffect(() => {
+        (async () => {
+            const { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                console.log('Permissão de localização negada pelo usuário');
+                // Aqui você poderia usar o seu Toast para avisar o usuário
+            }
+        })();
+    }, []);
 
     useFocusEffect(
         useCallback(() => {

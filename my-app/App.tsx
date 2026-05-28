@@ -6,8 +6,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { ThemeProvider, useAppTheme } from './src/theme/ThemeProvider';
 import LoadingScreen from './src/components/LoadingScreen';
-import HomeScreen from './src/screens/Home';
-import MapScreen from './src/screens/Map';
+import HomeScreen from './src/screens/PostosList';
+import MapScreen from './src/screens/MapView';
 import UserProfileScreen from './src/screens/UserProfile';
 
 import { ToastProvider } from './src/contexts/ToastContext';
