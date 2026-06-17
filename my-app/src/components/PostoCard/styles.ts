@@ -58,7 +58,7 @@ export const styles = StyleSheet.create({
     headerRight: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 4,
+        gap: spacing.xs,
     },
     logoContainer: {
         width: 40,
@@ -171,7 +171,7 @@ export const styles = StyleSheet.create({
     noPriceIconContainer: {
         width: 36,
         height: 36,
-        borderRadius: 12,
+        borderRadius: radius.md,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -199,7 +199,7 @@ export const styles = StyleSheet.create({
         borderTopWidth: 1,
     },
     updateIcon: {
-        marginRight: 4,
+        marginRight: spacing.xs,
     },
     updateText: {
         fontSize: typography.size.xs,

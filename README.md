@@ -12,10 +12,12 @@ Aplicativo colaborativo para mapeamento e atualização de preços de combustív
 
 ## 🏗 Estrutura
 
-* `src/screens/`: telas principais da aplicação (ex: `HomeScreen`).
-* `src/components/`: componentes visuais reutilizáveis (`PostoCard`, `UpdatePriceModal`, `ErrorCard`).
+* `src/components/`: componentes visuais reutilizáveis (`PostoCard`, `UpdatePriceModal`, `Header`, etc).
+* `src/contexts/`: gerenciamento de estado global (`AuthContext`, `CombustivelContext`, `ToastContext`).
 * `src/hooks/`: lógica de negócio e consumo de API isolada (`usePostos.ts`).
+* `src/screens/`: telas principais da aplicação (`MapView`, `PostosList`, `UserProfile`).
 * `src/theme/`: configuração global de cores e tipografia (Modo Claro/Escuro).
+* `src/utils/`: funções e utilitários auxiliares (`color.ts`, `dateFormatter.ts`, `dictFlags.ts`, `keyboardPadding.ts`).
 
 ## 🚀 Localmente
 

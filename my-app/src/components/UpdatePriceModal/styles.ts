@@ -1,4 +1,5 @@
 import { Platform, StyleSheet } from 'react-native';
+import { radius, spacing, typography, elevation } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     overlay: {
@@ -7,10 +8,10 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     modalContent: {
-        borderTopLeftRadius: 32,
-        borderTopRightRadius: 32,
-        paddingTop: 8,
-        paddingHorizontal: 20,
+        borderTopLeftRadius: radius.xl + 8, // 32
+        borderTopRightRadius: radius.xl + 8, // 32
+        paddingTop: spacing.sm,
+        paddingHorizontal: spacing.xl,
         paddingBottom: 40,
         ...Platform.select({
             ios: {
@@ -20,76 +21,76 @@ export const styles = StyleSheet.create({
                 shadowRadius: 20,
             },
             android: {
-                elevation: 8,
+                elevation: elevation.high - 2, // 8
             },
         }),
     },
     handle: {
         width: 40,
-        height: 4,
-        borderRadius: 2,
+        height: spacing.xs,
+        borderRadius: radius.sm / 4,
         alignSelf: 'center',
-        marginBottom: 20,
+        marginBottom: spacing.xl,
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 4,
+        marginBottom: spacing.xs,
     },
     title: {
-        fontSize: 20,
-        fontWeight: '700',
+        fontSize: typography.size.xl,
+        fontWeight: typography.weight.bold,
         letterSpacing: -0.4,
     },
     closeButton: {
         width: 36,
         height: 36,
-        borderRadius: 12,
+        borderRadius: radius.md,
         justifyContent: 'center',
         alignItems: 'center',
     },
     subtitle: {
-        fontSize: 14,
-        fontWeight: '500',
-        marginBottom: 24,
+        fontSize: typography.size.sm,
+        fontWeight: typography.weight.medium,
+        marginBottom: spacing.xxl,
     },
     section: {
-        marginBottom: 24,
+        marginBottom: spacing.xxl,
     },
     label: {
-        fontSize: 13,
-        fontWeight: '600',
+        fontSize: typography.size.xs + 1, // 13
+        fontWeight: typography.weight.semibold,
         textTransform: 'uppercase',
         letterSpacing: 0.5,
-        marginBottom: 12,
+        marginBottom: spacing.md,
     },
 
-    // --- Fuel scroll ---
     fuelScroll: {
         flexGrow: 0,
+        borderRadius: radius.lg,
     },
     fuelScrollContent: {
-        gap: 8,
-        paddingRight: 4,
+        gap: spacing.sm,
+        paddingRight: spacing.xs,
     },
     fuelChip: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 8,
-        paddingHorizontal: 16,
+        gap: spacing.sm,
+        paddingHorizontal: spacing.lg,
         paddingVertical: 10,
-        borderRadius: 50,
+        borderRadius: radius.pill,
         borderWidth: 1.5,
     },
     fuelChipDot: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
+        width: spacing.sm,
+        height: spacing.sm,
+        borderRadius: radius.sm / 2, // 4
     },
     fuelChipText: {
-        fontSize: 13,
-        fontWeight: '600',
+        fontSize: typography.size.xs + 1,
+        fontWeight: typography.weight.semibold,
         letterSpacing: -0.1,
     },
 
@@ -97,54 +98,54 @@ export const styles = StyleSheet.create({
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: 20,
+        borderRadius: radius.xl - 4, // 20
         borderWidth: 1.5,
-        paddingHorizontal: 20,
-        paddingVertical: 4,
+        paddingHorizontal: spacing.xl,
+        paddingVertical: spacing.xs,
     },
     currencyPrefix: {
-        fontSize: 18,
-        fontWeight: '600',
-        marginRight: 8,
+        fontSize: typography.size.lg,
+        fontWeight: typography.weight.semibold,
+        marginRight: spacing.sm,
     },
     input: {
         flex: 1,
-        fontSize: 32,
-        fontWeight: '700',
+        fontSize: typography.size.hero + 4, // 32
+        fontWeight: typography.weight.bold,
         textAlign: 'center',
-        paddingVertical: 16,
+        paddingVertical: spacing.lg,
         letterSpacing: -1,
     },
     currencySuffix: {
-        fontSize: 14,
-        fontWeight: '500',
-        marginLeft: 8,
+        fontSize: typography.size.sm,
+        fontWeight: typography.weight.medium,
+        marginLeft: spacing.sm,
     },
 
     // --- Submit ---
     submitButton: {
-        borderRadius: 16,
+        borderRadius: radius.lg,
         paddingVertical: 18,
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
-        gap: 8,
+        gap: spacing.sm,
         ...Platform.select({
             ios: {
                 shadowColor: '#000',
                 shadowOffset: { width: 0, height: 4 },
                 shadowOpacity: 0.15,
-                shadowRadius: 8,
+                shadowRadius: radius.sm,
             },
             android: {
-                elevation: 4,
+                elevation: elevation.low + 2, // 4
             },
         }),
     },
     submitButtonText: {
         color: '#FFF',
-        fontSize: 16,
-        fontWeight: '700',
+        fontSize: typography.size.md,
+        fontWeight: typography.weight.bold,
         letterSpacing: -0.2,
     },
 });
