@@ -55,3 +55,8 @@ O projeto está configurado para gerar builds na nuvem usando o EAS.
     ```
     eas build -p android --profile preview
     ```
+
+4. Ou, se preferir, baixe o APK dessa versão:
+    ```
+    https://drive.google.com/file/d/1A0TR-Lwu7ptXsZBSNRcB85rHcT2YuwxH/view?usp=sharing
+    ```
