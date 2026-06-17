@@ -147,12 +147,12 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: spacing.xs,
-        paddingHorizontal: spacing.md,
+        paddingHorizontal: spacing.lg,
         paddingVertical: spacing.sm,
         borderRadius: radius.pill,
         alignSelf: 'center',
-        minHeight: 44,
-        minWidth: 44,
+        minHeight: 12,
+        minWidth: 12,
     },
     likeCount: {
         fontSize: typography.size.xs,
@@ -197,7 +197,6 @@ export const styles = StyleSheet.create({
         marginTop: spacing.md,
         paddingTop: spacing.md,
         borderTopWidth: 1,
-        gap: spacing.xs,
     },
     updateIcon: {
         marginRight: 4,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     View,
     Text,
@@ -10,12 +10,17 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
     ScrollView,
+    Animated,
+    Dimensions,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
 import { PrecoAtualResumo, useUpdatePriceModal } from './useUpdatePriceModal';
 import { getReadableColor } from '../../utils/color';
+import { useKeyboardPadding } from '../../utils/keyboardPadding';
+
+const { height: screenHeight } = Dimensions.get('window');
 
 interface UpdatePriceModalProps {
     visible: boolean;
@@ -35,7 +40,9 @@ export default function UpdatePriceModal({
     onSuccess,
 }: UpdatePriceModalProps) {
     const { colors, isDark } = useAppTheme();
-    const [keyboardPadding, setKeyboardPadding] = useState(0);
+    const { keyboardPadding, setKeyboardPadding } = useKeyboardPadding();
+
+    const translateY = useRef(new Animated.Value(screenHeight)).current;
 
     const {
         fuelTypes,
@@ -47,34 +54,38 @@ export default function UpdatePriceModal({
         handleUpdate,
     } = useUpdatePriceModal({ visible, postoId, precosAtuais, onClose, onSuccess });
 
+    // Animação de slide para o modal
     useEffect(() => {
-        const showEvent = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
-        const hideEvent = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
+        if (visible) {
+            Animated.timing(translateY, {
+                toValue: 0,
+                duration: 250,
+                useNativeDriver: true,
+            }).start();
+        } else {
+            translateY.setValue(screenHeight);
+        }
+    }, [visible]);
 
-        const showSubscription = Keyboard.addListener(showEvent, (e) => {
-            setKeyboardPadding(e.endCoordinates.height);
-        });
-
-        const hideSubscription = Keyboard.addListener(hideEvent, () => {
-            setKeyboardPadding(0);
-        });
-
-        return () => {
-            showSubscription.remove();
-            hideSubscription.remove();
-        };
-    }, []);
-
+    // Garante que o padding seja resetado ao fechar o modal
     useEffect(() => {
         if (!visible) setKeyboardPadding(0);
     }, [visible]);
 
     return (
-        <Modal visible={visible} animationType="slide" transparent statusBarTranslucent>
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Modal visible={visible} animationType="fade" transparent statusBarTranslucent onRequestClose={onClose}>
+            <TouchableWithoutFeedback onPress={onClose}>
                 <View style={[styles.overlay, { paddingBottom: keyboardPadding }]}>
-                    <TouchableWithoutFeedback>
-                        <View style={[styles.modalContent, { backgroundColor: colors.surface }]}>
+                    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                        <Animated.View
+                            style={[
+                                styles.modalContent,
+                                {
+                                    backgroundColor: colors.surface,
+                                    transform: [{ translateY }]
+                                }
+                            ]}
+                        >
 
                             {/* Handle indicator */}
                             <View style={[styles.handle, { backgroundColor: colors.textSecondary + '30' }]} />
@@ -204,7 +215,7 @@ export default function UpdatePriceModal({
                                 )}
                             </TouchableOpacity>
 
-                        </View>
+                        </Animated.View>
                     </TouchableWithoutFeedback>
                 </View>
             </TouchableWithoutFeedback>

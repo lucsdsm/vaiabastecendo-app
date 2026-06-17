@@ -255,7 +255,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                             },
                         ]}>
                         <Feather name="user" size={11} color={colors.textSecondary} style={styles.updateIcon}/>
-                        <Text style={[styles.updateText, { color: colors.textSecondary }]}>Atualizado</Text>
+                        <Text style={[styles.updateText, { color: colors.textSecondary }]}>Atualizado </Text>
                         <Text style={[styles.metaText, { color: colors.textSecondary }]}>
                             {formatarTempoDecorrido(data.data_ultimaAtualizacao)}por <Text style={[styles.authorText, { color: colors.textPrimary }]}>
                             {data.autor_ultimaAtualizacao} </Text>                            
