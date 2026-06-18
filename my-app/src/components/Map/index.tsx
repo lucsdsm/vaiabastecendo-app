@@ -7,7 +7,7 @@ import { PostoProps } from '../PostoCard';
 import PostoMarker from '../PostoMarker';
 import { styles } from './styles';
 
-Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN ?? '');
+Mapbox.setAccessToken(process.env.EXPO_PUBLIC_MAPBOX_ACCESS_TOKEN ?? 'pk.eyJ1IjoibHVjc2RzbSIsImEiOiJjbW4zZjE0MWgxZ2dtMm9vcWUwYThjZzVzIn0.Ry9gj1mKor4g9Wc7CuGepA');
 
 interface MapProps {
     postos: PostoProps[];
@@ -38,7 +38,7 @@ export default function Map({
         
         cameraRef.current.setCamera({
             centerCoordinate: [targetRegion.longitude, targetRegion.latitude],
-            zoomLevel: 15,
+            zoomLevel: 13,
             animationDuration: 350,
         });
     }, [recenterToken, targetRegion]);
@@ -48,7 +48,7 @@ export default function Map({
             onSelectPosto(posto);
             cameraRef.current?.setCamera({
                 centerCoordinate: [Number(posto.longitude), Number(posto.latitude)],
-                zoomLevel: 16,
+                zoomLevel: 15,
                 animationDuration: 350,
             });
         },

@@ -16,12 +16,12 @@ export function useLoadingScreen(onFinish: () => void, canFinish: boolean) {
         if (!canFinish) {
             return;
         }
-        // A largura da barra usa thread JS porque width nao suporta native driver.
+        
         Animated.timing(progressAnim, {
-            toValue: 100,
+            toValue: 100, 
             duration: 2000,
             easing: Easing.out(Easing.ease),
-            useNativeDriver: false,
+            useNativeDriver: true, 
         }).start(() => {
             Animated.timing(opacityAnim, {
                 toValue: 0,
@@ -31,14 +31,14 @@ export function useLoadingScreen(onFinish: () => void, canFinish: boolean) {
         });
     }, [canFinish, onFinish, opacityAnim, progressAnim]);
 
-    const widthInterpolated = progressAnim.interpolate({
+    const rotateInterpolated = progressAnim.interpolate({
         inputRange: [0, 100],
-        outputRange: ['0%', '100%'],
+        outputRange: ['-90deg', '90deg'] 
     });
 
     return {
         colors,
         opacityAnim,
-        widthInterpolated,
+        rotateInterpolated,
     };
 }

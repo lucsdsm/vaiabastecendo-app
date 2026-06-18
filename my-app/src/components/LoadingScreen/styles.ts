@@ -38,15 +38,53 @@ export const styles = StyleSheet.create({
         marginBottom: spacing.xxl,
         textAlign: 'center',
     },
-    progressBarContainer: {
-        width: '100%',
-        height: 8,
-        borderRadius: radius.sm,
-        borderWidth: 1,
+    gaugeContainer: {
+        width: 200,
+        height: 100, 
         overflow: 'hidden',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        marginTop: spacing.md,
     },
-    progressBar: {
-        height: '100%',
-        borderRadius: radius.sm,
+    gaugeBackground: {
+        width: 200,
+        height: 200, 
+        borderRadius: 100,
+        borderWidth: 12,
+        borderBottomWidth: 0, 
+        position: 'absolute',
+        top: 0,
     },
+    gaugeLabels: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: 160,
+        position: 'absolute',
+        bottom: 5,
+    },
+    labelText: {
+        fontSize: typography.size.md,
+        fontWeight: typography.weight.bold,
+    },
+    needleWrapper: {
+        width: 200,
+        height: 200, 
+        position: 'absolute',
+        top: 0,
+        alignItems: 'center',
+        justifyContent: 'flex-start', 
+    },
+    needle: {
+        width: 6,
+        height: 85,
+        borderRadius: 3,
+        marginTop: 15,
+    },
+    needleCenter: {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        position: 'absolute',
+        bottom: -10, 
+    }
 });
