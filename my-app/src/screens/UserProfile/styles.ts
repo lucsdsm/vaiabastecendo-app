@@ -46,6 +46,12 @@ export const styles = StyleSheet.create({
         marginLeft: spacing.xl,
         justifyContent: 'center',
     },
+    nameContainer: {
+        flexDirection: 'row',         
+    },
+    verifiedIcon: {
+        marginLeft: spacing.xs,   
+    },
     usernameText: {
         fontSize: typography.size.lg,
         fontWeight: typography.weight.bold,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, StyleProp, ScrollView, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
 
 import UpdatePriceModal from '../UpdatePriceModal';
 import { styles } from './styles';
@@ -243,7 +243,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
             </View>
 
             {/* Rodapé */}
-            {hasPrecos && data.autor_ultimaAtualizacao && (
+            {hasPrecos && data?.autor_ultimaAtualizacao?.nome && (
                 <TouchableOpacity activeOpacity={0.7} onPress={handleOpenUpdateModal}>
                     <View
                         style={[
@@ -256,10 +256,25 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                         ]}>
                         <Feather name="user" size={11} color={colors.textSecondary} style={styles.updateIcon}/>
                         <Text style={[styles.updateText, { color: colors.textSecondary }]}>Atualizado </Text>
-                        <Text style={[styles.metaText, { color: colors.textSecondary }]}>
-                            {formatarTempoDecorrido(data.data_ultimaAtualizacao)}por <Text style={[styles.authorText, { color: colors.textPrimary }]}>
-                            {data.autor_ultimaAtualizacao} </Text>                            
-                        </Text>
+                        
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Text style={[styles.metaText, { color: colors.textSecondary }]}>
+                                {formatarTempoDecorrido(data.data_ultimaAtualizacao)}por{' '}
+                                <Text style={[styles.authorText, { color: colors.textPrimary }]}>
+                                    {data.autor_ultimaAtualizacao.nome}
+                                </Text>
+                            </Text>
+
+                            {/* Exibe o selo azul de verificado ao lado do nome do autor */}
+                            {data.autor_ultimaAtualizacao.verificado && (
+                                <MaterialIcons 
+                                    name="verified" 
+                                    size={16}
+                                    color={colors.primary}
+                                    style={{ marginLeft: 3 }}
+                                />
+                            )}
+                        </View>
                     </View>
                 </TouchableOpacity>
             )}

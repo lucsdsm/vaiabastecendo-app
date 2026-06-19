@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
         width: 200,
         height: 200, 
         borderRadius: 100,
-        borderWidth: 12,
+        borderWidth: 2,
         borderBottomWidth: 0, 
         position: 'absolute',
         top: 0,

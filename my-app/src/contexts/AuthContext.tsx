@@ -12,6 +12,7 @@ interface UserData {
     foto: string | null;
     likes_recebidos?: number;
     likes_deferidos?: number;
+    verificado?: boolean;
 }
 
 interface AuthContextData {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator, Image } from 'react-native';
-import { Feather, FontAwesome5 } from '@expo/vector-icons';
+import { Feather, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useAppTheme } from '../../theme/ThemeProvider';
@@ -63,11 +63,20 @@ export default function UserProfileScreen() {
                             )}
 
                             <View style={styles.infoSection}>
-                                <Text style={[styles.usernameText, { color: colors.textPrimary }]}>
-                                    {userData?.username 
-                                        ? userData.username
-                                        : 'Motorista'}
-                                </Text>
+                                <View style={styles.nameContainer}>
+                                    <Text style={[styles.usernameText, { color: colors.textPrimary }]}>
+                                        {userData?.username ? userData.username : 'Motorista'}
+                                    </Text>
+
+                                    {userData?.verificado && (
+                                        <MaterialIcons 
+                                            name="verified" 
+                                            size={24}
+                                            color={colors.primary}
+                                            style={styles.verifiedIcon} 
+                                        />
+                                    )}
+                                </View>
 
                                 {/* Estatísticas de Curtidas */}
                                 <View style={styles.statsContainer}>
@@ -80,7 +89,7 @@ export default function UserProfileScreen() {
                                     
                                     <View style={styles.statItem}>
                                         <Text style={[styles.statNumber, { color: colors.textPrimary }]}>
-                                            {userData?.likes_dados || 0}
+                                            {userData?.likes_deferidos || 0}
                                         </Text>
                                         <Text style={[styles.statLabel, { color: colors.textSecondary }]}> Deferidas </Text>
                                     </View>

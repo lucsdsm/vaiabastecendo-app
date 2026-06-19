@@ -32,7 +32,7 @@ export function useLoadingScreen(onFinish: () => void, canFinish: boolean) {
     }, [canFinish, onFinish, opacityAnim, progressAnim]);
 
     const rotateInterpolated = progressAnim.interpolate({
-        inputRange: [0, 100],
+        inputRange: [-5, 105],
         outputRange: ['-90deg', '90deg'] 
     });
 

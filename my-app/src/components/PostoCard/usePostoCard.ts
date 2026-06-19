@@ -34,7 +34,10 @@ export interface PostoProps {
     endereco: string;
     bandeira: string;
     data_ultimaAtualizacao: string;
-    autor_ultimaAtualizacao: string;
+    autor_ultimaAtualizacao: {
+        nome: string;
+        verificado: boolean;
+    };
     precos_atuais: PrecoAtual[];
 }
 
