@@ -55,8 +55,6 @@ export const styles = StyleSheet.create({
         fontWeight: typography.weight.semibold,
         letterSpacing: -0.1,
     },
-
-    // --- Price input ---
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -98,7 +96,7 @@ export const styles = StyleSheet.create({
                 shadowRadius: radius.sm,
             },
             android: {
-                elevation: elevation.low + 2, // 4
+                elevation: elevation.low,
             },
         }),
     },

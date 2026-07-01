@@ -4,17 +4,6 @@ import { radius, spacing, typography } from '../../theme/tokens';
 export const styles = StyleSheet.create({
     container: {
         paddingHorizontal: spacing.xs,
-        ...Platform.select({
-            ios: {
-                // shadowColor: '#000',
-                // shadowOffset: { width: 0, height: 2 },
-                // shadowOpacity: 0.1,
-                // shadowRadius: 4,
-            },
-            android: {
-                // elevation: 4,
-            },
-        }),
         zIndex: 10,
     },
     content: {

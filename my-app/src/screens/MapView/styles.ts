@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { spacing } from '../../theme/tokens';
+import { spacing, elevation } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
@@ -19,6 +19,6 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-end', 
     },
     cardWrapper: {
-        elevation: 8,
+        elevation: elevation.low,
     }
 });

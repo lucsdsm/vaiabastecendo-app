@@ -24,7 +24,7 @@ export default function UpdatePrice() {
     const { postoId, postoNome, precosAtuais } = route.params as UpdatePriceRouteParams;
 
     const handleSuccess = () => {
-        navigation.navigate('Home' as never, { refreshKey: Date.now() } as never);
+        (navigation.navigate as any)('Home', { refreshKey: Date.now() });
     };
 
     return (

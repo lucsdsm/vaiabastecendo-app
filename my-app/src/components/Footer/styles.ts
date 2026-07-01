@@ -1,5 +1,5 @@
 import { Platform, StyleSheet } from 'react-native';
-import { radius, spacing, typography } from '../../theme/tokens';
+import { radius, spacing, typography, elevation } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
                 shadowRadius: 4,
             },
             android: {
-                elevation: 8,
+                elevation: elevation.low, 
             },
         }),
         zIndex: 10,
@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
                 shadowRadius: 4,
             },
             android: {
-                elevation: 6,
+                elevation: elevation.low,
             },
         }),
     },

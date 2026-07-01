@@ -1,5 +1,5 @@
 import { Platform, StyleSheet } from 'react-native';
-import { radius, spacing, typography } from '../../theme/tokens';
+import { radius, spacing, typography, elevation } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     localCardBase: {
@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
                 shadowRadius: 12,
             },
             android: {
-                elevation: 2,
+                elevation: elevation.low,
             },
         }),
     },
