@@ -2,7 +2,6 @@ import { Platform, StyleSheet } from 'react-native';
 import { radius, spacing, typography } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
-    // Estilos transferidos do localStyles
     localCardBase: {
         borderRadius: radius.xl,
         padding: spacing.lg,
@@ -28,8 +27,6 @@ export const styles = StyleSheet.create({
         fontSize: typography.size.xs,
         fontWeight: typography.weight.semibold,
     },
-
-    // Estilos do Card Principal
     card: {
         width: '100%',
         marginBottom: spacing.lg,
@@ -100,7 +97,6 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    
     priceContainer: {
         marginTop: spacing.xs,
     },
@@ -188,8 +184,6 @@ export const styles = StyleSheet.create({
         lineHeight: 16,
         fontWeight: typography.weight.regular,
     },
-
-    // Informações de Atualização
     updateInfo: {
         flexDirection: 'row',
         alignItems: 'center',

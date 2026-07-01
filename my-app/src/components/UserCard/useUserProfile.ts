@@ -12,7 +12,7 @@ WebBrowser.maybeCompleteAuthSession();
 /**
  * Gerencia autenticacao Google e carregamento do perfil do usuario.
  */
-export function useUserProfile() {
+export function useUserCard() {
     const [loading, setLoading] = useState(false);
     const { token, userData, signIn, signOut, updateUserData } = useAuth();
 
@@ -100,7 +100,7 @@ export function useUserProfile() {
      */
     const handleMockLogin = () => {
         if (__DEV__) {
-            const mockToken = ""
+            const mockToken = "ya29.a0AT3oNZ-Ib9qeswx24GHx8i02Y7EJNCKn0h_FA1aF0rPIP1GFlolO_38HCR32ZWObsHBdgujntFu_uyQNLiSnG8sxywv13JjYI3VjSSOnnJ_uL8kfGaHotvd9w57gM6_8z0nBIYf9sffq0uh6cmEt9urnw9i_ze85maPKNagiFNAR2hjPiqdKzUXOh9rqZoK4C3wWY9oaCgYKAZsSARQSFQHGX2MiZmDHOGxGuSemiFHjmhItSw0206"
             console.log("Login simulado com token:", mockToken);
             enviarTokenParaDjango(mockToken);
         }

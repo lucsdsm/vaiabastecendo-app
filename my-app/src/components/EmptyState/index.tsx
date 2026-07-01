@@ -77,8 +77,8 @@ function Button({
  * Estado vazio para falha de conectividade com opcao de nova tentativa .
  */
 export default function EmptyState({ 
-    title = 'Servidor Indisponível',
-    message = 'Não foi possível conectar-se ao servidor no momento.', 
+    title = 'Dados Indisponíveis',
+    message = 'Não foi possível receber os dados dos postos no momento.', 
     iconName = 'wifi-off',
     buttonText = 'Tentar Novamente',
     onRetry 
