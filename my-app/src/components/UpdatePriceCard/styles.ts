@@ -12,41 +12,12 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     cardContent: {
-        borderRadius: radius.xl + 8,
         paddingTop: spacing.sm,
         paddingHorizontal: spacing.xl,
         paddingBottom: 40,
-        ...Platform.select({
-            ios: {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: -4 },
-                shadowOpacity: 0.08,
-                shadowRadius: 20,
-            },
-            android: {
-                elevation: elevation.high - 2, // 8
-            },
-        }),
-    },
-    handle: {
-        width: 40,
-        height: spacing.xs,
-        borderRadius: radius.sm / 4,
-        alignSelf: 'center',
-        marginBottom: spacing.xl,
-    },
-    title: {
-        fontSize: typography.size.xl,
-        fontWeight: typography.weight.bold,
-        letterSpacing: -0.4,
-        marginBottom: spacing.xs,
-    },
-    subtitle: {
-        fontSize: typography.size.sm,
-        fontWeight: typography.weight.medium,
-        marginBottom: spacing.xxl,
     },
     section: {
+        marginTop: spacing.xxl,
         marginBottom: spacing.xxl,
     },
     label: {

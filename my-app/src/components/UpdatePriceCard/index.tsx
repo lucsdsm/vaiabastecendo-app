@@ -34,12 +34,7 @@ export default function UpdatePriceCard({
     } = useUpdatePriceCard({ postoId, precosAtuais, onSuccess });
 
     const content = (
-        <View style={[styles.cardContent, { backgroundColor: colors.surface }] }>
-            <View style={[styles.handle, { backgroundColor: colors.textSecondary + '30' }]} />
-
-            <Text style={[styles.title, { color: colors.textPrimary }]}>Atualizar Preco</Text>
-            <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{postoNome}</Text>
-
+        <View style={[styles.cardContent, { backgroundColor: colors.background }] }>
             <View style={styles.section}>
                 <Text style={[styles.label, { color: colors.textSecondary }]}>Combustivel</Text>
                 <ScrollView

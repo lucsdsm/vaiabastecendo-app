@@ -6,8 +6,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useAppTheme } from '../../theme/ThemeProvider';
-import UpdatePriceCard from '../../components/UpdatePriceModal';
-import { PrecoAtualResumo } from '../../components/UpdatePriceModal/useUpdatePriceModal';
+import UpdatePriceCard from '../../components/UpdatePriceCard';
+import { PrecoAtualResumo } from '../../components/UpdatePriceCard/useUpdatePriceModal';
 import { styles } from './styles';
 
 type UpdatePriceRouteParams = {
