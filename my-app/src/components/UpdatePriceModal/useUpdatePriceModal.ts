@@ -11,21 +11,17 @@ export interface PrecoAtualResumo {
 }
 
 interface UseUpdatePriceModalParams {
-    visible: boolean;
     postoId: string;
     precosAtuais: PrecoAtualResumo[];
-    onClose: () => void;
     onSuccess: () => void;
 }
 
 /**
  * Gerencia selecao de combustivel, validacao de preco e envio de atualizacao.
  */
-export function useUpdatePriceModal({
-    visible,
+export function useUpdatePriceCard({
     postoId,
     precosAtuais,
-    onClose,
     onSuccess,
 }: UseUpdatePriceModalParams) {
     const { token } = useAuth();
@@ -35,26 +31,21 @@ export function useUpdatePriceModal({
     const [price, setPrice] = useState('');
     const [loading, setLoading] = useState(false);
 
-    // Gatilho de abertura do modal
     useEffect(() => {
-        if (visible) {
-            setPrice('');
-            // Se abriu e a lista está vazia, força a busca
-            if (fuelTypes.length === 0 && !isFuelLoading) {
-                refetchFuelTypes();
-            }
-        } else {
-            // Limpa a seleção ao fechar para evitar sujeira de estado
-            setSelectedFuel(null);
-        }
-    }, [visible]);
+        setPrice('');
+        setSelectedFuel(null);
 
-    // Gatilho de auto-seleção (escuta mudanças na lista)
+        // Se entrou na tela e a lista está vazia, força a busca.
+        if (fuelTypes.length === 0 && !isFuelLoading) {
+            refetchFuelTypes();
+        }
+    }, []);
+
     useEffect(() => {
-        if (visible && fuelTypes.length > 0 && !selectedFuel) {
+        if (fuelTypes.length > 0 && !selectedFuel) {
             setSelectedFuel(fuelTypes[0].id);
         }
-    }, [visible, fuelTypes, selectedFuel]);
+    }, [fuelTypes, selectedFuel]);
 
     const fuelTypeRows = useMemo(() => {
         const rows: (typeof fuelTypes)[] = [];
@@ -137,7 +128,6 @@ export function useUpdatePriceModal({
 
             setPrice('');
             onSuccess();
-            onClose();
             showToast('Preço atualizado com sucesso!', 'success');
         } catch (error: any) {
             console.error('Erro da API:', error.response?.data || error.message);

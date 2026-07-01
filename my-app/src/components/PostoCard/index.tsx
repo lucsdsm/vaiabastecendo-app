@@ -2,7 +2,6 @@ import React from 'react';
 import { Image, StyleProp, ScrollView, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 
-import UpdatePriceModal from '../UpdatePriceModal';
 import { styles } from './styles';
 import { PostoProps, usePostoCard } from './usePostoCard';
 
@@ -47,14 +46,11 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
     const {
         colors,
         isDark,
-        modalVisible,
-        modalPosto,
         precosLocais,
-        closeModal,
         handleGetDirections,
         toggleLike,
         handleOpenUpdateModal,
-    } = usePostoCard(data);
+    } = usePostoCard(data, onRefresh);
 
     const logoSource = dicionarioBandeiras[data.bandeira];
     const hasPrecos = precosLocais.length > 0;
@@ -278,18 +274,6 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                     </View>
                 </TouchableOpacity>
             )}
-
-            <UpdatePriceModal
-                visible={modalVisible}
-                onClose={closeModal}
-                postoId={(modalPosto ?? data).id}
-                postoNome={(modalPosto ?? data).nome}
-                precosAtuais={(modalPosto ?? data).precos_atuais}
-                onSuccess={() => {
-                    closeModal();
-                    onRefresh();
-                }}
-            />
         </LocalCard>
     );
 }

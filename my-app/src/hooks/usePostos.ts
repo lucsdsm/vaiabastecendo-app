@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import * as Location from 'expo-location';
 import axios from 'axios';
 import { PostoProps } from '../components/PostoCard';
@@ -34,7 +34,7 @@ export function usePostos() {
     const { token, loading: authLoading } = useAuth();
     const lastTokenRef = useRef<string | null | undefined>(undefined);
 
-    const fetchPostos = async (isRefreshing = false) => {
+    const fetchPostos = useCallback(async (isRefreshing = false) => {
         if (isRefreshing) {
             setRefreshing(true);
         }
@@ -125,7 +125,7 @@ export function usePostos() {
                 setLoading(false);
                 setRefreshing(false);
             }
-    };
+    }, [token]);
 
     useEffect(() => {
         if (authLoading) return;
@@ -138,5 +138,7 @@ export function usePostos() {
         fetchPostos();
     }, [token, authLoading]);
 
-    return { postos, loading, refreshing, error, refetch: () => fetchPostos(true) };
+    const refetch = useCallback(() => fetchPostos(true), [fetchPostos]);
+
+    return { postos, loading, refreshing, error, refetch };
 }

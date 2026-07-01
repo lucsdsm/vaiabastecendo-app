@@ -1,7 +1,9 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { Text, View, FlatList, ActivityIndicator, RefreshControl } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRoute } from '@react-navigation/native';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -24,6 +26,16 @@ export default function HomeScreen() {
     refetch,
     shouldShowErrorCard,
   } = useHomeScreen();
+
+  const route = useRoute<any>();
+
+  useEffect(() => {
+    if (!route.params?.refreshKey) {
+      return;
+    }
+
+    refetch();
+  }, [route.params?.refreshKey, refetch]);
 
   return (
     <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>

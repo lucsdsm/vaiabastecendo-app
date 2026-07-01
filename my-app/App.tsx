@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import { useFonts, GoogleSans_400Regular, GoogleSans_500Medium, GoogleSans_700Bold } from '@expo-google-fonts/google-sans';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -9,6 +8,7 @@ import LoadingScreen from './src/components/LoadingScreen';
 import HomeScreen from './src/screens/PostosList';
 import MapScreen from './src/screens/MapView';
 import UserProfileScreen from './src/screens/UserProfile';
+import UpdatePriceScreen from './src/screens/UpdatePrice';
 
 import { ToastProvider } from './src/contexts/ToastContext';
 import { Toast } from './src/components/Toast';
@@ -40,6 +40,7 @@ const AppNavigator = () => {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Map" component={MapScreen} />
         <Stack.Screen name="UserProfile" component={UserProfileScreen} />
+        <Stack.Screen name="UpdatePrice" component={UpdatePriceScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -63,14 +64,6 @@ const AppContent = () => {
 };
 
 export default function App() {
-  // const [fontsLoaded] = useFonts({ 
-  //   GoogleSans_400Regular,
-  //   GoogleSans_500Medium,
-  //   GoogleSans_700Bold
-  // });
-  // Só renderiza o app quando a fonte nativa estiver pronta
-  // if (!fontsLoaded) return null;
-
   return (
     <SafeAreaProvider>
       <ThemeProvider>

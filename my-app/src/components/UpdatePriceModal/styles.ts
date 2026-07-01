@@ -2,14 +2,17 @@ import { Platform, StyleSheet } from 'react-native';
 import { radius, spacing, typography, elevation } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
-    overlay: {
+    container: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.4)',
-        justifyContent: 'flex-end',
+        paddingHorizontal: spacing.lg,
+        paddingVertical: spacing.lg,
     },
-    modalContent: {
-        borderTopLeftRadius: radius.xl + 8, // 32
-        borderTopRightRadius: radius.xl + 8, // 32
+    cardShell: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    cardContent: {
+        borderRadius: radius.xl + 8,
         paddingTop: spacing.sm,
         paddingHorizontal: spacing.xl,
         paddingBottom: 40,
@@ -32,23 +35,11 @@ export const styles = StyleSheet.create({
         alignSelf: 'center',
         marginBottom: spacing.xl,
     },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: spacing.xs,
-    },
     title: {
         fontSize: typography.size.xl,
         fontWeight: typography.weight.bold,
         letterSpacing: -0.4,
-    },
-    closeButton: {
-        width: 36,
-        height: 36,
-        borderRadius: radius.md,
-        justifyContent: 'center',
-        alignItems: 'center',
+        marginBottom: spacing.xs,
     },
     subtitle: {
         fontSize: typography.size.sm,
@@ -121,8 +112,6 @@ export const styles = StyleSheet.create({
         fontWeight: typography.weight.medium,
         marginLeft: spacing.sm,
     },
-
-    // --- Submit ---
     submitButton: {
         borderRadius: radius.lg,
         paddingVertical: 18,

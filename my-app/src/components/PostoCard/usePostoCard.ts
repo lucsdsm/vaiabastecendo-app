@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Linking } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { useAppTheme } from '../../theme/ThemeProvider';
 
@@ -44,16 +45,14 @@ export interface PostoProps {
 /**
  * Encapsula estado local e comportamentos de interacao do card de posto
  */
-export function usePostoCard(data: PostoProps) {
+export function usePostoCard(data: PostoProps, onRefresh: () => void) {
     const { colors, isDark } = useAppTheme();
+    const navigation = useNavigation<any>();
 
     const { token } = useAuth();
     const { showToast } = useToast();
 
     const [precosLocais, setPrecosLocais] = useState<PrecoAtual[]>(data.precos_atuais || []);
-
-    const [modalVisible, setModalVisible] = useState(false);
-    const [modalPosto, setModalPosto] = useState<PostoProps | null>(null);
 
     const { userData } = useAuth();
 
@@ -91,8 +90,11 @@ export function usePostoCard(data: PostoProps) {
             return;
         }
 
-        setModalPosto(data);
-        setModalVisible(true);
+        navigation.navigate('UpdatePrice', {
+            postoId: data.id,
+            postoNome: data.nome,
+            precosAtuais: data.precos_atuais,
+        });
     };
 
     /*
@@ -137,15 +139,9 @@ export function usePostoCard(data: PostoProps) {
     return {
         colors,
         isDark,
-        modalVisible,
-        modalPosto,
         precosLocais,
         isLoggedIn: !!token,
         userData,
-        closeModal: () => {
-            setModalVisible(false);
-            setModalPosto(null);
-        },
         handleGetDirections,
         toggleLike: handleToggleLike,
         handleOpenUpdateModal,
