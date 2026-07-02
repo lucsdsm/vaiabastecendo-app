@@ -140,5 +140,16 @@ export function usePostos() {
 
     const refetch = useCallback(() => fetchPostos(true), [fetchPostos]);
 
-    return { postos, loading, refreshing, error, refetch };
+    const getHistorico = useCallback(async (id: string) => {
+        const baseURL = normalizeApiBaseUrl(process.env.EXPO_PUBLIC_API_URL);
+        
+        // Faz a requisição na rota que criamos no Django
+        const response = await axios.get(`${baseURL}/postos/${id}/historico/`, {
+            headers: token ? { Authorization: `Token ${token}` } : {}
+        });
+        
+        return response.data;
+    }, [token]);
+
+    return { postos, loading, refreshing, error, refetch, getHistorico };
 }

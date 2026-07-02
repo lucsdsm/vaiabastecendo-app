@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, Keyboard, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useAppTheme } from '../../theme/ThemeProvider';
@@ -12,6 +12,7 @@ interface UpdatePriceCardProps {
     postoNome: string;
     precosAtuais: PrecoAtualResumo[];
     onSuccess: () => void;
+    onFuelChange?: (fuelName: string) => void;
 }
 
 export default function UpdatePriceCard({
@@ -19,6 +20,7 @@ export default function UpdatePriceCard({
     postoNome,
     precosAtuais,
     onSuccess,
+    onFuelChange,
 }: UpdatePriceCardProps) {
     const { colors, isDark } = useAppTheme();
     const { keyboardPadding, setKeyboardPadding } = useKeyboardPadding();
@@ -32,6 +34,15 @@ export default function UpdatePriceCard({
         handlePriceChange,
         handleUpdate,
     } = useUpdatePriceCard({ postoId, precosAtuais, onSuccess });
+
+    useEffect(() => {
+        if (onFuelChange && fuelTypes.length > 0 && selectedFuel) {
+            const fuel = fuelTypes.find(t => t.id === selectedFuel);
+            if (fuel) {
+                onFuelChange(fuel.nome);
+            }
+        }
+    }, [selectedFuel, fuelTypes]);
 
     const content = (
         <View style={[styles.cardContent, { backgroundColor: colors.background }] }>

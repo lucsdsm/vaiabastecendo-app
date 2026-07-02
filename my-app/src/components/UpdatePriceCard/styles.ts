@@ -4,21 +4,17 @@ import { radius, spacing, typography, elevation } from '../../theme/tokens';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: spacing.lg,
-        paddingVertical: spacing.lg,
     },
     cardShell: {
         flex: 1,
         justifyContent: 'center',
     },
     cardContent: {
-        paddingTop: spacing.sm,
-        paddingHorizontal: spacing.xl,
-        paddingBottom: 40,
+        paddingBottom: spacing.xl,
     },
     section: {
-        marginTop: spacing.xxl,
-        marginBottom: spacing.xxl,
+        marginTop: spacing.xl,
+        marginBottom: spacing.xl,
     },
     label: {
         fontSize: typography.size.xs + 1, // 13
@@ -27,7 +23,6 @@ export const styles = StyleSheet.create({
         letterSpacing: 0.5,
         marginBottom: spacing.md,
     },
-
     fuelScroll: {
         flexGrow: 0,
         borderRadius: radius.lg,

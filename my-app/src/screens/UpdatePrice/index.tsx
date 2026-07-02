@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useAppTheme } from '../../theme/ThemeProvider';
 import UpdatePriceCard from '../../components/UpdatePriceCard';
+import PriceHistoryTable from '../../components/PriceHistoryTable';
 import { PrecoAtualResumo } from '../../components/UpdatePriceCard/useUpdatePriceModal';
 import { styles } from './styles';
 
@@ -22,6 +23,8 @@ export default function UpdatePrice() {
     const route = useRoute<any>();
 
     const { postoId, postoNome, precosAtuais } = route.params as UpdatePriceRouteParams;
+
+    const [activeFuelName, setActiveFuelName] = useState<string | null>(null);
 
     const handleSuccess = () => {
         (navigation.navigate as any)('Home', { refreshKey: Date.now() });
@@ -48,6 +51,12 @@ export default function UpdatePrice() {
                     postoNome={postoNome}
                     precosAtuais={precosAtuais}
                     onSuccess={handleSuccess}
+                    onFuelChange={setActiveFuelName}
+                />
+                <View style={[styles.divider, { backgroundColor: colors.border }]} />
+                <PriceHistoryTable 
+                    postoId={postoId} 
+                    selectedFuelName={activeFuelName} 
                 />
             </ScrollView>
         </SafeAreaView>

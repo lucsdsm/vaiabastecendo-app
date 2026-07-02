@@ -4,13 +4,12 @@ import { radius, spacing, typography } from '../../theme/tokens';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingHorizontal: spacing.xl,
     },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: spacing.lg,
         paddingTop: spacing.md,
-        paddingBottom: spacing.sm,
         gap: spacing.md,
     },
     backButton: {
@@ -36,7 +35,11 @@ export const styles = StyleSheet.create({
         height: 40,
     },
     content: {
-        flexGrow: 1,
-        paddingBottom: spacing.xl,
+        gap: spacing.lg,
+    },
+    divider: {
+        height: 1,
+        width: '100%',
+        opacity: 0.5,
     },
 });
