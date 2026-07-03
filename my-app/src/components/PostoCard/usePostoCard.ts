@@ -34,6 +34,7 @@ export interface PostoProps {
     distancia: string;
     endereco: string;
     bandeira: string;
+    avaliacao?: number;
     data_ultimaAtualizacao: string;
     autor_ultimaAtualizacao: {
         nome: string;
@@ -142,6 +143,7 @@ export function usePostoCard(data: PostoProps, onRefresh: () => void) {
         precosLocais,
         isLoggedIn: !!token,
         userData,
+        avaliacao: data.avaliacao,
         handleGetDirections,
         toggleLike: handleToggleLike,
         handleOpenUpdateModal,

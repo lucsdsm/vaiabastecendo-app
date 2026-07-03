@@ -13,6 +13,7 @@ export const styles = StyleSheet.create({
         marginLeft: spacing.xl,
         marginRight: spacing.xl,
         marginTop: spacing.sm,
+        marginBottom: spacing.sm,
         
     },
     titleContainer: {
@@ -30,10 +31,6 @@ export const styles = StyleSheet.create({
         fontWeight: typography.weight.regular,
         lineHeight: 20,
     },
-    // characterImage: {
-    //     width: 96,
-    //     height: 96,
-    // },
     themeButtonContainer: {
         padding: spacing.xs,
     },

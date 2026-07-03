@@ -22,6 +22,7 @@ export const styles = StyleSheet.create({
         textTransform: 'uppercase',
         letterSpacing: 0.5,
         marginBottom: spacing.md,
+        marginLeft: spacing.sm,
     },
     fuelScroll: {
         flexGrow: 0,

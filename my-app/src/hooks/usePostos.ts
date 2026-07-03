@@ -108,6 +108,7 @@ export function usePostos() {
                     longitude: p.longitude,
                     distancia: textoDistancia,
                     bandeira: p.bandeira,
+                    avaliacao: p.avaliacao,
                     precos_atuais: p.precos_atuais,
                     data_ultimaAtualizacao: data_ultimaAtualizacao,
                     autor_ultimaAtualizacao: autor_ultimaAtualizacao,

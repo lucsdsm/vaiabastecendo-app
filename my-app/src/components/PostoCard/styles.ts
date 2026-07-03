@@ -75,13 +75,6 @@ export const styles = StyleSheet.create({
         fontSize: typography.size.lg,
         fontWeight: typography.weight.bold,
         letterSpacing: typography.letterSpacing.normal,
-        marginBottom: spacing.xs,
-    },
-    addressRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: spacing.sm,
-        minWidth: 0,
     },
     addressText: {
         fontSize: typography.size.xs,
@@ -97,8 +90,27 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    metaRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: spacing.sm,
+        marginBottom: 2,
+    },
+    ratingInlineRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 4,
+    },
+    ratingText: {
+        fontSize: typography.size.xs,
+        fontWeight: typography.weight.bold,
+    },
+    addressRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        minWidth: 0,
+    },
     priceContainer: {
-        marginTop: spacing.xs,
     },
     pricesScrollContent: {
         gap: spacing.md,

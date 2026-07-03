@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, StyleProp, ScrollView, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
-import { Feather, MaterialIcons } from '@expo/vector-icons';
+import { Feather, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 
 import { styles } from './styles';
 import { PostoProps, usePostoCard } from './usePostoCard';
@@ -47,6 +47,7 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
         colors,
         isDark,
         precosLocais,
+        avaliacao,
         handleGetDirections,
         toggleLike,
         handleOpenUpdateModal,
@@ -69,28 +70,44 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
             <TouchableOpacity activeOpacity={0.7} onPress={handleOpenUpdateModal}>
                 <View style={styles.header}>
                     <View style={styles.headerLeft}>
-                        <Text
-                            style={[styles.title, { color: colors.textPrimary }]}
-                            numberOfLines={1}>
-                            {data.nome} 
-                        </Text>
-                        <View style={styles.addressRow}>
-                            <LocalBadge
-                                label={data.distancia}
-                                color={colors.primary + (isDark ? '22' : '12')}
-                                textColor={colors.primary}
-                                icon={<Feather name="navigation" size={12} color={colors.primary} />}
-                            />
-                            <Text
-                                style={[styles.addressText, { color: colors.textSecondary }]}
-                                numberOfLines={1}
-                                ellipsizeMode="tail"
-                            >
-                                {data.endereco}
-                            </Text>
-                        </View>
-                    </View>
 
+                            {/* Primeira linha: nome do posto */}
+                            <Text
+                                style={[styles.title, { color: colors.textPrimary }]}
+                                numberOfLines={1}>
+                                {data.nome} 
+                            </Text>
+
+                            {/* Segunda linha: metadados */}
+                            <View style={styles.metaRow}>
+                                {avaliacao && (
+                                    <View style={styles.ratingInlineRow}>
+                                        <FontAwesome name="star" size={12} color="#FFB300" />
+                                        <Text style={[styles.ratingText, { color: colors.textPrimary }]}>
+                                            {avaliacao.toFixed(1)}
+                                        </Text>
+                                    </View>
+                                )}
+
+                                <LocalBadge
+                                    label={data.distancia}
+                                    color={colors.primary + (isDark ? '22' : '12')}
+                                    textColor={colors.primary}
+                                    icon={<Feather name="navigation" size={11} color={colors.primary} />}
+                                />
+                            </View>
+
+                            {/* Terceira linha: endereço */}
+                            <View style={styles.addressRow}>
+                                <Text
+                                    style={[styles.addressText, { color: colors.textSecondary }]}
+                                    numberOfLines={1}
+                                    ellipsizeMode="tail"
+                                >
+                                    {data.endereco}
+                                </Text>
+                            </View>
+                        </View>
                     <View style={styles.headerRight}>
                         <View style={styles.logoContainer}>
                             {logoSource ? (

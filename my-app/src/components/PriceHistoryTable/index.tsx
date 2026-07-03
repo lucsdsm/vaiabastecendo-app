@@ -77,7 +77,7 @@ export default function PriceHistoryTable({ postoId, selectedFuelName }: PriceHi
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <Text style={[styles.title, { color: colors.textPrimary }]}>Evolução de Preço</Text>
+            <Text style={[styles.title, { color: colors.textPrimary }]}>Histórico de preços</Text>
             
             <View style={styles.chartWrapper}>
                 {chartData.length > 0 ? (
