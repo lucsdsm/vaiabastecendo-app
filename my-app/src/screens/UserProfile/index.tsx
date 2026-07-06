@@ -4,7 +4,7 @@ import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import Footer from '../../components/Footer';
+import Version from '../../components/Version';
 import UserCard from '../../components/UserCard';
 import { useUserCard } from '../../components/UserCard/useUserProfile';
 import { useAppTheme } from '../../theme/ThemeProvider';
@@ -77,7 +77,8 @@ export default function UserProfile() {
                 )}
             </ScrollView>
 
-            <Footer />
+            <Version />
+            
         </SafeAreaView>
     );
 }

@@ -71,6 +71,7 @@ export function useUserCard() {
                 headers: { Authorization: `Token ${token}` }
             });
             updateUserData(res.data);
+            console.log("Estatísticas do perfil carregadas:", res.data);
         } catch (error) {
             console.error("Erro ao carregar estatísticas do perfil:", error);
         }
@@ -85,7 +86,6 @@ export function useUserCard() {
             carregarEstatisticas();
         }, [token])
     );
-
 
     /**
      * Limpa o token salvo e os dados do usuario para efetuar logout
