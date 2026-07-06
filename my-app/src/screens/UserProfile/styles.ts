@@ -19,18 +19,6 @@ export const styles = StyleSheet.create({
         fontSize: typography.size.xl,
         fontWeight: typography.weight.bold,
     },
-    actionButton: {
-        marginHorizontal: spacing.lg,
-        paddingVertical: spacing.sm,
-        borderWidth: 1,
-        borderRadius: radius.sm,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    actionButtonText: {
-        fontWeight: typography.weight.semibold,
-        fontSize: typography.size.sm,
-    },
     guestContainer: {
         flex: 1,
         alignItems: 'center',

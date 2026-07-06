@@ -21,7 +21,7 @@ type UserCardProps = {
 export default function UserCard({ userData }: UserCardProps) {
     const { colors, isDark } = useAppTheme();
 
-    const points = userData?.likes_recebidos || 0;
+    const points = userData?.pontos || 0;
     const totalRequired = 100;
     const isVerified = userData?.verificado || points >= totalRequired;
 
@@ -108,7 +108,7 @@ export default function UserCard({ userData }: UserCardProps) {
                         </View>
 
                         <Text style={[styles.helpText, { color: colors.textSecondary }]}>
-                            Complete {totalRequired} curtidas recebidas para ganhar o selo azul e ser uma autoridade!
+                            Complete {totalRequired} curtidas recebidas para ganhar o selo e ser uma autoridade!
                         </Text>
                     </View>
                 )}

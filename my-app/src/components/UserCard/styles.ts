@@ -119,5 +119,6 @@ export const styles = StyleSheet.create({
         fontSize: typography.size.xs,
         lineHeight: 16,
         paddingHorizontal: 2,
+        textAlign: 'justify',
     },
 });

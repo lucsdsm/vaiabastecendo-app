@@ -3,7 +3,7 @@ import { View, Text, ActivityIndicator, Dimensions } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
-import { usePostos } from '../../hooks/usePostos';
+import { useHistoricoPosto } from '../../hooks/useHistoricoPosto';
 
 interface HistoryItem {
     id: number;
@@ -23,7 +23,7 @@ export default function PriceHistoryTable({ postoId, selectedFuelName }: PriceHi
     const [history, setHistory] = useState<HistoryItem[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const { getHistorico } = usePostos();
+    const { getHistorico } = useHistoricoPosto();
 
     useEffect(() => {
         async function fetchHistory() {

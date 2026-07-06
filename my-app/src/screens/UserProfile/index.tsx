@@ -36,8 +36,8 @@ export default function UserProfile() {
                 >
                     Perfil
                 </Text>
-                <TouchableOpacity>
-                    <Feather name="settings" size={24} color={colors.textPrimary} />
+                <TouchableOpacity onPress={handleLogout}>
+                    <Feather name="log-out" size={24} color={colors.textPrimary} />
                 </TouchableOpacity>
             </View>
 
@@ -47,13 +47,6 @@ export default function UserProfile() {
                 ) : token ? (
                     <View>
                         <UserCard userData={userData} />
-
-                        <TouchableOpacity
-                            style={[styles.actionButton, { borderColor: colors.border || '#ccc' }]}
-                            onPress={handleLogout}
-                        >
-                            <Text style={[styles.actionButtonText, { color: colors.textPrimary }]}>Sair da Conta</Text>
-                        </TouchableOpacity>
                     </View>
                 ) : (
                     <View style={styles.guestContainer}>
