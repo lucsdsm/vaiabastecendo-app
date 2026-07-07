@@ -71,7 +71,7 @@ export function useUserCard() {
                 headers: { Authorization: `Token ${token}` }
             });
             updateUserData(res.data);
-            console.log("Estatísticas do perfil carregadas:", res.data);
+            // console.log("Estatísticas do perfil carregadas:", res.data);
         } catch (error) {
             console.error("Erro ao carregar estatísticas do perfil:", error);
         }
@@ -100,7 +100,7 @@ export function useUserCard() {
      */
     const handleMockLogin = () => {
         if (__DEV__) {
-            const mockToken = process.env.OAUTH_ACCESS_TOKEN || '';
+            const mockToken = "process.env.OAUTH_ACCESS_TOKEN || ''";
             console.log("Login simulado com token:", mockToken);
             enviarTokenParaDjango(mockToken);
         }

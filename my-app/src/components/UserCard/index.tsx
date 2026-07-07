@@ -108,7 +108,7 @@ export default function UserCard({ userData }: UserCardProps) {
                         </View>
 
                         <Text style={[styles.helpText, { color: colors.textSecondary }]}>
-                            Complete {totalRequired} curtidas recebidas para ganhar o selo e ser uma autoridade!
+                            Receba {totalRequired} curtidas para ganhar o selo e ser uma autoridade!
                         </Text>
                     </View>
                 )}

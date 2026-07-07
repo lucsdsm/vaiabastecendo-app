@@ -38,7 +38,7 @@ export function useMapScreen() {
         (async () => {
             const { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
-                console.log('Permissão de localização negada pelo usuário');
+                // console.log('Permissão de localização negada pelo usuário');
                 // Aqui você poderia usar o seu Toast para avisar o usuário
             }
         })();

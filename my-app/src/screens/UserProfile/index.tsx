@@ -1,11 +1,13 @@
 import React from 'react';
-import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View, Image } from 'react-native';
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Version from '../../components/Version';
 import UserCard from '../../components/UserCard';
+import Banner from '../../components/Banner';
+
 import { useUserCard } from '../../components/UserCard/useUserProfile';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
@@ -47,6 +49,23 @@ export default function UserProfile() {
                 ) : token ? (
                     <View>
                         <UserCard userData={userData} />
+                        <Banner 
+                            text="Compartilhe preços e ajude outros motoristas!"
+                            onPress={() => {
+                                console.log("Card clicado!"); 
+                            }}
+                            gradientColors={[colors.primary, colors.primary, colors.success]}
+                            logoElement={
+                                <Image 
+                                    source={require('../../../assets/logo.png')} 
+                                    style={{ 
+                                        width: 128, 
+                                        height: 128, 
+                                        resizeMode: 'contain' 
+                                    }} 
+                                />
+                            } 
+                        />
                     </View>
                 ) : (
                     <View style={styles.guestContainer}>

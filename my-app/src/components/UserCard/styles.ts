@@ -5,7 +5,6 @@ export const styles = StyleSheet.create({
     // estrutura geral
     cardWrapper: {
         width: '100%',
-        paddingHorizontal: spacing.lg,
         marginTop: spacing.lg,
         marginBottom: spacing.lg,
     },
