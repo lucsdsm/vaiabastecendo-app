@@ -1,12 +1,13 @@
 import { StyleSheet } from 'react-native';
-import { spacing } from '../../theme/tokens';
+import { spacing, radius } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
     },
     content: {
-        flex: 1
+        flex: 1,
+        marginHorizontal: spacing.lg,
     },
     centerLoading: {
         flex: 1,
@@ -14,8 +15,6 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     listContainer: {
-        marginTop: spacing.sm,
-        paddingHorizontal: spacing.xl, 
-        paddingBottom: spacing.xl 
+        
     },
 });

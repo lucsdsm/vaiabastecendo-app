@@ -46,7 +46,7 @@ export default function InfoBanner({
 
     const translateX = animValue.interpolate({
         inputRange: [0, 1],
-        outputRange: [0, -125] 
+        outputRange: [0, -100] 
     });
 
     return (

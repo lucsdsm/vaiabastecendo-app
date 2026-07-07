@@ -3,48 +3,63 @@ import { radius, spacing, typography } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: spacing.xs,
         zIndex: 10,
     },
     content: {
         flexDirection: 'row',
-        alignItems: 'flex-start',
         justifyContent: 'space-between',
-        marginLeft: spacing.xl,
-        marginRight: spacing.xl,
-        marginTop: spacing.sm,
-        marginBottom: spacing.sm,
-        
+        alignItems: 'center',
+        marginHorizontal: spacing.sm,
+        marginTop: spacing.md,
     },
     titleContainer: {
-        flexDirection: 'column',
-        justifyContent: 'center',
         flex: 1,
+        justifyContent: 'center',
+    },
+    greetingText: {
+        fontSize: typography.size.sm,
+        fontWeight: typography.weight.medium,
+        marginBottom: 2,
     },
     title: {
-        fontSize: typography.size.hero,
-        fontWeight: typography.weight.black,
-        marginBottom: spacing.xs,
+        fontSize: typography.size.xl,
+        fontWeight: typography.weight.bold,
+        marginBottom: 4,
     },
-    subtitle: {
-        fontSize: typography.size.sm,
-        fontWeight: typography.weight.regular,
-        lineHeight: 20,
+    locationRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 4,
     },
-    themeButtonContainer: {
+    locationText: {
+        fontSize: typography.size.xs,
+        fontWeight: typography.weight.semibold,
+    },
+    actionsContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: spacing.md, 
+    },
+    iconButton: {
         padding: spacing.xs,
+        position: 'relative',
+    },
+    notificationBadge: {
+        position: 'absolute',
+        top: 2,
+        right: 4,
+        width: 8,
+        height: 8,
+        borderRadius: radius.md,
+        borderWidth: 1.5,
+        borderColor: '#FFFFFF', 
     },
     themeButton: {
-        width: 44,
-        height: 44,
+        width: 40,
+        height: 40,
         borderRadius: radius.md,
+        borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    themeButtonActive: {
-        borderWidth: 1,
-    },
-    themeButtonPressed: {
-        opacity: 0.7,
     },
 });

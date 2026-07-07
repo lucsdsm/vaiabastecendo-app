@@ -5,15 +5,12 @@ export const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         paddingHorizontal: spacing.lg,
+        marginVertical: spacing.md,
         borderRadius: radius.xl,
         alignItems: 'center', 
         justifyContent: 'space-between',
         overflow: 'hidden',
         position: 'relative',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        elevation: 1,
     },
     gradientWrapper: {
         width: '150%',
@@ -24,7 +21,6 @@ export const styles = StyleSheet.create({
     },
     contentWrapper: {
         flexDirection: 'row',
-        padding: spacing.lg,
         alignItems: 'center', 
         justifyContent: 'space-between',
         width: '100%',

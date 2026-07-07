@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
     },
     card: {
         width: '100%',
-        marginBottom: spacing.lg,
+        marginBottom: spacing.md,
         ...Platform.select({
             ios: {
                 shadowColor: '#000',
@@ -83,10 +83,10 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     directionsButton: {
-        width: 44,
-        height: 44,
+        width: 40,
+        height: 40,
         borderRadius: radius.md,
-        borderWidth: 1.5,
+        borderWidth: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -189,7 +189,6 @@ export const styles = StyleSheet.create({
     noPriceTitle: {
         fontSize: typography.size.sm,
         fontWeight: typography.weight.semibold,
-        marginBottom: 2,
     },
     noPriceText: {
         fontSize: typography.size.xs,
@@ -201,8 +200,6 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: spacing.md,
-        paddingTop: spacing.md,
-        borderTopWidth: 1,
     },
     updateIcon: {
         marginRight: spacing.xs,

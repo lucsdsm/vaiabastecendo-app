@@ -49,23 +49,6 @@ export default function UserProfile() {
                 ) : token ? (
                     <View>
                         <UserCard userData={userData} />
-                        <Banner 
-                            text="Compartilhe preços e ajude outros motoristas!"
-                            onPress={() => {
-                                console.log("Card clicado!"); 
-                            }}
-                            gradientColors={[colors.primary, colors.primary, colors.success]}
-                            logoElement={
-                                <Image 
-                                    source={require('../../../assets/logo.png')} 
-                                    style={{ 
-                                        width: 128, 
-                                        height: 128, 
-                                        resizeMode: 'contain' 
-                                    }} 
-                                />
-                            } 
-                        />
                     </View>
                 ) : (
                     <View style={styles.guestContainer}>

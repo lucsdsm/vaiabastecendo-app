@@ -119,8 +119,8 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                             style={[
                                 styles.directionsButton,
                                 {
-                                    borderColor: colors.primary,
-                                    backgroundColor: colors.primary + '0D',
+                                    backgroundColor: colors.primary + (isDark ? '14' : '0D'),
+                                    borderColor: colors.primary + '40',
                                 },
                             ]}
                             onPress={handleGetDirections}

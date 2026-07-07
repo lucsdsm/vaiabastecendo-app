@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { styles } from './styles';
@@ -6,43 +6,60 @@ import { styles } from './styles';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAppTheme } from '../../theme/ThemeProvider';
 
-/**
- * Header principal da aplicacao.
- * Exibe marca, titulo centralizado e controle manual de tema.
-*/
 export default function Header() {
     const { colors, toggleTheme, isDark } = useAppTheme();
     const { userData } = useAuth();
+    
     const displayName = userData?.primeiro_nome || 'Motorista';
 
+    // Lógica para Saudação Dinâmica
+    const greeting = useMemo(() => {
+        const hour = new Date().getHours();
+        if (hour < 12) return 'Bom dia';
+        if (hour < 18) return 'Boa tarde';
+        return 'Boa noite';
+    }, []);
+
     return (
-        <View style={[
-            styles.container,
-            {
-                backgroundColor: colors.background,
-            }
-        ]}>
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={styles.content}>
-                <View
-                    style={styles.titleContainer}
-                    pointerEvents="none"
-                >
-                    <Text style={[styles.title, { color: colors.primary }]}>
-                        Olá, {displayName}!
+                
+                {/* Bloco Esquerdo: Textos */}
+                <View style={styles.titleContainer} pointerEvents="none">
+                    <Text style={[styles.greetingText, { color: colors.textSecondary }]}>
+                        {greeting},
+                    </Text>
+                    <Text style={[styles.title, { color: colors.textPrimary }]}>
+                        {displayName}
                     </Text>
 
-                    <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
-                        Os melhores preços de combustíveis perto de você.
-                    </Text>
-                    
+                    {/* Indicador de Localização */}
+                    <View style={styles.locationRow}>
+                        <Feather name="map-pin" size={12} color={colors.primary} />
+                        <Text style={[styles.locationText, { color: colors.primary }]}>
+                            Parnamirim, RN
+                        </Text>
+                    </View>
                 </View>
 
-                <View style={styles.themeButtonContainer}>
+                {/* Bloco Direito: Ações */}
+                <View style={styles.actionsContainer}>
+                    
+                    {/* Botão de Notificações (Exemplo de Gamificação) */}
+                    <Pressable 
+                        style={styles.iconButton}
+                        accessibilityRole="button"
+                    >
+                        <Feather name="bell" size={20} color={colors.textSecondary} />
+                        {/* Pontinho vermelho para indicar notificação não lida */}
+                        <View style={[styles.notificationBadge, { backgroundColor: colors.danger }]} />
+                    </Pressable>
+
+                    {/* Botão de Tema Original */}
                     <Pressable
                         onPress={toggleTheme}
                         style={({ pressed }) => [
                             styles.themeButton,
-                            styles.themeButtonActive,
                             {
                                 backgroundColor: colors.primary + (isDark ? '14' : '0D'),
                                 borderColor: colors.primary + '40',
@@ -54,20 +71,13 @@ export default function Header() {
                     >
                         <Feather
                             name={isDark ? "moon" : "sun"}
-                            size={22}
-                            color={colors.textSecondary}
+                            size={20}
+                            color={colors.primary}
                         />
                     </Pressable>
                 </View>
 
-
-                {/* <Image
-                    source={require('../../../assets/images/nozzleready.png')}
-                    style={styles.characterImage}
-                    resizeMode="contain"
-                /> */}
             </View>
         </View>
-    )
-};
-
+    );
+}
