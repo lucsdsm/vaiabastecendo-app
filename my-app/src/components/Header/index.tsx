@@ -1,24 +1,18 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { styles } from './styles';
-
-import { useAuth } from '../../contexts/AuthContext';
-import { useAppTheme } from '../../theme/ThemeProvider';
+import { useHeader } from './useHeader';
 
 export default function Header() {
-    const { colors, toggleTheme, isDark } = useAppTheme();
-    const { userData } = useAuth();
-    
-    const displayName = userData?.primeiro_nome || 'Motorista';
-
-    // Lógica para Saudação Dinâmica
-    const greeting = useMemo(() => {
-        const hour = new Date().getHours();
-        if (hour < 12) return 'Bom dia';
-        if (hour < 18) return 'Boa tarde';
-        return 'Boa noite';
-    }, []);
+    const { 
+        colors, 
+        isDark, 
+        toggleTheme, 
+        displayName, 
+        greeting, 
+        locationName 
+    } = useHeader();
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -33,11 +27,15 @@ export default function Header() {
                         {displayName}
                     </Text>
 
-                    {/* Indicador de Localização */}
+                    {/* Indicador de Localização Dinâmico */}
                     <View style={styles.locationRow}>
                         <Feather name="map-pin" size={12} color={colors.primary} />
-                        <Text style={[styles.locationText, { color: colors.primary }]}>
-                            Parnamirim, RN
+                        <Text 
+                            style={[styles.locationText, { color: colors.primary }]}
+                            numberOfLines={1} 
+                            ellipsizeMode="tail"
+                        >
+                            {locationName}
                         </Text>
                     </View>
                 </View>
@@ -45,17 +43,16 @@ export default function Header() {
                 {/* Bloco Direito: Ações */}
                 <View style={styles.actionsContainer}>
                     
-                    {/* Botão de Notificações (Exemplo de Gamificação) */}
+                    {/* Botão de Notificações */}
                     <Pressable 
                         style={styles.iconButton}
                         accessibilityRole="button"
                     >
                         <Feather name="bell" size={20} color={colors.textSecondary} />
-                        {/* Pontinho vermelho para indicar notificação não lida */}
                         <View style={[styles.notificationBadge, { backgroundColor: colors.danger }]} />
                     </Pressable>
 
-                    {/* Botão de Tema Original */}
+                    {/* Botão de Tema */}
                     <Pressable
                         onPress={toggleTheme}
                         style={({ pressed }) => [
