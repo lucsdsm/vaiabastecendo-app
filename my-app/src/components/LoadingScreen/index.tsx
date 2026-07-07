@@ -28,7 +28,7 @@ export default function LoadingScreen({ onFinish, canFinish }: LoadingScreenProp
         <Text style={[styles.title, { color: colors.textPrimary }]}>
           Vai Abastecendo
         </Text>
-        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>Carregando postos proximos...</Text>
+        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>Ligando os motores...</Text>
 
         <View style={styles.gaugeContainer}>
           {/* Arco de Fundo do Medidor */}

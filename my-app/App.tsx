@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import * as Location from 'expo-location'; // NOVO IMPORT
 
 import { ThemeProvider, useAppTheme } from './src/theme/ThemeProvider';
 import LoadingScreen from './src/components/LoadingScreen';
@@ -9,6 +10,7 @@ import HomeScreen from './src/screens/PostosList';
 import MapScreen from './src/screens/MapView';
 import UserProfileScreen from './src/screens/UserProfile';
 import UpdatePriceScreen from './src/screens/UpdatePrice';
+import PermissionScreen from './src/screens/PermissionScreen'; 
 
 import { ToastProvider } from './src/contexts/ToastContext';
 import { Toast } from './src/components/Toast';
@@ -18,7 +20,8 @@ import { CombustivelProvider } from './src/contexts/CombustivelContext';
 
 const Stack = createNativeStackNavigator();
 
-const AppNavigator = () => {
+// Recebe o estado de permissao para decidir qual pilha de telas renderizar
+const AppNavigator = ({ hasPermission, setHasPermission }: any) => {
   const { colors } = useAppTheme();
   const navigationTheme = {
     ...DefaultTheme,
@@ -37,26 +40,53 @@ const AppNavigator = () => {
           contentStyle: { backgroundColor: colors.background },
         }}
       >
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Map" component={MapScreen} />
-        <Stack.Screen name="UserProfile" component={UserProfileScreen} />
-        <Stack.Screen name="UpdatePrice" component={UpdatePriceScreen} />
+        {!hasPermission ? (
+          // Fica preso ate liberar a localizacao, mostrando a tela de permissao
+          <Stack.Screen name="Permission">
+            {(props) => <PermissionScreen {...props} onPermissionGranted={() => setHasPermission(true)} />}
+          </Stack.Screen>
+        ) : (
+          // Renderiza o app principal apos liberar a localizacao
+          <>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Map" component={MapScreen} />
+            <Stack.Screen name="UserProfile" component={UserProfileScreen} />
+            <Stack.Screen name="UpdatePrice" component={UpdatePriceScreen} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
 const AppContent = () => {
-  const { loading } = useAuth();
+  const { loading: authLoading } = useAuth();
   const [isAppReady, setIsAppReady] = useState(false);
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+
+  // Checa a permissao atual enquanto o loading roda
+  useEffect(() => {
+    async function checkLocation() {
+      const { status } = await Location.getForegroundPermissionsAsync();
+      setHasPermission(status === 'granted');
+    }
+    checkLocation();
+  }, []);
+
+  // Loading so pode sumir se a auth carregou
+  const canFinishLoading = !authLoading && hasPermission !== null;
 
   return (
     <>
-      <AppNavigator />
+      {/* So renderiza o navigator depois do loading terminar, evitando tela piscando */}
+      {isAppReady && (
+        <AppNavigator hasPermission={hasPermission} setHasPermission={setHasPermission} />
+      )}
+      
       {!isAppReady && (
         <LoadingScreen
           onFinish={() => setIsAppReady(true)}
-          canFinish={!loading}
+          canFinish={canFinishLoading}
         />
       )}
     </>
