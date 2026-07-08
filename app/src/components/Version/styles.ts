@@ -16,8 +16,24 @@ export const styles = StyleSheet.create({
         fontSize: typography.size.xs,
         fontWeight: typography.weight.medium,
     },
+    socialContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 16,
+        marginVertical: spacing.sm,    
+    },
+    socialButton: {
+        width: 40,
+        height: 40,
+        borderRadius: radius.md,
+        borderWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     copyrightContainer: {
         alignItems: 'center',
+        justifyContent: 'center',
     },
     text: {
         fontSize: 10,

@@ -1,18 +1,20 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Constants from 'expo-constants';
-import { useAppTheme } from '../../theme/ThemeProvider';
+import { View, Text, Pressable } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { styles } from './styles';
+import { useVersion } from './useVersion';
 
 export default function Version() {
-    const { colors } = useAppTheme();
-    
-    const currentYear = new Date().getFullYear();
-    
-    const appVersion = Constants.expoConfig?.version || '1.0.0';
+    const { 
+        colors, 
+        currentYear, 
+        appVersion, 
+        isDark,
+        handleOpenLink
+    } = useVersion();
 
     return (
-        <View style={[styles.container]}>
+        <View style={styles.container}>
             <Text style={[styles.appName, { color: colors.textPrimary }]}>
                 Vai Abastecendo
             </Text>
@@ -20,6 +22,41 @@ export default function Version() {
             <Text style={[styles.version, { color: colors.textSecondary }]}>
                 Versão {appVersion}
             </Text>
+
+            {/* Bloco de Redes Sociais / Contato */}
+            <View style={styles.socialContainer}>
+                <Pressable
+                    onPress={() => handleOpenLink('https://www.linkedin.com/in/lucas-eduardo-84485359/')}
+                    style={({ pressed }) => [
+                        styles.socialButton, 
+                        {
+                            backgroundColor: colors.primary + (isDark ? '14' : '0D'),
+                            borderColor: colors.primary + '40',
+                        },
+                        pressed && { opacity: 0.6 }, 
+                    ]}
+                    accessibilityRole="button"
+                    accessibilityLabel="Acessar LinkedIn"
+                >
+                    <FontAwesome name="linkedin" size={20} color={colors.primary} />
+                </Pressable>
+
+                <Pressable
+                    onPress={() => handleOpenLink('mailto:lucaseduardo168@gmail.com?subject=Suporte%20-%20Vai%20Abastecendo')}
+                    style={({ pressed }) => [
+                        styles.socialButton,
+                        {
+                            backgroundColor: colors.primary + (isDark ? '14' : '0D'),
+                            borderColor: colors.primary + '40',
+                        },
+                        pressed && { opacity: 0.6 },
+                    ]}
+                    accessibilityRole="button"
+                    accessibilityLabel="Acessar Discord"
+                >
+                    <FontAwesome name="envelope" size={22} color={colors.primary} />
+                </Pressable>
+            </View>
             
             <View style={styles.copyrightContainer}>
                 <Text style={[styles.text, { color: colors.textSecondary }]}>

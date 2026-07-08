@@ -61,7 +61,7 @@ export default function Header() {
                                 backgroundColor: colors.primary + (isDark ? '14' : '0D'),
                                 borderColor: colors.primary + '40',
                             },
-                            pressed && styles.themeButtonPressed,
+                            pressed && { opacity: 0.6 },
                         ]}
                         accessibilityRole="button"
                         accessibilityLabel="Alternar tema"

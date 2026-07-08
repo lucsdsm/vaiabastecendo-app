@@ -28,19 +28,27 @@ export default function UserProfile() {
     return (
         <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Feather name="arrow-left" size={24} color={colors.textPrimary} />
-                </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.headerActionButton}>
+                <Feather name="arrow-left" size={24} color={colors.textPrimary} />
+            </TouchableOpacity>
+            
+            <View style={styles.headerTitleContainer}>
                 <Text
                     style={[styles.headerTitle, { color: colors.textPrimary }]}
                     onLongPress={__DEV__ ? handleMockLogin : undefined}
                 >
                     Perfil
                 </Text>
-                <TouchableOpacity onPress={handleLogout}>
+            </View>
+
+            {token ? (
+                <TouchableOpacity onPress={handleLogout} style={styles.headerActionButton}>
                     <Feather name="log-out" size={24} color={colors.textPrimary} />
                 </TouchableOpacity>
-            </View>
+            ) : (
+                <View style={styles.headerActionButton} />
+            )}
+        </View>
 
             <ScrollView showsVerticalScrollIndicator={false} style={styles.content}>
                 {loading ? (

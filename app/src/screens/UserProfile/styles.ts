@@ -13,8 +13,21 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: spacing.lg,
+        paddingHorizontal: spacing.md,
         paddingVertical: spacing.md,
+        position: 'relative',     
+    },
+    headerActionButton: {
+        width: 40,           
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 2,            
+    },
+    headerTitleContainer: {
+        ...StyleSheet.absoluteFillObject,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1,
     },
     headerTitle: {
         fontSize: typography.size.xl,
