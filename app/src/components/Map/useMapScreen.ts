@@ -2,7 +2,7 @@ import { useCallback, useState, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import { useAppTheme } from '../../theme/ThemeProvider';
-import { PostoProps } from '../../components/PostoCard';
+import { PostoProps } from '../PostoCard';
 import { usePostos } from '../../hooks/usePostos';
 
 export function useMapScreen() {

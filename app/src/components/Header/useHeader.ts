@@ -19,33 +19,47 @@ export function useHeader() {
     }, []);
 
     useEffect(() => {
-        async function fetchCityName() {
-            try {
-                const { coords } = await Location.getCurrentPositionAsync({
+    async function fetchCityName() {
+        try {
+            // 1. tenta pegar a ultima localização conhecida (mais rápido e evita travar o emulador)
+            let location = await Location.getLastKnownPositionAsync({});
+
+            // 2. se nao houver posição recente, força a busca da posicao atual com timeout
+            if (!location) {
+                location = await Location.getCurrentPositionAsync({
                     accuracy: Location.Accuracy.Balanced,
                 });
+            }
 
+            if (location) {
                 const [address] = await Location.reverseGeocodeAsync({
-                    latitude: coords.latitude,
-                    longitude: coords.longitude,
+                    latitude: location.coords.latitude,
+                    longitude: location.coords.longitude,
                 });
 
                 if (address) {
                     const city = address.subregion || address.city || 'Local desconhecido';
-                    const state = address.region || '';
-                    
-                    setLocationName(`${city}${state ? `, ${state}` : ''}`);
+                    const neighborhood = address.district || '';
+
+                    const formattedLocation = [
+                        neighborhood,
+                        city,
+                    ].filter(Boolean).join(', ');
+                    setLocationName(formattedLocation + '.');
                 } else {
                     setLocationName('Localização não encontrada');
                 }
-            } catch (error) {
-                console.error("Erro ao fazer o reverse geocode:", error);
-                setLocationName('Erro ao buscar local');
+            } else {
+                setLocationName('Desconhecido');
             }
+        } catch (error) {
+            console.error("Erro ao fazer o reverse geocode:", error);
+            setLocationName('Desconhecido');
         }
+    }
 
-        fetchCityName();
-    }, []);
+    fetchCityName();
+}, []);
 
     return {
         colors,

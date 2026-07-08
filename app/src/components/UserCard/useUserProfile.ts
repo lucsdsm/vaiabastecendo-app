@@ -100,7 +100,7 @@ export function useUserCard() {
      */
     const handleMockLogin = () => {
         if (__DEV__) {
-            const mockToken = "process.env.OAUTH_ACCESS_TOKEN || ''";
+            const mockToken = "";
             console.log("Login simulado com token:", mockToken);
             enviarTokenParaDjango(mockToken);
         }

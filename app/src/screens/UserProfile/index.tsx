@@ -6,7 +6,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Version from '../../components/Version';
 import UserCard from '../../components/UserCard';
-import Banner from '../../components/Banner';
 
 import { useUserCard } from '../../components/UserCard/useUserProfile';
 import { useAppTheme } from '../../theme/ThemeProvider';
