@@ -99,7 +99,7 @@ export const styles = StyleSheet.create({
     ratingInlineRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 4,
+        gap: spacing.xs,
     },
     ratingText: {
         fontSize: typography.size.xs,
@@ -135,6 +135,9 @@ export const styles = StyleSheet.create({
     },
     fuelLabelContainer: {
         flex: 1,
+        height: 35,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     fuelLabel: {
         fontSize: typography.size.sm,
@@ -199,7 +202,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: spacing.md,
+        marginTop: spacing.lg,
     },
     updateIcon: {
         marginRight: spacing.xs,

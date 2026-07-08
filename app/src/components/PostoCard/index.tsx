@@ -158,15 +158,11 @@ export default function PostoCard({ data, onRefresh }: { data: PostoProps; onRef
                                     <View style={styles.priceBadgeHeader}>
                                         <View style={styles.fuelLabelContainer}>
                                             <Text
-                                                style={[
-                                                    styles.fuelLabel,
-                                                    { color: accentColor },
-                                                ]}
+                                                style={[styles.fuelLabel, { color: accentColor }]}
                                                 numberOfLines={2}
-                                                adjustsFontSizeToFit
-                                                minimumFontScale={0.85}
                                             >
-                                                {item.tipo}
+                                                {/* Substitui o espaço antes de 'Comum' ou 'Aditivada' por uma quebra de linha */}
+                                                {item.tipo.replace(' ', '\n')}
                                             </Text>
                                         </View>
                                     </View>
