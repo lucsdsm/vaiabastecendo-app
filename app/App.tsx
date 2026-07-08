@@ -10,13 +10,16 @@ import HomeScreen from './src/screens/PostosList';
 import MapScreen from './src/screens/MapView';
 import UserProfileScreen from './src/screens/UserProfile';
 import UpdatePriceScreen from './src/screens/UpdatePrice';
-import PermissionScreen from './src/screens/PermissionScreen'; 
+import PermissionScreen from './src/screens/PermissionScreen';
+import FuelLogScreen from './src/screens/FuelLog';
 
 import { ToastProvider } from './src/contexts/ToastContext';
 import { Toast } from './src/components/Toast';
 
 import { AuthProvider, useAuth } from './src/contexts/AuthContext';
 import { CombustivelProvider } from './src/contexts/CombustivelContext';
+
+import { initDatabase } from './src/database';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,6 +55,7 @@ const AppNavigator = ({ hasPermission, setHasPermission }: any) => {
             <Stack.Screen name="Map" component={MapScreen} />
             <Stack.Screen name="UserProfile" component={UserProfileScreen} />
             <Stack.Screen name="UpdatePrice" component={UpdatePriceScreen} />
+            <Stack.Screen name="FuelLog" component={FuelLogScreen} />
           </>
         )}
       </Stack.Navigator>
@@ -64,13 +68,20 @@ const AppContent = () => {
   const [isAppReady, setIsAppReady] = useState(false);
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
 
-  // Checa a permissao atual enquanto o loading roda
+  // Inicializa o banco de dados e checa a permissão de localizacao
   useEffect(() => {
-    async function checkLocation() {
-      const { status } = await Location.getForegroundPermissionsAsync();
-      setHasPermission(status === 'granted');
+    async function prepareApp() {
+      try {
+        initDatabase();
+
+        const { status } = await Location.getForegroundPermissionsAsync();
+        setHasPermission(status === 'granted');
+      } catch (e) {
+        console.warn("Erro ao preparar o app:", e);
+      }
     }
-    checkLocation();
+    
+    prepareApp();
   }, []);
 
   // Loading so pode sumir se a auth carregou

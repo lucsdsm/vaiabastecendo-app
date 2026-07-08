@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { styles } from './styles';
 import { useHeader } from './useHeader';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Header() {
     const { 
@@ -13,6 +14,8 @@ export default function Header() {
         greeting, 
         locationName 
     } = useHeader();
+
+    const navigation = useNavigation<any>();
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -43,13 +46,21 @@ export default function Header() {
                 {/* Bloco Direito: Ações */}
                 <View style={styles.actionsContainer}>
                     
-                    {/* Botão de Notificações */}
+                    {/* Botão de Garagem / Diário de Bordo */}
                     <Pressable 
-                        style={styles.iconButton}
+                        style={({ pressed }) => [
+                            styles.themeButton,
+                            {
+                                backgroundColor: colors.background + (isDark ? '14' : '0D'),
+                                borderColor: colors.background + '40',
+                            },
+                            pressed && { opacity: 0.6 },
+                        ]}
                         accessibilityRole="button"
+                        accessibilityLabel="Acessar diário de bordo"
+                        onPress={() => navigation.navigate('FuelLog')}
                     >
-                        <Feather name="bell" size={20} color={colors.textSecondary} />
-                        <View style={[styles.notificationBadge, { backgroundColor: colors.danger }]} />
+                        <MaterialCommunityIcons name="car" size={24} color={colors.textSecondary} />
                     </Pressable>
 
                     {/* Botão de Tema */}
