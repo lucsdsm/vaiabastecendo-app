@@ -10,7 +10,7 @@ import PostoCard from '../../components/PostoCard';
 import EmptyState from '../../components/EmptyState';
 import Banner from '../../components/Banner';
 import { styles } from './styles';
-import { useHomeScreen } from './useHomeScreen';
+import { usePostosList } from './usePostosList';
 
 export default function HomeScreen() {
   const {
@@ -22,7 +22,7 @@ export default function HomeScreen() {
     error,
     refetch,
     shouldShowErrorCard,
-  } = useHomeScreen();
+  } = usePostosList();
 
   const route = useRoute<any>();
 

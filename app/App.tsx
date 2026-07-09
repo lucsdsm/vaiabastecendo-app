@@ -12,6 +12,7 @@ import UserProfileScreen from './src/screens/UserProfile';
 import UpdatePriceScreen from './src/screens/UpdatePrice';
 import PermissionScreen from './src/screens/PermissionScreen';
 import FuelLogScreen from './src/screens/FuelLog';
+import AddVehicleScreen from './src/screens/AddVehicle';
 
 import { ToastProvider } from './src/contexts/ToastContext';
 import { Toast } from './src/components/Toast';
@@ -56,6 +57,7 @@ const AppNavigator = ({ hasPermission, setHasPermission }: any) => {
             <Stack.Screen name="UserProfile" component={UserProfileScreen} />
             <Stack.Screen name="UpdatePrice" component={UpdatePriceScreen} />
             <Stack.Screen name="FuelLog" component={FuelLogScreen} />
+            <Stack.Screen name="AddVehicle" component={AddVehicleScreen} />
           </>
         )}
       </Stack.Navigator>

@@ -37,9 +37,4 @@ export const styles = StyleSheet.create({
     content: {
         gap: spacing.lg,
     },
-    divider: {
-        height: 1,
-        width: '100%',
-        opacity: 0.5,
-    },
 });

@@ -5,6 +5,10 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    content: {
+        flex: 1,
+        padding: spacing.lg,
+    },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -26,16 +30,13 @@ export const styles = StyleSheet.create({
         right: 60,
         top: 0,
         bottom: 0,
-        justifyContent: 'center',
+        flexDirection: 'row',    
+        justifyContent: 'center', 
         alignItems: 'center',
         zIndex: 1,
     },
     headerTitle: {
-        fontSize: 20, // Ajuste para a sua variável de typography
+        fontSize: typography.size.xl,
         fontWeight: 'bold',
-    },
-    content: {
-        flex: 1,
-        padding: 20,
     }
 });

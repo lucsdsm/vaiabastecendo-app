@@ -4,7 +4,7 @@ import { usePostos } from '../../hooks/usePostos';
 /**
  * Reune estado de tema e dados da lista principal de postos.
  */
-export function useHomeScreen() {
+export function usePostosList() {
     const { colors, isDark } = useAppTheme();
     const { postos, loading, refreshing, error, refetch } = usePostos();
 

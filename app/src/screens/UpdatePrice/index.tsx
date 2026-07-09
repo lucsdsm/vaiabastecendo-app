@@ -53,7 +53,7 @@ export default function UpdatePrice() {
                     onSuccess={handleSuccess}
                     onFuelChange={setActiveFuelName}
                 />
-                <View style={[styles.divider, { backgroundColor: colors.border }]} />
+                
                 <PriceHistoryTable 
                     postoId={postoId} 
                     selectedFuelName={activeFuelName} 

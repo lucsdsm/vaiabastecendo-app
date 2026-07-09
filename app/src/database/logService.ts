@@ -30,6 +30,18 @@ export function createVehicle(name: string, plate: string, tankCapacity: number)
     return id;
 }
 
+export function updateVehicle(id: string, name: string, plate: string, tankCapacity: number) {
+    db.runSync(
+        `UPDATE vehicles SET name = ?, plate = ?, tank_capacity = ? WHERE id = ?`,
+        [name, plate, tankCapacity, id]
+    );
+}
+
+export function deleteVehicle(id: string) {
+    db.runSync(`DELETE FROM vehicles WHERE id = ?`, [id]);
+    db.runSync(`DELETE FROM logs WHERE vehicle_id = ?`, [id]);
+}
+
 export function getVehicles(): Vehicle[] {
     return db.getAllSync<Vehicle>(`SELECT * FROM vehicles ORDER BY name ASC`);
 }
