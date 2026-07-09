@@ -1,6 +1,6 @@
 import React from 'react';
 import { 
-    View, Text, TouchableOpacity, TextInput, ActivityIndicator, 
+    View, Text, TouchableOpacity, TextInput, 
     Keyboard, ScrollView, KeyboardAvoidingView, Platform 
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -30,12 +30,37 @@ export default function AddVehicleScreen() {
                 <TouchableOpacity onPress={goBack} style={styles.headerActionButton}>
                     <Feather name="arrow-left" size={24} color={colors.textPrimary} />
                 </TouchableOpacity>
+                
                 <View style={styles.headerTitleContainer}>
                     <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
-                        {isEditing ? 'Editar Veículo' : 'Novo Veículo'}
+                        {isEditing ? 'Editar veículo' : 'Novo veículo'}
                     </Text>
                 </View>
-                <View style={styles.headerActionButton} />
+
+                {/* Bloco de ações na direita */}
+                <View style={styles.headerRightActions}>
+                    {isEditing && (
+                        <TouchableOpacity 
+                            onPress={requestDelete} 
+                            style={styles.headerActionButton}
+                            activeOpacity={0.7}
+                        >
+                            <Feather name="trash-2" size={22} color={colors.textPrimary} />
+                        </TouchableOpacity>
+                    )}
+
+                    <TouchableOpacity 
+                        onPress={handleSave} 
+                        disabled={!isFormValid || loading}
+                        style={[
+                            styles.headerActionButton, 
+                            { opacity: !isFormValid || loading ? 0.35 : 1 }
+                        ]}
+                        activeOpacity={0.7}
+                    >
+                        <Feather name="check" size={24} color={colors.textPrimary} />
+                    </TouchableOpacity>
+                </View>
             </View>
 
             <KeyboardAvoidingView
@@ -93,47 +118,6 @@ export default function AddVehicleScreen() {
                             </View>
                         </View>
 
-                        <TouchableOpacity
-                            style={[
-                                styles.button,
-                                {
-                                    backgroundColor: colors.primary + (isDark ? '4B' : 'FF'),
-                                    opacity: loading || !isFormValid ? 0.5 : 1,
-                                    marginTop: 20,
-                                },
-                            ]}
-                            onPress={handleSave}
-                            disabled={loading || !isFormValid}
-                            activeOpacity={0.8}
-                        >
-                            {loading ? (
-                                <ActivityIndicator color="#FFF" size="small" />
-                            ) : (
-                                <>
-                                    <Feather name="check" size={18} color="#FFF" />
-                                    <Text style={[styles.buttonText, {color: "#FFF"}]}> Salvar veículo</Text> 
-                                </>
-                            )}
-                        </TouchableOpacity>
-
-                        {isEditing && (
-                            <TouchableOpacity
-                                style={[
-                                styles.button,
-                                {
-                                    backgroundColor: colors.danger + (isDark ? '4B' : 'FF'),
-                                    marginTop: 10,
-                                },
-                            ]}
-                                onPress={requestDelete} 
-                                activeOpacity={0.8}
-                            >
-                                <Feather name="trash-2" size={18} color="#FFF" />
-                                <Text style={[styles.buttonText, {color: "#FFF"}]}> Excluir veículo</Text> 
-                            </TouchableOpacity>
-                        )}
-
-                        {/* Renderize o alerta customizado no final da hierarquia da tela */}
                         <CustomAlert 
                             visible={isAlertVisible}
                             title="Atenção"

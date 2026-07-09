@@ -35,6 +35,5 @@ export const styles = StyleSheet.create({
         height: 40,
     },
     content: {
-        gap: spacing.lg,
     },
 });

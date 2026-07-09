@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     cardContent: {
-        paddingBottom: spacing.xl,
     },
     section: {
         marginTop: spacing.xl,
@@ -76,30 +75,5 @@ export const styles = StyleSheet.create({
         fontSize: typography.size.sm,
         fontWeight: typography.weight.medium,
         marginLeft: spacing.sm,
-    },
-    submitButton: {
-        borderRadius: radius.lg,
-        paddingVertical: 18,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        gap: spacing.sm,
-        ...Platform.select({
-            ios: {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 4 },
-                shadowOpacity: 0.15,
-                shadowRadius: radius.sm,
-            },
-            android: {
-                elevation: elevation.low,
-            },
-        }),
-    },
-    submitButtonText: {
-        color: '#FFF',
-        fontSize: typography.size.md,
-        fontWeight: typography.weight.bold,
-        letterSpacing: -0.2,
     },
 });

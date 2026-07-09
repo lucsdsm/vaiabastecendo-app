@@ -1,53 +1,33 @@
-import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, Keyboard, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, TextInput, Keyboard, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
-import { PrecoAtualResumo, useUpdatePriceCard } from './useUpdatePriceModal';
 import { getReadableColor } from '../../utils/color';
 import { useKeyboardPadding } from '../../utils/keyboardPadding';
 
 interface UpdatePriceCardProps {
-    postoId: string;
-    postoNome: string;
-    precosAtuais: PrecoAtualResumo[];
-    onSuccess: () => void;
-    onFuelChange?: (fuelName: string) => void;
+    fuelTypes: any[];
+    selectedFuel: number | string | null;
+    price: string;
+    setSelectedFuel: (id: any) => void;
+    handlePriceChange: (text: string) => void;
 }
 
 export default function UpdatePriceCard({
-    postoId,
-    postoNome,
-    precosAtuais,
-    onSuccess,
-    onFuelChange,
+    fuelTypes,
+    selectedFuel,
+    price,
+    setSelectedFuel,
+    handlePriceChange,
 }: UpdatePriceCardProps) {
     const { colors, isDark } = useAppTheme();
-    const { keyboardPadding, setKeyboardPadding } = useKeyboardPadding();
-
-    const {
-        fuelTypes,
-        selectedFuel,
-        price,
-        loading,
-        setSelectedFuel,
-        handlePriceChange,
-        handleUpdate,
-    } = useUpdatePriceCard({ postoId, precosAtuais, onSuccess });
-
-    useEffect(() => {
-        if (onFuelChange && fuelTypes.length > 0 && selectedFuel) {
-            const fuel = fuelTypes.find(t => t.id === selectedFuel);
-            if (fuel) {
-                onFuelChange(fuel.nome);
-            }
-        }
-    }, [selectedFuel, fuelTypes]);
+    const { keyboardPadding } = useKeyboardPadding();
 
     const content = (
         <View style={[styles.cardContent, { backgroundColor: colors.background }] }>
             <View style={styles.section}>
-                <Text style={[styles.label, { color: colors.textSecondary }]}>Combustivel</Text>
+                <Text style={[styles.label, { color: colors.textSecondary }]}>Combustível</Text>
                 <ScrollView
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -116,28 +96,6 @@ export default function UpdatePriceCard({
                     <Text style={[styles.currencySuffix, { color: colors.textSecondary }]}>/L</Text>
                 </View>
             </View>
-
-            <TouchableOpacity
-                style={[
-                    styles.submitButton,
-                    {
-                        backgroundColor: colors.primary,
-                        opacity: loading ? 0.7 : 1,
-                    },
-                ]}
-                onPress={() => handleUpdate(selectedFuel, price)}
-                disabled={loading}
-                activeOpacity={0.8}
-            >
-                {loading ? (
-                    <ActivityIndicator color="#FFF" size="small" />
-                ) : (
-                    <>
-                        <Feather name="check" size={18} color="#FFF" />
-                        <Text style={styles.submitButtonText}>Confirmar</Text>
-                    </>
-                )}
-            </TouchableOpacity>
         </View>
     );
 
