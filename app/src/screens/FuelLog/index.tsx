@@ -54,11 +54,10 @@ export default function FuelLogScreen() {
                 <FlatList
                     data={logs}
                     keyExtractor={(item) => item.id}
-                    contentContainerStyle={{ padding: 20, paddingBottom: 100 }}
                     showsVerticalScrollIndicator={false}
                     ListEmptyComponent={
                         selectedVehicle ? (
-                            <View style={{ alignItems: 'center', marginTop: 40 }}>
+                            <View style={{ alignItems: 'center' }}>
                                 <FontAwesome5 name="receipt" size={40} color={colors.textSecondary + '40'} />
                                 <Text style={{ color: colors.textSecondary, marginTop: 16, textAlign: 'center' }}>
                                     Nenhum abastecimento registrado ainda.

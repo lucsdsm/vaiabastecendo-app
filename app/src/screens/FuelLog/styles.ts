@@ -5,15 +5,15 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    content: {
+     content: {
         flex: 1,
+        marginHorizontal: spacing.lg,
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: spacing.md,
-        paddingVertical: spacing.md,
         position: 'relative',
         minHeight: 56,
     },

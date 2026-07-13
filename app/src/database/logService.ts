@@ -36,6 +36,10 @@ export function updateFuelLog(log: FuelLog) {
     );
 }
 
+export function deleteFuelLog(id: string) {
+    db.runSync(`DELETE FROM logs WHERE id = ?`, [id]);
+}
+
 export function deleteVehicle(id: string) {
     db.runSync(`DELETE FROM vehicles WHERE id = ?`, [id]);
     db.runSync(`DELETE FROM logs WHERE vehicle_id = ?`, [id]);

@@ -71,8 +71,10 @@ export function FuelLogCard({ data, onPress }: FuelLogCardProps) {
                 </View>
             </View>
 
-            {/* Rodapé: Odômetro e Tanque Cheio */}
+            {/* Rodapé: Odômetro na Esquerda | Média e Tanque Cheio na Direita */}
             <View style={[styles.footer, { borderTopColor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)' }]}>
+                
+                {/* Odômetro */}
                 <View style={styles.odometerRow}>
                     <FontAwesome5 name="tachometer-alt" size={12} color={colors.textSecondary} style={{ marginRight: 6 }}/>
                     <Text style={[styles.footerText, { color: colors.textSecondary }]}>
@@ -80,19 +82,23 @@ export function FuelLogCard({ data, onPress }: FuelLogCardProps) {
                     </Text>
                 </View>
 
-                {formattedKml && (
-                    <View style={[styles.badge, { backgroundColor: colors.primary + '15'}]}>
-                        <Feather name="target" size={12} color={colors.primary} style={{ marginRight: 4 }} />
-                        <Text style={[styles.badgeText, { color: colors.primary }]}>{formattedKml}</Text>
-                    </View>
-                )}
+                {/* Grupo de Badges */}
+                <View style={styles.footerRightGroup}>
+                    {formattedKml && (
+                        <View style={[styles.badge, { backgroundColor: colors.primary + '15'}]}>
+                            <Feather name="target" size={12} color={colors.primary} style={{ marginRight: 4 }} />
+                            <Text style={[styles.badgeText, { color: colors.primary }]}>{formattedKml}</Text>
+                        </View>
+                    )}
 
-                {data.is_full === 1 && (
-                    <View style={[styles.badge, { backgroundColor: colors.primary + '15' }]}>
-                        <Feather name="droplet" size={12} color={colors.primary} style={{ marginRight: 4 }} />
-                        <Text style={[styles.badgeText, { color: colors.primary }]}>Tanque Cheio</Text>
-                    </View>
-                )}
+                    {data.is_full === 1 && (
+                        <View style={[styles.badge, { backgroundColor: colors.primary + '15' }]}>
+                            <Feather name="droplet" size={12} color={colors.primary} style={{ marginRight: 4 }} />
+                            <Text style={[styles.badgeText, { color: colors.primary }]}>Tanque Cheio</Text>
+                        </View>
+                    )}
+                </View>
+
             </View>
         </TouchableOpacity>
     );

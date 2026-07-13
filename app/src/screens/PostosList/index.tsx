@@ -85,7 +85,6 @@ export default function HomeScreen() {
       <StatusBar style={isDark ? 'light' : 'dark'} />
 
       <View style={styles.content}>
-        {/* A FlatList agora é renderizada SEMPRE, gerenciando os próprios estados */}
         <FlatList
           data={postos}
           keyExtractor={(item) => item.id}

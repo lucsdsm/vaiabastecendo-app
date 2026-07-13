@@ -46,7 +46,7 @@ export function useAddVehicle() {
     };
 
     const confirmDelete = () => {
-        setIsAlertVisible(false); // Fecha o modal
+        setIsAlertVisible(false);
         try {
             deleteVehicle(vehicleToEdit.id);
             navigation.goBack();

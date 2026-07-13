@@ -8,6 +8,7 @@ import { useKeyboardPadding } from '../../utils/keyboardPadding';
 import { getReadableColor } from '../../utils/color';
 import { useAddFuelLog } from './useAddFuelLog';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { CustomAlert } from '../../components/Alert';
 
 export default function AddFuelLogScreen() {
     const { colors, isDark } = useAppTheme();
@@ -22,6 +23,7 @@ export default function AddFuelLogScreen() {
         fuelTypes, selectedFuel, setSelectedFuel,
         date, setDate,
         showDatePicker, setShowDatePicker,
+        isAlertVisible, requestDelete, confirmDelete, cancelDelete,
         isFormValid, isEditing, handleSave, goBack
     } = useAddFuelLog();
 
@@ -32,18 +34,34 @@ export default function AddFuelLogScreen() {
                 <TouchableOpacity onPress={goBack} style={styles.headerActionButton}>
                     <Feather name="arrow-left" size={24} color={colors.textPrimary} />
                 </TouchableOpacity>
+                
                 <View style={styles.headerTitleContainer}>
                     <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
-                        {isEditing ? 'Editar Abastecimento' : 'Novo Abastecimento'}
+                        {isEditing ? 'Editar abastecimento' : 'Novo abastecimento'}
                     </Text>
                 </View>
-                <TouchableOpacity 
-                    onPress={handleSave} 
-                    disabled={!isFormValid}
-                    style={[styles.headerActionButton, { opacity: isFormValid ? 1 : 0.35 }]}
-                >
-                    <Feather name="check" size={24} color={colors.primary} />
-                </TouchableOpacity>
+                
+                {/* Agrupamento dos botões da direita */}
+                <View style={styles.headerRightActions}>
+                    {isEditing && (
+                        <TouchableOpacity 
+                            onPress={requestDelete}
+                            style={styles.headerActionButton}
+                            activeOpacity={0.7}
+                        >
+                            <Feather name="trash-2" size={22} color={colors.textPrimary} />
+                        </TouchableOpacity>
+                    )}
+
+                    <TouchableOpacity 
+                        onPress={handleSave} 
+                        disabled={!isFormValid}
+                        style={[styles.headerActionButton, { opacity: isFormValid ? 1 : 0.35 }]}
+                        activeOpacity={0.7}
+                    >
+                        <Feather name="check" size={24} color={colors.textPrimary} />
+                    </TouchableOpacity>
+                </View>
             </View>
 
             <KeyboardAvoidingView
@@ -183,6 +201,16 @@ export default function AddFuelLogScreen() {
                                 thumbColor={isFullTank ? colors.primary : '#f4f3f4'}
                             />
                         </View>
+
+                        <CustomAlert
+                            visible={isAlertVisible}
+                            title="Atenção"
+                            message="Tem certeza que deseja excluir este abastecimento?"
+                            confirmText="Excluir"
+                            isDestructive={true}
+                            onConfirm={confirmDelete}
+                            onCancel={cancelDelete}
+                        />
 
                     </TouchableOpacity>
                 </ScrollView>

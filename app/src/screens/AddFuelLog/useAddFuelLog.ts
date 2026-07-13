@@ -2,40 +2,36 @@ import { useState, useEffect } from 'react';
 import { Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useCombustivel } from '../../contexts/CombustivelContext';
-import { addFuelLog, updateFuelLog, getVehicleLogs } from '../../database/logService';
+import { addFuelLog, updateFuelLog, getVehicleLogs, deleteFuelLog } from '../../database/logService';
 
 export function useAddFuelLog() {
     const navigation = useNavigation();
     const route = useRoute<any>();
     
-    // Parâmetros da rota
     const vehicleId = route.params?.vehicleId;
     const logToEdit = route.params?.logToEdit;
     const isEditing = !!logToEdit;
 
-    // Estados do formulário
     const [odometer, setOdometer] = useState(logToEdit?.odometer?.toString() || '');
     const [pricePerLiter, setPricePerLiter] = useState(logToEdit?.price_per_liter?.toString() || '');
     const [totalPrice, setTotalPrice] = useState(logToEdit?.total_price?.toString() || '');
     const [liters, setLiters] = useState(logToEdit?.liters?.toString() || '');
     const [isFullTank, setIsFullTank] = useState(logToEdit?.is_full === 1);
     
-    // Estados da Data
     const [date, setDate] = useState(logToEdit ? new Date(logToEdit.date) : new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
 
-    // Contexto de combustíveis
     const { fuelTypes, refetchFuelTypes, loading: isFuelLoading } = useCombustivel();
     const [selectedFuel, setSelectedFuel] = useState<number | null>(null);
 
-    // Buscar lista de combustíveis se estiver vazia
+    const [isAlertVisible, setIsAlertVisible] = useState(false);
+
     useEffect(() => {
         if (fuelTypes.length === 0 && !isFuelLoading) {
             refetchFuelTypes();
         }
     }, []);
 
-    // Selecionar combustível padrão
     useEffect(() => {
         if (fuelTypes.length > 0) {
             if (isEditing && logToEdit?.fuel_type) {
@@ -47,7 +43,6 @@ export function useAddFuelLog() {
         }
     }, [fuelTypes, isEditing, logToEdit]);
 
-    // --- LÓGICA MATEMÁTICA ---
     const parseNumber = (text: string) => parseFloat(text.replace(',', '.')) || 0;
     const formatNumber = (num: number) => num > 0 ? num.toFixed(2).replace('.', ',') : '';
 
@@ -72,7 +67,25 @@ export function useAddFuelLog() {
         if (price > 0 && lts > 0) setTotalPrice(formatNumber(lts * price));
     };
 
-    // --- VALIDAÇÃO E SALVAMENTO ---
+    const requestDelete = () => {
+        if (!isEditing || !logToEdit?.id) return;
+        setIsAlertVisible(true);
+    };
+    
+    const confirmDelete = () => {
+        setIsAlertVisible(false);
+        try {
+            deleteFuelLog(logToEdit.id);
+            navigation.goBack();
+        } catch (error) {
+            console.error("Erro ao excluir abastecimento:", error);
+        }
+    };
+    
+    const cancelDelete = () => {
+        setIsAlertVisible(false);
+    };
+
     const isFormValid = 
         vehicleId && 
         selectedFuel && 
@@ -89,14 +102,12 @@ export function useAddFuelLog() {
         const currentTotal = parseNumber(totalPrice);
         const fuelName = fuelTypes.find(f => f.id === selectedFuel)?.nome || 'Desconhecido';
 
-        // Validação Cronológica do Odômetro
         const history = getVehicleLogs(vehicleId);
         const filteredHistory = isEditing ? history.filter(log => log.id !== logToEdit.id) : history;
 
         for (const pastLog of filteredHistory) {
             const pastDate = new Date(pastLog.date);
             
-            // Retira a precisão de horas/minutos para comparar apenas os dias
             const dateStr = date.toISOString().split('T')[0];
             const pastDateStr = pastDate.toISOString().split('T')[0];
 
@@ -151,6 +162,7 @@ export function useAddFuelLog() {
         date, setDate,
         showDatePicker, setShowDatePicker,
         isFormValid, handleSave, isEditing,
+        isAlertVisible, requestDelete, confirmDelete, cancelDelete,
         goBack: () => navigation.goBack()
     };
 }

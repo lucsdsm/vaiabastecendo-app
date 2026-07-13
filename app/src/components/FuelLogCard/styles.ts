@@ -61,11 +61,18 @@ export const styles = StyleSheet.create({
     },
     footer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-between', 
         alignItems: 'center',
         paddingHorizontal: 16,
         paddingVertical: 12,
         borderTopWidth: 1,
+    },
+    footerRightGroup: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        flexWrap: 'wrap',
+        gap: 8,
     },
     odometerRow: {
         flexDirection: 'row',

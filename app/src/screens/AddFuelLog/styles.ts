@@ -35,6 +35,11 @@ export const styles = StyleSheet.create({
         fontSize: typography.size.xl,
         fontWeight: typography.weight.bold,
     },
+        headerRightActions: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        zIndex: 2,
+    },
     cardContent: {
         paddingHorizontal: spacing.lg,
         paddingBottom: spacing.xl,
