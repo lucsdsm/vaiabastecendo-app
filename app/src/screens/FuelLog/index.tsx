@@ -16,6 +16,7 @@ export default function FuelLogScreen() {
         handleSelectVehicle,
         handleAddVehicle,
         handleEditVehicle,
+        handleAddFuelLog,
         goBack
     } = useFuelLog();
 
@@ -59,6 +60,16 @@ export default function FuelLogScreen() {
                 onAddVehicle={handleAddVehicle}
                 onEditVehicle={handleEditVehicle}
             />
+
+            {selectedVehicle && (
+                <TouchableOpacity 
+                    style={[styles.fab, { backgroundColor: colors.primary }]}
+                    onPress={handleAddFuelLog}
+                    activeOpacity={0.8}
+                >
+                    <FontAwesome5 name="gas-pump" size={20} color="#FFF" />
+                </TouchableOpacity>
+            )}
 
         </SafeAreaView>
     );

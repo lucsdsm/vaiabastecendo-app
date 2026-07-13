@@ -53,6 +53,13 @@ export function useFuelLog() {
         navigation.navigate('AddVehicle', { vehicleToEdit: vehicle });
     };
 
+    const handleAddFuelLog = () => {
+        if (selectedVehicle) {
+            navigation.navigate('AddFuelLog', { vehicleId: selectedVehicle.id });
+        }
+        
+    };
+
     const goBack = () => navigation.goBack();
 
     return {
@@ -64,6 +71,7 @@ export function useFuelLog() {
         handleSelectVehicle,
         handleAddVehicle,
         handleEditVehicle,
+        handleAddFuelLog,
         goBack
     };
 }
