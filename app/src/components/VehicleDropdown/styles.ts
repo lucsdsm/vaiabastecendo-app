@@ -4,7 +4,7 @@ import { spacing, radius, typography, elevation, iconSize  } from '../../theme/t
 export const styles = StyleSheet.create({
     dropdownOverlay: {
         position: 'absolute',
-        top: 65,
+        top: 80,
         left: 0,
         right: 0,
         bottom: 0,

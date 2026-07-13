@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { getVehicles, Vehicle } from '../../database/logService'; 
+import { getVehicleLogs, getVehicles, Vehicle } from '../../database/logService'; 
 import { useAppTheme } from '../../theme/ThemeProvider';
+import { FuelLog } from '../../database/logService';
 
 export function useFuelLog() {
     const { colors } = useAppTheme();
@@ -10,6 +11,8 @@ export function useFuelLog() {
     const [vehicles, setVehicles] = useState<Vehicle[]>([]);
     const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const [logs, setLogs] = useState<FuelLog[]>([]);
 
     useFocusEffect(
         useCallback(() => {
@@ -21,10 +24,8 @@ export function useFuelLog() {
                     setSelectedVehicle((prevSelected) => {
                         if (!prevSelected) return loadedVehicles[0];
 
-                        // Busca o carro atualizado de dentro da nova lista do banco
                         const updatedVehicle = loadedVehicles.find(v => v.id === prevSelected.id);
 
-                        // Se ele ainda existir (não foi deletado), retorna a versão atualizada dele
                         return updatedVehicle ? updatedVehicle : loadedVehicles[0];
                     });
                 } else {
@@ -35,6 +36,14 @@ export function useFuelLog() {
             fetchVehicles();
         }, [])
     );
+
+    useEffect(() => {
+        if (selectedVehicle) {
+            setLogs(getVehicleLogs(selectedVehicle.id));
+        } else {
+            setLogs([]);
+        }
+    }, [selectedVehicle]);
 
     const toggleModal = () => setIsModalVisible(!isModalVisible);
 
@@ -57,7 +66,15 @@ export function useFuelLog() {
         if (selectedVehicle) {
             navigation.navigate('AddFuelLog', { vehicleId: selectedVehicle.id });
         }
-        
+    };
+
+    const handleEditFuelLog = (log: FuelLog) => {
+        if (selectedVehicle) {
+            (navigation.navigate as any)('AddFuelLog', { 
+                vehicleId: selectedVehicle.id,
+                logToEdit: log 
+            });
+        }
     };
 
     const goBack = () => navigation.goBack();
@@ -72,6 +89,8 @@ export function useFuelLog() {
         handleAddVehicle,
         handleEditVehicle,
         handleAddFuelLog,
+        handleEditFuelLog,
+        logs,
         goBack
     };
 }

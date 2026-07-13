@@ -5,11 +5,13 @@ import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import { styles } from './styles';
 import { useFuelLog } from './useFuelLog';
 import { VehicleDropdown } from '../../components/VehicleDropdown';
+import { FuelLogCard } from '../../components/FuelLogCard';
 
 export default function FuelLogScreen() {
     const {
         colors,
         vehicles,
+        logs,
         selectedVehicle,
         isModalVisible,
         toggleModal,
@@ -17,6 +19,7 @@ export default function FuelLogScreen() {
         handleAddVehicle,
         handleEditVehicle,
         handleAddFuelLog,
+        handleEditFuelLog,
         goBack
     } = useFuelLog();
 
@@ -48,6 +51,28 @@ export default function FuelLogScreen() {
 
             {/* Conteúdo */}
             <View style={styles.content}>
+                <FlatList
+                    data={logs}
+                    keyExtractor={(item) => item.id}
+                    contentContainerStyle={{ padding: 20, paddingBottom: 100 }}
+                    showsVerticalScrollIndicator={false}
+                    ListEmptyComponent={
+                        selectedVehicle ? (
+                            <View style={{ alignItems: 'center', marginTop: 40 }}>
+                                <FontAwesome5 name="receipt" size={40} color={colors.textSecondary + '40'} />
+                                <Text style={{ color: colors.textSecondary, marginTop: 16, textAlign: 'center' }}>
+                                    Nenhum abastecimento registrado ainda.
+                                </Text>
+                            </View>
+                        ) : null
+                    }
+                    renderItem={({ item }) => (
+                        <FuelLogCard 
+                            data={item} 
+                            onPress={() => handleEditFuelLog(item)} 
+                        />
+                    )}
+                />
             </View>
 
             {/* Dropdown */}

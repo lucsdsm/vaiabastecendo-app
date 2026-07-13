@@ -22,7 +22,7 @@ export default function AddFuelLogScreen() {
         fuelTypes, selectedFuel, setSelectedFuel,
         date, setDate,
         showDatePicker, setShowDatePicker,
-        isFormValid, handleSave, goBack
+        isFormValid, isEditing, handleSave, goBack
     } = useAddFuelLog();
 
     return (
@@ -33,7 +33,9 @@ export default function AddFuelLogScreen() {
                     <Feather name="arrow-left" size={24} color={colors.textPrimary} />
                 </TouchableOpacity>
                 <View style={styles.headerTitleContainer}>
-                    <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>Novo abastecimento</Text>
+                    <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
+                        {isEditing ? 'Editar Abastecimento' : 'Novo Abastecimento'}
+                    </Text>
                 </View>
                 <TouchableOpacity 
                     onPress={handleSave} 
@@ -86,7 +88,9 @@ export default function AddFuelLogScreen() {
                                     display="default"
                                     onChange={(event, selectedDate) => {
                                         setShowDatePicker(false);
-                                        if (selectedDate) setDate(selectedDate);
+                                        if (event.type === 'set' && selectedDate) {
+                                            setDate(selectedDate);
+                                        }
                                     }}
                                 />
                             )}

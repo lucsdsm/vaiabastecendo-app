@@ -7,7 +7,6 @@ export const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        padding: spacing.lg,
     },
     header: {
         flexDirection: 'row',
