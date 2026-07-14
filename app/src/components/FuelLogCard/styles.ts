@@ -1,8 +1,9 @@
 import { StyleSheet } from 'react-native';
+import { radius, spacing, typography, elevation } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     card: {
-        borderRadius: 16,
+        borderRadius: radius.md,
         borderWidth: 1,
         marginBottom: 16,
         overflow: 'hidden',
@@ -11,7 +12,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 16,
+        padding: spacing.md,
     },
     headerLeft: {
         flexDirection: 'row',
@@ -20,7 +21,7 @@ export const styles = StyleSheet.create({
     iconContainer: {
         width: 32,
         height: 32,
-        borderRadius: 8,
+        borderRadius: radius.sm,
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: 10,
@@ -36,8 +37,8 @@ export const styles = StyleSheet.create({
     metricsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 16,
-        paddingBottom: 16,
+        paddingHorizontal: spacing.md,
+        paddingBottom: spacing.md,
     },
     metricBlock: {
         flex: 1,
@@ -46,7 +47,7 @@ export const styles = StyleSheet.create({
         width: 1,
         height: '80%',
         alignSelf: 'center',
-        marginHorizontal: 12,
+        marginHorizontal: spacing.sm,
         opacity: 0.5,
     },
     metricLabel: {
@@ -61,18 +62,30 @@ export const styles = StyleSheet.create({
     },
     footer: {
         flexDirection: 'row',
-        justifyContent: 'space-between', 
+        justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 16,
-        paddingVertical: 12,
+        paddingHorizontal: spacing.md,
+        paddingVertical: spacing.sm,
         borderTopWidth: 1,
     },
     footerRightGroup: {
+        flex: 1,
         flexDirection: 'row',
+        flexWrap: 'wrap', 
+        justifyContent: 'flex-end', 
         alignItems: 'center',
-        justifyContent: 'flex-end',
-        flexWrap: 'wrap',
-        gap: 8,
+        gap: spacing.sm, 
+    },
+    distanceText: {
+        fontSize: 12,
+        marginTop: 2,
+        opacity: 0.7,
+        marginLeft: 18,
+    },
+    odometerContainer: {
+        flexShrink: 0, 
+        marginRight: spacing.sm,
+        justifyContent: 'center',
     },
     odometerRow: {
         flexDirection: 'row',
@@ -85,8 +98,8 @@ export const styles = StyleSheet.create({
     badge: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: 8,
-        paddingVertical: 4,
+        paddingHorizontal: spacing.sm,
+        paddingVertical: spacing.xs,
         borderRadius: 12,
     },
     badgeText: {

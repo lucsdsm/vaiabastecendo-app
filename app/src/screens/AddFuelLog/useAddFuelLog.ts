@@ -107,6 +107,7 @@ export function useAddFuelLog() {
         const filteredHistory = isEditing ? history.filter(log => log.id !== logToEdit.id) : history;
 
         const today = new Date();
+        today.setHours(23, 59, 59, 999);
 
         if (date > today) {
             showToast("Data inválida. A data do abastecimento não pode ser no futuro.", "danger");

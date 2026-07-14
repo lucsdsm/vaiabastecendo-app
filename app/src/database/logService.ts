@@ -70,17 +70,32 @@ export function addFuelLog(log: Omit<FuelLog, 'id'>): string {
     return id;
 }
 
-export function getVehicleLogs(vehicleId: string): (FuelLog & { km_per_liter: number | null })[] {
+export function getVehicleLogs(vehicleId: string): (FuelLog & { 
+    km_per_liter: number | null;
+    distance_driven: number | null;
+    cost_per_km: number | null;
+})[] {
     const logs = db.getAllSync<FuelLog>(
         `SELECT * FROM logs WHERE vehicle_id = ? ORDER BY odometer ASC`,
         [vehicleId]
     );
 
     let lastFullOdometer: number | null = null;
+    let previousOdometer: number | null = null;
     let accumulatedLiters = 0;
 
-    const logsWithKml = logs.map((log) => {
+    const logsWithMetrics = logs.map((log) => {
         let kmPerLiter: number | null = null;
+        let distanceDriven: number | null = null;
+        let costPerKm: number | null = null;
+
+        if (previousOdometer !== null) {
+            distanceDriven = log.odometer - previousOdometer;
+            if (distanceDriven > 0) {
+                costPerKm = log.total_price / distanceDriven;
+            }
+        }
+        previousOdometer = log.odometer;
 
         if (log.is_full === 1) {
             if (lastFullOdometer !== null) {
@@ -99,11 +114,13 @@ export function getVehicleLogs(vehicleId: string): (FuelLog & { km_per_liter: nu
 
         return {
             ...log,
-            km_per_liter: kmPerLiter
+            km_per_liter: kmPerLiter,
+            distance_driven: distanceDriven,
+            cost_per_km: costPerKm
         };
     });
 
-    return logsWithKml.reverse();
+    return logsWithMetrics.reverse();
 }
 
 export function getVehicleStats(vehicleId: string) {
