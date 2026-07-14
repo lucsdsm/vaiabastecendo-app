@@ -6,6 +6,7 @@ import { styles } from './styles';
 import { useFuelLog } from './useFuelLog';
 import { VehicleDropdown } from '../../components/VehicleDropdown';
 import { FuelLogCard } from '../../components/FuelLogCard';
+import EmptyState from '@components/EmptyState';
 
 export default function FuelLogScreen() {
     const {
@@ -48,21 +49,25 @@ export default function FuelLogScreen() {
                     />
                 </TouchableOpacity>
             </View>
-
+            
             {/* Conteúdo */}
             <View style={styles.content}>
                 <FlatList
                     data={logs}
                     keyExtractor={(item) => item.id}
                     showsVerticalScrollIndicator={false}
+                    contentContainerStyle={[
+                        logs.length === 0 && { flex: 1, justifyContent: 'center'}
+                    ]}
                     ListEmptyComponent={
                         selectedVehicle ? (
-                            <View style={{ alignItems: 'center' }}>
-                                <FontAwesome5 name="receipt" size={40} color={colors.textSecondary + '40'} />
-                                <Text style={{ color: colors.textSecondary, marginTop: 16, textAlign: 'center' }}>
-                                    Nenhum abastecimento registrado ainda.
-                                </Text>
-                            </View>
+                            <EmptyState 
+                                title="Nenhum abastecimento."
+                                message="Ainda não há abastecimentos registrados para este veículo."
+                                variant="neutral"
+                                iconName="clipboard" 
+                                
+                            />
                         ) : null
                     }
                     renderItem={({ item }) => (

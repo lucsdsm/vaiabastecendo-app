@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Alert } from 'react-native';
+import { useToast } from '../../contexts/ToastContext';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useCombustivel } from '../../contexts/CombustivelContext';
 import { addFuelLog, updateFuelLog, getVehicleLogs, deleteFuelLog } from '../../database/logService';
@@ -7,6 +7,7 @@ import { addFuelLog, updateFuelLog, getVehicleLogs, deleteFuelLog } from '../../
 export function useAddFuelLog() {
     const navigation = useNavigation();
     const route = useRoute<any>();
+    const { showToast } = useToast();
     
     const vehicleId = route.params?.vehicleId;
     const logToEdit = route.params?.logToEdit;
@@ -105,6 +106,13 @@ export function useAddFuelLog() {
         const history = getVehicleLogs(vehicleId);
         const filteredHistory = isEditing ? history.filter(log => log.id !== logToEdit.id) : history;
 
+        const today = new Date();
+
+        if (date > today) {
+            showToast("Data inválida. A data do abastecimento não pode ser no futuro.", "danger");
+            return;
+        }
+
         for (const pastLog of filteredHistory) {
             const pastDate = new Date(pastLog.date);
             
@@ -112,11 +120,11 @@ export function useAddFuelLog() {
             const pastDateStr = pastDate.toISOString().split('T')[0];
 
             if (dateStr > pastDateStr && currentOdo <= pastLog.odometer) {
-                Alert.alert("Erro no Odômetro", `O odômetro não pode ser menor ou igual a ${pastLog.odometer} km, que foi registrado em ${pastDate.toLocaleDateString('pt-BR')}.`);
+                showToast("Erro no Odômetro. O odômetro não pode ser menor ou igual a ${pastLog.odometer} km, que foi registrado em ${pastDate.toLocaleDateString('pt-BR')}.", "danger");
                 return;
             }
             if (dateStr < pastDateStr && currentOdo >= pastLog.odometer) {
-                Alert.alert("Erro no Odômetro", `Para esta data, o odômetro deve ser menor que ${pastLog.odometer} km, que foi registrado em ${pastDate.toLocaleDateString('pt-BR')}.`);
+                showToast("Erro no Odômetro. Para esta data, o odômetro deve ser menor que ${pastLog.odometer} km, que foi registrado em ${pastDate.toLocaleDateString('pt-BR')}.", "danger");
                 return;
             }
         }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Pressable, Text, View } from 'react-native';
+import { ActivityIndicator, Pressable, Text, View, StyleProp, ViewStyle } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { styles } from './styles';
 import { useAppTheme } from '../../theme/ThemeProvider';
@@ -8,8 +8,11 @@ interface EmptyStateProps {
     title?: string;
     message?: string;
     iconName?: keyof typeof Feather.glyphMap;
+    customIcon?: React.ReactNode;
     onRetry?: () => void;
     buttonText?: string;
+    variant?: 'error' | 'neutral' | 'primary'; 
+    style?: StyleProp<ViewStyle>;
 }
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost';
@@ -26,18 +29,9 @@ interface ButtonProps {
     accessibilityLabel?: string;
 }
 
-/**
- * Botao base com estados de carregamento e variantes de cor.
- */
 function Button({
-    label,
-    onPress,
-    variant = 'primary',
-    size = 'md',
-    disabled = false,
-    loading = false,
-    icon,
-    accessibilityLabel,
+    label, onPress, variant = 'primary', size = 'md',
+    disabled = false, loading = false, icon, accessibilityLabel,
 }: ButtonProps) {
     const { colors } = useAppTheme();
     const isDisabled = disabled || loading;
@@ -73,24 +67,40 @@ function Button({
     );
 }
 
-/**
- * Estado vazio para falha de conectividade com opcao de nova tentativa .
- */
 export default function EmptyState({ 
     title = 'Dados Indisponíveis',
-    message = 'Não foi possível receber os dados dos postos no momento.', 
+    message = 'Não foi possível receber os dados no momento.', 
     iconName = 'wifi-off',
+    customIcon,
     buttonText = 'Tentar Novamente',
-    onRetry 
+    onRetry,
+    variant = 'error',
+    style
 }: EmptyStateProps) {
     const { colors, isDark } = useAppTheme();
 
+    const getVariantColors = () => {
+        switch (variant) {
+            case 'neutral':
+                return { bg: colors.textSecondary + (isDark ? '33' : '1A'), icon: colors.textSecondary };
+            case 'primary':
+                return { bg: colors.primary + (isDark ? '33' : '1A'), icon: colors.primary };
+            case 'error':
+            default:
+                return { bg: colors.danger + (isDark ? '33' : '1A'), icon: colors.danger };
+        }
+    };
+
+    const variantColors = getVariantColors();
+
     return (
-        <View style={[styles.container, { 
-            backgroundColor: colors.background,
-        }]}>
-            <View style={[styles.iconContainer, { backgroundColor: colors.danger + (isDark ? '33' : '1A') }]}>
-                <Feather name={iconName} size={32} color={colors.danger} />
+        <View style={[styles.container, { backgroundColor: colors.background }, style]}>
+            <View style={[styles.iconContainer, { backgroundColor: variantColors.bg }]}>
+                {customIcon ? (
+                    customIcon
+                ) : (
+                    <Feather name={iconName} size={32} color={variantColors.icon} />
+                )}
             </View>
             
             <Text style={[styles.title, { color: colors.textPrimary }]}>
@@ -101,14 +111,15 @@ export default function EmptyState({
                 {message}
             </Text>
 
-            {/* Renderiza o botão apenas se a função onRetry for passada */}
             {onRetry && (
-                <Button
-                    label={buttonText}
-                    onPress={onRetry}
-                    icon={<Feather name="refresh-cw" size={16} color="#FFF" />}
-                    accessibilityLabel={buttonText}
-                />
+                <View style={{ marginTop: 16 }}>
+                    <Button
+                        label={buttonText}
+                        onPress={onRetry}
+                        icon={<Feather name="refresh-cw" size={16} color="#FFF" />}
+                        accessibilityLabel={buttonText}
+                    />
+                </View>
             )}
         </View>
     );

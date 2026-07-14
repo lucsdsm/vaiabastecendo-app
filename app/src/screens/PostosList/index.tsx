@@ -12,7 +12,7 @@ import Banner from '../../components/Banner';
 import { styles } from './styles';
 import { usePostosList } from './usePostosList';
 
-export default function HomeScreen() {
+export default function PostoListScreen() {
   const {
     colors,
     isDark,
@@ -33,7 +33,6 @@ export default function HomeScreen() {
     refetch();
   }, [route.params?.refreshKey, refetch]);
 
-  // 1. Isolamos o Header e o Banner numa constante para o topo da lista
   const renderHeader = () => (
     <>
       <Header />
@@ -54,7 +53,6 @@ export default function HomeScreen() {
     </>
   );
 
-  // 2. Isolamos a lógica de Loading, Erro e Lista Vazia em uma única função
   const renderEmptyState = () => {
     if (loading) {
       return (
@@ -73,8 +71,8 @@ export default function HomeScreen() {
 
     return (
       <EmptyState
-        title="Nenhum posto encontrado"
-        message="Ainda não há postos cadastrados no sistema. Puxe para baixo para atualizar ou seja o primeiro a adicionar um!"
+        title="Nenhum posto encontrado."
+        message="Ainda não há postos cadastrados no sistema. Puxe para baixo para atualizar!"
         iconName="map"
       />
     );
@@ -90,7 +88,6 @@ export default function HomeScreen() {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <PostoCard data={item} onRefresh={refetch} />}
           
-          // Injetamos o cabeçalho e os estados de vazio aqui:
           ListHeaderComponent={renderHeader}
           ListEmptyComponent={renderEmptyState}
           
@@ -105,7 +102,6 @@ export default function HomeScreen() {
           }
           contentContainerStyle={[
             styles.listContainer,
-            // Mantém a lógica de expandir caso não tenha postos para centralizar o loader/erro
             postos.length === 0 && { flexGrow: 1 } 
           ]}
           showsVerticalScrollIndicator={false}

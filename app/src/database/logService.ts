@@ -49,9 +49,8 @@ export function getVehicles(): Vehicle[] {
     return db.getAllSync<Vehicle>(`SELECT * FROM vehicles ORDER BY name ASC`);
 }
 
-export function addFuelLog(log: Omit<FuelLog, 'id' | 'date'>): string {
+export function addFuelLog(log: Omit<FuelLog, 'id'>): string {
     const id = Crypto.randomUUID();
-    const currentDate = new Date().toISOString();
 
     db.runSync(
         `INSERT INTO logs (id, vehicle_id, date, odometer, liters, price_per_liter, total_price, is_full, fuel_type) 
@@ -59,7 +58,7 @@ export function addFuelLog(log: Omit<FuelLog, 'id' | 'date'>): string {
         [
             id, 
             log.vehicle_id, 
-            currentDate, 
+            log.date, 
             log.odometer, 
             log.liters, 
             log.price_per_liter, 

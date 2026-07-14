@@ -6,7 +6,7 @@ import * as Location from 'expo-location'; // NOVO IMPORT
 
 import { ThemeProvider, useAppTheme } from './src/theme/ThemeProvider';
 import LoadingScreen from './src/components/LoadingScreen';
-import HomeScreen from './src/screens/PostosList';
+import PostoListScreen from './src/screens/PostosList';
 import MapScreen from './src/screens/MapView';
 import UserProfileScreen from './src/screens/UserProfile';
 import UpdatePriceScreen from './src/screens/UpdatePrice';
@@ -53,7 +53,7 @@ const AppNavigator = ({ hasPermission, setHasPermission }: any) => {
         ) : (
           // Renderiza o app principal apos liberar a localizacao
           <>
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="PostoList" component={PostoListScreen} />
             <Stack.Screen name="Map" component={MapScreen} />
             <Stack.Screen name="UserProfile" component={UserProfileScreen} />
             <Stack.Screen name="UpdatePrice" component={UpdatePriceScreen} />

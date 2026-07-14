@@ -104,6 +104,7 @@ export default function AddFuelLogScreen() {
                                     value={date}
                                     mode="date"
                                     display="default"
+                                    maximumDate={new Date()}
                                     onChange={(event, selectedDate) => {
                                         setShowDatePicker(false);
                                         if (event.type === 'set' && selectedDate) {
