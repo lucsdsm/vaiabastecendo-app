@@ -21,7 +21,7 @@ export default function FuelLogScreen() {
         handleEditVehicle,
         handleAddFuelLog,
         handleEditFuelLog,
-        goBack
+        goBack,
     } = useFuelLog();
 
     return (

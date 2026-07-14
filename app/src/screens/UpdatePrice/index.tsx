@@ -25,7 +25,7 @@ export default function UpdatePrice() {
     const [activeFuelName, setActiveFuelName] = useState<string | null>(null);
 
     const handleSuccess = () => {
-        (navigation.navigate as any)('Home', { refreshKey: Date.now() });
+        (navigation.navigate as any)('PostoList', { refreshKey: Date.now() });
     };
 
     const {

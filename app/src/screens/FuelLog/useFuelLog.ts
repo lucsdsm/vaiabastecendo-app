@@ -1,8 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { getVehicleLogs, getVehicles, Vehicle } from '../../database/logService'; 
+import { addFuelLog, getVehicleLogs, getVehicles, Vehicle } from '../../database/logService'; 
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { FuelLog } from '../../database/logService';
+
+import * as DocumentPicker from 'expo-document-picker';
+import * as FileSystem from 'expo-file-system/legacy';
+import { Alert } from 'react-native';
 
 export function useFuelLog() {
     const { colors } = useAppTheme();

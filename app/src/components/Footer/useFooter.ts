@@ -11,7 +11,7 @@ export function useFooter() {
     const { colors, toggleTheme } = useAppTheme();
     const { userData } = useAuth();
     const [profileModalVisible, setProfileModalVisible] = useState(false);
-    const activeRoute = useNavigationState((state) => state?.routes[state.index]?.name || 'Home');
+    const activeRoute = useNavigationState((state) => state?.routes[state.index]?.name || 'PostoList');
     const navigation = useNavigation<any>();
 
     const openProfileModal = () => setProfileModalVisible(true);

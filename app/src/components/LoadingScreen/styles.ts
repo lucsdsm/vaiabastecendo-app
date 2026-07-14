@@ -40,10 +40,10 @@ export const styles = StyleSheet.create({
     },
     gaugeContainer: {
         width: 200,
-        height: 100, 
+        height: 115,
         overflow: 'hidden',
         alignItems: 'center',
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-start',
         marginTop: spacing.md,
     },
     gaugeBackground: {
@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: 160,
         position: 'absolute',
-        bottom: 5,
+        bottom: 0,
     },
     labelText: {
         fontSize: typography.size.md,
@@ -85,6 +85,7 @@ export const styles = StyleSheet.create({
         height: 20,
         borderRadius: 10,
         position: 'absolute',
-        bottom: -10, 
+        top: 90, 
+        alignSelf: 'center',
     }
 });

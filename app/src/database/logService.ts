@@ -29,6 +29,13 @@ export function createVehicle(name: string, plate: string, tankCapacity: number)
     return id;
 }
 
+export function updateVehicle(id: string, name: string, plate: string, capacityNumber: number) {
+    db.runSync(
+        `UPDATE vehicles SET name = ?, plate = ?, tank_capacity = ? WHERE id = ?`,
+        [name, plate, capacityNumber, id]
+    );
+}
+
 export function updateFuelLog(log: FuelLog) {
     db.runSync(
         `UPDATE logs SET date = ?, odometer = ?, liters = ?, price_per_liter = ?, total_price = ?, is_full = ?, fuel_type = ? WHERE id = ?`,

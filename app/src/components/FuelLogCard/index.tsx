@@ -33,7 +33,6 @@ export function FuelLogCard({ data, onPress }: FuelLogCardProps) {
             {/* Cabeçalho do Card */}
             <View style={styles.header}>
                 <View style={styles.headerLeft}>
-                    {/* 👇 Cor Dinâmica Aplicada Aqui */}
                     <View style={[
                         styles.iconContainer, 
                         { backgroundColor: accentColor + (isDark ? '22' : '14') }
