@@ -79,7 +79,7 @@ export default function UpdatePriceCard({
                     style={[
                         styles.inputContainer,
                         {
-                            backgroundColor: colors.info,
+                            backgroundColor: colors.background,
                             borderColor: colors.primary + '40',
                         },
                     ]}

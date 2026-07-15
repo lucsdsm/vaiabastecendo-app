@@ -8,6 +8,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import PostoCard from '../../components/PostoCard';
 import EmptyState from '../../components/EmptyState';
+import LoadingState from '../../components/LoadingState';
 import Banner from '../../components/Banner';
 import { styles } from './styles';
 import { usePostosList } from './usePostosList';
@@ -56,12 +57,10 @@ export default function PostoListScreen() {
   const renderEmptyState = () => {
     if (loading) {
       return (
-        <View style={styles.centerLoading}>
-          <ActivityIndicator size="large" color={colors.primary} />
-          <Text style={{ color: colors.textSecondary, marginTop: 10 }}>
-            Buscando postos próximos...
-          </Text>
-        </View>
+        <LoadingState 
+            message="Buscando postos próximos..." 
+            iconName="map-marker-alt"
+        />
       );
     }
 
