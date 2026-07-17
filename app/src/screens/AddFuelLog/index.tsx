@@ -5,10 +5,10 @@ import { Feather } from '@expo/vector-icons';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
 import { useKeyboardPadding } from '../../utils/keyboardPadding';
-import { getReadableColor } from '../../utils/color';
 import { useAddFuelLog } from './useAddFuelLog';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { CustomAlert } from '../../components/Alert';
+import FuelTypeSelector from '../../components/FuelTypeSelector';
 
 export default function AddFuelLogScreen() {
     const { colors, isDark } = useAppTheme();
@@ -117,30 +117,14 @@ export default function AddFuelLogScreen() {
 
                         {/* Tipo de Combustível */}
                         <View style={styles.section}>
-                            <Text style={[styles.label, { color: colors.textSecondary }]}>Tipo de Combustível</Text>
-                            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.fuelScrollContent}>
-                                {fuelTypes.map((type) => {
-                                    const isSelected = selectedFuel === type.id;
-                                    const accentColor = getReadableColor(type.cor, isDark);
-                                    return (
-                                        <TouchableOpacity
-                                            key={type.id}
-                                            style={[
-                                                styles.fuelChip,
-                                                {
-                                                    borderColor: isSelected ? accentColor : colors.border,
-                                                    backgroundColor: isSelected ? accentColor + (isDark ? '22' : '14') : 'transparent',
-                                                },
-                                            ]}
-                                            onPress={() => setSelectedFuel(type.id)}
-                                            activeOpacity={0.7}
-                                        >
-                                            <View style={[styles.fuelChipDot, { backgroundColor: isSelected ? accentColor : colors.textSecondary + '60' }]} />
-                                            <Text style={[styles.fuelChipText, { color: isSelected ? accentColor : colors.textSecondary }]}>{type.nome}</Text>
-                                        </TouchableOpacity>
-                                    );
-                                })}
-                            </ScrollView>
+                            <FuelTypeSelector
+                                label="Tipo de Combustível"
+                                fuelTypes={fuelTypes}
+                                selectedFuel={selectedFuel}
+                                onSelectFuel={setSelectedFuel}
+                                variant="transparent"
+                                size="regular"
+                            />
                         </View>
 
                         <View style={styles.row}>

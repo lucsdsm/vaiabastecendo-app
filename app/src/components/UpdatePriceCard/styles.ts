@@ -15,41 +15,6 @@ export const styles = StyleSheet.create({
         marginTop: spacing.xl,
         marginBottom: spacing.xl,
     },
-    label: {
-        fontSize: typography.size.xs + 1, // 13
-        fontWeight: typography.weight.semibold,
-        textTransform: 'uppercase',
-        letterSpacing: 0.5,
-        marginBottom: spacing.md,
-        marginLeft: spacing.sm,
-    },
-    fuelScroll: {
-        flexGrow: 0,
-        borderRadius: radius.lg,
-    },
-    fuelScrollContent: {
-        gap: spacing.sm,
-        paddingRight: spacing.xs,
-    },
-    fuelChip: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: spacing.sm,
-        paddingHorizontal: spacing.lg,
-        paddingVertical: 10,
-        borderRadius: radius.pill,
-        borderWidth: 1.5,
-    },
-    fuelChipDot: {
-        width: spacing.sm,
-        height: spacing.sm,
-        borderRadius: radius.sm / 2, // 4
-    },
-    fuelChipText: {
-        fontSize: typography.size.xs + 1,
-        fontWeight: typography.weight.semibold,
-        letterSpacing: -0.1,
-    },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',

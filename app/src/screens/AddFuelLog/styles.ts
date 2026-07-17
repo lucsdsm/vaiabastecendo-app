@@ -83,29 +83,6 @@ export const styles = StyleSheet.create({
         fontWeight: typography.weight.medium,
         marginLeft: spacing.xs,
     },
-    fuelScrollContent: {
-        gap: spacing.sm,
-        paddingRight: spacing.xs,
-        paddingVertical: 4,
-    },
-    fuelChip: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: spacing.sm,
-        paddingHorizontal: spacing.lg,
-        paddingVertical: 12,
-        borderRadius: radius.pill,
-        borderWidth: 1.5,
-    },
-    fuelChipDot: {
-        width: spacing.sm,
-        height: spacing.sm,
-        borderRadius: radius.sm / 2,
-    },
-    fuelChipText: {
-        fontSize: typography.size.sm,
-        fontWeight: typography.weight.semibold,
-    },
     switchContainer: {
         flexDirection: 'row',
         alignItems: 'center',

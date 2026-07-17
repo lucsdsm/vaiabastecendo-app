@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, TextInput, Keyboard, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity, TextInput, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
-import { getReadableColor } from '../../utils/color';
 import { useKeyboardPadding } from '../../utils/keyboardPadding';
+import FuelTypeSelector from '../FuelTypeSelector';
 
 interface UpdatePriceCardProps {
     fuelTypes: any[];
@@ -21,56 +20,21 @@ export default function UpdatePriceCard({
     setSelectedFuel,
     handlePriceChange,
 }: UpdatePriceCardProps) {
-    const { colors, isDark } = useAppTheme();
+    const { colors } = useAppTheme();
     const { keyboardPadding } = useKeyboardPadding();
 
     const content = (
         <View style={[styles.cardContent, { backgroundColor: colors.background }] }>
             <View style={styles.section}>
-                <Text style={[styles.label, { color: colors.textSecondary }]}>Combustível</Text>
-                <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    style={styles.fuelScroll}
-                    contentContainerStyle={styles.fuelScrollContent}
-                >
-                    {fuelTypes.map((type) => {
-                        const isSelected = selectedFuel === type.id;
-                        const accentColor = getReadableColor(type.cor, isDark);
-                        return (
-                            <TouchableOpacity
-                                key={type.id}
-                                style={[
-                                    styles.fuelChip,
-                                    {
-                                        borderColor: isSelected ? accentColor : colors.border,
-                                        backgroundColor: isSelected
-                                            ? accentColor + (isDark ? '22' : '14')
-                                            : colors.background,
-                                    },
-                                ]}
-                                onPress={() => setSelectedFuel(type.id)}
-                                activeOpacity={0.7}
-                            >
-                                <View
-                                    style={[
-                                        styles.fuelChipDot,
-                                        { backgroundColor: isSelected ? accentColor : colors.textSecondary + '60' },
-                                    ]}
-                                />
-                                <Text
-                                    style={[
-                                        styles.fuelChipText,
-                                        { color: isSelected ? accentColor : colors.textSecondary },
-                                    ]}
-                                >
-                                    {type.nome}
-                                </Text>
-                                {isSelected && <Feather name="check" size={13} color={accentColor} />}
-                            </TouchableOpacity>
-                        );
-                    })}
-                </ScrollView>
+                <FuelTypeSelector
+                    label="Combustível"
+                    fuelTypes={fuelTypes}
+                    selectedFuel={selectedFuel}
+                    onSelectFuel={setSelectedFuel}
+                    variant="surface"
+                    size="compact"
+                    showCheckIcon={true}
+                />
             </View>
 
             <View style={styles.section}>
