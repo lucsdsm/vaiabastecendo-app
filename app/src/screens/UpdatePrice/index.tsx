@@ -75,7 +75,7 @@ export default function UpdatePrice() {
                     {loading ? (
                         <ActivityIndicator color={colors.primary} size="small" />
                     ) : (
-                        <Feather name="check" size={24} color={colors.primary} />
+                        <Feather name="check" size={24} color={colors.textPrimary} />
                     )}
                 </TouchableOpacity>
             </View>

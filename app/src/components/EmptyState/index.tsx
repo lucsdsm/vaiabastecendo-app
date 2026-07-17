@@ -112,7 +112,7 @@ export default function EmptyState({
             </Text>
 
             {onRetry && (
-                <View style={{ marginTop: 16 }}>
+                <View>
                     <Button
                         label={buttonText}
                         onPress={onRetry}

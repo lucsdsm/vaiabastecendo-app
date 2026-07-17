@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 import * as Location from 'expo-location'; // NOVO IMPORT
 
 import { ThemeProvider, useAppTheme } from './src/theme/ThemeProvider';
@@ -110,7 +110,7 @@ const AppContent = () => {
 
 export default function App() {
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ThemeProvider>
         <ToastProvider>
           <AuthProvider>

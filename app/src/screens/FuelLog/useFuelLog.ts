@@ -1,21 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { addFuelLog, getVehicleLogs, getVehicles, Vehicle } from '../../database/logService'; 
+import { normalizeEtanolName, addFuelLog, getVehicleLogs, getVehicles, Vehicle } from '../../database/logService'; 
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { FuelLog } from '../../database/logService';
-
-import * as DocumentPicker from 'expo-document-picker';
-import * as FileSystem from 'expo-file-system/legacy';
-import { Alert } from 'react-native';
 
 export function useFuelLog() {
     const { colors } = useAppTheme();
     const navigation = useNavigation<any>();
     
+    const [isInitializing, setIsInitializing] = useState(true);
     const [vehicles, setVehicles] = useState<Vehicle[]>([]);
     const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
-
     const [logs, setLogs] = useState<FuelLog[]>([]);
 
     useFocusEffect(
@@ -27,13 +23,12 @@ export function useFuelLog() {
                 if (loadedVehicles.length > 0) {
                     setSelectedVehicle((prevSelected) => {
                         if (!prevSelected) return loadedVehicles[0];
-
                         const updatedVehicle = loadedVehicles.find(v => v.id === prevSelected.id);
-
                         return updatedVehicle ? updatedVehicle : loadedVehicles[0];
                     });
                 } else {
                     setSelectedVehicle(null);
+                    setIsInitializing(false);
                 }
             };
             
@@ -44,6 +39,7 @@ export function useFuelLog() {
     useEffect(() => {
         if (selectedVehicle) {
             setLogs(getVehicleLogs(selectedVehicle.id));
+            setIsInitializing(false);
         } else {
             setLogs([]);
         }
@@ -62,7 +58,7 @@ export function useFuelLog() {
     };
 
     const handleEditVehicle = (vehicle: Vehicle) => {
-    setIsModalVisible(false);
+        setIsModalVisible(false);
         navigation.navigate('AddVehicle', { vehicleToEdit: vehicle });
     };
 
@@ -95,6 +91,7 @@ export function useFuelLog() {
         handleAddFuelLog,
         handleEditFuelLog,
         logs,
-        goBack
+        goBack,
+        isInitializing
     };
 }

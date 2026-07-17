@@ -5,19 +5,31 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 24,
+        padding: 32,
+        gap: 16,
     },
-    iconContainer: {
-        width: 64,
-        height: 64,
-        borderRadius: 32,
+
+    iconRing: {
+        width: 72,
+        height: 72,
+        borderRadius: 36,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 16,
+        borderWidth: 1.5,
     },
+
+    iconCore: {
+        width: 52,
+        height: 52,
+        borderRadius: 26,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
     message: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: '500',
         textAlign: 'center',
-    }
+        letterSpacing: 0.1,
+    },
 });

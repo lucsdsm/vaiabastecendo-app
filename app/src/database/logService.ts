@@ -20,6 +20,11 @@ export interface FuelLog {
     fuel_type: string;
 }
 
+// 
+export function normalizeEtanolName() {
+    db.runSync(`UPDATE logs SET fuel_type = 'Etanol Comum' WHERE fuel_type = 'Etanol'`);
+}
+
 export function createVehicle(name: string, plate: string, tankCapacity: number): string {
     const id = Crypto.randomUUID();
     db.runSync(
