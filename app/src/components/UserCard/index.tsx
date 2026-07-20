@@ -5,114 +5,147 @@ import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
 
-type UserCardData = {
-    foto?: string | null;
-    username?: string | null;
-    verificado?: boolean;
-    likes_recebidos?: number | null;
-    likes_deferidos?: number | null;
-    pontos?: number | null;
-};
+export interface UserCardData {
+  photo?: string | null;
+  username?: string | null;
+  verified?: boolean;
+  likesReceived?: number | null;
+  likesGiven?: number | null;
+  points?: number | null;
+}
 
-type UserCardProps = {
-    userData?: UserCardData | null;
-};
+interface UserCardProps {
+  userData?: UserCardData | null;
+}
 
+/**
+ * Exibe um resumo visual do perfil do usuário, incluindo estatísticas
+ * e progresso de verificação dentro da comunidade.
+ */
 export default function UserCard({ userData }: UserCardProps) {
-    const { colors, isDark } = useAppTheme();
+  const { colors, isDark } = useAppTheme();
 
-    const points = userData?.pontos || 0;
-    const totalRequired = 100;
-    const isVerified = userData?.verificado || points >= totalRequired;
+  const points = userData?.points || 0;
+  const totalRequired = 100;
+  const isVerified = userData?.verified || points >= totalRequired;
 
-    const percentage = useMemo(() => {
-        return Math.min(1, points / totalRequired);
-    }, [userData?.pontos, totalRequired]);
+  /**
+   * Limita o preenchimento da barra de progresso ao intervalo visual esperado.
+   */
+  const percentage = useMemo(() => {
+    return Math.min(1, points / totalRequired);
+  }, [points, totalRequired]);
 
-    return (
-        <View style={styles.cardWrapper}>
-            {/* Bloco Superior: Foto e Estatísticas */}
-            <View style={styles.profileSection}>
-                {userData?.foto ? (
-                    <Image source={{ uri: userData.foto }} style={styles.avatar} />
-                ) : (
-                    <View style={[styles.avatarPlaceholder, { backgroundColor: colors.primary + '20' }]}>
-                        <Feather name="user" size={40} color={colors.primary} />
-                    </View>
-                )}
+  return (
+    <View style={styles.cardWrapper}>
+      <View style={styles.profileSection}>
+        {userData?.photo ? (
+          <Image source={{ uri: userData.photo }} style={styles.avatar} />
+        ) : (
+          <View
+            style={[
+              styles.avatarPlaceholder,
+              { backgroundColor: colors.primary + '20' },
+            ]}
+          >
+            <Feather name="user" size={40} color={colors.primary} />
+          </View>
+        )}
 
-                <View style={styles.infoSection}>
-                    <View style={styles.nameContainer}>
-                        <Text style={[styles.usernameText, { color: colors.textPrimary }]}>
-                            {userData?.username ? userData.username : 'Motorista'}
-                        </Text>
-                    </View>
+        <View style={styles.infoSection}>
+          <View style={styles.nameContainer}>
+            <Text style={[styles.usernameText, { color: colors.textPrimary }]}>
+              {userData?.username ? userData.username : 'Motorista'}
+            </Text>
+          </View>
 
-                    <View style={styles.statsContainer}>
-                        <View style={styles.statItem}>
-                            <Text style={[styles.statNumber, { color: colors.textPrimary }]}>
-                                {userData?.likes_recebidos || 0}
-                            </Text>
-                            <Text style={[styles.statLabel, { color: colors.textSecondary }]}>Recebidas</Text>
-                        </View>
-
-                        <View style={styles.statItem}>
-                            <Text style={[styles.statNumber, { color: colors.textPrimary }]}>
-                                {userData?.likes_deferidos || 0}
-                            </Text>
-                            <Text style={[styles.statLabel, { color: colors.textSecondary }]}>Deferidas</Text>
-                        </View>
-                    </View>
-                </View>
+          <View style={styles.statsContainer}>
+            <View style={styles.statItem}>
+              <Text style={[styles.statNumber, { color: colors.textPrimary }]}>
+                {userData?.likesReceived || 0}
+              </Text>
+              <Text style={[styles.statLabel, { color: colors.textSecondary }]}>
+                Recebidas
+              </Text>
             </View>
 
-            {/* Bloco Inferior: Gamificação (Progresso do Selo) Embutida */}
-            <View style={styles.progressSection}>
-                {isVerified ? (
-                    <View style={[styles.badgeContainer, { backgroundColor: colors.primary + (isDark ? '1A' : '0A'), borderColor: colors.primary + '30' }]}>
-                        <View style={styles.row}>
-                            <MaterialIcons 
-                                name="verified" 
-                                size={18} 
-                                color={colors.primary} 
-                            />
-                            <Text style={[styles.badgeText, { color: colors.primary }]}>
-                                Motorista Verificado
-                            </Text>
-                        </View>
-                        <Text style={[styles.badgeSubtext, { color: colors.textSecondary }]}>
-                            Obrigado por sua dedicação à comunidade!
-                        </Text>
-                    </View>
-                ) : (
-                    <View style={styles.progressContainer}>
-                        <View style={styles.headerRow}>
-                            <Text style={[styles.progressTitle, { color: colors.textPrimary }]}>
-                                Caminho para a Verificação
-                            </Text>
-                            <Text style={[styles.counter, { color: colors.textSecondary }]}>
-                                {userData?.pontos} / {totalRequired} curtidas
-                            </Text>
-                        </View>
-
-                        <View style={[styles.progressBarTrack, { backgroundColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.04)' }]}>
-                            <View 
-                                style={[
-                                    styles.progressBarFill, 
-                                    { 
-                                        backgroundColor: colors.primary,
-                                        width: `${percentage * 100}%` 
-                                    }
-                                ]} 
-                            />
-                        </View>
-
-                        <Text style={[styles.helpText, { color: colors.textSecondary }]}>
-                            Receba {totalRequired} curtidas para ganhar o selo e ser uma autoridade!
-                        </Text>
-                    </View>
-                )}
+            <View style={styles.statItem}>
+              <Text style={[styles.statNumber, { color: colors.textPrimary }]}>
+                {userData?.likesGiven || 0}
+              </Text>
+              <Text style={[styles.statLabel, { color: colors.textSecondary }]}>
+                Enviadas
+              </Text>
             </View>
+          </View>
         </View>
-    );
+      </View>
+
+      <View style={styles.progressSection}>
+        {isVerified ? (
+          <View
+            style={[
+              styles.badgeContainer,
+              {
+                backgroundColor: colors.primary + (isDark ? '1A' : '0A'),
+                borderColor: colors.primary + '30',
+              },
+            ]}
+          >
+            <View style={styles.row}>
+              <MaterialIcons
+                name="verified"
+                size={18}
+                color={colors.primary}
+              />
+              <Text style={[styles.badgeText, { color: colors.primary }]}>
+                Motorista Verificado
+              </Text>
+            </View>
+
+            <Text style={[styles.badgeSubtext, { color: colors.textSecondary }]}>
+              Obrigado por sua dedicação à comunidade!
+            </Text>
+          </View>
+        ) : (
+          <View style={styles.progressContainer}>
+            <View style={styles.headerRow}>
+              <Text style={[styles.progressTitle, { color: colors.textPrimary }]}>
+                Caminho para a verificação
+              </Text>
+              <Text style={[styles.counter, { color: colors.textSecondary }]}>
+                {points} / {totalRequired} curtidas
+              </Text>
+            </View>
+
+            <View
+              style={[
+                styles.progressBarTrack,
+                {
+                  backgroundColor: isDark
+                    ? 'rgba(255,255,255,0.08)'
+                    : 'rgba(0,0,0,0.04)',
+                },
+              ]}
+            >
+              <View
+                style={[
+                  styles.progressBarFill,
+                  {
+                    backgroundColor: colors.primary,
+                    width: `${percentage * 100}%`,
+                  },
+                ]}
+              />
+            </View>
+
+            <Text style={[styles.helpText, { color: colors.textSecondary }]}>
+              Receba {totalRequired} curtidas para ganhar o selo e se tornar uma
+              referência na comunidade.
+            </Text>
+          </View>
+        )}
+      </View>
+    </View>
+  );
 }

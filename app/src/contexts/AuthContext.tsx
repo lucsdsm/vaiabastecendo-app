@@ -1,4 +1,12 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 
@@ -42,8 +50,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isInitializingAuth, setIsInitializingAuth] = useState(true);
 
-  async function fetchCurrentUser(authToken: string) {
-    const response = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/auth/me/`, {
+  /**
+   * Mantém a referência mais atual do token sem quebrar a estabilidade
+   * das funções memoizadas que dependem dele.
+   */
+  const tokenRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    tokenRef.current = token;
+  }, [token]);
+
+  const fetchCurrentUser = useCallback(async (authToken: string) => {
+    const response = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/profile/`, {
       headers: {
         Authorization: `Token ${authToken}`,
       },
@@ -63,48 +81,53 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       verified: apiUser.verified ?? false,
       points: apiUser.points ?? 0,
     });
-  }
+  }, []);
 
-  async function refreshUser() {
-    if (!token) {
+  const refreshUser = useCallback(async () => {
+    const currentToken = tokenRef.current;
+
+    if (!currentToken) {
       setUser(null);
       return;
     }
 
     try {
-      await fetchCurrentUser(token);
+      await fetchCurrentUser(currentToken);
     } catch (error) {
       console.error('Falha ao atualizar os dados do usuário autenticado:', error);
     }
-  }
+  }, [fetchCurrentUser]);
 
-  async function signIn(nextToken: string) {
-    await SecureStore.setItemAsync(AUTH_TOKEN_STORAGE_KEY, nextToken);
-    setToken(nextToken);
+  const signIn = useCallback(
+    async (nextToken: string) => {
+      await SecureStore.setItemAsync(AUTH_TOKEN_STORAGE_KEY, nextToken);
+      setToken(nextToken);
 
-    try {
-      await fetchCurrentUser(nextToken);
-      showToast('Login realizado com sucesso.', 'success');
-    } catch (error) {
-      await SecureStore.deleteItemAsync(AUTH_TOKEN_STORAGE_KEY);
-      setToken(null);
-      setUser(null);
-      console.error('Falha ao carregar o perfil após o login:', error);
-      showToast('Não foi possível concluir o login.', 'danger');
-      throw error;
-    }
-  }
+      try {
+        await fetchCurrentUser(nextToken);
+        showToast('Login realizado com sucesso.', 'success');
+      } catch (error) {
+        await SecureStore.deleteItemAsync(AUTH_TOKEN_STORAGE_KEY);
+        setToken(null);
+        setUser(null);
+        console.error('Falha ao carregar o perfil após o login:', error);
+        showToast('Não foi possível concluir o login.', 'danger');
+        throw error;
+      }
+    },
+    [fetchCurrentUser, showToast]
+  );
 
-  async function signOut() {
+  const signOut = useCallback(async () => {
     await SecureStore.deleteItemAsync(AUTH_TOKEN_STORAGE_KEY);
     setToken(null);
     setUser(null);
     showToast('Você saiu da sua conta.', 'info');
-  }
+  }, [showToast]);
 
-  function updateUser(nextUser: AuthUser | null) {
+  const updateUser = useCallback((nextUser: AuthUser | null) => {
     setUser(nextUser);
-  }
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -142,9 +165,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [fetchCurrentUser]);
 
-  const value = useMemo(
+  const value = useMemo<AuthContextValue>(
     () => ({
       token,
       user,
@@ -154,7 +177,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       updateUser,
       refreshUser,
     }),
-    [token, user, isInitializingAuth]
+    [token, user, isInitializingAuth, signIn, signOut, updateUser, refreshUser]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
