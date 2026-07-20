@@ -67,7 +67,7 @@ export function useUserCard() {
         if (!token) return;
         
         try {
-            const res = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/auth/me/`, {
+            const res = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/profile/`, {
                 headers: { Authorization: `Token ${token}` }
             });
             updateUserData(res.data);

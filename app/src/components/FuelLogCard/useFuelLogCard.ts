@@ -1,6 +1,6 @@
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { getReadableColor } from '../../utils/color';
-import { useCombustivel } from '../../contexts/CombustivelContext'; 
+import { useCombustivel } from '../../contexts/FuelTypesContext'; 
 
 export function useFuelLogCard(data: any) {
     const { colors, isDark } = useAppTheme();

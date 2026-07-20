@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import axios from 'axios';
-import { useCombustivel } from '../../contexts/CombustivelContext';
+import { useCombustivel } from '../../contexts/FuelTypesContext';
 import { useToast } from '../../contexts/ToastContext';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -118,7 +118,7 @@ export function useUpdatePriceCard({
 
         setLoading(true);
         try {
-            await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/atualizar-preco/`, {
+            await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/price-updates/`, {
                 posto: postoId,
                 tipo_combustivel: fuelId,
                 preco: numericPrice,

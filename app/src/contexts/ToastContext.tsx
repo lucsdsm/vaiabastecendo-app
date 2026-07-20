@@ -1,39 +1,64 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useCallback, useContext, useState } from 'react';
 
-type ToastType = 'success' | 'danger' | 'info';
+export type ToastType = 'success' | 'danger' | 'info';
 
-interface ToastContextData {
-    showToast: (message: string, type?: ToastType) => void;
-    hideToast: () => void;
-    toastData: { message: string; type: ToastType; visible: boolean };
+export interface ToastState {
+  message: string;
+  type: ToastType;
+  visible: boolean;
 }
 
-const ToastContext = createContext<ToastContextData>({} as ToastContextData);
+interface ToastContextValue {
+  toastState: ToastState;
+  showToast: (message: string, type?: ToastType) => void;
+  hideToast: () => void;
+}
+
+const ToastContext = createContext<ToastContextValue | undefined>(undefined);
 
 /**
- * Provedor global de notificacoes toast.
- * Mantem um estado unico para mensagens de feedback da aplicacao.
+ * Provedor global de notificações toast.
+ * Mantém um estado único para mensagens de feedback da aplicação.
  */
-export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [toastData, setToastData] = useState({ message: '', type: 'info' as ToastType, visible: false });
+export function ToastProvider({ children }: { children: React.ReactNode }) {
+  const [toastState, setToastState] = useState<ToastState>({
+    message: '',
+    type: 'info',
+    visible: false,
+  });
 
-    const showToast = useCallback((message: string, type: ToastType = 'info') => {
-        setToastData({ message, type, visible: true });
-    }, []);
+  const showToast = useCallback((message: string, type: ToastType = 'info') => {
+    setToastState({
+      message,
+      type,
+      visible: true,
+    });
+  }, []);
 
-    const hideToast = useCallback(() => {
-        setToastData((prev) => ({ ...prev, visible: false }));
-    }, []);
+  const hideToast = useCallback(() => {
+    setToastState((previousState) => ({
+      ...previousState,
+      visible: false,
+    }));
+  }, []);
 
-    return (
-        <ToastContext.Provider value={{ showToast, hideToast, toastData }}>
-            {children}
-        </ToastContext.Provider>
-    );
-};
+  return (
+    <ToastContext.Provider value={{ toastState, showToast, hideToast }}>
+      {children}
+    </ToastContext.Provider>
+  );
+}
 
 /**
- * Hook de acesso ao estado e acoes de toast.
+ * Hook de acesso ao estado e ações de toast.
  * Deve ser usado dentro de ToastProvider.
  */
-export const useToast = () => useContext(ToastContext);
+export function useToast() {
+  const context = useContext(ToastContext);
+
+  if (!context) {
+    throw new Error('useToast deve ser usado dentro de um ToastProvider.');
+  }
+
+  return context;
+}

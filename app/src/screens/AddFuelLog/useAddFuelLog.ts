@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useToast } from '../../contexts/ToastContext';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useCombustivel } from '../../contexts/CombustivelContext';
+import { useCombustivel } from '../../contexts/FuelTypesContext';
 import { addFuelLog, updateFuelLog, getVehicleLogs, deleteFuelLog } from '../../database/logService';
 
 export function useAddFuelLog() {

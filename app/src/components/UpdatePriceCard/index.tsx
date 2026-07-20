@@ -38,7 +38,7 @@ export default function UpdatePriceCard({
             </View>
 
             <View style={styles.section}>
-                <Text style={[styles.label, { color: colors.textSecondary }]}>Preço por litro</Text>
+                <Text style={[{ color: colors.textSecondary }]}>Preço por litro</Text>
                 <View
                     style={[
                         styles.inputContainer,

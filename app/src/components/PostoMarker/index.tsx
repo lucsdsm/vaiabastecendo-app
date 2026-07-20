@@ -3,7 +3,7 @@ import { Image, View } from 'react-native';
 import Mapbox from '@rnmapbox/maps';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { PostoProps } from '../PostoCard';
+import { PostoProps } from '../StationCard';
 import { dicionarioBandeiras } from '../../utils/dictFlags';
 import { styles } from './styles';
 

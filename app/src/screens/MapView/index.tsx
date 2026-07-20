@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 
 import Footer from '../../components/Footer';
-import PostoCard from '../../components/PostoCard';
+import StationCard from '../../components/StationCard';
 import Map from '../../components/Map'; 
 import { styles } from './styles';
 import { useMapScreen } from '../../components/Map/useMapScreen';
@@ -13,7 +13,7 @@ export default function MapScreen() {
     const {
         colors,
         isDark,
-        postos,
+        stations,
         initialRegion,
         userRegion,
         recenterToken,
@@ -29,7 +29,7 @@ export default function MapScreen() {
             <View style={styles.content}>
                 {/* O Componente Mapa Isolado */}
                 <Map 
-                    postos={postos}
+                    stations={stations}
                     initialRegion={initialRegion}
                     targetRegion={userRegion}
                     recenterToken={recenterToken}
@@ -42,7 +42,7 @@ export default function MapScreen() {
                 {selectedPosto && (
                     <View style={styles.cardOverlay} pointerEvents="box-none">
                         <View style={styles.cardWrapper}>
-                            <PostoCard data={selectedPosto} onRefresh={refetch} />
+                            <StationCard data={selectedPosto} onRefresh={refetch} />
                         </View>
                     </View>
                 )}

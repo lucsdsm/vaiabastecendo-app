@@ -1,7 +1,7 @@
 import { Alert, Linking } from 'react-native';
 import Constants from 'expo-constants';
 import { useAppTheme } from '../../theme/ThemeProvider';
-import { useToast } from '@components/Toast/useToast';
+import { useToast } from '@components/Toast/useToastAnimation';
 
 export function useVersion() {
     const { colors, toggleTheme, isDark } = useAppTheme();

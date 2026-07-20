@@ -1,40 +1,63 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as Location from 'expo-location';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
-import * as Location from 'expo-location'; // NOVO IMPORT
 
-import { ThemeProvider, useAppTheme } from './src/theme/ThemeProvider';
 import LoadingScreen from './src/components/LoadingScreen';
-import PostoListScreen from './src/screens/PostosList';
-import MapScreen from './src/screens/MapView';
-import UserProfileScreen from './src/screens/UserProfile';
-import UpdatePriceScreen from './src/screens/UpdatePrice';
-import PermissionScreen from './src/screens/PermissionScreen';
-import FuelLogScreen from './src/screens/FuelLog';
-import AddVehicleScreen from './src/screens/AddVehicle';
-import AddFuelLogScreen from './src/screens/AddFuelLog';
-
-import { ToastProvider } from './src/contexts/ToastContext';
 import { Toast } from './src/components/Toast';
-
 import { AuthProvider, useAuth } from './src/contexts/AuthContext';
-import { CombustivelProvider } from './src/contexts/CombustivelContext';
-
+import { FuelTypeProvider } from './src/contexts/FuelTypesContext';
+import { ToastProvider } from './src/contexts/ToastContext';
+import AddFuelLogScreen from './src/screens/AddFuelLog';
+import AddVehicleScreen from './src/screens/AddVehicle';
+import FuelLogScreen from './src/screens/FuelLog';
+import MapScreen from './src/screens/MapView';
+import PermissionScreen from './src/screens/PermissionScreen';
+import StationListScreen from './src/screens/StationList';
+import UpdatePriceScreen from './src/screens/UpdatePrice';
+import UserProfileScreen from './src/screens/UserProfile';
+import { ThemeProvider, useAppTheme } from './src/theme/ThemeProvider';
 import { initDatabase } from './src/database';
 
-const Stack = createNativeStackNavigator();
+type RootStackParamList = {
+  Permission: undefined;
+  StationList: undefined;
+  Map: undefined;
+  UserProfile: undefined;
+  UpdatePrice: undefined;
+  FuelLog: undefined;
+  AddVehicle: undefined;
+  AddFuelLog: undefined;
+};
 
-// Recebe o estado de permissao para decidir qual pilha de telas renderizar
-const AppNavigator = ({ hasPermission, setHasPermission }: any) => {
+type AppNavigatorProps = {
+  hasLocationPermission: boolean;
+  onPermissionGranted: () => void;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+/**
+ * Renderiza a árvore de navegação principal com base no estado
+ * atual da permissão de localização.
+ */
+function AppNavigator({
+  hasLocationPermission,
+  onPermissionGranted,
+}: AppNavigatorProps) {
   const { colors } = useAppTheme();
-  const navigationTheme = {
-    ...DefaultTheme,
-    colors: {
-      ...DefaultTheme.colors,
-      background: colors.background,
-    },
-  };
+
+  const navigationTheme = useMemo(
+    () => ({
+      ...DefaultTheme,
+      colors: {
+        ...DefaultTheme.colors,
+        background: colors.background,
+      },
+    }),
+    [colors.background]
+  );
 
   return (
     <NavigationContainer theme={navigationTheme}>
@@ -45,15 +68,18 @@ const AppNavigator = ({ hasPermission, setHasPermission }: any) => {
           contentStyle: { backgroundColor: colors.background },
         }}
       >
-        {!hasPermission ? (
-          // Fica preso ate liberar a localizacao, mostrando a tela de permissao
+        {!hasLocationPermission ? (
           <Stack.Screen name="Permission">
-            {(props) => <PermissionScreen {...props} onPermissionGranted={() => setHasPermission(true)} />}
+            {(props) => (
+              <PermissionScreen
+                {...props}
+                onPermissionGranted={onPermissionGranted}
+              />
+            )}
           </Stack.Screen>
         ) : (
-          // Renderiza o app principal apos liberar a localizacao
           <>
-            <Stack.Screen name="PostoList" component={PostoListScreen} />
+            <Stack.Screen name="StationList" component={StationListScreen} />
             <Stack.Screen name="Map" component={MapScreen} />
             <Stack.Screen name="UserProfile" component={UserProfileScreen} />
             <Stack.Screen name="UpdatePrice" component={UpdatePriceScreen} />
@@ -65,40 +91,57 @@ const AppNavigator = ({ hasPermission, setHasPermission }: any) => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
+}
 
-const AppContent = () => {
-  const { loading: authLoading } = useAuth();
+/**
+ * Executa o bootstrap inicial da aplicação, incluindo:
+ * - inicialização do banco local
+ * - verificação da autenticação
+ * - leitura da permissão de localização
+ */
+function AppContent() {
+  const { isInitializingAuth } = useAuth();
   const [isAppReady, setIsAppReady] = useState(false);
-  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const [hasLocationPermission, setHasLocationPermission] = useState<boolean | null>(null);
 
-  // Inicializa o banco de dados e checa a permissão de localizacao
   useEffect(() => {
-    async function prepareApp() {
+    let isMounted = true;
+
+    async function bootstrapApp() {
       try {
         initDatabase();
 
         const { status } = await Location.getForegroundPermissionsAsync();
-        setHasPermission(status === 'granted');
-      } catch (e) {
-        console.warn("Erro ao preparar o app:", e);
+
+        if (isMounted) {
+          setHasLocationPermission(status === 'granted');
+        }
+      } catch (error) {
+        console.warn('Falha ao inicializar a aplicação:', error);
+
+        if (isMounted) {
+          setHasLocationPermission(false);
+        }
       }
     }
-    
-    prepareApp();
+
+    bootstrapApp();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  // Loading so pode sumir se a auth carregou
-  const canFinishLoading = !authLoading && hasPermission !== null;
+  const canFinishLoading = !isInitializingAuth && hasLocationPermission !== null;
 
   return (
     <>
-      {/* So renderiza o navigator depois do loading terminar, evitando tela piscando */}
-      {isAppReady && (
-        <AppNavigator hasPermission={hasPermission} setHasPermission={setHasPermission} />
-      )}
-      
-      {!isAppReady && (
+      {isAppReady ? (
+        <AppNavigator
+          hasLocationPermission={Boolean(hasLocationPermission)}
+          onPermissionGranted={() => setHasLocationPermission(true)}
+        />
+      ) : (
         <LoadingScreen
           onFinish={() => setIsAppReady(true)}
           canFinish={canFinishLoading}
@@ -106,17 +149,20 @@ const AppContent = () => {
       )}
     </>
   );
-};
+}
 
+/**
+ * Componente raiz responsável por compor os providers globais da aplicação.
+ */
 export default function App() {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ThemeProvider>
         <ToastProvider>
           <AuthProvider>
-            <CombustivelProvider>
+            <FuelTypeProvider>
               <AppContent />
-            </CombustivelProvider>
+            </FuelTypeProvider>
           </AuthProvider>
           <Toast />
         </ToastProvider>

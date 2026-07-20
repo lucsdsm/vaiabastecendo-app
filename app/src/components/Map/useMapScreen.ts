@@ -2,13 +2,13 @@ import { useCallback, useState, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import { useAppTheme } from '../../theme/ThemeProvider';
-import { PostoProps } from '../PostoCard';
-import { usePostos } from '../../hooks/usePostos';
+import { StationCardProps } from '../StationCard';
+import { useStations } from '../../hooks/useStations';
 
 export function useMapScreen() {
     const { colors, isDark } = useAppTheme();
-    const { postos, refetch } = usePostos();
-    const [selectedPosto, setSelectedPosto] = useState<PostoProps | null>(null);
+    const { stations, refetch } = useStations();
+    const [selectedPosto, setSelectedPosto] = useState<StationCardProps | null>(null);
     const [userRegion, setUserRegion] = useState<{
         latitude: number;
         longitude: number;
@@ -25,7 +25,7 @@ export function useMapScreen() {
         longitudeDelta: 0.05,
     };
 
-    const handleSelectPosto = (posto: PostoProps) => {
+    const handleSelectPosto = (posto: StationCardProps) => {
         setSelectedPosto(posto);
     };
 
@@ -86,7 +86,7 @@ export function useMapScreen() {
     return {
         colors,
         isDark,
-        postos,
+        stations: stations,
         initialRegion,
         userRegion,
         recenterToken,

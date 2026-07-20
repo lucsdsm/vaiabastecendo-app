@@ -3,7 +3,7 @@ import { View, Text, ActivityIndicator, Dimensions } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
-import { useHistoricoPosto } from '../../hooks/useHistoricoPosto';
+import { useStationHistory } from '../../hooks/useStationHistory';
 
 interface HistoryItem {
     id: number;
@@ -23,12 +23,12 @@ export default function PriceHistoryTable({ postoId, selectedFuelName }: PriceHi
     const [history, setHistory] = useState<HistoryItem[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const { getHistorico } = useHistoricoPosto();
+    const { getStationHistory } = useStationHistory();
 
     useEffect(() => {
         async function fetchHistory() {
             try {
-                const data = await getHistorico(postoId);
+                const data = await getStationHistory(postoId);
                 setHistory(data);
             } catch (error) {
                 console.error("Erro ao buscar histórico:", error);
@@ -37,7 +37,7 @@ export default function PriceHistoryTable({ postoId, selectedFuelName }: PriceHi
             }
         }
         fetchHistory();
-    }, [postoId, getHistorico]);
+    }, [postoId, getStationHistory]);
 
     const chartData = useMemo(() => {
         if (!selectedFuelName) return [];

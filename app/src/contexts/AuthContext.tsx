@@ -1,94 +1,174 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import * as SecureStore from 'expo-secure-store';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
 
 import { useToast } from './ToastContext';
 
-interface UserData {
-    id: number;
-    username: string;
-    primeiro_nome: string;
-    ultimo_nome: string;
-    foto: string | null;
-    likes_recebidos?: number;
-    likes_deferidos?: number;
-    verificado?: boolean;
+const AUTH_TOKEN_STORAGE_KEY = 'userToken';
+
+export interface AuthUser {
+  id: number;
+  username: string;
+  first_name: string;
+  last_name: string;
+  email?: string;
+  photo: string | null;
+  likes_received?: number;
+  likes_given?: number;
+  verified?: boolean;
+  points?: number;
 }
 
-interface AuthContextData {
-    token: string | null;
-    userData: UserData | null;
-    loading: boolean;
-    signIn: (jwtToken: string) => Promise<void>;
-    signOut: () => Promise<void>;
-    updateUserData: (data: UserData | null) => void;
+interface AuthContextValue {
+  token: string | null;
+  user: AuthUser | null;
+  isInitializingAuth: boolean;
+  signIn: (token: string) => Promise<void>;
+  signOut: () => Promise<void>;
+  updateUser: (user: AuthUser | null) => void;
+  refreshUser: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 /**
- * Provedor global de autenticacao.
- * Centraliza persistencia de token, perfil e feedback de login/logout via toast.
+ * Provedor global de autenticação.
+ * Centraliza token, perfil do usuário e ações de login/logout.
  */
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { showToast } = useToast();
-    const [token, setToken] = useState<string | null>(null);
-    const [userData, setUserData] = useState<UserData | null>(null);
-    const [loading, setLoading] = useState(true);
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const { showToast } = useToast();
 
-    const fetchUserData = async (authToken: string) => {
-        try {
-            const res = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/auth/me/`, {
-                headers: { Authorization: `Token ${authToken}` }
-            });
-            setUserData(res.data);
-        } catch (error) {
-            console.error('Erro ao carregar dados do usuario:', error);
+  const [token, setToken] = useState<string | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [isInitializingAuth, setIsInitializingAuth] = useState(true);
+
+  async function fetchCurrentUser(authToken: string) {
+    const response = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/auth/me/`, {
+      headers: {
+        Authorization: `Token ${authToken}`,
+      },
+    });
+
+    const apiUser = response.data;
+
+    setUser({
+      id: apiUser.id,
+      username: apiUser.username,
+      first_name: apiUser.first_name ?? '',
+      last_name: apiUser.last_name ?? '',
+      email: apiUser.email ?? '',
+      photo: apiUser.photo ?? null,
+      likes_received: apiUser.likes_received ?? 0,
+      likes_given: apiUser.likes_given ?? 0,
+      verified: apiUser.verified ?? false,
+      points: apiUser.points ?? 0,
+    });
+  }
+
+  async function refreshUser() {
+    if (!token) {
+      setUser(null);
+      return;
+    }
+
+    try {
+      await fetchCurrentUser(token);
+    } catch (error) {
+      console.error('Falha ao atualizar os dados do usuário autenticado:', error);
+    }
+  }
+
+  async function signIn(nextToken: string) {
+    await SecureStore.setItemAsync(AUTH_TOKEN_STORAGE_KEY, nextToken);
+    setToken(nextToken);
+
+    try {
+      await fetchCurrentUser(nextToken);
+      showToast('Login realizado com sucesso.', 'success');
+    } catch (error) {
+      await SecureStore.deleteItemAsync(AUTH_TOKEN_STORAGE_KEY);
+      setToken(null);
+      setUser(null);
+      console.error('Falha ao carregar o perfil após o login:', error);
+      showToast('Não foi possível concluir o login.', 'danger');
+      throw error;
+    }
+  }
+
+  async function signOut() {
+    await SecureStore.deleteItemAsync(AUTH_TOKEN_STORAGE_KEY);
+    setToken(null);
+    setUser(null);
+    showToast('Você saiu da sua conta.', 'info');
+  }
+
+  function updateUser(nextUser: AuthUser | null) {
+    setUser(nextUser);
+  }
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function initializeAuth() {
+      try {
+        const storedToken = await SecureStore.getItemAsync(AUTH_TOKEN_STORAGE_KEY);
+
+        if (!storedToken) {
+          return;
         }
+
+        if (isMounted) {
+          setToken(storedToken);
+        }
+
+        await fetchCurrentUser(storedToken);
+      } catch (error) {
+        console.error('Falha ao inicializar a autenticação:', error);
+        await SecureStore.deleteItemAsync(AUTH_TOKEN_STORAGE_KEY);
+
+        if (isMounted) {
+          setToken(null);
+          setUser(null);
+        }
+      } finally {
+        if (isMounted) {
+          setIsInitializingAuth(false);
+        }
+      }
+    }
+
+    initializeAuth();
+
+    return () => {
+      isMounted = false;
     };
+  }, []);
 
-    const signIn = async (jwtToken: string) => {
-        await SecureStore.setItemAsync('userToken', jwtToken);
-        setToken(jwtToken);
-        await fetchUserData(jwtToken);
-        showToast('Login realizado com sucesso!', 'success');
-    };
+  const value = useMemo(
+    () => ({
+      token,
+      user,
+      isInitializingAuth,
+      signIn,
+      signOut,
+      updateUser,
+      refreshUser,
+    }),
+    [token, user, isInitializingAuth]
+  );
 
-    const signOut = async () => {
-        await SecureStore.deleteItemAsync('userToken');
-        setToken(null);
-        setUserData(null);
-        showToast('Você saiu da sua conta.', 'info');
-    };
-
-    useEffect(() => {
-        const inicializarAuth = async () => {
-            try {
-                const savedToken = await SecureStore.getItemAsync('userToken');
-                if (savedToken) {
-                    setToken(savedToken);
-                    await fetchUserData(savedToken);
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-        inicializarAuth();
-    }, []);
-
-    const updateUserData = (data: UserData | null) => {
-        setUserData(data);
-    };
-
-    return (
-        <AuthContext.Provider value={{ token, userData, loading, signIn, signOut, updateUserData }}>
-            {children}
-        </AuthContext.Provider>
-    );
-};
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+}
 
 /**
- * Hook de acesso ao estado de autenticacao da aplicacao.
- * Deve ser usado dentro de AuthProvider.
+ * Hook de acesso seguro ao contexto de autenticação.
  */
-export const useAuth = () => useContext(AuthContext);
+export function useAuth() {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error('useAuth deve ser usado dentro de um AuthProvider.');
+  }
+
+  return context;
+}

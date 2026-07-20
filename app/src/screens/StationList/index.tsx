@@ -1,29 +1,29 @@
 import React, { useEffect } from 'react';
-import { Text, View, FlatList, ActivityIndicator, RefreshControl, Image } from 'react-native';
+import { FlatList, Image, RefreshControl, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute } from '@react-navigation/native';
 
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import PostoCard from '../../components/PostoCard';
+import StationCard from '../../components/StationCard';
 import EmptyState from '../../components/EmptyState';
 import LoadingState from '../../components/LoadingState';
 import Banner from '../../components/Banner';
 import { styles } from './styles';
-import { usePostosList } from './usePostosList';
+import { useStationList } from './useStationList';
 
-export default function PostoListScreen() {
+export default function StationListScreen() {
   const {
     colors,
     isDark,
-    postos,
-    loading,
-    refreshing,
+    stations,
+    isLoading,
+    isRefreshing,
     error,
     refetch,
     shouldShowErrorCard,
-  } = usePostosList();
+  } = useStationList();
 
   const route = useRoute<any>();
 
@@ -31,35 +31,38 @@ export default function PostoListScreen() {
     if (!route.params?.refreshKey) {
       return;
     }
+
     refetch();
   }, [route.params?.refreshKey, refetch]);
 
-  const renderHeader = () => (
-    <>
-      <Header />
-      <Banner
-        text="Compartilhe preços e ajude outros motoristas!"
-        gradientColors={[colors.primary, colors.primary, colors.success]}
-        logoElement={
-          <Image
-            source={require('../../../assets/images/two.png')}
-            style={{
-              width: 128,
-              height: 128,
-              resizeMode: 'contain'
-            }}
-          />
-        }
-      />
-    </>
-  );
+  function renderHeader() {
+    return (
+      <>
+        <Header />
+        <Banner
+          text="Compartilhe preços e ajude outros motoristas!"
+          gradientColors={[colors.primary, colors.primary, colors.success]}
+          logoElement={
+            <Image
+              source={require('../../../assets/images/two.png')}
+              style={{
+                width: 128,
+                height: 128,
+                resizeMode: 'contain',
+              }}
+            />
+          }
+        />
+      </>
+    );
+  }
 
-  const renderEmptyState = () => {
-    if (loading) {
+  function renderEmptyState() {
+    if (isLoading) {
       return (
-        <LoadingState 
-            message="Buscando postos próximos..." 
-            iconName="map-marker-alt"
+        <LoadingState
+          message="Buscando postos próximos..."
+          iconName="map-marker-alt"
         />
       );
     }
@@ -75,24 +78,27 @@ export default function PostoListScreen() {
         iconName="map"
       />
     );
-  };
+  }
 
   return (
-    <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView
+      edges={['top']}
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <StatusBar style={isDark ? 'light' : 'dark'} />
 
       <View style={styles.content}>
         <FlatList
-          data={postos}
+          data={stations}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <PostoCard data={item} onRefresh={refetch} />}
-          
+          renderItem={({ item }) => (
+            <StationCard data={item} onRefresh={refetch} />
+          )}
           ListHeaderComponent={renderHeader}
           ListEmptyComponent={renderEmptyState}
-          
           refreshControl={
             <RefreshControl
-              refreshing={refreshing}
+              refreshing={isRefreshing}
               onRefresh={refetch}
               colors={[colors.primary]}
               progressViewOffset={80}
@@ -101,12 +107,12 @@ export default function PostoListScreen() {
           }
           contentContainerStyle={[
             styles.listContainer,
-            postos.length === 0 && { flexGrow: 1 } 
+            stations.length === 0 && { flexGrow: 1 },
           ]}
           showsVerticalScrollIndicator={false}
         />
       </View>
-      
+
       <Footer />
     </SafeAreaView>
   );

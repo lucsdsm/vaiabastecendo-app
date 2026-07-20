@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import Mapbox from '@rnmapbox/maps';
 
 import { useAppTheme } from '../../theme/ThemeProvider';
-import { PostoProps } from '../PostoCard';
+import { PostoProps } from '../StationCard';
 import PostoMarker from '../PostoMarker';
 import { styles } from './styles';
 
