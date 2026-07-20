@@ -7,7 +7,7 @@ import { addFuelLog, updateFuelLog, getVehicleLogs, deleteFuelLog } from '../../
 export function useAddFuelLog() {
     const navigation = useNavigation();
     const route = useRoute<any>();
-    const { showToast } = useToast();
+    const { showToast } = useToastAnimation();
     
     const vehicleId = route.params?.vehicleId;
     const logToEdit = route.params?.logToEdit;

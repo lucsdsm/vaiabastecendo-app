@@ -5,50 +5,55 @@ import { StatusBar } from 'expo-status-bar';
 
 import Footer from '../../components/Footer';
 import StationCard from '../../components/StationCard';
-import Map from '../../components/Map'; 
+import Map from '../../components/Map';
 import { styles } from './styles';
 import { useMapScreen } from '../../components/Map/useMapScreen';
 
+/**
+ * Tela de visualização em mapa com seleção de postos e card em sobreposição.
+ */
 export default function MapScreen() {
-    const {
-        colors,
-        isDark,
-        stations,
-        initialRegion,
-        userRegion,
-        recenterToken,
-        selectedPosto,
-        handleSelectPosto,
-        handleCloseCard,
-        refetch
-    } = useMapScreen();
+  const {
+    colors,
+    isDark,
+    stations,
+    initialRegion,
+    userRegion,
+    recenterToken,
+    selectedStation,
+    handleSelectStation,
+    handleCloseCard,
+    refetch,
+  } = useMapScreen();
 
-    return (
-        <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
-            <StatusBar style={isDark ? 'light' : 'dark'} />
-            <View style={styles.content}>
-                {/* O Componente Mapa Isolado */}
-                <Map 
-                    stations={stations}
-                    initialRegion={initialRegion}
-                    targetRegion={userRegion}
-                    recenterToken={recenterToken}
-                    selectedPostoId={selectedPosto?.id}
-                    onSelectPosto={handleSelectPosto}
-                    onMapPress={handleCloseCard}
-                />
+  return (
+    <SafeAreaView
+      edges={['top']}
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
+      <StatusBar style={isDark ? 'light' : 'dark'} />
 
-                {/* Overlay do Cartão do Posto na parte inferior */}
-                {selectedPosto && (
-                    <View style={styles.cardOverlay} pointerEvents="box-none">
-                        <View style={styles.cardWrapper}>
-                            <StationCard data={selectedPosto} onRefresh={refetch} />
-                        </View>
-                    </View>
-                )}
+      <View style={styles.content}>
+        <Map
+          stations={stations}
+          initialRegion={initialRegion}
+          targetRegion={userRegion}
+          recenterToken={recenterToken}
+          selectedStationId={selectedStation?.id}
+          onSelectStation={handleSelectStation}
+          onMapPress={handleCloseCard}
+        />
+
+        {selectedStation && (
+          <View style={styles.cardOverlay} pointerEvents="box-none">
+            <View style={styles.cardWrapper}>
+              <StationCard data={selectedStation} onRefresh={refetch} />
             </View>
+          </View>
+        )}
+      </View>
 
-            <Footer />
-        </SafeAreaView>
-    );
+      <Footer />
+    </SafeAreaView>
+  );
 }

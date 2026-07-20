@@ -1,98 +1,117 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Location from 'expo-location';
+
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { StationCardProps } from '../StationCard';
 import { useStations } from '../../hooks/useStations';
 
+interface MapRegion {
+  latitude: number;
+  longitude: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
+}
+
+/**
+ * Centraliza o estado e os comportamentos da tela de mapa.
+ * Controla seleção de posto, localização do usuário e recentralização do mapa.
+ */
 export function useMapScreen() {
-    const { colors, isDark } = useAppTheme();
-    const { stations, refetch } = useStations();
-    const [selectedPosto, setSelectedPosto] = useState<StationCardProps | null>(null);
-    const [userRegion, setUserRegion] = useState<{
-        latitude: number;
-        longitude: number;
-        latitudeDelta: number;
-        longitudeDelta: number;
-    } | null>(null);
-    const [recenterToken, setRecenterToken] = useState(0);
+  const { colors, isDark } = useAppTheme();
+  const { stations, refetch } = useStations();
 
-    // Coordenadas iniciais (Você pode puxar a localização atual do dispositivo depois)
-    const initialRegion = {
-        latitude: -5.79448,
-        longitude: -35.2110,
-        latitudeDelta: 0.05,
-        longitudeDelta: 0.05,
-    };
+  const [selectedStation, setSelectedStation] = useState<StationCardProps | null>(null);
+  const [userRegion, setUserRegion] = useState<MapRegion | null>(null);
+  const [recenterToken, setRecenterToken] = useState(0);
 
-    const handleSelectPosto = (posto: StationCardProps) => {
-        setSelectedPosto(posto);
-    };
+  /**
+   * Região inicial de fallback usada antes de obter a localização real do usuário.
+   */
+  const initialRegion: MapRegion = {
+    latitude: -5.79448,
+    longitude: -35.211,
+    latitudeDelta: 0.05,
+    longitudeDelta: 0.05,
+  };
 
-    const handleCloseCard = () => {
-        setSelectedPosto(null);
-    };
+  function handleSelectStation(station: StationCardProps) {
+    setSelectedStation(station);
+  }
 
-    // Solicita permissão e obtém a localização do usuário quando a tela é focada
-    useEffect(() => {
-        (async () => {
-            const { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                // console.log('Permissão de localização negada pelo usuário');
-                // Aqui você poderia usar o seu Toast para avisar o usuário
-            }
-        })();
-    }, []);
+  function handleCloseCard() {
+    setSelectedStation(null);
+  }
 
-    useFocusEffect(
-        useCallback(() => {
-            let isActive = true;
+  useEffect(() => {
+    /**
+     * Antecipar a solicitação de permissão ajuda a reduzir latência
+     * quando a tela precisar centralizar no usuário.
+     */
+    (async () => {
+      await Location.requestForegroundPermissionsAsync();
+    })();
+  }, []);
 
-            const resolveUserRegion = async () => {
-                const { status } = await Location.requestForegroundPermissionsAsync();
-                if (status !== 'granted') {
-                    return;
-                }
+  useFocusEffect(
+    useCallback(() => {
+      let isActive = true;
 
-                let location = await Location.getLastKnownPositionAsync({});
+      async function resolveUserRegion() {
+        const { status } = await Location.requestForegroundPermissionsAsync();
 
-                if (!location) {
-                    location = await Location.getCurrentPositionAsync({
-                        accuracy: Location.Accuracy.Balanced,
-                    });
-                }
+        if (status !== 'granted') {
+          return;
+        }
 
-                if (!location || !isActive) {
-                    return;
-                }
+        /**
+         * Prioriza a última posição conhecida por ser mais rápida.
+         * Se não existir, busca a localização atual com precisão balanceada.
+         */
+        let location = await Location.getLastKnownPositionAsync({});
 
-                setUserRegion({
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
-                    latitudeDelta: 0.02,
-                    longitudeDelta: 0.02,
-                });
-                setRecenterToken((value) => value + 1);
-            };
+        if (!location) {
+          location = await Location.getCurrentPositionAsync({
+            accuracy: Location.Accuracy.Balanced,
+          });
+        }
 
-            resolveUserRegion();
+        if (!location || !isActive) {
+          return;
+        }
 
-            return () => {
-                isActive = false;
-            };
-        }, [])
-    );
+        setUserRegion({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 0.02,
+          longitudeDelta: 0.02,
+        });
 
-    return {
-        colors,
-        isDark,
-        stations: stations,
-        initialRegion,
-        userRegion,
-        recenterToken,
-        selectedPosto,
-        handleSelectPosto,
-        handleCloseCard,
-        refetch,
-    };
+        /**
+         * Incrementa o token para forçar uma nova recentralização,
+         * mesmo que a região resultante seja parecida com a anterior.
+         */
+        setRecenterToken((value) => value + 1);
+      }
+
+      resolveUserRegion();
+
+      return () => {
+        isActive = false;
+      };
+    }, [])
+  );
+
+  return {
+    colors,
+    isDark,
+    stations,
+    initialRegion,
+    userRegion,
+    recenterToken,
+    selectedStation,
+    handleSelectStation,
+    handleCloseCard,
+    refetch,
+  };
 }

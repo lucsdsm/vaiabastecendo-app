@@ -25,7 +25,7 @@ export function useUpdatePriceCard({
     onSuccess,
 }: UseUpdatePriceModalParams) {
     const { token } = useAuth();
-    const { showToast } = useToast();
+    const { showToast } = useToastAnimation();
     const { fuelTypes, refetchFuelTypes, loading: isFuelLoading } = useCombustivel();
     const [selectedFuel, setSelectedFuel] = useState<number | null>(null);
     const [price, setPrice] = useState('');

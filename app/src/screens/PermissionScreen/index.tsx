@@ -15,7 +15,7 @@ interface PermissionScreenProps {
 
 export default function PermissionScreen({ onPermissionGranted }: PermissionScreenProps) {
   const { colors } = useAppTheme();
-  const { showToast } = useToast();
+  const { showToast } = useToastAnimation();
 
   const handleRequestPermission = async () => {
     const { status } = await Location.requestForegroundPermissionsAsync();
