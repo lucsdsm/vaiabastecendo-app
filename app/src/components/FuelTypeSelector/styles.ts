@@ -7,17 +7,16 @@ export const styles = StyleSheet.create({
         fontWeight: typography.weight.semibold,
         textTransform: 'uppercase',
         letterSpacing: 0.5,
-        marginBottom: spacing.md,
         marginLeft: spacing.sm,
+        marginBottom: spacing.sm,
     },
     scroll: {
         flexGrow: 0,
-        borderRadius: radius.lg,
+        borderRadius: radius.pill,
     },
     scrollContent: {
         gap: spacing.sm,
         paddingRight: spacing.xs,
-        paddingVertical: 4,
     },
     chipBase: {
         flexDirection: 'row',

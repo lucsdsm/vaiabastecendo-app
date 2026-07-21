@@ -6,11 +6,12 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     title: {
-        fontSize: typography.size.lg,
-        fontWeight: 'bold',
-        paddingHorizontal: spacing.sm,
-        marginBottom: spacing.md,
-        paddingTop: spacing.xl,
+        fontSize: typography.size.xs + 1,
+        fontWeight: typography.weight.semibold,
+        textTransform: 'uppercase',
+        letterSpacing: 0.5,
+        marginLeft: spacing.sm,
+        marginBottom: spacing.sm,
     },
     chartWrapper: {
         paddingRight: spacing.lg,

@@ -4,6 +4,7 @@ import { radius, spacing, typography, elevation } from '../../theme/tokens';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginTop: spacing.xl,
     },
     cardShell: {
         flex: 1,
@@ -11,20 +12,22 @@ export const styles = StyleSheet.create({
     },
     cardContent: {
     },
-    section: {
-        paddingVertical: spacing.md,
-    },
     label: {
-        paddingHorizontal: spacing.sm,
+        fontSize: typography.size.xs + 1,
+        fontWeight: typography.weight.semibold,
+        textTransform: 'uppercase',
+        letterSpacing: 0.5,
+        marginLeft: spacing.sm,
+        marginBottom: spacing.sm,
+        marginTop: spacing.xl,
     },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: radius.xl - 4,
+        borderRadius: radius.xl,
         borderWidth: 1.5,
         paddingHorizontal: spacing.xl,
         paddingVertical: spacing.sm,
-        marginTop: spacing.xs,
     },
     currencyPrefix: {
         fontSize: typography.size.lg,

@@ -58,25 +58,23 @@ export const styles = StyleSheet.create({
         fontWeight: typography.weight.semibold,
         textTransform: 'uppercase',
         letterSpacing: 0.5,
-        marginBottom: spacing.md,
+        marginBottom: spacing.sm,
         marginLeft: spacing.sm,
     },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: radius.xl - 4,
+        borderRadius: radius.lg,
         borderWidth: 1.5,
-        paddingHorizontal: spacing.xl,
-        paddingVertical: spacing.xs,
+        paddingHorizontal: spacing.md,
+        paddingVertical: 4,
     },
-
     textInput: {
         flex: 1,
-        fontSize: typography.size.md,
-        fontWeight: typography.weight.medium,
+        fontSize: typography.size.lg,
+        fontWeight: typography.weight.bold,
         paddingVertical: spacing.md,
     },
-
     numberInput: {
         flex: 1,
         fontSize: typography.size.hero + 4,

@@ -81,7 +81,7 @@ export default function PriceHistoryTable({ stationId, selectedFuelName }: Price
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <Text style={[styles.title, { color: colors.textPrimary }]}>Histórico de preços</Text>
+            <Text style={[styles.title, { color: colors.textSecondary }]}>Histórico de preços</Text>
 
             <View style={styles.chartWrapper}>
                 <LineChart

@@ -6,6 +6,9 @@ export const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: spacing.md,
     },
+    content: {
+        gap: spacing.xl,
+    },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -33,7 +36,5 @@ export const styles = StyleSheet.create({
     headerSpacer: {
         width: 40,
         height: 40,
-    },
-    content: {
     },
 });
