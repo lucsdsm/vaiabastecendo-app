@@ -10,7 +10,6 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: spacing.md,
-        paddingVertical: spacing.md,
         minHeight: 56,
         position: 'relative',
     },

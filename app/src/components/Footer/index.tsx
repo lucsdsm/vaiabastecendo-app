@@ -20,7 +20,7 @@ export default function Footer() {
     } = useFooter();
 
     const navigation = useNavigation<any>(); 
-    const isPostoList = activeRoute === 'PostoList';
+    const isPostoList = activeRoute === 'StationList';
     const isMapActive = activeRoute === 'Map';
     const isProfileActive = activeRoute === 'UserProfile';
     const activeColor = colors.primary;
@@ -54,7 +54,7 @@ export default function Footer() {
                         activeOpacity={0.8}
                         accessibilityRole="button"
                         accessibilityLabel="Ir para lista de postos"
-                        onPress={() => navigation.navigate('PostoList')}
+                        onPress={() => navigation.navigate('StationList')}
                     >
                         <FontAwesome5 name="gas-pump" size={26} color="#FFFFFF" />
                     </TouchableOpacity>

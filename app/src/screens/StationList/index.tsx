@@ -90,7 +90,7 @@ export default function StationListScreen() {
       <View style={styles.content}>
         <FlatList
           data={stations}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <StationCard data={item} onRefresh={refetch} />
           )}

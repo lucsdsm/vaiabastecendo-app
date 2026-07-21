@@ -4,7 +4,7 @@ import Mapbox from '@rnmapbox/maps';
 
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { StationCardProps } from '../StationCard';
-import StationMarker from '../PostoMarker';
+import StationMarker from '../StationMarker';
 import { styles } from './styles';
 
 Mapbox.setAccessToken(
@@ -107,7 +107,7 @@ export default function Map({
         {stations.map((station) => (
           <StationMarker
             key={station.id}
-            posto={station}
+            station={station}
             isSelected={selectedStationId === station.id}
             primaryColor={colors.primary}
             surfaceColor={colors.surface}

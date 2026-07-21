@@ -7,8 +7,8 @@ import { FuelType, FuelTypeSelectorSize, FuelTypeSelectorVariant, useFuelTypeSel
 interface FuelTypeSelectorProps {
     label: string;
     fuelTypes: FuelType[];
-    selectedFuel: number | string | null;
-    onSelectFuel: (id: number | string) => void;
+    selectedFuel: number | null;
+    onSelectFuel: (id: number) => void;
     variant?: FuelTypeSelectorVariant;
     size?: FuelTypeSelectorSize;
     showCheckIcon?: boolean;
@@ -53,7 +53,7 @@ export default function FuelTypeSelector({
                             activeOpacity={0.7}
                         >
                             <View style={dotStyle} />
-                            <Text style={textStyle}>{type.nome}</Text>
+                            <Text style={textStyle}>{type.name}</Text>
                             {showCheckIcon && isSelected && (
                                 <Feather name="check" size={13} color={accentColor} style={styles.checkIcon} />
                             )}

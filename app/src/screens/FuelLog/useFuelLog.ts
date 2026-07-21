@@ -70,9 +70,9 @@ export function useFuelLog() {
 
     const handleEditFuelLog = (log: FuelLog) => {
         if (selectedVehicle) {
-            (navigation.navigate as any)('AddFuelLog', { 
+            navigation.navigate('AddFuelLog', {
                 vehicleId: selectedVehicle.id,
-                logToEdit: log 
+                logToEdit: log
             });
         }
     };

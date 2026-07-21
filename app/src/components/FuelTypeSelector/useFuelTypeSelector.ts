@@ -3,17 +3,17 @@ import { getReadableColor } from '../../utils/color';
 import { styles } from './styles';
 
 export type FuelType = {
-    id: number | string;
-    nome: string;
-    cor: string;
+    id: number;
+    name: string;
+    color: string;
 };
 
 export type FuelTypeSelectorVariant = 'surface' | 'transparent';
 export type FuelTypeSelectorSize = 'compact' | 'regular';
 
 interface UseFuelTypeSelectorParams {
-    selectedFuel: number | string | null;
-    onSelectFuel: (id: number | string) => void;
+    selectedFuel: number | null;
+    onSelectFuel: (id: number) => void;
     variant?: FuelTypeSelectorVariant;
     size?: FuelTypeSelectorSize;
 }
@@ -29,13 +29,13 @@ export function useFuelTypeSelector({
 }: UseFuelTypeSelectorParams) {
     const { colors, isDark } = useAppTheme();
 
-    const handleSelectFuel = (id: number | string) => {
+    const handleSelectFuel = (id: number) => {
         onSelectFuel(id);
     };
 
     const getChipStyles = (type: FuelType) => {
         const isSelected = selectedFuel === type.id;
-        const accentColor = getReadableColor(type.cor, isDark);
+        const accentColor = getReadableColor(type.color, isDark);
 
         return {
             isSelected,

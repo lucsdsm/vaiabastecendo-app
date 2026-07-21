@@ -1,14 +1,14 @@
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { getReadableColor } from '../../utils/color';
-import { useCombustivel } from '../../contexts/FuelTypesContext'; 
+import { useFuelTypes } from '../../contexts/FuelTypesContext'; 
 
 export function useFuelLogCard(data: any) {
     const { colors, isDark } = useAppTheme();
     
-    const { fuelTypes } = useCombustivel();
+    const { fuelTypes } = useFuelTypes();
 
-    const fuelInfo = fuelTypes.find(f => f.nome === data.fuel_type);
-    const baseColor = fuelInfo?.cor || colors.primary; 
+    const fuelInfo = fuelTypes.find(f => f.name === data.fuel_type);
+    const baseColor = fuelInfo?.color || colors.primary; 
     const accentColor = getReadableColor(baseColor, isDark);
 
     const dateObj = new Date(data.date);

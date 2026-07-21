@@ -12,16 +12,19 @@ export const styles = StyleSheet.create({
     cardContent: {
     },
     section: {
-        marginTop: spacing.xl,
-        marginBottom: spacing.xl,
+        paddingVertical: spacing.md,
+    },
+    label: {
+        paddingHorizontal: spacing.sm,
     },
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: radius.xl - 4, // 20
+        borderRadius: radius.xl - 4,
         borderWidth: 1.5,
         paddingHorizontal: spacing.xl,
-        paddingVertical: spacing.xs,
+        paddingVertical: spacing.sm,
+        marginTop: spacing.xs,
     },
     currencyPrefix: {
         fontSize: typography.size.lg,
@@ -33,7 +36,6 @@ export const styles = StyleSheet.create({
         fontSize: typography.size.hero + 4, // 32
         fontWeight: typography.weight.bold,
         textAlign: 'center',
-        paddingVertical: spacing.lg,
         letterSpacing: -1,
     },
     currencySuffix: {

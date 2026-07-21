@@ -7,25 +7,25 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import UpdatePriceCard from '../../components/UpdatePriceCard';
 import PriceHistoryTable from '../../components/PriceHistoryTable';
-import { PrecoAtualResumo, useUpdatePriceCard } from '../../components/UpdatePriceCard/useUpdatePriceModal';
+import { PrecoAtualResumo, useUpdatePriceCard } from '../../components/UpdatePriceCard/useUpdatePriceCard';
 import { styles } from './styles';
 
 type UpdatePriceRouteParams = {
-    postoId: string;
-    postoNome: string;
-    precosAtuais: PrecoAtualResumo[];
+    stationId: string;
+    stationName: string;
+    currentPrices: PrecoAtualResumo[];
 };
 
-export default function UpdatePrice() {
+export default function UpdatePriceScreen() {
     const { colors } = useAppTheme();
     const navigation = useNavigation();
     const route = useRoute<any>();
 
-    const { postoId, postoNome, precosAtuais } = route.params as UpdatePriceRouteParams;
+    const { stationId, stationName, currentPrices } = route.params as UpdatePriceRouteParams;
     const [activeFuelName, setActiveFuelName] = useState<string | null>(null);
 
     const handleSuccess = () => {
-        (navigation.navigate as any)('PostoList', { refreshKey: Date.now() });
+        (navigation.navigate as any)('StationList', { refreshKey: Date.now() });
     };
 
     const {
@@ -36,18 +36,19 @@ export default function UpdatePrice() {
         setSelectedFuel,
         handlePriceChange,
         handleUpdate,
-    } = useUpdatePriceCard({ postoId, precosAtuais, onSuccess: handleSuccess });
+        parsePriceToNumber,
+    } = useUpdatePriceCard({ stationId, currentPrices, onSuccess: handleSuccess });
 
     useEffect(() => {
         if (fuelTypes.length > 0 && selectedFuel) {
-            const fuel = fuelTypes.find(t => t.id === selectedFuel);
+            const fuel = fuelTypes.find((t) => t.id === selectedFuel);
             if (fuel) {
-                setActiveFuelName(fuel.nome);
+                setActiveFuelName(fuel.name);
             }
         }
     }, [selectedFuel, fuelTypes]);
 
-    const isFormValid = selectedFuel && price && parseFloat(price.replace(',', '.')) > 0;
+    const isFormValid = Boolean(selectedFuel) && Boolean(price) && parsePriceToNumber(price) > 0;
 
     return (
         <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
@@ -55,20 +56,20 @@ export default function UpdatePrice() {
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                     <Feather name="arrow-left" size={24} color={colors.textPrimary} />
                 </TouchableOpacity>
-                
+
                 <View style={styles.headerTextContainer}>
                     <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>Atualizar preço</Text>
                     <Text style={[styles.headerSubtitle, { color: colors.textSecondary }]} numberOfLines={1}>
-                        {postoNome}
+                        {stationName}
                     </Text>
                 </View>
-                
+
                 <TouchableOpacity
                     onPress={() => handleUpdate(selectedFuel, price)}
                     disabled={!isFormValid || loading}
                     style={[
-                        styles.backButton, 
-                        { opacity: !isFormValid || loading ? 0.35 : 1, alignItems: 'center', justifyContent: 'center' }
+                        styles.backButton,
+                        { opacity: !isFormValid || loading ? 0.35 : 1, alignItems: 'center', justifyContent: 'center' },
                     ]}
                     activeOpacity={0.7}
                 >
@@ -88,11 +89,8 @@ export default function UpdatePrice() {
                     setSelectedFuel={setSelectedFuel}
                     handlePriceChange={handlePriceChange}
                 />
-                
-                <PriceHistoryTable 
-                    postoId={postoId} 
-                    selectedFuelName={activeFuelName} 
-                />
+
+                <PriceHistoryTable stationId={stationId} selectedFuelName={activeFuelName} />
             </ScrollView>
         </SafeAreaView>
     );

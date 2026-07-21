@@ -1,4 +1,4 @@
-export const dicionarioBandeiras: Record<string, any> = {
+export const flagsDictionary: Record<string, any> = {
     'Petrobras': require('../../assets/flags/petrobras.png'),
     'Shell': require('../../assets/flags/shell.png'),
     'Ipiranga': require('../../assets/flags/ipiranga.webp'),

@@ -136,7 +136,7 @@ export function useUserProfile() {
       return;
     }
 
-    const mockGoogleAccessToken = 'ya29.a0ARGnu0YY672_us0-KqZHM9-uxc2W0mR0t3z1W85gx_2Pm-wQFhEWRUmlxmxbID6Q9jEGGH8M-IHHhfu-j0Ykqk2ohdhTnYy27mfbYohzC0M95_LaaxaQI0TYzF7ndcoZ0nOkM_Qmc5YwEaup_PnSIBVHPZIuey8VO0va8VoGVffWyz-z43dYwCf_9BZs2JDkO2fpePMaCgYKAZUSARQSFQHGX2MiKFEkBiJ-sqNYB-JnsqanyA0206';
+    const mockGoogleAccessToken = '';
 
     if (!mockGoogleAccessToken) {
       showToast('Defina um token de teste antes de usar o login simulado.', 'info');

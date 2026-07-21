@@ -30,17 +30,7 @@ export const styles = StyleSheet.create({
     card: {
         width: '100%',
         marginBottom: spacing.md,
-        ...Platform.select({
-            ios: {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 2 },
-                shadowOpacity: 0.04,
-                shadowRadius: 12,
-            },
-            android: {
-                elevation: elevation.low,
-            },
-        }),
+        
     },
     header: {
         flexDirection: 'row',

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import axios from 'axios';
 
 export interface FuelType {
@@ -23,7 +23,7 @@ export function FuelTypeProvider({ children }: { children: React.ReactNode }) {
   const [fuelTypes, setFuelTypes] = useState<FuelType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  async function refreshFuelTypes() {
+  const refreshFuelTypes = useCallback(async () => {
     setIsLoading(true);
 
     try {
@@ -43,11 +43,11 @@ export function FuelTypeProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, []);
 
   useEffect(() => {
     refreshFuelTypes();
-  }, []);
+  }, [refreshFuelTypes]);
 
   const value = useMemo(
     () => ({
@@ -55,7 +55,7 @@ export function FuelTypeProvider({ children }: { children: React.ReactNode }) {
       isLoading,
       refreshFuelTypes,
     }),
-    [fuelTypes, isLoading]
+    [fuelTypes, isLoading, refreshFuelTypes]
   );
 
   return (

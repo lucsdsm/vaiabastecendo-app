@@ -1,18 +1,19 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
-import { styles } from './styles';
-import { useHeader } from './useHeader';
 import { useNavigation } from '@react-navigation/native';
 
+import { styles } from './styles';
+import { useHeader } from './useHeader';
+
 export default function Header() {
-    const { 
-        colors, 
-        isDark, 
-        toggleTheme, 
-        displayName, 
-        greeting, 
-        locationName 
+    const {
+        colors,
+        isDark,
+        toggleTheme,
+        displayName,
+        greeting,
+        locationName,
     } = useHeader();
 
     const navigation = useNavigation<any>();
@@ -20,8 +21,7 @@ export default function Header() {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={styles.content}>
-                
-                {/* Bloco Esquerdo: Textos */}
+
                 <View style={styles.titleContainer} pointerEvents="none">
                     <Text style={[styles.greetingText, { color: colors.textSecondary }]}>
                         {greeting},
@@ -30,12 +30,11 @@ export default function Header() {
                         {displayName}
                     </Text>
 
-                    {/* Indicador de Localização Dinâmico */}
                     <View style={styles.locationRow}>
                         <Feather name="map-pin" size={12} color={colors.primary} />
-                        <Text 
+                        <Text
                             style={[styles.locationText, { color: colors.primary }]}
-                            numberOfLines={1} 
+                            numberOfLines={1}
                             ellipsizeMode="tail"
                         >
                             {locationName}
@@ -43,11 +42,9 @@ export default function Header() {
                     </View>
                 </View>
 
-                {/* Bloco Direito: Ações */}
                 <View style={styles.actionsContainer}>
-                    
-                    {/* Botão de Garagem / Diário de Bordo */}
-                    <Pressable 
+
+                    <Pressable
                         style={({ pressed }) => [
                             styles.themeButton,
                             {
@@ -63,7 +60,6 @@ export default function Header() {
                         <MaterialCommunityIcons name="car" size={24} color={colors.textSecondary} />
                     </Pressable>
 
-                    {/* Botão de Tema */}
                     <Pressable
                         onPress={toggleTheme}
                         style={({ pressed }) => [
@@ -78,7 +74,7 @@ export default function Header() {
                         accessibilityLabel="Alternar tema"
                     >
                         <Feather
-                            name={isDark ? "moon" : "sun"}
+                            name={isDark ? 'moon' : 'sun'}
                             size={20}
                             color={colors.primary}
                         />

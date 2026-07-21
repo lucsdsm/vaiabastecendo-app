@@ -4,12 +4,13 @@ import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
 import { useKeyboardPadding } from '../../utils/keyboardPadding';
 import FuelTypeSelector from '../FuelTypeSelector';
+import { FuelType } from '../../contexts/FuelTypesContext';
 
 interface UpdatePriceCardProps {
-    fuelTypes: any[];
-    selectedFuel: number | string | null;
+    fuelTypes: FuelType[];
+    selectedFuel: number | null;
     price: string;
-    setSelectedFuel: (id: any) => void;
+    setSelectedFuel: (id: number) => void;
     handlePriceChange: (text: string) => void;
 }
 
@@ -24,7 +25,7 @@ export default function UpdatePriceCard({
     const { keyboardPadding } = useKeyboardPadding();
 
     const content = (
-        <View style={[styles.cardContent, { backgroundColor: colors.background }] }>
+        <View style={[styles.cardContent, { backgroundColor: colors.background }]}>
             <View style={styles.section}>
                 <FuelTypeSelector
                     label="Combustível"
@@ -38,7 +39,7 @@ export default function UpdatePriceCard({
             </View>
 
             <View style={styles.section}>
-                <Text style={[{ color: colors.textSecondary }]}>Preço por litro</Text>
+                <Text style={[styles.label, { color: colors.textSecondary }]}>Preço por litro</Text>
                 <View
                     style={[
                         styles.inputContainer,

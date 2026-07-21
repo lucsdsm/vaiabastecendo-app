@@ -60,7 +60,7 @@ export default function FuelLogScreen() {
    
                     <FlatList
                         data={logs}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item) => item.id.toString()}
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={[
                             logs.length === 0 && { flex: 1, justifyContent: 'center'}

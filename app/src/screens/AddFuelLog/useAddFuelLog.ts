@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useToast } from '../../contexts/ToastContext';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useCombustivel } from '../../contexts/FuelTypesContext';
+import { useFuelTypes } from '../../contexts/FuelTypesContext';
 import { addFuelLog, updateFuelLog, getVehicleLogs, deleteFuelLog } from '../../database/logService';
 
 export function useAddFuelLog() {
     const navigation = useNavigation();
     const route = useRoute<any>();
-    const { showToast } = useToastAnimation();
+    const { showToast } = useToast();
     
     const vehicleId = route.params?.vehicleId;
     const logToEdit = route.params?.logToEdit;
@@ -22,21 +22,21 @@ export function useAddFuelLog() {
     const [date, setDate] = useState(logToEdit ? new Date(logToEdit.date) : new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
 
-    const { fuelTypes, refetchFuelTypes, loading: isFuelLoading } = useCombustivel();
+    const { fuelTypes, refreshFuelTypes, isLoading: isFuelLoading } = useFuelTypes();
     const [selectedFuel, setSelectedFuel] = useState<number | null>(null);
 
     const [isAlertVisible, setIsAlertVisible] = useState(false);
 
     useEffect(() => {
         if (fuelTypes.length === 0 && !isFuelLoading) {
-            refetchFuelTypes();
+            refreshFuelTypes();
         }
     }, []);
 
     useEffect(() => {
         if (fuelTypes.length > 0) {
             if (isEditing && logToEdit?.fuel_type) {
-                const matchedFuel = fuelTypes.find(f => f.nome === logToEdit.fuel_type);
+                const matchedFuel = fuelTypes.find(f => f.name === logToEdit.fuel_type);
                 setSelectedFuel(matchedFuel ? matchedFuel.id : fuelTypes[0].id);
             } else if (!selectedFuel) {
                 setSelectedFuel(fuelTypes[0].id);
@@ -101,7 +101,7 @@ export function useAddFuelLog() {
         const currentLiters = parseNumber(liters);
         const currentPrice = parseNumber(pricePerLiter);
         const currentTotal = parseNumber(totalPrice);
-        const fuelName = fuelTypes.find(f => f.id === selectedFuel)?.nome || 'Desconhecido';
+        const fuelName = fuelTypes.find(f => f.id === selectedFuel)?.name || 'Desconhecido';
 
         const history = getVehicleLogs(vehicleId);
         const filteredHistory = isEditing ? history.filter(log => log.id !== logToEdit.id) : history;
@@ -121,11 +121,11 @@ export function useAddFuelLog() {
             const pastDateStr = pastDate.toISOString().split('T')[0];
 
             if (dateStr > pastDateStr && currentOdo <= pastLog.odometer) {
-                showToast("Erro no Odômetro. O odômetro não pode ser menor ou igual a ${pastLog.odometer} km, que foi registrado em ${pastDate.toLocaleDateString('pt-BR')}.", "danger");
+                showToast(`Erro no Odômetro. O odômetro não pode ser menor ou igual a ${pastLog.odometer} km, que foi registrado em ${pastDate.toLocaleDateString('pt-BR')}.`, "danger");
                 return;
             }
             if (dateStr < pastDateStr && currentOdo >= pastLog.odometer) {
-                showToast("Erro no Odômetro. Para esta data, o odômetro deve ser menor que ${pastLog.odometer} km, que foi registrado em ${pastDate.toLocaleDateString('pt-BR')}.", "danger");
+                showToast(`Erro no Odômetro. Para esta data, o odômetro deve ser menor que ${pastLog.odometer} km, que foi registrado em ${pastDate.toLocaleDateString('pt-BR')}.`, "danger");
                 return;
             }
         }

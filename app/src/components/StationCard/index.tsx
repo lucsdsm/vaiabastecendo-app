@@ -14,7 +14,7 @@ import { styles } from './styles';
 import { CurrentPrice, StationCardProps, useStationCard } from './useStationCard';
 
 import { formatarTempoDecorrido } from '../../utils/dateFormatter';
-import { dicionarioBandeiras } from '../../utils/dictFlags';
+import { flagsDictionary } from '../../utils/flagsDictionary';
 import { getReadableColor } from '../../utils/color';
 
 export type { CurrentPrice, StationCardProps } from './useStationCard';
@@ -67,7 +67,7 @@ export default function StationCard({
     handleOpenUpdateModal,
   } = useStationCard(data, onRefresh);
 
-  const logoSource = dicionarioBandeiras[data.brand];
+  const logoSource = flagsDictionary[data.brand];
   const hasPrices = localPrices.length > 0;
 
   return (

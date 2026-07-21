@@ -3,46 +3,53 @@ import { Image, View } from 'react-native';
 import Mapbox from '@rnmapbox/maps';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import { PostoProps } from '../StationCard';
-import { dicionarioBandeiras } from '../../utils/dictFlags';
+import { StationCardProps } from '../StationCard';
+import { flagsDictionary } from '../../utils/flagsDictionary';
 import { styles } from './styles';
 
-interface PostoMarkerProps {
-    posto: PostoProps;
+interface StationMarkerProps {
+    station: StationCardProps;
     isSelected: boolean;
     primaryColor: string;
     surfaceColor: string;
-    onPress: (posto: PostoProps) => void;
+    onPress: (station: StationCardProps) => void;
 }
 
-const PostoMarker = memo(({
-    posto,
+const StationMarker = memo(({
+    station,
     isSelected,
     primaryColor,
     surfaceColor,
     onPress,
-}: PostoMarkerProps) => {
+}: StationMarkerProps) => {
     const [renderVersion, setRenderVersion] = useState(0);
-    const normalizedBandeira = posto.bandeira?.trim().toLowerCase();
-    const isWhiteFlag = normalizedBandeira === 'bandeira branca' || normalizedBandeira === 'branca';
-    const flagSource = !isWhiteFlag ? dicionarioBandeiras[posto.bandeira] : undefined;
 
     const handlePress = useCallback(() => {
-        onPress(posto);
-    }, [posto, onPress]);
+        if (station) {
+            onPress(station);
+        }
+    }, [station, onPress]);
 
     useEffect(() => {
         const timer = setTimeout(() => setRenderVersion((version) => version + 1), 50);
         return () => clearTimeout(timer);
     }, []);
 
+    if (!station) {
+        return null;
+    }
+
+    const normalizedBrand = station.brand?.trim().toLowerCase();
+    const isWhiteFlag = normalizedBrand === 'bandeira branca' || normalizedBrand === 'branca';
+    const flagSource = !isWhiteFlag ? flagsDictionary[station.brand] : undefined;
+
     return (
         <Mapbox.PointAnnotation
-            id={posto.id}
-            coordinate={[Number(posto.longitude), Number(posto.latitude)]}
+            id={station.id}
+            coordinate={[Number(station.longitude), Number(station.latitude)]}
             anchor={{ x: 0.5, y: 0.5 }}
             onSelected={handlePress}
-            key={`${posto.id}-${isSelected}-${renderVersion}`}
+            key={`${station.id}-${isSelected}-${renderVersion}`}
         >
             <View
                 style={[
@@ -81,6 +88,6 @@ const PostoMarker = memo(({
     );
 });
 
-PostoMarker.displayName = 'PostoMarker';
+StationMarker.displayName = 'StationMarker';
 
-export default PostoMarker;
+export default StationMarker;

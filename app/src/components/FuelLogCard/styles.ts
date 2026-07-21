@@ -1,10 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { radius, spacing, typography, elevation } from '../../theme/tokens';
+import { radius, spacing } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     card: {
         borderRadius: radius.md,
-        borderWidth: 1,
         marginBottom: 16,
         overflow: 'hidden',
     },

@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { createVehicle, updateVehicle, deleteVehicle } from '../../database/logService';
 import { useAppTheme } from '../../theme/ThemeProvider';
+import { useToast } from '../../contexts/ToastContext';
 
 export function useAddVehicle() {
     const navigation = useNavigation();
     const route = useRoute<any>();
     const { colors, isDark } = useAppTheme();
-    
+    const { showToast } = useToast();
+
     const vehicleToEdit = route.params?.vehicleToEdit;
     const isEditing = !!vehicleToEdit;
 
@@ -17,24 +19,31 @@ export function useAddVehicle() {
     const [loading, setLoading] = useState(false);
     const [isAlertVisible, setIsAlertVisible] = useState(false);
 
-    const isFormValid = name.trim().length > 0 && tankCapacity.trim().length > 0;
+    const parseCapacity = (text: string) => parseFloat(text.replace(',', '.'));
+
+    const isFormValid =
+        name.trim().length > 0 &&
+        tankCapacity.trim().length > 0 &&
+        !isNaN(parseCapacity(tankCapacity)) &&
+        parseCapacity(tankCapacity) > 0;
 
     const handleSave = () => {
         if (!isFormValid) return;
-        
+
         setLoading(true);
         try {
-            const capacityNumber = parseFloat(tankCapacity.replace(',', '.'));
-            
+            const capacityNumber = parseCapacity(tankCapacity);
+
             if (isEditing) {
-                updateVehicle(vehicleToEdit.id, name, plate, capacityNumber);
+                updateVehicle(vehicleToEdit.id, name.trim(), plate.trim(), capacityNumber);
             } else {
-                createVehicle(name, plate, capacityNumber);
+                createVehicle(name.trim(), plate.trim(), capacityNumber);
             }
-            
+
             navigation.goBack();
         } catch (error) {
-            console.error("Erro ao salvar veículo:", error);
+            console.error('Erro ao salvar veículo:', error);
+            showToast('Não foi possível salvar o veículo. Tente novamente.', 'danger');
         } finally {
             setLoading(false);
         }
@@ -51,7 +60,8 @@ export function useAddVehicle() {
             deleteVehicle(vehicleToEdit.id);
             navigation.goBack();
         } catch (error) {
-            console.error("Erro ao excluir veículo:", error);
+            console.error('Erro ao excluir veículo:', error);
+            showToast('Não foi possível excluir o veículo. Tente novamente.', 'danger');
         }
     };
 
