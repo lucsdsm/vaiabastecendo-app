@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Location from 'expo-location';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
@@ -46,17 +46,22 @@ function AppNavigator({
   hasLocationPermission,
   onPermissionGranted,
 }: AppNavigatorProps) {
-  const { colors } = useAppTheme();
+  const { colors, isDark } = useAppTheme();
 
   const navigationTheme = useMemo(
     () => ({
-      ...DefaultTheme,
+      ...(isDark ? DarkTheme : DefaultTheme),
       colors: {
-        ...DefaultTheme.colors,
+        ...(isDark ? DarkTheme.colors : DefaultTheme.colors),
         background: colors.background,
+        card: colors.surface,
+        text: colors.textPrimary,
+        border: colors.border,
+        primary: colors.primary,
+        notification: colors.primary,
       },
     }),
-    [colors.background]
+    [colors.background, colors.border, colors.primary, colors.surface, colors.textPrimary, isDark]
   );
 
   return (
@@ -101,6 +106,7 @@ function AppNavigator({
  */
 function AppContent() {
   const { isInitializingAuth } = useAuth();
+  const { isThemeReady } = useAppTheme();
   const [isAppReady, setIsAppReady] = useState(false);
   const [hasLocationPermission, setHasLocationPermission] = useState<boolean | null>(null);
 
@@ -132,7 +138,7 @@ function AppContent() {
     };
   }, []);
 
-  const canFinishLoading = !isInitializingAuth && hasLocationPermission !== null;
+  const canFinishLoading = !isInitializingAuth && hasLocationPermission !== null && isThemeReady;
 
   return (
     <>

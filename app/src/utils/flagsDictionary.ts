@@ -9,5 +9,6 @@ export const flagsDictionary: Record<string, any> = {
     'Lemon': require('../../assets/flags/lemon.png'),
     'Estrela': require('../../assets/flags/estrela.jpg'),
     'Macaco': require('../../assets/flags/macaco.png'),
-    'Setta': require('../../assets/flags/setta.jpg')
+    'Setta': require('../../assets/flags/setta.jpg'),
+    'Domingos': require('../../assets/flags/domingos.jpg'),
 };
