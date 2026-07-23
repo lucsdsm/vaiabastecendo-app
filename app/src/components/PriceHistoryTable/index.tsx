@@ -1,118 +1,247 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import { View, Text, ActivityIndicator, Dimensions } from 'react-native';
+import React from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
-import { useAppTheme } from '../../theme/ThemeProvider';
+import { Feather } from '@expo/vector-icons';
 import { styles } from './styles';
-import { useStationHistory } from '../../hooks/useStationHistory';
+import {
+  PriceHistoryTableProps,
+  usePriceHistoryTable,
+} from './usePriceHistoryTable';
+import LoadingState from '../LoadingState';
+import EmptyState from '@components/EmptyState';
 
-interface HistoryItem {
-    id: number;
-    fuel_type: string;
-    price: number;
-    created_at: string;
-    author: string;
-}
+export default function PriceHistoryTable({
+  stationId,
+  selectedFuelName,
+}: PriceHistoryTableProps) {
+  const {
+    colors,
+    isDark,
+    loading,
+    chartData,
+    summary,
+    selectedFuelName: fuelName,
+    screenWidth,
+    chartMaxValue,
+    chartMinValue,
+    trendColor,
+    trendLabel,
+    formatPrice,
+    formatDate,
+    chartShouldHideDataPoints,
+  } = usePriceHistoryTable({ stationId, selectedFuelName });
 
-interface PriceHistoryTableProps {
-    stationId: string;
-    selectedFuelName: string | null;
-}
-
-export default function PriceHistoryTable({ stationId, selectedFuelName }: PriceHistoryTableProps) {
-    const { colors } = useAppTheme();
-    const [history, setHistory] = useState<HistoryItem[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    const { getStationHistory } = useStationHistory();
-
-    useEffect(() => {
-        if (!stationId) {
-            setLoading(false);
-            return;
-        }
-
-        async function fetchHistory() {
-            try {
-                setLoading(true);
-                const data = await getStationHistory(stationId);
-                setHistory(data);
-            } catch (error) {
-                console.error("Erro ao buscar histórico:", error);
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchHistory();
-    }, [stationId, getStationHistory]);
-
-    const chartData = useMemo(() => {
-        if (!selectedFuelName) return [];
-
-        const filteredHistory = history.filter(item => item.fuel_type === selectedFuelName).reverse();
-
-        return filteredHistory.map(item => {
-            const date = new Date(item.created_at);
-            return {
-                value: Number(item.price),
-                label: `${date.getDate()}/${date.getMonth() + 1}`,
-                dataPointText: Number(item.price).toFixed(2).replace('.', ','),
-                textColor: colors.textPrimary,
-                textShiftY: -15,
-                textShiftX: -12,
-            };
-        });
-    }, [history, selectedFuelName]);
-
-    if (loading) {
-        return (
-            <View style={styles.loadingContainer}>
-                <ActivityIndicator color={colors.primary} />
-            </View>
-        );
-    }
-
-    if (chartData.length === 0) {
-        return null;
-    }
-
-    const screenWidth = Dimensions.get('window').width;
-    const maxPrice = Math.max(...chartData.map(d => d.value));
-    const chartMaxValue = maxPrice + (maxPrice * 0.15);
-
+  if (loading) {
     return (
-        <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <Text style={[styles.title, { color: colors.textSecondary }]}>Histórico de preços</Text>
-
-            <View style={styles.chartWrapper}>
-                <LineChart
-                    data={chartData}
-                    width={screenWidth - 80}
-                    height={180}
-                    maxValue={chartMaxValue}
-                    thickness={3}
-                    color={colors.primary}
-                    dataPointsColor={colors.primary}
-                    focusedDataPointColor={colors.primary}
-                    dataPointsRadius={4}
-                    noOfSections={4}
-                    yAxisLabelPrefix="R$ "
-                    formatYLabel={(label) => Number(label).toFixed(2).replace('.', ',')}
-                    yAxisTextStyle={{ color: colors.textSecondary, fontSize: 10 }}
-                    xAxisLabelTextStyle={{ color: colors.textSecondary, fontSize: 10, marginBottom: 4 }}
-                    hideRules
-                    yAxisColor="transparent"
-                    xAxisColor="transparent"
-                    curved
-                    isAnimated
-                    animationDuration={1200}
-                    startFillColor={colors.primary}
-                    startOpacity={0.2}
-                    endFillColor={colors.primary}
-                    endOpacity={0.01}
-                    initialSpacing={35}
-                    endSpacing={35}
-                />
-            </View>
-        </View>
+      <View style={styles.loadingContainer}>
+        <LoadingState message='Carregando histórico...' iconName='history' />
+      </View>
     );
+  }
+
+  if (!fuelName || chartData.length === 0 || !summary) {
+    return (
+      <View style={styles.loadingContainer}>
+        <EmptyState title="Histórico indisponível" message='Nenhum dado de histórico disponível.' iconName='alert-circle' />
+      </View>
+    );
+  }
+
+  return (
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: colors.background,
+          borderWidth: 0,
+        },
+      ]}
+    >
+      <View style={styles.header}>
+        <View style={styles.titleBlock}>
+          <Text style={[styles.eyebrow, { color: colors.textSecondary }]}>
+            Histórico de preços
+          </Text>
+          <Text style={[styles.fuelName, { color: colors.textPrimary }]}>
+            {fuelName}
+          </Text>
+        </View>
+
+        <View
+          style={[
+            styles.badge,
+            {
+              backgroundColor:
+                summary.trend === 'flat'
+                  ? colors.textSecondary + '12'
+                  : trendColor + '12',
+              borderColor:
+                summary.trend === 'flat'
+                  ? colors.textSecondary + '20'
+                  : trendColor + '25',
+            },
+          ]}
+        >
+          <Text style={[styles.badgeText, { color: trendColor }]}>
+            {trendLabel}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.summaryRow}>
+        <View style={styles.summaryItem}>
+          <Text style={[styles.summaryLabel, { color: colors.textSecondary }]}>
+            Último preço
+          </Text>
+          <Text style={[styles.summaryValue, { color: colors.textPrimary }]}>
+            {formatPrice(summary.latestPrice)}
+          </Text>
+        </View>
+
+        <View style={styles.summaryItem}>
+          <Text style={[styles.summaryLabel, { color: colors.textSecondary }]}>
+            Registros
+          </Text>
+          <Text style={[styles.summaryValue, { color: colors.textPrimary }]}>
+            {summary.records}
+          </Text>
+        </View>
+
+        <View style={styles.summaryItem}>
+          <Text style={[styles.summaryLabel, { color: colors.textSecondary }]}>
+            Variação
+          </Text>
+          <Text style={[styles.summaryValue, { color: trendColor }]}>
+            {summary.delta > 0 ? '+' : ''}
+            {summary.delta.toFixed(2).replace('.', ',')}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.chartWrapper}>
+        <LineChart
+          data={chartData}
+          width={screenWidth - 88}
+          height={190}
+          adjustToWidth
+          areaChart
+          curved
+          isAnimated
+          animationDuration={700}
+          color={colors.primary}
+          startFillColor={colors.primary}
+          endFillColor={colors.success}
+          startOpacity={0.14}
+          endOpacity={0.015}
+          thickness={3}
+          hideRules={false}
+          rulesColor={isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)'}
+          noOfSections={4}
+          maxValue={chartMaxValue}
+          mostNegativeValue={chartMinValue}
+          yAxisTextStyle={{
+            color: colors.textSecondary,
+            fontSize: 10,
+          }}
+          xAxisLabelTextStyle={{
+            color: colors.textSecondary,
+            fontSize: 10,
+            marginTop: 6,
+          }}
+          yAxisLabelPrefix="R$ "
+          formatYLabel={(label) => Number(label).toFixed(2).replace('.', ',')}
+          yAxisColor="transparent"
+          xAxisColor="transparent"
+          dataPointsColor={colors.primary}
+          focusedDataPointColor={colors.primary}
+          hideDataPoints={chartShouldHideDataPoints}
+          initialSpacing={22}
+          endSpacing={22}
+          spacing={Math.max(42, (screenWidth - 148) / Math.max(chartData.length, 1))}
+          pointerConfig={{
+            pointerStripColor: colors.primary + '55',
+            pointerStripWidth: 1,
+            pointerColor: colors.primary,
+            radius: 5,
+            activatePointersOnLongPress: true,
+            autoAdjustPointerLabelPosition: true,
+            pointerLabelComponent: (items: any) => {
+              const item = items?.[0];
+              if (!item) return null;
+
+              return (
+                <View
+                  style={[
+                    styles.tooltip,
+                    {
+                      backgroundColor: colors.background,
+                      borderColor: isDark
+                        ? 'rgba(255,255,255,0.08)'
+                        : 'rgba(0,0,0,0.06)',
+                    },
+                  ]}
+                >
+                  <Text style={[styles.tooltipPrice, { color: colors.textPrimary }]}>
+                    {formatPrice(Number(item.value))}
+                  </Text>
+                  <Text style={[styles.tooltipLabel, { color: colors.textSecondary }]}>
+                    {item.label}
+                  </Text>
+                </View>
+              );
+            },
+          }}
+        />
+      </View>
+
+      <View
+        style={[
+          styles.footer,
+          {
+            borderTopColor: isDark
+              ? 'rgba(255,255,255,0.06)'
+              : 'rgba(0,0,0,0.05)',
+          },
+        ]}
+      >
+        <View style={styles.footerHeader}>
+          <Feather name="clock" size={14} color={colors.textSecondary} />
+          <Text style={[styles.footerTitle, { color: colors.textSecondary }]}>
+            Últimas atualizações
+          </Text>
+        </View>
+
+        {summary.latestItems.map((item) => {
+          const itemDate = new Date(item.created_at);
+
+          return (
+            <View
+              key={item.id}
+              style={[
+                styles.historyRow,
+                {
+                  borderBottomColor: isDark
+                    ? 'rgba(255,255,255,0.05)'
+                    : 'rgba(0,0,0,0.04)',
+                },
+              ]}
+            >
+              <View style={styles.historyMeta}>
+                <Text style={[styles.historyPrice, { color: colors.textPrimary }]}>
+                  {formatPrice(Number(item.price))}
+                </Text>
+                <Text style={[styles.historyInfo, { color: colors.textSecondary }]}>
+                  por {item.author}
+                </Text>
+              </View>
+
+              <Text style={[styles.historyDate, { color: colors.textSecondary }]}>
+                {formatDate(itemDate)}
+              </Text>
+            </View>
+          );
+        })}
+      </View>
+    </View>
+  );
 }
