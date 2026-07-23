@@ -12,7 +12,7 @@ export default {
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
-      "backgroundColor": "#3e9535",
+      "backgroundColor": "#85bc3a",
       "resizeMode": "cover"
     },
     "ios": {
@@ -21,7 +21,7 @@ export default {
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#3e9535"
+        "backgroundColor": "#85bc3a"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,

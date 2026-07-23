@@ -10,6 +10,7 @@ export default function Version() {
         currentYear, 
         appVersion, 
         isDark,
+        handleEmailSupport,
         handleOpenLink
     } = useVersion();
 
@@ -42,7 +43,7 @@ export default function Version() {
                 </Pressable>
 
                 <Pressable
-                    onPress={() => handleOpenLink('mailto:lucaseduardo168@gmail.com?subject=Suporte%20-%20Vai%20Abastecendo')}
+                    onPress={handleEmailSupport}
                     style={({ pressed }) => [
                         styles.socialButton,
                         {
