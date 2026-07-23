@@ -16,6 +16,9 @@ import { useUserProfile } from '../../components/UserCard/useUserProfile';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
 
+import { useEffect } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
+
 /**
  * Tela de perfil do usuário com autenticação, resumo da conta
  * e acesso ao fluxo de entrada com Google.
@@ -23,6 +26,8 @@ import { styles } from './styles';
 export default function UserProfile() {
   const { colors } = useAppTheme();
   const navigation = useNavigation();
+
+  const { user } = useAuth();
 
   const {
     userData,

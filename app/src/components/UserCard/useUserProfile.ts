@@ -8,16 +8,8 @@ import axios from 'axios';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 
-/**
- * Necessário para concluir corretamente o fluxo de autenticação
- * em navegadores e no app nativo.
- */
 WebBrowser.maybeCompleteAuthSession();
 
-/**
- * Centraliza autenticação com Google, carregamento do perfil
- * e ações relacionadas à conta do usuário.
- */
 export function useUserProfile() {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,10 +26,19 @@ export function useUserProfile() {
     redirectUri,
   });
 
-  /**
-   * Envia o token do Google ao backend, que valida a conta
-   * e devolve o token usado pela API da aplicação.
-   */
+  const loadProfile = useCallback(async () => {
+    if (!token) {
+      updateUser(null);
+      return;
+    }
+
+    try {
+      await refreshUser();
+    } catch (error) {
+      console.error('Erro ao atualizar os dados do perfil:', error);
+    }
+  }, [token, refreshUser, updateUser]);
+
   const exchangeGoogleToken = useCallback(
     async (googleAccessToken: string) => {
       setIsLoading(true);
@@ -53,11 +54,13 @@ export function useUserProfile() {
         const apiToken = response.data?.key;
 
         if (!apiToken) {
+          console.error('O backend não retornou um token de autenticação.');
           showToast('O backend não retornou um token de autenticação.', 'danger');
           return;
         }
 
         await signIn(apiToken);
+        await refreshUser();
       } catch (error) {
         console.error('Erro na autenticação com o backend:', error);
         showToast('Não foi possível validar seu login.', 'danger');
@@ -65,14 +68,10 @@ export function useUserProfile() {
         setIsLoading(false);
       }
     },
-    [signIn, showToast]
+    [signIn, refreshUser, showToast]
   );
 
   useEffect(() => {
-    /**
-     * Observa o retorno do fluxo OAuth e inicia a troca do token do Google
-     * pelo token autenticado do backend.
-     */
     if (response?.type === 'success') {
       const { authentication } = response;
 
@@ -94,22 +93,13 @@ export function useUserProfile() {
     }
   }, [response, showToast, exchangeGoogleToken]);
 
-  /**
-   * Atualiza os dados do perfil ao focar a tela,
-   * garantindo estatísticas recentes para o usuário autenticado.
-   */
-  const loadProfile = useCallback(async () => {
-    if (!token) {
-      updateUser(null);
+  useEffect(() => {
+    if (!token || user) {
       return;
     }
 
-    try {
-      await refreshUser();
-    } catch (error) {
-      console.error('Erro ao atualizar os dados do perfil:', error);
-    }
-  }, [token, refreshUser, updateUser]);
+    loadProfile();
+  }, [token, user, loadProfile]);
 
   useFocusEffect(
     useCallback(() => {
@@ -117,20 +107,10 @@ export function useUserProfile() {
     }, [loadProfile])
   );
 
-  /**
-   * Encerra a sessão atual do usuário autenticado.
-   */
   const handleLogout = useCallback(async () => {
     await signOut();
   }, [signOut]);
 
-  /**
-   * Permite testes rápidos em desenvolvimento sem depender
-   * do fluxo completo de autenticação do Google.
-   *
-   * O mock precisa passar pelo mesmo fluxo do login real, enviando
-   * um access token do Google para o backend trocar por um token da API.
-   */
   const handleMockLogin = useCallback(() => {
     if (!__DEV__) {
       return;

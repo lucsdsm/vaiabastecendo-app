@@ -18,23 +18,23 @@ interface UserCardProps {
   userData?: UserCardData | null;
 }
 
-/**
- * Exibe um resumo visual do perfil do usuário, incluindo estatísticas
- * e progresso de verificação dentro da comunidade.
- */
 export default function UserCard({ userData }: UserCardProps) {
   const { colors, isDark } = useAppTheme();
 
-  const points = userData?.points || 0;
+  const points = userData?.points ?? 0;
   const totalRequired = 100;
-  const isVerified = userData?.verified || points >= totalRequired;
+  const isVerified = userData?.verified ?? points >= totalRequired;
 
-  /**
-   * Limita o preenchimento da barra de progresso ao intervalo visual esperado.
-   */
+  const displayName = useMemo(() => {
+    return userData?.username?.trim() || 'Motorista';
+  }, [userData?.username]);
+
+  const likesReceived = userData?.likesReceived ?? 0;
+  const likesGiven = userData?.likesGiven ?? 0;
+
   const percentage = useMemo(() => {
     return Math.min(1, points / totalRequired);
-  }, [points, totalRequired]);
+  }, [points]);
 
   return (
     <View style={styles.cardWrapper}>
@@ -55,14 +55,14 @@ export default function UserCard({ userData }: UserCardProps) {
         <View style={styles.infoSection}>
           <View style={styles.nameContainer}>
             <Text style={[styles.usernameText, { color: colors.textPrimary }]}>
-              {userData?.username ? userData.username : 'Motorista'}
+              {displayName}
             </Text>
           </View>
 
           <View style={styles.statsContainer}>
             <View style={styles.statItem}>
               <Text style={[styles.statNumber, { color: colors.textPrimary }]}>
-                {userData?.likesReceived || 0}
+                {likesReceived}
               </Text>
               <Text style={[styles.statLabel, { color: colors.textSecondary }]}>
                 Recebidas
@@ -71,7 +71,7 @@ export default function UserCard({ userData }: UserCardProps) {
 
             <View style={styles.statItem}>
               <Text style={[styles.statNumber, { color: colors.textPrimary }]}>
-                {userData?.likesGiven || 0}
+                {likesGiven}
               </Text>
               <Text style={[styles.statLabel, { color: colors.textSecondary }]}>
                 Enviadas

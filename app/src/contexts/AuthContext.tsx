@@ -39,10 +39,6 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-/**
- * Provedor global de autenticação.
- * Centraliza token, perfil do usuário e ações de login/logout.
- */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { showToast } = useToast();
 
@@ -50,28 +46,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isInitializingAuth, setIsInitializingAuth] = useState(true);
 
-  /**
-   * Mantém a referência mais atual do token sem quebrar a estabilidade
-   * das funções memoizadas que dependem dele.
-   */
   const tokenRef = useRef<string | null>(null);
 
   useEffect(() => {
     tokenRef.current = token;
   }, [token]);
 
-  const fetchCurrentUser = useCallback(async (authToken: string) => {
-    const response = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/profile/`, {
-      headers: {
-        Authorization: `Token ${authToken}`,
-      },
-    });
-
-    const apiUser = response.data;
-
-    setUser({
+  const mapApiUser = useCallback((apiUser: any): AuthUser => {
+    return {
       id: apiUser.id,
-      username: apiUser.username,
+      username: apiUser.username ?? '',
       first_name: apiUser.first_name ?? '',
       last_name: apiUser.last_name ?? '',
       email: apiUser.email ?? '',
@@ -80,8 +64,51 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       likes_given: apiUser.likes_given ?? 0,
       verified: apiUser.verified ?? false,
       points: apiUser.points ?? 0,
-    });
+    };
   }, []);
+
+  const fetchCurrentUser = useCallback(
+    async (authToken: string) => {
+      const response = await axios.get(
+        `${process.env.EXPO_PUBLIC_API_URL}/profile/`,
+        {
+          headers: {
+            Authorization: `Token ${authToken}`,
+          },
+        }
+      );
+
+      const apiUser = response.data;
+      const nextUser = mapApiUser(apiUser);
+
+      setUser(nextUser);
+      return nextUser;
+    },
+    [mapApiUser]
+  );
+
+  const refreshUserWithRetry = useCallback(
+    async (authToken: string) => {
+      const maxAttempts = 3;
+      const delayMs = 500;
+
+      for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+        const nextUser = await fetchCurrentUser(authToken);
+        const hasProfileData = Boolean(
+          nextUser.username || nextUser.first_name || nextUser.photo
+        );
+
+        if (hasProfileData || attempt === maxAttempts) {
+          return nextUser;
+        }
+
+        await new Promise((resolve) => setTimeout(resolve, delayMs));
+      }
+
+      return null;
+    },
+    [fetchCurrentUser]
+  );
 
   const refreshUser = useCallback(async () => {
     const currentToken = tokenRef.current;
@@ -92,22 +119,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     try {
-      await fetchCurrentUser(currentToken);
+      await refreshUserWithRetry(currentToken);
     } catch (error) {
       console.error('Falha ao atualizar os dados do usuário autenticado:', error);
+      throw error;
     }
-  }, [fetchCurrentUser]);
+  }, [refreshUserWithRetry]);
 
   const signIn = useCallback(
     async (nextToken: string) => {
       await SecureStore.setItemAsync(AUTH_TOKEN_STORAGE_KEY, nextToken);
+
+      tokenRef.current = nextToken;
       setToken(nextToken);
 
       try {
-        await fetchCurrentUser(nextToken);
+        await refreshUserWithRetry(nextToken);
         showToast('Login realizado com sucesso.', 'success');
       } catch (error) {
         await SecureStore.deleteItemAsync(AUTH_TOKEN_STORAGE_KEY);
+        tokenRef.current = null;
         setToken(null);
         setUser(null);
         console.error('Falha ao carregar o perfil após o login:', error);
@@ -115,11 +146,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         throw error;
       }
     },
-    [fetchCurrentUser, showToast]
+    [refreshUserWithRetry, showToast]
   );
 
   const signOut = useCallback(async () => {
     await SecureStore.deleteItemAsync(AUTH_TOKEN_STORAGE_KEY);
+    tokenRef.current = null;
     setToken(null);
     setUser(null);
     showToast('Você saiu da sua conta.', 'info');
@@ -140,14 +172,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           return;
         }
 
+        tokenRef.current = storedToken;
+
         if (isMounted) {
           setToken(storedToken);
         }
 
-        await fetchCurrentUser(storedToken);
+        await refreshUserWithRetry(storedToken);
       } catch (error) {
         console.error('Falha ao inicializar a autenticação:', error);
         await SecureStore.deleteItemAsync(AUTH_TOKEN_STORAGE_KEY);
+        tokenRef.current = null;
 
         if (isMounted) {
           setToken(null);
@@ -165,7 +200,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => {
       isMounted = false;
     };
-  }, [fetchCurrentUser]);
+  }, [refreshUserWithRetry]);
 
   const value = useMemo<AuthContextValue>(
     () => ({
@@ -183,9 +218,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-/**
- * Hook de acesso seguro ao contexto de autenticação.
- */
 export function useAuth() {
   const context = useContext(AuthContext);
 
