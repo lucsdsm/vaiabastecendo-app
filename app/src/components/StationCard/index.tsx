@@ -273,7 +273,7 @@ export default function StationCard({
               style={styles.updateIcon}
             />
             <Text style={[styles.updateText, { color: colors.textSecondary }]}>
-              Atualizado {formatarTempoDecorrido(data.lastUpdatedAt)} por{' '}
+              Atualizado {formatarTempoDecorrido(data.lastUpdatedAt)}por{' '}
             </Text>
 
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>

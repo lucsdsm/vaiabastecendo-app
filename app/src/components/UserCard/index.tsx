@@ -33,8 +33,8 @@ export default function UserCard({ userData }: UserCardProps) {
   const likesGiven = userData?.likesGiven ?? 0;
 
   const percentage = useMemo(() => {
-    return Math.min(1, points / totalRequired);
-  }, [points]);
+    return Math.min(1, likesReceived / totalRequired);
+  }, [likesReceived, totalRequired]);
 
   return (
     <View style={styles.cardWrapper}>
@@ -114,7 +114,7 @@ export default function UserCard({ userData }: UserCardProps) {
                 Caminho para a verificação
               </Text>
               <Text style={[styles.counter, { color: colors.textSecondary }]}>
-                {points} / {totalRequired} curtidas
+                {likesReceived} / {totalRequired} curtidas
               </Text>
             </View>
 
