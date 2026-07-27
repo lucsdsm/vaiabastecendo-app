@@ -62,20 +62,24 @@ export default function StationListScreen() {
       return (
         <LoadingState
           message="Buscando postos próximos..."
-          iconName="map-marker-alt"
+          iconName="run"
         />
       );
     }
 
     if (shouldShowErrorCard) {
-      return <EmptyState message={error || undefined} onRetry={refetch} />;
+      return (
+        <EmptyState
+          iconName="fail"
+        />
+      );
     }
 
     return (
       <EmptyState
         title="Nenhum posto encontrado."
         message="Ainda não há postos cadastrados no sistema. Puxe para baixo para atualizar!"
-        iconName="map"
+        iconName="looking"
       />
     );
   }

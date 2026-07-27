@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Linking } from 'react-native';
 import * as Location from 'expo-location';
 import { Feather } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import EmptyState from '../../components/EmptyState';
 
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
@@ -51,21 +52,11 @@ export default function PermissionScreen({ onPermissionGranted }: PermissionScre
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={styles.content}>
-
-        <View style={[styles.iconContainer, { backgroundColor: colors.primary + '15' }]}>
-          <Feather name="map-pin" size={48} color={colors.primary} />
-        </View>
-
-        <Text style={[styles.title, { color: colors.textPrimary }]}>
-          Precisamos da sua localização
-        </Text>
-
-        <Text style={[styles.description, { color: colors.textSecondary }]}>
-          Para mostrar os postos e preços atualizados perto de você, o Vai Abastecendo precisa acessar a localização do seu dispositivo.
-        </Text>
-
-      </View>
+        <EmptyState
+          iconName="needgps"
+          title="Precisamos da sua localização"
+          message="Para mostrar os postos e preços atualizados perto de você, o Vai Abastecendo precisa acessar a localização do seu dispositivo."
+        />
 
       <View style={styles.footer}>
         <TouchableOpacity

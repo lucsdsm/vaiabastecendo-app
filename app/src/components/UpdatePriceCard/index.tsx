@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, TouchableOpacity, TextInput, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
-import { useKeyboardPadding } from '../../utils/keyboardPadding';
 import FuelTypeSelector from '../FuelTypeSelector';
 import { FuelType } from '../../contexts/FuelTypesContext';
 
@@ -22,7 +21,6 @@ export default function UpdatePriceCard({
     handlePriceChange,
 }: UpdatePriceCardProps) {
     const { colors } = useAppTheme();
-    const { keyboardPadding } = useKeyboardPadding();
 
     const content = (
         <View style={[styles.cardContent, { backgroundColor: colors.background }]}>
@@ -67,7 +65,7 @@ export default function UpdatePriceCard({
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-            style={[styles.container, { paddingBottom: keyboardPadding }]}
+            style={[styles.container]}
         >
             <TouchableOpacity activeOpacity={1} onPress={Keyboard.dismiss} style={styles.cardShell}>
                 {content}

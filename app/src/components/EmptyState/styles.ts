@@ -4,19 +4,12 @@ import { radius, spacing, typography } from '../../theme/tokens';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        margin: spacing.lg,
-        padding: spacing.xxl,
-        borderRadius: radius.lg,
+        marginHorizontal: spacing.lg,
+        paddingHorizontal: spacing.xxl,
         alignItems: 'center',
         justifyContent: 'center',
     },
     iconContainer: {
-        width: 64,
-        height: 64,
-        borderRadius: radius.pill,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: spacing.lg,
     },
     title: {
         fontSize: typography.size.lg,

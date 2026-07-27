@@ -6,6 +6,8 @@ export const styles = StyleSheet.create({
         flex: 1,
         marginTop: spacing.xl,
     },
+    section: {
+    },
     cardShell: {
         flex: 1,
         justifyContent: 'center',

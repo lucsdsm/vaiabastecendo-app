@@ -7,13 +7,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
-import { useKeyboardPadding } from '../../utils/keyboardPadding';
 import { useAddVehicle } from './useAddVehicle';
 import { CustomAlert } from '../../components/Alert';
 
 export default function AddVehicleScreen() {
     const { colors, isDark } = useAppTheme();
-    const { keyboardPadding } = useKeyboardPadding();
     const {
         name, setName,
         plate, setPlate,
@@ -65,7 +63,7 @@ export default function AddVehicleScreen() {
 
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-                style={[styles.container, { paddingBottom: keyboardPadding }]}
+                style={styles.container}
             >
                 <ScrollView 
                     showsVerticalScrollIndicator={false}

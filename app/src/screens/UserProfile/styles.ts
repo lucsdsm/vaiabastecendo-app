@@ -7,7 +7,8 @@ export const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        marginHorizontal: spacing.lg,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     header: {
         flexDirection: 'row',
@@ -38,25 +39,6 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         paddingHorizontal: spacing.xxl,
-    },
-    guestIconContainer: {
-        width: 100,
-        height: 100,
-        borderRadius: radius.pill,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: spacing.xxl,
-    },
-    guestTitle: {
-        fontSize: typography.size.xl,
-        fontWeight: typography.weight.bold,
-        marginBottom: spacing.md,
-    },
-    guestText: {
-        fontSize: typography.size.sm,
-        textAlign: 'center',
-        marginBottom: spacing.xxxl,
-        lineHeight: 22,
     },
     googleButton: {
         backgroundColor: '#DB4437',

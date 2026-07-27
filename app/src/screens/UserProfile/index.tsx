@@ -16,8 +16,10 @@ import { useUserProfile } from '../../components/UserCard/useUserProfile';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
 
-import { useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
+
+import LoadingState from '@components/LoadingState';
+import EmptyState from '@components/EmptyState';
 
 /**
  * Tela de perfil do usuário com autenticação, resumo da conta
@@ -57,7 +59,7 @@ export default function UserProfile() {
             style={[styles.headerTitle, { color: colors.textPrimary }]}
             onLongPress={__DEV__ ? handleMockLogin : undefined}
           >
-            Perfil
+            {user?.username || 'Perfil do usuário'}
           </Text>
         </View>
 
@@ -73,36 +75,20 @@ export default function UserProfile() {
         )}
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false} style={styles.content}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         {isLoading ? (
-          <ActivityIndicator
-            size="large"
-            color={colors.primary}
-            style={{ marginTop: 40 }}
-          />
+          <LoadingState />
         ) : token ? (
           <View>
             <UserCard userData={userData} />
           </View>
         ) : (
           <View style={styles.guestContainer}>
-            <View
-              style={[
-                styles.guestIconContainer,
-                { backgroundColor: colors.primary + '10' },
-              ]}
-            >
-              <Feather name="lock" size={48} color={colors.primary} />
-            </View>
-
-            <Text style={[styles.guestTitle, { color: colors.textPrimary }]}>
-              Seu perfil
-            </Text>
-
-            <Text style={[styles.guestText, { color: colors.textSecondary }]}>
-              Faça login para acompanhar suas curtidas, ganhar reputação e
-              contribuir com a comunidade.
-            </Text>
+            <EmptyState
+              iconName="user"
+              title="Seu perfil"
+              message="Faça login para acompanhar suas curtidas, ganhar reputação e contribuir com a comunidade."
+            />
 
             <TouchableOpacity
               style={styles.googleButton}

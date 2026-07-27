@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
-import { useKeyboardPadding } from '../../utils/keyboardPadding';
 import { useAddFuelLog } from './useAddFuelLog';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { CustomAlert } from '../../components/Alert';
@@ -12,7 +11,6 @@ import FuelTypeSelector from '../../components/FuelTypeSelector';
 
 export default function AddFuelLogScreen() {
     const { colors, isDark } = useAppTheme();
-    const { keyboardPadding } = useKeyboardPadding();
     
     const {
         odometer, setOdometer,
@@ -66,7 +64,7 @@ export default function AddFuelLogScreen() {
 
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-                style={[styles.container, { paddingBottom: keyboardPadding }]}
+                style={styles.container}
             >
                 <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
                     <TouchableOpacity activeOpacity={1} onPress={Keyboard.dismiss} style={styles.cardContent}>

@@ -55,7 +55,7 @@ export default function FuelLogScreen() {
             
             <View style={[styles.content, { flex: 1 }]}> 
                 {isInitializing ? (
-                    <LoadingState message="Carregando histórico..." iconName="clipboard-list" />
+                    <LoadingState message="Carregando histórico..." iconName="run" />
                 ) : (
    
                     <FlatList
@@ -67,14 +67,19 @@ export default function FuelLogScreen() {
                         ]}
                         ListEmptyComponent={
                             selectedVehicle ? (
-                                <EmptyState 
-                                    title="Nenhum abastecimento."
-                                    message="Ainda não há abastecimentos registrados para este veículo."
-                                    variant="neutral"
-                                    iconName="clipboard" 
+                                <EmptyState
+                                title="Nenhum abastecimento"
+                                message="Ainda não há abastecimentos registrados para este veículo."
+                                iconName="looking"
                                 />
-                            ) : null
-                        }
+                            ) : (
+                                <EmptyState
+                                title="Nenhum veículo selecionado"
+                                message="Selecione um veículo para visualizar o histórico de abastecimentos."
+                                iconName="looking"
+                                />
+                            )
+                            }
                         renderItem={({ item }) => (
                             <FuelLogCard 
                                 data={item} 
