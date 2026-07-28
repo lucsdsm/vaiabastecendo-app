@@ -8,6 +8,8 @@ import { styles } from './styles';
 export interface UserCardData {
   photo?: string | null;
   username?: string | null;
+  first_name?: string | null;
+  last_name?: string | null;
   verified?: boolean;
   likesReceived?: number | null;
   likesGiven?: number | null;
@@ -26,8 +28,16 @@ export default function UserCard({ userData }: UserCardProps) {
   const isVerified = userData?.verified ?? points >= totalRequired;
 
   const displayName = useMemo(() => {
+    const firstName = userData?.first_name?.trim() ?? '';
+    const lastName = userData?.last_name?.trim() ?? '';
+    const fullName = `${firstName} ${lastName}`.trim();
+
+    if (fullName) {
+      return fullName;
+    }
+
     return userData?.username?.trim() || 'Motorista';
-  }, [userData?.username]);
+  }, [userData?.first_name, userData?.last_name, userData?.username]);
 
   const likesReceived = userData?.likesReceived ?? 0;
   const likesGiven = userData?.likesGiven ?? 0;
@@ -37,7 +47,7 @@ export default function UserCard({ userData }: UserCardProps) {
   }, [likesReceived, totalRequired]);
 
   return (
-    <View style={styles.cardWrapper}>
+    <View style={styles.container}>
       <View style={styles.profileSection}>
         {userData?.photo ? (
           <Image source={{ uri: userData.photo }} style={styles.avatar} />
@@ -54,26 +64,26 @@ export default function UserCard({ userData }: UserCardProps) {
 
         <View style={styles.infoSection}>
           <View style={styles.nameContainer}>
-            <Text style={[styles.usernameText, { color: colors.textPrimary }]}>
+            <Text style={[styles.usernameText, { color: colors.textPrimary }]}> 
               {displayName}
             </Text>
           </View>
 
           <View style={styles.statsContainer}>
             <View style={styles.statItem}>
-              <Text style={[styles.statNumber, { color: colors.textPrimary }]}>
+              <Text style={[styles.statNumber, { color: colors.textPrimary }]}> 
                 {likesReceived}
               </Text>
-              <Text style={[styles.statLabel, { color: colors.textSecondary }]}>
+              <Text style={[styles.statLabel, { color: colors.textSecondary }]}> 
                 Recebidas
               </Text>
             </View>
 
             <View style={styles.statItem}>
-              <Text style={[styles.statNumber, { color: colors.textPrimary }]}>
+              <Text style={[styles.statNumber, { color: colors.textPrimary }]}> 
                 {likesGiven}
               </Text>
-              <Text style={[styles.statLabel, { color: colors.textSecondary }]}>
+              <Text style={[styles.statLabel, { color: colors.textSecondary }]}> 
                 Enviadas
               </Text>
             </View>
@@ -98,22 +108,22 @@ export default function UserCard({ userData }: UserCardProps) {
                 size={18}
                 color={colors.primary}
               />
-              <Text style={[styles.badgeText, { color: colors.primary }]}>
+              <Text style={[styles.badgeText, { color: colors.primary }]}> 
                 Motorista Verificado
               </Text>
             </View>
 
-            <Text style={[styles.badgeSubtext, { color: colors.textSecondary }]}>
+            <Text style={[styles.badgeSubtext, { color: colors.textSecondary }]}> 
               Obrigado por sua dedicação à comunidade!
             </Text>
           </View>
         ) : (
           <View style={styles.progressContainer}>
             <View style={styles.headerRow}>
-              <Text style={[styles.progressTitle, { color: colors.textPrimary }]}>
+              <Text style={[styles.progressTitle, { color: colors.textPrimary }]}> 
                 Caminho para a verificação
               </Text>
-              <Text style={[styles.counter, { color: colors.textSecondary }]}>
+              <Text style={[styles.counter, { color: colors.textSecondary }]}> 
                 {likesReceived} / {totalRequired} curtidas
               </Text>
             </View>
@@ -139,7 +149,7 @@ export default function UserCard({ userData }: UserCardProps) {
               />
             </View>
 
-            <Text style={[styles.helpText, { color: colors.textSecondary }]}>
+            <Text style={[styles.helpText, { color: colors.textSecondary }]}> 
               Receba {totalRequired} curtidas para ganhar o selo e se tornar uma
               referência na comunidade.
             </Text>

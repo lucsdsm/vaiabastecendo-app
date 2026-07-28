@@ -21,6 +21,8 @@ import { useAuth } from '../../contexts/AuthContext';
 import LoadingState from '@components/LoadingState';
 import EmptyState from '@components/EmptyState';
 
+import Button from '../../components/Button';
+
 /**
  * Tela de perfil do usuário com autenticação, resumo da conta
  * e acesso ao fluxo de entrada com Google.
@@ -59,7 +61,7 @@ export default function UserProfile() {
             style={[styles.headerTitle, { color: colors.textPrimary }]}
             onLongPress={__DEV__ ? handleMockLogin : undefined}
           >
-            {user?.username || 'Perfil do usuário'}
+            {user?.username || ''}
           </Text>
         </View>
 
@@ -75,7 +77,13 @@ export default function UserProfile() {
         )}
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={[
+          styles.scrollContent,
+          !token && styles.scrollContentGuest,
+        ]}
+      >
         {isLoading ? (
           <LoadingState />
         ) : token ? (
@@ -90,15 +98,12 @@ export default function UserProfile() {
               message="Faça login para acompanhar suas curtidas, ganhar reputação e contribuir com a comunidade."
             />
 
-            <TouchableOpacity
-              style={styles.googleButton}
-              activeOpacity={0.8}
-              disabled={!request}
+            <Button
+              title="Entrar com Google"
               onPress={() => promptAsync()}
-            >
-              <FontAwesome5 name="google" size={18} color="#FFF" />
-              <Text style={styles.googleButtonText}>Entrar com Google</Text>
-            </TouchableOpacity>
+              disabled={!request}
+              iconLeft={<FontAwesome5 name="google" size={16} color="#FFF" />}
+            />
           </View>
         )}
       </ScrollView>

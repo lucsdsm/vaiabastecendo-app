@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
     message: {
         fontSize: typography.size.sm,
         textAlign: 'center',
-        marginBottom: spacing.xxl,
+        marginBottom: spacing.md,
         lineHeight: 20,
     },
     buttonBase: {

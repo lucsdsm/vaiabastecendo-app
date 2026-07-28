@@ -1,5 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useEffect, useState } from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
@@ -13,7 +12,14 @@ WebBrowser.maybeCompleteAuthSession();
 export function useUserProfile() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { token, user, signIn, signOut, updateUser, refreshUser } = useAuth();
+  const {
+    token,
+    user,
+    signIn,
+    signOut,
+    refreshUser,
+    isInitializingAuth,
+  } = useAuth();
   const { showToast } = useToast();
 
   const redirectUri = AuthSession.makeRedirectUri({
@@ -25,19 +31,6 @@ export function useUserProfile() {
     webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
     redirectUri,
   });
-
-  const loadProfile = useCallback(async () => {
-    if (!token) {
-      updateUser(null);
-      return;
-    }
-
-    try {
-      await refreshUser();
-    } catch (error) {
-      console.error('Erro ao atualizar os dados do perfil:', error);
-    }
-  }, [token, refreshUser, updateUser]);
 
   const exchangeGoogleToken = useCallback(
     async (googleAccessToken: string) => {
@@ -54,13 +47,11 @@ export function useUserProfile() {
         const apiToken = response.data?.key;
 
         if (!apiToken) {
-          console.error('O backend não retornou um token de autenticação.');
           showToast('O backend não retornou um token de autenticação.', 'danger');
           return;
         }
 
         await signIn(apiToken);
-        await refreshUser();
       } catch (error) {
         console.error('Erro na autenticação com o backend:', error);
         showToast('Não foi possível validar seu login.', 'danger');
@@ -68,7 +59,7 @@ export function useUserProfile() {
         setIsLoading(false);
       }
     },
-    [signIn, refreshUser, showToast]
+    [signIn, showToast]
   );
 
   useEffect(() => {
@@ -91,25 +82,27 @@ export function useUserProfile() {
     if (response?.type === 'dismiss') {
       showToast('Login cancelado.', 'info');
     }
-  }, [response, showToast, exchangeGoogleToken]);
-
-  useEffect(() => {
-    if (!token || user) {
-      return;
-    }
-
-    loadProfile();
-  }, [token, user, loadProfile]);
-
-  useFocusEffect(
-    useCallback(() => {
-      loadProfile();
-    }, [loadProfile])
-  );
+  }, [response, exchangeGoogleToken, showToast]);
 
   const handleLogout = useCallback(async () => {
     await signOut();
   }, [signOut]);
+
+  const handleRefreshProfile = useCallback(async () => {
+    if (!token) {
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      await refreshUser();
+    } catch (error) {
+      console.error('Erro ao atualizar os dados do perfil:', error);
+      showToast('Não foi possível atualizar o perfil.', 'danger');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [token, refreshUser, showToast]);
 
   const handleMockLogin = useCallback(() => {
     if (!__DEV__) {
@@ -130,11 +123,13 @@ export function useUserProfile() {
 
   return {
     userData: user,
-    isLoading,
     token,
     request,
     promptAsync,
+    isLoading,
+    isInitializingAuth,
     handleLogout,
+    handleRefreshProfile,
     handleMockLogin,
   };
 }

@@ -4,6 +4,7 @@ import { spacing, radius, typography, elevation, iconSize  } from '../../theme/t
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginHorizontal: spacing.md,
     },
     content: {
         flex: 1,
@@ -14,7 +15,6 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: spacing.md,
         paddingVertical: spacing.md,
         position: 'relative',     
     },
@@ -34,25 +34,14 @@ export const styles = StyleSheet.create({
         fontSize: typography.size.xl,
         fontWeight: typography.weight.bold,
     },
+    scrollContent: {
+        flexGrow: 1,
+    },
+    scrollContentGuest: {
+        justifyContent: 'center',
+    },
     guestContainer: {
-        flex: 1,
-        alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: spacing.xxl,
-    },
-    googleButton: {
-        backgroundColor: '#DB4437',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        paddingVertical: spacing.md,
-        borderRadius: radius.md,
-        gap: spacing.md,
-    },
-    googleButtonText: {
-        color: '#FFF',
-        fontSize: typography.size.md,
-        fontWeight: typography.weight.bold,
+        paddingBottom: spacing.xxl,
     },
 });
