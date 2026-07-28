@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { cloneElement, isValidElement } from 'react';
 import {
   ActivityIndicator,
   Text,
@@ -15,7 +15,7 @@ export interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   variant?: 'primary' | 'secondary' | 'ghost';
-  iconLeft?: React.ReactNode;
+  iconLeft?: React.ReactElement;
   fullWidth?: boolean;
 }
 
@@ -32,6 +32,7 @@ export default function Button({
     isDisabled,
     containerStyle,
     textStyle,
+    iconColor,
     activityColor,
   } = useButton({
     disabled,
@@ -42,7 +43,7 @@ export default function Button({
 
   return (
     <TouchableOpacity
-      activeOpacity={0.82}
+      activeOpacity={0.6}
       onPress={onPress}
       disabled={isDisabled}
       style={containerStyle}
@@ -51,7 +52,7 @@ export default function Button({
         <ActivityIndicator size="small" color={activityColor} />
       ) : (
         <View style={styles.content}>
-          {iconLeft ? <View style={styles.iconLeft}>{iconLeft}</View> : null}
+          {iconLeft ? <View style={styles.iconLeft}>{cloneElement(iconLeft, { color: iconColor })}</View> : null}
           <Text style={textStyle}>{title}</Text>
         </View>
       )}

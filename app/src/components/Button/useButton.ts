@@ -43,10 +43,10 @@ export function useButton({
       baseStyle.push({
         backgroundColor: isDark
           ? colors.primary + '1A'
-          : colors.primary + '10',
+          : colors.primary + '0D',
         borderColor: isDark
           ? colors.primary + '35'
-          : colors.primary + '22',
+          : colors.primary + '40',
       });
     }
 
@@ -69,9 +69,9 @@ export function useButton({
         {
           color: isDisabled
             ? isDark
-              ? 'rgba(255,255,255,0.55)'
-              : 'rgba(255,255,255,0.75)'
-            : '#FFFFFF',
+              ? colors.textPrimary
+              : colors.textPrimary
+            : colors.background,
         },
       ];
     }
@@ -81,7 +81,9 @@ export function useButton({
         styles.buttonText,
         {
           color: isDisabled
-            ? colors.textSecondary
+            ? isDark
+              ? colors.textSecondary
+              : colors.textSecondary
             : colors.primary,
         },
       ];
@@ -97,6 +99,26 @@ export function useButton({
     ];
   }, [colors, isDark, variant, isDisabled]);
 
+  const iconColor = useMemo(() => {
+  if (variant === 'primary') {
+    return isDisabled
+      ? isDark
+        ? colors.textSecondary
+        : colors.textPrimary
+      : colors.background;
+  }
+
+  if (variant === 'secondary') {
+    return isDisabled
+      ? colors.textSecondary
+      : colors.primary;
+  }
+
+  return isDisabled
+    ? colors.textSecondary
+    : colors.textPrimary;
+}, [colors, variant, isDisabled]);
+
   const activityColor =
     variant === 'primary' ? '#FFFFFF' : colors.primary;
 
@@ -106,6 +128,7 @@ export function useButton({
     isDisabled,
     containerStyle,
     textStyle,
+    iconColor,
     activityColor,
   };
 }
