@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, View, Text, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles'
+import Button from '../Button';
 
 interface CustomAlertProps {
     visible: boolean;
@@ -47,26 +48,17 @@ export function CustomAlert({
                             </Text>
 
                             <View style={styles.buttonContainer}>
-                                <TouchableOpacity 
-                                    style={[styles.button, styles.cancelButton, { borderColor: colors.border }]} 
+                                <Button
+                                    title={cancelText}
                                     onPress={onCancel}
-                                >
-                                    <Text style={[styles.buttonText, { color: colors.textPrimary }]}>
-                                        {cancelText}
-                                    </Text>
-                                </TouchableOpacity>
+                                    variant="ghost"
+                                />
 
-                                <TouchableOpacity 
-                                    style={[
-                                        styles.button, 
-                                        { backgroundColor: isDestructive ? colors.danger : colors.primary }
-                                    ]} 
+                                <Button
+                                    title={confirmText}
                                     onPress={onConfirm}
-                                >
-                                    <Text style={[styles.buttonText, { color: '#FFF' }]}>
-                                        {confirmText}
-                                    </Text>
-                                </TouchableOpacity>
+                                    variant="primary"
+                                />
                             </View>
 
                         </View>

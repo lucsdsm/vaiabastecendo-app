@@ -187,7 +187,7 @@ export default function AddFuelLogScreen() {
 
                         <CustomAlert
                             visible={isAlertVisible}
-                            title="Atenção"
+                            title="Atenção!"
                             message="Tem certeza que deseja excluir este abastecimento?"
                             confirmText="Excluir"
                             isDestructive={true}

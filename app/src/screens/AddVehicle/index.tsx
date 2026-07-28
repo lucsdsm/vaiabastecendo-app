@@ -118,7 +118,7 @@ export default function AddVehicleScreen() {
 
                         <CustomAlert 
                             visible={isAlertVisible}
-                            title="Atenção"
+                            title="Atenção!"
                             message="Tem certeza que deseja excluir este veículo? Todos os registros de abastecimento associados a ele também serão removidos."
                             confirmText="Excluir"
                             isDestructive={true}

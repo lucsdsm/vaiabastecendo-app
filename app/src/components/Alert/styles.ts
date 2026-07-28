@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
     },
     message: {
         fontSize: 15,
-        lineHeight: 22,
+        lineHeight: 24,
         textAlign: 'center',
         marginBottom: 24,
     },

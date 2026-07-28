@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
     },
     scroll: {
         flexGrow: 0,
-        borderRadius: radius.pill,
+        borderRadius: radius.md,
     },
     scrollContent: {
         gap: spacing.sm,
@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: spacing.sm,
-        borderRadius: radius.pill,
+        borderRadius: radius.md,
         borderWidth: 1.5,
     },
     chipCompact: {
