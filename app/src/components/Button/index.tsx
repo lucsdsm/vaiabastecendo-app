@@ -5,13 +5,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
 
-import { useAppTheme } from '../../theme/ThemeProvider';
 import { useButton } from './useButton';
 import { styles } from './styles';
 
-export interface AppButtonProps {
+export interface ButtonProps {
   title: string;
   onPress: () => void;
   disabled?: boolean;
@@ -29,16 +27,13 @@ export default function Button({
   variant = 'primary',
   iconLeft,
   fullWidth = true,
-}: AppButtonProps) {
-  const { colors } = useAppTheme();
-
+}: ButtonProps) {
   const {
     isDisabled,
     containerStyle,
     textStyle,
     activityColor,
   } = useButton({
-    colors,
     disabled,
     loading,
     variant,
@@ -57,10 +52,7 @@ export default function Button({
       ) : (
         <View style={styles.content}>
           {iconLeft ? <View style={styles.iconLeft}>{iconLeft}</View> : null}
-
-          <Text style={textStyle} numberOfLines={1}>
-            {title}
-          </Text>
+          <Text style={textStyle}>{title}</Text>
         </View>
       )}
     </TouchableOpacity>

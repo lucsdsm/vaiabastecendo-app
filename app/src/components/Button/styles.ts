@@ -7,10 +7,12 @@ export const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
     borderRadius: radius.xl,
+    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   fullWidth: {
+    width: '50%',
     alignSelf: 'center',
   },
   content: {
@@ -25,7 +27,7 @@ export const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: typography.size.sm,
-    fontWeight: typography.weight.bold,
+    fontWeight: typography.weight.semibold,
     letterSpacing: 0.2,
   },
 });

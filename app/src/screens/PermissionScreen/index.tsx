@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Linking } from 'react-native';
+import { View, Linking } from 'react-native';
 import * as Location from 'expo-location';
-import { Feather } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import EmptyState from '../../components/EmptyState';
 
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
 import { useToast } from '../../contexts/ToastContext';
+
+import Button from '../../components/Button';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 interface PermissionScreenProps {
   onPermissionGranted: () => void;
@@ -59,15 +61,11 @@ export default function PermissionScreen({ onPermissionGranted }: PermissionScre
         />
 
       <View style={styles.footer}>
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: colors.primary }]}
+        <Button
+          title={canAskAgain ? 'Permitir Localização' : 'Abrir Configurações'}
           onPress={canAskAgain ? handleRequestPermission : handleOpenSettings}
-          activeOpacity={0.8}
-        >
-          <Text style={styles.buttonText}>
-            {canAskAgain ? 'Permitir Localização' : 'Abrir Configurações'}
-          </Text>
-        </TouchableOpacity>
+          iconLeft={<FontAwesome5 name="location-arrow" size={16} color="#FFF" />}
+        />
       </View>
     </SafeAreaView>
   );

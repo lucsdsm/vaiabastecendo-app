@@ -102,6 +102,7 @@ export default function UserProfile() {
               title="Entrar com Google"
               onPress={() => promptAsync()}
               disabled={!request}
+              variant="secondary"
               iconLeft={<FontAwesome5 name="google" size={16} color="#FFF" />}
             />
           </View>
