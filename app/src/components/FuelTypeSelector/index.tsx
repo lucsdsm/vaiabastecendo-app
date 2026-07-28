@@ -35,32 +35,47 @@ export default function FuelTypeSelector({
 
     return (
         <View>
-            <Text style={[styles.label, { color: colors.textSecondary }]}>{label}</Text>
-            <ScrollView
+            <Text style={[styles.label, { color: colors.textSecondary }]}>
+                {label}
+            </Text>
+
+            {fuelTypes.length > 0 ? (
+                <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 style={styles.scroll}
                 contentContainerStyle={styles.scrollContent}
-            >
+                >
                 {fuelTypes.map((type) => {
-                    const { isSelected, accentColor, chipStyle, dotStyle, textStyle } = getChipStyles(type);
+                    const { isSelected, accentColor, chipStyle, dotStyle, textStyle } =
+                    getChipStyles(type);
 
                     return (
-                        <TouchableOpacity
-                            key={type.id}
-                            style={chipStyle}
-                            onPress={() => handleSelectFuel(type.id)}
-                            activeOpacity={0.7}
-                        >
-                            <View style={dotStyle} />
-                            <Text style={textStyle}>{type.name}</Text>
-                            {showCheckIcon && isSelected && (
-                                <Feather name="check" size={13} color={accentColor} style={styles.checkIcon} />
-                            )}
-                        </TouchableOpacity>
+                    <TouchableOpacity
+                        key={type.id}
+                        style={chipStyle}
+                        onPress={() => handleSelectFuel(type.id)}
+                        activeOpacity={0.7}
+                    >
+                        <View style={dotStyle} />
+                        <Text style={textStyle}>{type.name}</Text>
+                        {showCheckIcon && isSelected && (
+                        <Feather
+                            name="check"
+                            size={13}
+                            color={accentColor}
+                            style={styles.checkIcon}
+                        />
+                        )}
+                    </TouchableOpacity>
                     );
                 })}
-            </ScrollView>
-        </View>
+                </ScrollView>
+            ) : (
+                <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
+                Nenhum tipo de combustível cadastrado no momento. Contate o suporte para mais informações.
+                </Text>
+            )}
+            </View>
     );
 }

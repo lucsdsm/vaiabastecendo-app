@@ -10,6 +10,12 @@ export const styles = StyleSheet.create({
         marginLeft: spacing.sm,
         marginBottom: spacing.sm,
     },
+    emptyText: {
+        fontWeight: typography.weight.regular,
+        marginLeft: spacing.sm,
+        lineHeight: 20,
+        textAlign: 'left',
+    },
     scroll: {
         flexGrow: 0,
         borderRadius: radius.pill,
