@@ -71,15 +71,7 @@ export default function StationCard({
   const hasPrices = localPrices.length > 0;
 
   return (
-    <LocalCard
-      style={[
-        styles.card,
-        {
-          backgroundColor: colors.surface,
-          borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)',
-        },
-      ]}
-    >
+    <LocalCard style={[styles.card, {backgroundColor: colors.surface}]}>
       <TouchableOpacity activeOpacity={0.7} onPress={handleOpenUpdateModal}>
         <View style={styles.header}>
           <View style={styles.headerLeft}>
@@ -108,15 +100,6 @@ export default function StationCard({
               />
             </View>
 
-            <View style={styles.addressRow}>
-              <Text
-                style={[styles.addressText, { color: colors.textSecondary }]}
-                numberOfLines={1}
-                ellipsizeMode="tail"
-              >
-                {data.address}
-              </Text>
-            </View>
           </View>
 
           <View style={styles.headerRight}>
@@ -140,7 +123,18 @@ export default function StationCard({
               <Feather name="map-pin" size={16} color={colors.primary} />
             </TouchableOpacity>
           </View>
+          
         </View>
+
+        <View style={styles.addressRow}>
+              <Text
+                style={[styles.addressText, { color: colors.textSecondary }]}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {data.address}
+              </Text>
+            </View>
       </TouchableOpacity>
 
       <View style={styles.priceContainer}>

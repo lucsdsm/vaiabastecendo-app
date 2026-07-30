@@ -3,18 +3,7 @@ import { radius, spacing, typography } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
   container: {
-    borderRadius: radius.xl,
-    borderWidth: 1,
-    paddingVertical: spacing.md,
-    paddingHorizontal: spacing.md,
-    marginTop: spacing.md,
     overflow: 'hidden',
-  },
-
-  loadingContainer: {
-    height: 180,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 
   header: {
@@ -22,41 +11,11 @@ export const styles = StyleSheet.create({
   },
 
   eyebrow: {
-    fontSize: typography.size.xs,
-    fontWeight: typography.weight.semibold,
-    textTransform: 'uppercase',
-    letterSpacing: 0.6,
-    marginBottom: 4,
-  },
-
-  title: {
-    fontSize: typography.size.lg,
-    fontWeight: typography.weight.bold,
-  },
-
-  summaryRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: spacing.sm,
-    marginBottom: spacing.md,
-  },
-
-  summaryItem: {
-    flex: 1,
-  },
-
-  summaryLabel: {
-    fontSize: typography.size.xs,
-    marginBottom: 4,
-  },
-
-  summaryValue: {
-    fontSize: typography.size.md,
+    fontSize: typography.size.sm,
     fontWeight: typography.weight.bold,
   },
 
   listContent: {
-    paddingTop: 2,
   },
 
   timelineRow: {
@@ -87,7 +46,6 @@ export const styles = StyleSheet.create({
 
   itemCard: {
     flex: 1,
-    borderWidth: 1,
     borderRadius: radius.lg,
     padding: spacing.md,
   },
@@ -132,11 +90,6 @@ export const styles = StyleSheet.create({
 
   priceBlock: {
     alignItems: 'flex-end',
-  },
-
-  priceLabel: {
-    fontSize: typography.size.xs,
-    marginBottom: 2,
   },
 
   priceValue: {

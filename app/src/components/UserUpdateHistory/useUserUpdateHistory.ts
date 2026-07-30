@@ -3,10 +3,11 @@ import axios from 'axios';
 
 import { useAuth } from '../../contexts/AuthContext';
 
-export interface UserUpdatesHistoryItem {
+export interface UserUpdateHistoryItem {
   id: number;
   station_name: string;
   station_brand?: string | null;
+  station_address?: string | null;
   fuel_type: string;
   price: number;
   likes: number;
@@ -14,31 +15,42 @@ export interface UserUpdatesHistoryItem {
   verified?: boolean;
 }
 
-interface UseUserUpdatesHistoryParams {
-  userId?: number | null;
+interface UseUserUpdateHistoryParams {
+  enabled?: boolean;
 }
 
-/**
- * Centraliza a busca, transformação e resumo do histórico
- * de atualizações de preço realizadas pelo usuário.
- */
-export function useUserUpdatesHistory({
-  userId,
-}: UseUserUpdatesHistoryParams) {
+type ProfileHistoryItem = {
+  id: number;
+  station?: {
+    id?: number;
+    name?: string;
+    brand?: string | null;
+    address?: string | null;
+  };
+  fuel_type?: string;
+  color?: string;
+  price?: string | number;
+  likes?: number;
+  created_at?: string;
+  author?: string;
+};
+
+type ProfileResponse = {
+  verified?: boolean;
+  history?: ProfileHistoryItem[];
+};
+
+export function useUserUpdateHistory({ enabled = true }: UseUserUpdateHistoryParams) {
   const { token } = useAuth();
 
-  const [updates, setUpdates] = useState<UserUpdatesHistoryItem[]>([]);
+  const [updates, setUpdates] = useState<UserUpdateHistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
 
-    /**
-     * Busca o histórico de atualizações do usuário autenticado
-     * ou do usuário informado na tela de perfil.
-     */
     async function fetchUserUpdates() {
-      if (!token || !userId) {
+      if (!enabled || !token) {
         if (isMounted) {
           setUpdates([]);
           setLoading(false);
@@ -49,8 +61,8 @@ export function useUserUpdatesHistory({
       try {
         setLoading(true);
 
-        const response = await axios.get(
-          `${process.env.EXPO_PUBLIC_API_URL}/users/${userId}/updates-history/`,
+        const response = await axios.get<ProfileResponse>(
+          `${process.env.EXPO_PUBLIC_API_URL}/profile/`,
           {
             headers: {
               Authorization: `Token ${token}`,
@@ -58,21 +70,26 @@ export function useUserUpdatesHistory({
           }
         );
 
-        const normalizedData = (response.data || []).map((item: any) => ({
+        const history = Array.isArray(response.data?.history) ? response.data.history : [];
+        const verified = Boolean(response.data?.verified ?? false);
+
+        const normalizedData: UserUpdateHistoryItem[] = history.map((item) => ({
           id: item.id,
-          station_name: item.station_name ?? item.station?.name ?? 'Posto',
-          station_brand: item.station_brand ?? item.station?.brand ?? null,
-          fuel_type: item.fuel_type ?? item.fuelType ?? 'Combustível',
+          station_name: item.station?.name ?? 'Posto',
+          station_brand: item.station?.brand ?? null,
+          station_address: item.station?.address ?? null,
+          fuel_type: item.fuel_type ?? 'Combustível',
+          color: item.color ?? '#6B7280',
           price: Number(item.price ?? 0),
-          likes: Number(item.likes ?? item.likes_count ?? 0),
-          created_at: item.created_at,
-          verified: Boolean(item.verified ?? item.user_verified ?? false),
+          likes: Number(item.likes ?? 0),
+          created_at: item.created_at ?? new Date().toISOString(),
+          verified,
         }));
 
         if (isMounted) {
           setUpdates(
             normalizedData.sort(
-              (a: UserUpdatesHistoryItem, b: UserUpdatesHistoryItem) =>
+              (a, b) =>
                 new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
             )
           );
@@ -95,11 +112,8 @@ export function useUserUpdatesHistory({
     return () => {
       isMounted = false;
     };
-  }, [token, userId]);
+  }, [token, enabled]);
 
-  /**
-   * Resume os principais números exibidos no topo do componente.
-   */
   const summary = useMemo(() => {
     const totalUpdates = updates.length;
     const totalLikes = updates.reduce((acc, item) => acc + (item.likes || 0), 0);
@@ -112,16 +126,10 @@ export function useUserUpdatesHistory({
     };
   }, [updates]);
 
-  /**
-   * Formata preços no padrão monetário utilizado pela aplicação.
-   */
   const formatPrice = useCallback((value: number) => {
     return `R$ ${value.toFixed(2).replace('.', ',')}`;
   }, []);
 
-  /**
-   * Formata data e horário de forma curta para leitura em lista.
-   */
   const formatDate = useCallback((value: string) => {
     const date = new Date(value);
 
@@ -132,27 +140,13 @@ export function useUserUpdatesHistory({
     ).padStart(2, '0')}`;
   }, []);
 
-  /**
-   * Define uma cor de destaque discreta com base no combustível.
-   */
   const getFuelAccent = useCallback((fuelType: string) => {
     const normalized = fuelType.toLowerCase();
 
-    if (normalized.includes('gasolina')) {
-      return '#2E86DE';
-    }
-
-    if (normalized.includes('etanol') || normalized.includes('álcool')) {
-      return '#27AE60';
-    }
-
-    if (normalized.includes('diesel')) {
-      return '#F39C12';
-    }
-
-    if (normalized.includes('gnv')) {
-      return '#8E44AD';
-    }
+    if (normalized.includes('gasolina')) return '#2E86DE';
+    if (normalized.includes('etanol') || normalized.includes('álcool')) return '#27AE60';
+    if (normalized.includes('diesel')) return '#F39C12';
+    if (normalized.includes('gnv')) return '#8E44AD';
 
     return '#6B7280';
   }, []);

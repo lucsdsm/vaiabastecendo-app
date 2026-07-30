@@ -41,8 +41,11 @@ export default function PriceHistoryTable({
 
   if (!fuelName || chartData.length === 0 || !summary) {
     return (
-      <View style={styles.loadingContainer}>
-        <EmptyState title="Histórico indisponível" message='Nenhum dado de histórico disponível.' iconName='alert-circle' />
+      <View style={[styles.loadingContainer, { flex: 1, justifyContent: 'center', alignItems: 'center' }]}>
+        <EmptyState 
+          title="Histórico indisponível" 
+          message='Nenhum dado de histórico disponível.' 
+          iconName='fail' />
       </View>
     );
   }

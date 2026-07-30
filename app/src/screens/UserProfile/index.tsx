@@ -11,6 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import Version from '../../components/Version';
 import UserCard from '../../components/UserCard';
+import UserUpdateHistory from '../../components/UserUpdateHistory';
 import { useUserProfile } from '../../components/UserCard/useUserProfile';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
@@ -47,35 +48,6 @@ export default function UserProfile() {
       edges={['top']}
       style={[styles.container, { backgroundColor: colors.background }]}
     >
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.headerActionButton}
-        >
-          <Feather name="arrow-left" size={24} color={colors.textPrimary} />
-        </TouchableOpacity>
-
-        <View style={styles.headerTitleContainer}>
-          <Text
-            style={[styles.headerTitle, { color: colors.textPrimary }]}
-            onLongPress={__DEV__ ? handleMockLogin : undefined}
-          >
-            {user?.username || ''}
-          </Text>
-        </View>
-
-        {token ? (
-          <TouchableOpacity
-            onPress={handleLogout}
-            style={styles.headerActionButton}
-          >
-            <Feather name="log-out" size={24} color={colors.textPrimary} />
-          </TouchableOpacity>
-        ) : (
-          <View style={styles.headerActionButton} />
-        )}
-      </View>
-
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
@@ -83,11 +55,41 @@ export default function UserProfile() {
           !token && styles.scrollContentGuest,
         ]}
       >
+        <View style={styles.header}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.headerActionButton}
+          >
+            <Feather name="arrow-left" size={24} color={colors.textPrimary} />
+          </TouchableOpacity>
+
+          <View style={styles.headerTitleContainer}>
+            <Text
+              style={[styles.headerTitle, { color: colors.textPrimary }]}
+              onLongPress={__DEV__ ? handleMockLogin : undefined}
+            >
+              {user?.username || ''}
+            </Text>
+          </View>
+
+          {token ? (
+            <TouchableOpacity
+              onPress={handleLogout}
+              style={styles.headerActionButton}
+            >
+              <Feather name="log-out" size={24} color={colors.textPrimary} />
+            </TouchableOpacity>
+          ) : (
+            <View style={styles.headerActionButton} />
+          )}
+        </View>
+
         {isLoading ? (
           <LoadingState />
         ) : token ? (
           <View>
             <UserCard userData={userData} />
+            {userData?.id ? <UserUpdateHistory userId={userData.id} /> : null}
           </View>
         ) : (
           <View style={styles.guestContainer}>
@@ -106,9 +108,9 @@ export default function UserProfile() {
             />
           </View>
         )}
-      </ScrollView>
 
-      <Version />
+        <Version />
+      </ScrollView>
     </SafeAreaView>
   );
 }

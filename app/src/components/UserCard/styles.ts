@@ -66,14 +66,12 @@ export const styles = StyleSheet.create({
         marginTop: 2,
     },
 
-    // gameficacao
     progressSection: {
         width: '100%',
     },
     badgeContainer: {
         padding: spacing.md,
         borderRadius: radius.lg,
-        borderWidth: 1,
         alignItems: 'flex-start',
         gap: spacing.xs,
         width: '100%',

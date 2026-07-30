@@ -24,7 +24,6 @@ export interface AuthUser {
   likes_received?: number;
   likes_given?: number;
   verified?: boolean;
-  points?: number;
 }
 
 interface AuthContextValue {
@@ -63,7 +62,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       likes_received: apiUser.likes_received ?? 0,
       likes_given: apiUser.likes_given ?? 0,
       verified: apiUser.verified ?? false,
-      points: apiUser.points ?? 0,
     };
   }, []);
 

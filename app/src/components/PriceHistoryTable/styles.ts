@@ -6,10 +6,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: spacing.sm,
     marginTop: spacing.sm,
     marginBottom: spacing.md,
-    overflow: 'hidden',
   },
   loadingContainer: {
-    height: 220,
     justifyContent: 'center',
     alignItems: 'center',
   },

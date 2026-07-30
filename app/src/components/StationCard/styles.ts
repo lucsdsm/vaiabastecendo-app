@@ -5,7 +5,6 @@ export const styles = StyleSheet.create({
     localCardBase: {
         borderRadius: radius.xl,
         padding: spacing.lg,
-        borderWidth: 1,
     },
     badge: {
         paddingHorizontal: spacing.xs,
@@ -30,17 +29,14 @@ export const styles = StyleSheet.create({
     card: {
         width: '100%',
         marginBottom: spacing.md,
-        
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        marginBottom: spacing.md,
     },
     headerLeft: {
         flex: 1,
-        gap: spacing.xs,
     },
     headerRight: {
         flexDirection: 'row',
@@ -99,6 +95,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         minWidth: 0,
+        marginBottom: spacing.md,
     },
     priceContainer: {
     },

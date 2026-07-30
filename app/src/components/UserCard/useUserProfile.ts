@@ -33,14 +33,14 @@ export function useUserProfile() {
   });
 
   const exchangeGoogleToken = useCallback(
-    async (googleAccessToken: string) => {
+    async (googleToken: string) => {
       setIsLoading(true);
 
       try {
         const response = await axios.post(
           `${process.env.EXPO_PUBLIC_API_URL}/auth/google/`,
           {
-            access_token: googleAccessToken,
+            access_token: googleToken,
           }
         );
 
@@ -64,10 +64,13 @@ export function useUserProfile() {
 
   useEffect(() => {
     if (response?.type === 'success') {
-      const { authentication } = response;
+      const googleToken =
+        response.authentication?.accessToken || response.authentication?.idToken;
 
-      if (authentication?.accessToken) {
-        exchangeGoogleToken(authentication.accessToken);
+      if (googleToken) {
+        exchangeGoogleToken(googleToken);
+      } else {
+        showToast('Google não retornou token de autenticação.', 'danger');
       }
 
       return;
@@ -89,9 +92,7 @@ export function useUserProfile() {
   }, [signOut]);
 
   const handleRefreshProfile = useCallback(async () => {
-    if (!token) {
-      return;
-    }
+    if (!token) return;
 
     try {
       setIsLoading(true);
@@ -105,9 +106,7 @@ export function useUserProfile() {
   }, [token, refreshUser, showToast]);
 
   const handleMockLogin = useCallback(() => {
-    if (!__DEV__) {
-      return;
-    }
+    if (!__DEV__) return;
 
     const mockGoogleAccessToken = '';
 

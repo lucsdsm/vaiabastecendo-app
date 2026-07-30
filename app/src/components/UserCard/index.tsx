@@ -11,9 +11,8 @@ export interface UserCardData {
   first_name?: string | null;
   last_name?: string | null;
   verified?: boolean;
-  likesReceived?: number | null;
-  likesGiven?: number | null;
-  points?: number | null;
+  likes_received?: number | null;
+  likes_given?: number | null;
 }
 
 interface UserCardProps {
@@ -23,9 +22,8 @@ interface UserCardProps {
 export default function UserCard({ userData }: UserCardProps) {
   const { colors, isDark } = useAppTheme();
 
-  const points = userData?.points ?? 0;
   const totalRequired = 100;
-  const isVerified = userData?.verified ?? points >= totalRequired;
+  const isVerified = userData?.verified;
 
   const displayName = useMemo(() => {
     const firstName = userData?.first_name?.trim() ?? '';
@@ -39,8 +37,8 @@ export default function UserCard({ userData }: UserCardProps) {
     return userData?.username?.trim() || 'Motorista';
   }, [userData?.first_name, userData?.last_name, userData?.username]);
 
-  const likesReceived = userData?.likesReceived ?? 0;
-  const likesGiven = userData?.likesGiven ?? 0;
+  const likesReceived = userData?.likes_received ?? 0;
+  const likesGiven = userData?.likes_given ?? 0;
 
   const percentage = useMemo(() => {
     return Math.min(1, likesReceived / totalRequired);
@@ -94,14 +92,7 @@ export default function UserCard({ userData }: UserCardProps) {
       <View style={styles.progressSection}>
         {isVerified ? (
           <View
-            style={[
-              styles.badgeContainer,
-              {
-                backgroundColor: colors.primary + (isDark ? '1A' : '0A'),
-                borderColor: colors.primary + '30',
-              },
-            ]}
-          >
+            style={[styles.badgeContainer, {backgroundColor: colors.primary + (isDark ? '1A' : '0A')}]}>
             <View style={styles.row}>
               <MaterialIcons
                 name="verified"

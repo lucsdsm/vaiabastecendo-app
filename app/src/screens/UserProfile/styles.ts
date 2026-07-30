@@ -38,9 +38,10 @@ export const styles = StyleSheet.create({
         flexGrow: 1,
     },
     scrollContentGuest: {
-        justifyContent: 'center',
+        flexGrow: 1,
     },
     guestContainer: {
+        flexGrow: 1,
         justifyContent: 'center',
         paddingBottom: spacing.xxl,
     },
