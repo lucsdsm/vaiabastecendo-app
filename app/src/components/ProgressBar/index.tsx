@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { View, Text } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
-import { MaterialIcons } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { getBadgeInfo } from '../../utils/badgeRules';
@@ -98,15 +98,15 @@ export default function ProgressBar({
           ringColor={badge.ringColor}
           trackColor={badge.trackColor}
         />
-
-        {showAuthorBadge && (
-          <View style={[styles.badgePill, { backgroundColor: badge.trackColor }]}>
-            <MaterialIcons name="military-tech" size={12} color={badge.ringColor} />
-            <Text style={[styles.badgePillText, { color: badge.ringColor }]}>
-              {badge.label}
-            </Text>
-          </View>
-        )}
+          
+        {badge.tier !== 'none' ? (
+            <View style={[styles.badgePill, { backgroundColor: badge.trackColor }]}>
+                <FontAwesome6 name="medal" size={12} color={badge.ringColor} iconStyle='solid' />
+                <Text style={[styles.badgePillText, { color: badge.ringColor }]}>
+                    {badge.label}
+                </Text>
+            </View>
+        ) : null}
 
         <View style={styles.meta}>
           <Text style={[styles.helpText, { color: colors.textSecondary }]}>

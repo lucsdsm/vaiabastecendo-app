@@ -24,7 +24,7 @@ const TIERS = [
   {
     tier: 'bronze',
     label: 'Bronze',
-    iconName: 'gear',
+    iconName: 'medal',
     minLikes: 5,
     maxLikes: 24,
     ringColor: '#CD7F32',
@@ -33,7 +33,7 @@ const TIERS = [
   {
     tier: 'prata',
     label: 'Prata',
-    iconName: 'ring',
+    iconName: 'medal',
     minLikes: 25,
     maxLikes: 49,
     ringColor: '#C0C0C0',
@@ -42,7 +42,7 @@ const TIERS = [
   {
     tier: 'ouro',
     label: 'Ouro',
-    iconName: 'star',
+    iconName: 'medal',
     minLikes: 50,
     maxLikes: 74,
     ringColor: '#D4AF37',

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
@@ -86,6 +87,18 @@ export function useUserProfile() {
       showToast('Login cancelado.', 'info');
     }
   }, [response, exchangeGoogleToken, showToast]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (!token || isInitializingAuth) {
+        return;
+      }
+
+      void refreshUser().catch((error) => {
+        console.error('Erro ao sincronizar o perfil ao abrir a tela:', error);
+      });
+    }, [token, isInitializingAuth, refreshUser])
+  );
 
   const handleLogout = useCallback(async () => {
     await signOut();
