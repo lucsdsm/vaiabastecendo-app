@@ -30,7 +30,7 @@ export default function AddFuelLogScreen() {
             
             <View style={styles.header}>
                 <TouchableOpacity onPress={goBack} style={styles.headerActionButton}>
-                    <FontAwesome6 name="arrow-left" size={24} iconStyle='solid' color={colors.textPrimary} />
+                    <FontAwesome6 name="arrow-left" size={20} iconStyle='solid' color={colors.textPrimary} />
                 </TouchableOpacity>
                 
                 <View style={styles.headerTitleContainer}>
@@ -47,7 +47,7 @@ export default function AddFuelLogScreen() {
                             style={styles.headerActionButton}
                             activeOpacity={0.7}
                         >
-                            <FontAwesome6 name="trash" size={22} iconStyle='solid' color={colors.textPrimary} />
+                            <FontAwesome6 name="trash" size={20} iconStyle='solid' color={colors.textPrimary} />
                         </TouchableOpacity>
                     )}
 
@@ -57,7 +57,7 @@ export default function AddFuelLogScreen() {
                         style={[styles.headerActionButton, { opacity: isFormValid ? 1 : 0.35 }]}
                         activeOpacity={0.7}
                     >
-                        <FontAwesome6 name="check" size={24} iconStyle='solid' color={colors.textPrimary} />
+                        <FontAwesome6 name="check" size={20} iconStyle='solid' color={colors.textPrimary} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -91,7 +91,7 @@ export default function AddFuelLogScreen() {
                                 style={[styles.inputContainer, { borderColor: colors.primary + '40', paddingVertical: 18 }]}
                                 onPress={() => setShowDatePicker(true)}
                             >
-                                <FontAwesome6 name="calendar" size={20} iconStyle='solid' color={colors.textSecondary} style={{ marginRight: 12 }} />
+                                <FontAwesome6 name="calendar" size={14} iconStyle='solid' color={colors.textSecondary} style={{ marginRight: 12 }} />
                                 <Text style={[styles.textInput, { color: colors.textPrimary, paddingVertical: 0 }]}>
                                     {date.toLocaleDateString('pt-BR')}
                                 </Text>

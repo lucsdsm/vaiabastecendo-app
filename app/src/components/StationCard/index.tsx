@@ -89,7 +89,7 @@ export default function StationCard({
             <View style={styles.metaRow}>
               {rating !== undefined && rating !== null && (
                 <View style={styles.ratingInlineRow}>
-                  <FontAwesome6 name="star" size={12} color="#FFB300" iconStyle='solid'/>
+                  <FontAwesome6 name="star" size={10} color="#FFB300" iconStyle='solid'/>
                   <Text style={[styles.ratingText, { color: colors.textPrimary }]}>
                     {rating.toFixed(1)}
                   </Text>
@@ -100,7 +100,7 @@ export default function StationCard({
                 label={data.distance}
                 color={colors.primary + (isDark ? '22' : '12')}
                 textColor={colors.primary}
-                icon={<FontAwesome6 name="compass" size={11} color={colors.primary} iconStyle='solid' />}
+                icon={<FontAwesome6 name="compass" size={10} color={colors.primary} iconStyle='solid' />}
               />
             </View>
 
@@ -124,7 +124,7 @@ export default function StationCard({
               accessibilityRole="button"
               accessibilityLabel="Abrir direções no mapa"
             >
-              <FontAwesome6 name="location-arrow" size={16} color={colors.primary} iconStyle='solid'/>
+              <FontAwesome6 name="location-arrow" size={18} color={colors.primary} iconStyle='solid'/>
             </TouchableOpacity>
           </View>
           
@@ -202,7 +202,7 @@ export default function StationCard({
                   >
                     <FontAwesome6
                       name={item.isLiked ? 'heart' : 'thumbs-up'}
-                      size={12}
+                      size={14}
                       color={item.isLiked ? colors.danger : colors.textSecondary}
                     />
                     <Text
@@ -237,7 +237,7 @@ export default function StationCard({
                   { backgroundColor: colors.primary + '20' },
                 ]}
               >
-                <FontAwesome6 name="plus" size={18} color={colors.primary} iconStyle='solid' />
+                <FontAwesome6 name="plus" size={20} color={colors.primary} iconStyle='solid' />
               </View>
               <View style={styles.noPriceTextContainer}>
                 <Text style={[styles.noPriceTitle, { color: colors.textPrimary }]}>
@@ -266,7 +266,7 @@ export default function StationCard({
           >
             <FontAwesome6
               name="user"
-              size={11}
+              size={12}
               color={colors.textSecondary}
               style={styles.updateIcon}
             />

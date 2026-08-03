@@ -32,7 +32,7 @@ export default function FuelLogScreen() {
             
             <View style={styles.header}>
                 <TouchableOpacity onPress={goBack} style={styles.headerActionButton}>
-                    <FontAwesome6 name="arrow-left" size={24} iconStyle='solid' color={colors.textPrimary} />
+                    <FontAwesome6 name="arrow-left" size={20} iconStyle='solid' color={colors.textPrimary} />
                 </TouchableOpacity>
             
                 
@@ -46,10 +46,10 @@ export default function FuelLogScreen() {
                     </Text>
                     <FontAwesome6 
                         name={isModalVisible ? "chevron-up" : "chevron-down"} 
-                        size={20} 
+                        size={14} 
                         iconStyle='solid'
                         color={colors.textPrimary} 
-                        style={{ marginLeft: 4 }} 
+                        style={{ marginLeft: 8 }} 
                     />
                 </TouchableOpacity>
             </View>
@@ -108,7 +108,7 @@ export default function FuelLogScreen() {
                     onPress={handleAddFuelLog}
                     activeOpacity={0.8}
                 >
-                    <FontAwesome6 name="gas-pump" size={20} iconStyle='solid' color="#FFF" />
+                    <FontAwesome6 name="gas-pump" size={22} iconStyle='solid' color="#FFF" />
                 </TouchableOpacity>
             )}
 

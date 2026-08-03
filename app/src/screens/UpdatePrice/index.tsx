@@ -54,7 +54,7 @@ export default function UpdatePriceScreen() {
         <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <FontAwesome6 name="arrow-left" size={24} iconStyle='solid' color={colors.textPrimary} />
+                    <FontAwesome6 name="arrow-left" size={20} iconStyle='solid' color={colors.textPrimary} />
                 </TouchableOpacity>
 
                 <View style={styles.headerTextContainer}>
@@ -76,7 +76,7 @@ export default function UpdatePriceScreen() {
                     {loading ? (
                         <ActivityIndicator color={colors.primary} size="small" />
                     ) : (
-                        <FontAwesome6 name="check" size={24} iconStyle='solid' color={colors.textPrimary} />
+                        <FontAwesome6 name="check" size={20} iconStyle='solid' color={colors.textPrimary} />
                     )}
                 </TouchableOpacity>
             </View>

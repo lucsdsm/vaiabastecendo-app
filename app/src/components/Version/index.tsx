@@ -39,7 +39,7 @@ export default function Version() {
                     accessibilityRole="button"
                     accessibilityLabel="Acessar LinkedIn"
                 >
-                    <FontAwesome name="linkedin" size={20} color={colors.primary} />
+                    <FontAwesome name="linkedin" size={24} color={colors.primary} />
                 </Pressable>
 
                 <Pressable
@@ -55,7 +55,7 @@ export default function Version() {
                     accessibilityRole="button"
                     accessibilityLabel="Enviar Email"
                 >
-                    <FontAwesome6 name="envelope" size={22} iconStyle='solid' color={colors.primary} />
+                    <FontAwesome6 name="envelope" size={24} iconStyle='solid' color={colors.primary} />
                 </Pressable>
             </View>
             

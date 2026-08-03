@@ -57,7 +57,7 @@ export default function UserProfile() {
             onPress={() => navigation.goBack()}
             style={styles.headerActionButton}
           >
-            <FontAwesome6 name="arrow-left" size={24} iconStyle='solid' color={colors.textPrimary} />
+            <FontAwesome6 name="arrow-left" size={20} iconStyle='solid' color={colors.textPrimary} />
           </TouchableOpacity>
       </View>
       ) : null}
@@ -76,7 +76,7 @@ export default function UserProfile() {
               onPress={() => navigation.goBack()}
               style={styles.headerActionButton}
             >
-              <FontAwesome6 name="arrow-left" size={24} iconStyle='solid' color={colors.textPrimary} />
+              <FontAwesome6 name="arrow-left" size={20} iconStyle='solid' color={colors.textPrimary} />
             </TouchableOpacity>
 
             <View style={styles.headerTitleContainer}>
@@ -93,7 +93,7 @@ export default function UserProfile() {
                 onPress={handleLogout}
                 style={styles.headerActionButton}
               >
-                <FontAwesome6 name="arrow-right-to-bracket" size={24} iconStyle='solid' color={colors.textPrimary} />
+                <FontAwesome6 name="arrow-right-to-bracket" size={20} iconStyle='solid' color={colors.textPrimary} />
               </TouchableOpacity>
             ) : (
               <View style={styles.headerActionButton} />

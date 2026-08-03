@@ -208,7 +208,7 @@ export default function PriceHistoryTable({
         ]}
       >
         <View style={styles.footerHeader}>
-          <FontAwesome6 name="clock" size={14} iconStyle='solid' color={colors.textSecondary} />
+          <FontAwesome6 name="clock" size={12} iconStyle='solid' color={colors.textSecondary} />
           <Text style={[styles.footerTitle, { color: colors.textSecondary }]}>
             Últimas atualizações
           </Text>

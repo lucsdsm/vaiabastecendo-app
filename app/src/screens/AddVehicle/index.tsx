@@ -26,7 +26,7 @@ export default function AddVehicleScreen() {
             
             <View style={styles.header}>
                 <TouchableOpacity onPress={goBack} style={styles.headerActionButton}>
-                    <FontAwesome6 name="arrow-left" size={24} iconStyle='solid' color={colors.textPrimary} />
+                    <FontAwesome6 name="arrow-left" size={20} iconStyle='solid' color={colors.textPrimary} />
                 </TouchableOpacity>
                 
                 <View style={styles.headerTitleContainer}>
@@ -43,7 +43,7 @@ export default function AddVehicleScreen() {
                             style={styles.headerActionButton}
                             activeOpacity={0.7}
                         >
-                            <FontAwesome6 name="trash" size={22} iconStyle='solid' color={colors.textPrimary} />
+                            <FontAwesome6 name="trash" size={20} iconStyle='solid' color={colors.textPrimary} />
                         </TouchableOpacity>
                     )}
 
@@ -56,7 +56,7 @@ export default function AddVehicleScreen() {
                         ]}
                         activeOpacity={0.7}
                     >
-                        <FontAwesome6 name="check" size={24} iconStyle='solid' color={colors.textPrimary} />
+                        <FontAwesome6 name="check" size={20} iconStyle='solid' color={colors.textPrimary} />
                     </TouchableOpacity>
                 </View>
             </View>

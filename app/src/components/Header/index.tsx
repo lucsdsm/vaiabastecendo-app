@@ -57,7 +57,7 @@ export default function Header() {
           >
             <FontAwesome6
               name="car"
-              size={24}
+              size={20}
               iconStyle='solid'
               color={colors.textSecondary}
             />

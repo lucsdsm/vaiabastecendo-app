@@ -78,7 +78,7 @@ export function VehicleDropdown({
                     style={styles.addVehicleModalButton}
                     onPress={onAddVehicle}
                 >
-                    <FontAwesome6 name="circle-plus" size={18} iconStyle='solid' color={colors.primary} />
+                    <FontAwesome6 name="circle-plus" size={16} iconStyle='solid' color={colors.primary} />
                     <Text style={[styles.addVehicleModalText, { color: colors.primary }]}>
                         Adicionar veículo
                     </Text>
