@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { Feather, FontAwesome5 } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { styles } from './styles';
 import { useFuelLogCard } from './useFuelLogCard';
 import { FuelLog } from '../../database/logService';
@@ -37,7 +37,7 @@ export function FuelLogCard({ data, onPress }: FuelLogCardProps) {
                         styles.iconContainer,
                         { backgroundColor: accentColor + (isDark ? '22' : '14') }
                     ]}>
-                        <FontAwesome5 name="gas-pump" size={14} color={accentColor} />
+                        <FontAwesome6 name="gas-pump" size={14} iconStyle="solid" color={accentColor} />
                     </View>
                     <Text style={[styles.fuelType, { color: colors.textPrimary }]}>
                         {data.fuel_type}
@@ -69,7 +69,7 @@ export function FuelLogCard({ data, onPress }: FuelLogCardProps) {
 
                 <View style={styles.odometerContainer}>
                     <View style={styles.odometerRow}>
-                        <FontAwesome5 name="tachometer-alt" size={12} color={colors.textSecondary} style={{ marginRight: 6 }} />
+                        <FontAwesome6 name="gauge-high" size={12} iconStyle="solid" color={colors.textSecondary} style={{ marginRight: 6 }} />
                         <Text style={[styles.footerText, { color: colors.textSecondary }]}>
                             {formattedOdometer} km
                         </Text>
@@ -85,21 +85,21 @@ export function FuelLogCard({ data, onPress }: FuelLogCardProps) {
 
                     {formattedCostPerKm && (
                         <View style={[styles.badge, { backgroundColor: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)' }]}>
-                            <Feather name="dollar-sign" size={11} color={colors.textSecondary} style={{ marginRight: 2 }} />
+                            <FontAwesome6 name="dollar-sign" size={11} iconStyle="solid" color={colors.textSecondary} style={{ marginRight: 2 }} />
                             <Text style={[styles.badgeText, { color: colors.textSecondary }]}>{formattedCostPerKm}</Text>
                         </View>
                     )}
 
                     {formattedKml && (
                         <View style={[styles.badge, { backgroundColor: accentColor + '15' }]}>
-                            <Feather name="target" size={11} color={accentColor} style={{ marginRight: 4 }} />
+                            <FontAwesome6 name="gas-pump" size={11} iconStyle="solid" color={accentColor} style={{ marginRight: 4 }} />
                             <Text style={[styles.badgeText, { color: accentColor }]}>{formattedKml}</Text>
                         </View>
                     )}
 
                     {data.is_full === 1 && (
                         <View style={[styles.badge, { backgroundColor: accentColor + '15' }]}>
-                            <Feather name="droplet" size={11} color={accentColor} style={{ marginRight: 4 }} />
+                            <FontAwesome6 name="droplet" size={11} iconStyle="solid" color={accentColor} style={{ marginRight: 4 }} />
                             <Text style={[styles.badgeText, { color: accentColor }]}>Cheio</Text>
                         </View>
                     )}

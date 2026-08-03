@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { styles } from './styles';
 import { FuelType, FuelTypeSelectorSize, FuelTypeSelectorVariant, useFuelTypeSelector } from './useFuelTypeSelector';
 
@@ -24,7 +24,7 @@ export default function FuelTypeSelector({
     onSelectFuel,
     variant = 'surface',
     size = 'regular',
-    showCheckIcon = false,
+    showCheckIcon = true,
 }: FuelTypeSelectorProps) {
     const { colors, getChipStyles, handleSelectFuel } = useFuelTypeSelector({
         selectedFuel,
@@ -47,7 +47,7 @@ export default function FuelTypeSelector({
                 contentContainerStyle={styles.scrollContent}
                 >
                 {fuelTypes.map((type) => {
-                    const { isSelected, accentColor, chipStyle, dotStyle, textStyle } =
+                    const { isSelected, accentColor, chipStyle, textStyle } =
                     getChipStyles(type);
 
                     return (
@@ -57,11 +57,11 @@ export default function FuelTypeSelector({
                         onPress={() => handleSelectFuel(type.id)}
                         activeOpacity={0.7}
                     >
-                        <View style={dotStyle} />
                         <Text style={textStyle}>{type.name}</Text>
                         {showCheckIcon && isSelected && (
-                        <Feather
+                        <FontAwesome6
                             name="check"
+                            iconStyle="solid"
                             size={13}
                             color={accentColor}
                             style={styles.checkIcon}

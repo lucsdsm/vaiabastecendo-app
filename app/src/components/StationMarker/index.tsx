@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
 import Mapbox from '@rnmapbox/maps';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 
 import { StationCardProps } from '../StationCard';
 import { flagsDictionary } from '../../utils/flagsDictionary';
@@ -76,9 +76,10 @@ const StationMarker = memo(({
                     />
                 ) : (
                     <View style={styles.iconContainer}>
-                        <MaterialCommunityIcons
-                            name="gas-station"
+                        <FontAwesome6
+                            name="gas-pump"
                             size={isSelected ? 32 : 24}
+                            iconStyle='solid'
                             color={isSelected ? surfaceColor : primaryColor}
                         />
                     </View>

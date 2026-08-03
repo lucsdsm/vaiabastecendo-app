@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -54,7 +54,7 @@ export default function UpdatePriceScreen() {
         <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <Feather name="arrow-left" size={24} color={colors.textPrimary} />
+                    <FontAwesome6 name="arrow-left" size={24} iconStyle='solid' color={colors.textPrimary} />
                 </TouchableOpacity>
 
                 <View style={styles.headerTextContainer}>
@@ -76,7 +76,7 @@ export default function UpdatePriceScreen() {
                     {loading ? (
                         <ActivityIndicator color={colors.primary} size="small" />
                     ) : (
-                        <Feather name="check" size={24} color={colors.textPrimary} />
+                        <FontAwesome6 name="check" size={24} iconStyle='solid' color={colors.textPrimary} />
                     )}
                 </TouchableOpacity>
             </View>

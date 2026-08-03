@@ -3,15 +3,19 @@ export type BadgeTier = 'none' | 'bronze' | 'prata' | 'ouro' | 'diamante' | 'esm
 export interface BadgeInfo {
   tier: BadgeTier;
   label: string;
-  iconName: string;
+  iconName?: string;
   minLikes: number;
   maxLikes: number | null;
+  nextLabel?: string;
+  nextTarget?: number | null;
+  remaining?: number | null;
   progress: number;
+  progressText?: string;
   ringColor: string;
   trackColor: string;
 }
 
-const TIERS = [
+const tiers = [
   {
     tier: 'none',
     label: 'Nenhum',
@@ -24,7 +28,7 @@ const TIERS = [
   {
     tier: 'bronze',
     label: 'Bronze',
-    iconName: 'medal',
+    iconName: 'award',
     minLikes: 5,
     maxLikes: 24,
     ringColor: '#CD7F32',
@@ -33,7 +37,7 @@ const TIERS = [
   {
     tier: 'prata',
     label: 'Prata',
-    iconName: 'medal',
+    iconName: 'award',
     minLikes: 25,
     maxLikes: 49,
     ringColor: '#C0C0C0',
@@ -42,7 +46,7 @@ const TIERS = [
   {
     tier: 'ouro',
     label: 'Ouro',
-    iconName: 'medal',
+    iconName: 'award',
     minLikes: 50,
     maxLikes: 74,
     ringColor: '#D4AF37',
@@ -69,12 +73,31 @@ const TIERS = [
 ] as const;
 
 export function getBadgeInfo(likesReceived: number): BadgeInfo {
-  const rule =
-    TIERS.find((item) =>
-      item.maxLikes === null
-        ? likesReceived >= item.minLikes
-        : likesReceived >= item.minLikes && likesReceived <= item.maxLikes
-    ) ?? TIERS[0];
+
+  if (likesReceived < 5) {
+    return {
+      tier: 'none',
+      label: '',
+      minLikes: 0,
+      maxLikes: 5,
+      progress: likesReceived / 5,
+      ringColor: 'transparent',
+      trackColor: 'rgba(0,0,0,0.08)',
+      nextLabel: 'Bronze',
+      nextTarget: 5,
+      remaining: Math.max(0, 5 - likesReceived),
+      progressText: `${likesReceived}/5`,
+    };
+  }
+
+  const index = tiers.findIndex((item) =>
+    item.maxLikes === null
+      ? likesReceived >= item.minLikes
+      : likesReceived >= item.minLikes && likesReceived <= item.maxLikes
+  );
+
+  const rule = index >= 0 ? tiers[index] : tiers[0];
+  const nextRule = index >= 0 ? tiers[index + 1] : tiers[0];
 
   const progress =
     rule.maxLikes === null
@@ -84,6 +107,9 @@ export function getBadgeInfo(likesReceived: number): BadgeInfo {
           (likesReceived - rule.minLikes) / (rule.maxLikes - rule.minLikes + 1)
         );
 
+  const nextTarget = nextRule?.minLikes ?? null;
+  const remaining = nextTarget !== null ? Math.max(0, nextTarget - likesReceived) : null;
+
   return {
     tier: rule.tier,
     label: rule.label,
@@ -91,8 +117,12 @@ export function getBadgeInfo(likesReceived: number): BadgeInfo {
     minLikes: rule.minLikes,
     maxLikes: rule.maxLikes,
     progress,
+    progressText: `${likesReceived}/${nextTarget ?? '∞'}`,
     ringColor: rule.ringColor,
     trackColor: rule.trackColor,
+    nextLabel: nextRule?.label,
+    nextTarget,
+    remaining,
   };
 }
 

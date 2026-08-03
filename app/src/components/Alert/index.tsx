@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, View, Text, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles'
 import Button from '../Button';

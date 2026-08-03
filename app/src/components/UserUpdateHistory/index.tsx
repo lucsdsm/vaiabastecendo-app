@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, Text, View } from 'react-native';
-import { Feather, MaterialIcons } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 
 import LoadingState from '../LoadingState';
 import EmptyState from '../EmptyState';
@@ -99,26 +99,17 @@ export default function UserUpdateHistory({ userId }: UserUpdateHistoryProps) {
 
           <View style={styles.itemFooter}>
             <View style={styles.footerLeft}>
-              <Feather name="clock" size={12} color={colors.textSecondary} />
+              <FontAwesome6 name="clock" size={12} iconStyle='solid' color={colors.textSecondary} />
               <Text style={[styles.footerText, { color: colors.textSecondary }]}>
                 {formatDate(item.created_at)}
               </Text>
             </View>
 
             <View style={styles.footerRight}>
-              <Feather name="thumbs-up" size={12} color={colors.textSecondary} />
+              <FontAwesome6 name="thumbs-up" size={12} iconStyle='solid' color={colors.textSecondary} />
               <Text style={[styles.footerText, { color: colors.textSecondary }]}>
                 {item.likes}
               </Text>
-
-              {item.verified ? (
-                <MaterialIcons
-                  name="verified"
-                  size={14}
-                  color={colors.primary}
-                  style={{ marginLeft: 8 }}
-                />
-              ) : null}
             </View>
           </View>
         </View>

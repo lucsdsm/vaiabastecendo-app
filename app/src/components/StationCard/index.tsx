@@ -124,7 +124,7 @@ export default function StationCard({
               accessibilityRole="button"
               accessibilityLabel="Abrir direções no mapa"
             >
-              <FontAwesome6 name="map-location" size={16} color={colors.primary} iconStyle='solid'/>
+              <FontAwesome6 name="location-arrow" size={16} color={colors.primary} iconStyle='solid'/>
             </TouchableOpacity>
           </View>
           

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Feather, FontAwesome5 } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { styles } from './styles';
 import { useFuelLog } from './useFuelLog';
 import { VehicleDropdown } from '../../components/VehicleDropdown';
@@ -32,7 +32,7 @@ export default function FuelLogScreen() {
             
             <View style={styles.header}>
                 <TouchableOpacity onPress={goBack} style={styles.headerActionButton}>
-                    <Feather name="arrow-left" size={24} color={colors.textPrimary} />
+                    <FontAwesome6 name="arrow-left" size={24} iconStyle='solid' color={colors.textPrimary} />
                 </TouchableOpacity>
             
                 
@@ -44,9 +44,10 @@ export default function FuelLogScreen() {
                     <Text style={[styles.headerTitle, { color: colors.textPrimary }]} numberOfLines={1}>
                         {selectedVehicle ? selectedVehicle.name : 'Selecionar veículo'}
                     </Text>
-                    <Feather 
+                    <FontAwesome6 
                         name={isModalVisible ? "chevron-up" : "chevron-down"} 
                         size={20} 
+                        iconStyle='solid'
                         color={colors.textPrimary} 
                         style={{ marginLeft: 4 }} 
                     />
@@ -107,7 +108,7 @@ export default function FuelLogScreen() {
                     onPress={handleAddFuelLog}
                     activeOpacity={0.8}
                 >
-                    <FontAwesome5 name="gas-pump" size={20} color="#FFF" />
+                    <FontAwesome6 name="gas-pump" size={20} iconStyle='solid' color="#FFF" />
                 </TouchableOpacity>
             )}
 

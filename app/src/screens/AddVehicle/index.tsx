@@ -4,7 +4,7 @@ import {
     Keyboard, ScrollView, KeyboardAvoidingView, Platform 
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Feather } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
 import { useAddVehicle } from './useAddVehicle';
@@ -26,7 +26,7 @@ export default function AddVehicleScreen() {
             
             <View style={styles.header}>
                 <TouchableOpacity onPress={goBack} style={styles.headerActionButton}>
-                    <Feather name="arrow-left" size={24} color={colors.textPrimary} />
+                    <FontAwesome6 name="arrow-left" size={24} iconStyle='solid' color={colors.textPrimary} />
                 </TouchableOpacity>
                 
                 <View style={styles.headerTitleContainer}>
@@ -43,7 +43,7 @@ export default function AddVehicleScreen() {
                             style={styles.headerActionButton}
                             activeOpacity={0.7}
                         >
-                            <Feather name="trash-2" size={22} color={colors.textPrimary} />
+                            <FontAwesome6 name="trash" size={22} iconStyle='solid' color={colors.textPrimary} />
                         </TouchableOpacity>
                     )}
 
@@ -56,7 +56,7 @@ export default function AddVehicleScreen() {
                         ]}
                         activeOpacity={0.7}
                     >
-                        <Feather name="check" size={24} color={colors.textPrimary} />
+                        <FontAwesome6 name="check" size={24} iconStyle='solid' color={colors.textPrimary} />
                     </TouchableOpacity>
                 </View>
             </View>

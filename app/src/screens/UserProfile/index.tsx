@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Feather, FontAwesome5 } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -48,8 +49,19 @@ export default function UserProfile() {
   return (
     <SafeAreaView
       edges={['top']}
-      style={[styles.container, { backgroundColor: colors.background }]}
-    >
+      style={[styles.container, { backgroundColor: colors.background }]}>
+
+      {!token && styles.scrollContentGuest ? (
+      <View style={styles.header}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.headerActionButton}
+          >
+            <FontAwesome6 name="arrow-left" size={24} iconStyle='solid' color={colors.textPrimary} />
+          </TouchableOpacity>
+      </View>
+      ) : null}
+    
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
@@ -57,34 +69,37 @@ export default function UserProfile() {
           !token && styles.scrollContentGuest,
         ]}
       >
-        <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.headerActionButton}
-          >
-            <Feather name="arrow-left" size={24} color={colors.textPrimary} />
-          </TouchableOpacity>
 
-          <View style={styles.headerTitleContainer}>
-            <Text
-              style={[styles.headerTitle, { color: colors.textPrimary }]}
-              onLongPress={__DEV__ ? handleMockLogin : undefined}
-            >
-              {user?.username || ''}
-            </Text>
-          </View>
-
-          {token ? (
+        {token && userData ? (
+          <View style={styles.header}>
             <TouchableOpacity
-              onPress={handleLogout}
+              onPress={() => navigation.goBack()}
               style={styles.headerActionButton}
             >
-              <Feather name="log-out" size={24} color={colors.textPrimary} />
+              <FontAwesome6 name="arrow-left" size={24} iconStyle='solid' color={colors.textPrimary} />
             </TouchableOpacity>
-          ) : (
-            <View style={styles.headerActionButton} />
-          )}
-        </View>
+
+            <View style={styles.headerTitleContainer}>
+              <Text
+                style={[styles.headerTitle, { color: colors.textPrimary }]}
+                onLongPress={__DEV__ ? handleMockLogin : undefined}
+              >
+                {user?.username || ''}
+              </Text>
+            </View>
+
+            {token ? (
+              <TouchableOpacity
+                onPress={handleLogout}
+                style={styles.headerActionButton}
+              >
+                <FontAwesome6 name="arrow-right-to-bracket" size={24} iconStyle='solid' color={colors.textPrimary} />
+              </TouchableOpacity>
+            ) : (
+              <View style={styles.headerActionButton} />
+            )}
+          </View>
+        ) : null}
 
         {isLoading ? (
           <LoadingState />

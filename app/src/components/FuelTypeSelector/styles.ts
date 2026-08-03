@@ -39,11 +39,6 @@ export const styles = StyleSheet.create({
         paddingHorizontal: spacing.lg,
         paddingVertical: 12,
     },
-    chipDot: {
-        width: spacing.sm,
-        height: spacing.sm,
-        borderRadius: radius.sm / 2,
-    },
     chipTextBase: {
         fontWeight: typography.weight.semibold,
         letterSpacing: -0.1,

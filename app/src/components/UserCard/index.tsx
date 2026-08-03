@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { View, Text, Image } from 'react-native';
-import { Feather, MaterialIcons } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
@@ -56,7 +56,7 @@ export default function UserCard({ userData }: UserCardProps) {
               { backgroundColor: colors.primary + '20' },
             ]}
           >
-            <Feather name="user" size={40} color={colors.primary} />
+            <FontAwesome6 name="user" size={40} iconStyle='solid' color={colors.primary} />
           </View>
         )}
 

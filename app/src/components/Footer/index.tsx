@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { Feather, FontAwesome5 } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 
 import { styles } from './styles';
 import { useFooter } from './useFooter';
@@ -42,7 +42,7 @@ export default function Footer() {
                     accessibilityState={{ selected: isMapActive }}
                     onPress={handleOpenMap}
                 >
-                    <Feather name="map" size={22} color={isMapActive ? activeColor : inactiveColor} />
+                    <FontAwesome6 name="map" size={22} iconStyle="solid" color={isMapActive ? activeColor : inactiveColor} />
                     <Text style={[styles.label, { color: isMapActive ? activeColor : inactiveColor }]}> 
                         Mapa
                     </Text>
@@ -56,7 +56,7 @@ export default function Footer() {
                         accessibilityLabel="Ir para lista de postos"
                         onPress={() => navigation.navigate('StationList')}
                     >
-                        <FontAwesome5 name="gas-pump" size={26} color="#FFFFFF" />
+                        <FontAwesome6 name="gas-pump" size={26} iconStyle="solid" color="#FFFFFF" />
                     </TouchableOpacity>
                     <Text style={[styles.centerLabel, { color: isPostoList ? activeColor : colors.textSecondary }]}>Postos</Text>
                 </View>
@@ -70,7 +70,7 @@ export default function Footer() {
                     accessibilityLabel="Ir para perfil"
                     accessibilityState={{ selected: isProfileActive }}
                 >
-                    <Feather name="user" size={22} color={isProfileActive ? activeColor : inactiveColor} />
+                    <FontAwesome6 name="circle-user" size={22} iconStyle="solid" color={isProfileActive ? activeColor : inactiveColor} />
                     <Text style={[styles.label, { color: isProfileActive ? activeColor : inactiveColor }]}>Perfil</Text>
                 </TouchableOpacity>
                 

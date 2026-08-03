@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
-import { Feather, FontAwesome5 } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { useAppTheme } from '../../theme/ThemeProvider'; // Ajuste o caminho
 import { styles } from './styles';
 
@@ -62,12 +62,12 @@ export function VehicleDropdown({
                                     }
                                 }}
                             >
-                                <FontAwesome5 name="car" size={16} color={colors.textSecondary} />
+                                <FontAwesome6 name="car" size={16} iconStyle='solid' color={colors.textSecondary} />
                                 <Text style={[styles.vehicleItemText, { color: colors.textPrimary }]} numberOfLines={1}>
                                     {item.name}
                                 </Text>
                                 {isSelected && (
-                                    <Feather name="edit-2" size={16} color={colors.primary} />
+                                    <FontAwesome6 name="pencil" size={16} iconStyle='solid' color={colors.primary} />
                                 )}
                             </TouchableOpacity>
                         );
@@ -78,7 +78,7 @@ export function VehicleDropdown({
                     style={styles.addVehicleModalButton}
                     onPress={onAddVehicle}
                 >
-                    <Feather name="plus-circle" size={18} color={colors.primary} />
+                    <FontAwesome6 name="circle-plus" size={18} iconStyle='solid' color={colors.primary} />
                     <Text style={[styles.addVehicleModalText, { color: colors.primary }]}>
                         Adicionar veículo
                     </Text>

@@ -19,12 +19,14 @@ interface ProgressBarProps {
 
 function BadgeRing({
   progress,
+  progressText,
   ringColor,
   trackColor,
   size = 88,
   strokeWidth = 7,
 }: {
   progress: number;
+  progressText: string;
   ringColor: string;
   trackColor: string;
   size?: number;
@@ -65,11 +67,15 @@ function BadgeRing({
         />
       </Svg>
 
-      <View style={styles.ringCenter}>
-        <Text style={[styles.ringPercent, { color: colors.textPrimary }]}>
-          {Math.round(normalized * 100)}%
-        </Text>
-      </View>
+        <View style={styles.ringCenter}>
+            <Text style={[styles.ringPercent, { color: colors.textPrimary }]}>
+                {Math.round(normalized * 100)}%
+            </Text>
+
+            <Text style={[styles.ringCount, { color: colors.textSecondary }]}>
+                {progressText}
+            </Text>
+        </View>
     </View>
   );
 }
@@ -88,7 +94,7 @@ export default function ProgressBar({
       style={[
         styles.container,
         {
-          backgroundColor: colors.surface,
+          backgroundColor: colors.background,
         },
       ]}
     >
@@ -97,6 +103,7 @@ export default function ProgressBar({
           progress={badge.progress}
           ringColor={badge.ringColor}
           trackColor={badge.trackColor}
+          progressText={badge.progressText}
         />
           
         {badge.tier !== 'none' ? (
@@ -109,9 +116,16 @@ export default function ProgressBar({
         ) : null}
 
         <View style={styles.meta}>
-          <Text style={[styles.helpText, { color: colors.textSecondary }]}>
-            Continue contribuindo para evoluir sua reputação na comunidade.
-          </Text>
+            {badge.tier !== 'esmeralda' ? (
+                <Text style={[styles.helpText, { color: colors.textSecondary }]}>
+                    Receba mais {badge.remaining} reações para obter o selo {badge.nextLabel}.
+                    Continue contribuindo para evoluir sua reputação na comunidade.
+                </Text>
+            ) : (
+                <Text style={[styles.helpText, { color: colors.textSecondary }]}>
+                    Parabéns! Você atingiu o nível máximo de reputação na comunidade.
+                </Text>
+            )}
         </View>
       </View>
     </View>

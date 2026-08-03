@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 import { styles } from './styles';
 import { useVersion } from './useVersion';
 
@@ -53,9 +53,9 @@ export default function Version() {
                         pressed && { opacity: 0.6 },
                     ]}
                     accessibilityRole="button"
-                    accessibilityLabel="Acessar Discord"
+                    accessibilityLabel="Enviar Email"
                 >
-                    <FontAwesome name="envelope" size={22} color={colors.primary} />
+                    <FontAwesome6 name="envelope" size={22} iconStyle='solid' color={colors.primary} />
                 </Pressable>
             </View>
             

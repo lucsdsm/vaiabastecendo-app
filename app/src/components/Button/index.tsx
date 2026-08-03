@@ -1,4 +1,4 @@
-import React, { cloneElement, isValidElement } from 'react';
+import React, { cloneElement } from 'react';
 import {
   ActivityIndicator,
   Text,

@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { LineChart } from 'react-native-gifted-charts';
-import { Feather } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { styles } from './styles';
 import {
   PriceHistoryTableProps,
   usePriceHistoryTable,
 } from './usePriceHistoryTable';
-import LoadingState from '../LoadingState';
+import LoadingState from '@components/LoadingState';
 import EmptyState from '@components/EmptyState';
 
 export default function PriceHistoryTable({
@@ -34,7 +34,7 @@ export default function PriceHistoryTable({
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <LoadingState message='Carregando histórico...' iconName='history' />
+        <LoadingState message='Carregando histórico...' iconName='run' />
       </View>
     );
   }
@@ -208,7 +208,7 @@ export default function PriceHistoryTable({
         ]}
       >
         <View style={styles.footerHeader}>
-          <Feather name="clock" size={14} color={colors.textSecondary} />
+          <FontAwesome6 name="clock" size={14} iconStyle='solid' color={colors.textSecondary} />
           <Text style={[styles.footerTitle, { color: colors.textSecondary }]}>
             Últimas atualizações
           </Text>

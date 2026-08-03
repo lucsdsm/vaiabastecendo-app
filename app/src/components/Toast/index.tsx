@@ -1,6 +1,6 @@
 import React from 'react';
 import { Animated, Text, View } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 
 import { useToastAnimation } from './useToastAnimation';
 import { styles } from './styles';
@@ -16,7 +16,7 @@ export function Toast() {
       ]}
     >
       <View style={styles.iconContainer}>
-        <Feather name={icon as any} size={18} color="#FFF" />
+        <FontAwesome6 name={icon as any} size={18} iconStyle='solid' color="#FFF" />
       </View>
 
       <View style={styles.textContainer}>

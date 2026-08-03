@@ -51,9 +51,9 @@ export function useToastAnimation() {
       case 'success':
         return { backgroundColor: colors.primary, icon: 'check-circle' };
       case 'danger':
-        return { backgroundColor: colors.danger, icon: 'alert-circle' };
+        return { backgroundColor: colors.danger, icon: 'circle-exclamation' };
       default:
-        return { backgroundColor: colors.info, icon: 'info' };
+        return { backgroundColor: colors.info, icon: 'circle-info' };
     }
   }
 

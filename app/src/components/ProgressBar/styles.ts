@@ -22,6 +22,12 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 1,
+  },
+  ringCount: {
+    fontSize: typography.size.xs,
+    fontWeight: typography.weight.medium,
+    lineHeight: 14,
   },
   ringPercent: {
     fontSize: typography.size.md,

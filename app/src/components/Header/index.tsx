@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { useNavigation } from '@react-navigation/native';
 
 import { styles } from './styles';
@@ -30,7 +30,7 @@ export default function Header() {
           </Text>
 
           <View style={styles.locationRow}>
-            <Feather name="map-pin" size={12} color={colors.primary} />
+            <FontAwesome6 name="location-crosshairs" size={12} iconStyle='solid' color={colors.primary} />
             <Text
               style={[styles.locationText, { color: colors.primary }]}
               numberOfLines={1}
@@ -55,9 +55,10 @@ export default function Header() {
             accessibilityLabel="Acessar diário de bordo"
             onPress={() => navigation.navigate('FuelLog')}
           >
-            <MaterialCommunityIcons
+            <FontAwesome6
               name="car"
               size={24}
+              iconStyle='solid'
               color={colors.textSecondary}
             />
           </Pressable>
@@ -75,9 +76,10 @@ export default function Header() {
             accessibilityRole="button"
             accessibilityLabel="Alternar tema"
           >
-            <Feather
+            <FontAwesome6
               name={isDark ? 'moon' : 'sun'}
               size={20}
+              iconStyle='solid'
               color={colors.primary}
             />
           </Pressable>

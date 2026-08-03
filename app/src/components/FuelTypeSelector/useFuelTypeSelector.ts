@@ -52,12 +52,6 @@ export function useFuelTypeSelector({
                             : 'transparent',
                 },
             ],
-            dotStyle: [
-                styles.chipDot,
-                {
-                    backgroundColor: isSelected ? accentColor : colors.textSecondary + '60',
-                },
-            ],
             textStyle: [
                 styles.chipTextBase,
                 size === 'compact' ? styles.chipTextCompact : styles.chipTextRegular,

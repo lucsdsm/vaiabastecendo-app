@@ -9,7 +9,7 @@ import { styles } from './styles';
 import { useToast } from '../../contexts/ToastContext';
 
 import Button from '../../components/Button';
-import { FontAwesome5 } from '@expo/vector-icons';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 
 interface PermissionScreenProps {
   onPermissionGranted: () => void;
@@ -64,7 +64,7 @@ export default function PermissionScreen({ onPermissionGranted }: PermissionScre
         <Button
           title={canAskAgain ? 'Permitir Localização' : 'Abrir Configurações'}
           onPress={canAskAgain ? handleRequestPermission : handleOpenSettings}
-          iconLeft={<FontAwesome5 name="location-arrow" size={16} color="#FFF" />}
+          iconLeft={<FontAwesome6 name="location-crosshairs" size={16} iconStyle='solid' color="#FFF" />}
         />
       </View>
     </SafeAreaView>
