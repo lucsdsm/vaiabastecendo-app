@@ -28,7 +28,7 @@ export interface CurrentPrice {
  */
 export interface LastUpdatedBy {
   name: string;
-  verified: boolean;
+  likes_received: number | null;
 }
 
 /**

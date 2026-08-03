@@ -202,8 +202,17 @@ export const styles = StyleSheet.create({
         fontSize: typography.size.xs,
         fontWeight: typography.weight.medium,
     },
+    authorRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     authorText: {
         fontSize: typography.size.xs,
         fontWeight: typography.weight.semibold,
+    },
+    authorBadge: {
+        marginLeft: spacing.xs,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });

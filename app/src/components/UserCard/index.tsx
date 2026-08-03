@@ -88,65 +88,6 @@ export default function UserCard({ userData }: UserCardProps) {
           </View>
         </View>
       </View>
-
-      <View style={styles.progressSection}>
-        {isVerified ? (
-          <View
-            style={[styles.badgeContainer, {backgroundColor: colors.primary + (isDark ? '1A' : '0A')}]}>
-            <View style={styles.row}>
-              <MaterialIcons
-                name="verified"
-                size={18}
-                color={colors.primary}
-              />
-              <Text style={[styles.badgeText, { color: colors.primary }]}> 
-                Motorista Verificado
-              </Text>
-            </View>
-
-            <Text style={[styles.badgeSubtext, { color: colors.textSecondary }]}> 
-              Obrigado por sua dedicação à comunidade!
-            </Text>
-          </View>
-        ) : (
-          <View style={styles.progressContainer}>
-            <View style={styles.headerRow}>
-              <Text style={[styles.progressTitle, { color: colors.textPrimary }]}> 
-                Caminho para a verificação
-              </Text>
-              <Text style={[styles.counter, { color: colors.textSecondary }]}> 
-                {likesReceived} / {totalRequired} curtidas
-              </Text>
-            </View>
-
-            <View
-              style={[
-                styles.progressBarTrack,
-                {
-                  backgroundColor: isDark
-                    ? 'rgba(255,255,255,0.08)'
-                    : 'rgba(0,0,0,0.04)',
-                },
-              ]}
-            >
-              <View
-                style={[
-                  styles.progressBarFill,
-                  {
-                    backgroundColor: colors.primary,
-                    width: `${percentage * 100}%`,
-                  },
-                ]}
-              />
-            </View>
-
-            <Text style={[styles.helpText, { color: colors.textSecondary }]}> 
-              Receba {totalRequired} curtidas para ganhar o selo e se tornar uma
-              referência na comunidade.
-            </Text>
-          </View>
-        )}
-      </View>
     </View>
   );
 }

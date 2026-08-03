@@ -8,7 +8,8 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { Feather, FontAwesome, MaterialIcons } from '@expo/vector-icons';
+
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 
 import { styles } from './styles';
 import { CurrentPrice, StationCardProps, useStationCard } from './useStationCard';
@@ -16,6 +17,8 @@ import { CurrentPrice, StationCardProps, useStationCard } from './useStationCard
 import { formatarTempoDecorrido } from '../../utils/dateFormatter';
 import { flagsDictionary } from '../../utils/flagsDictionary';
 import { getReadableColor } from '../../utils/color';
+
+import { getBadgeInfo } from '../../utils/badgeRules';
 
 export type { CurrentPrice, StationCardProps } from './useStationCard';
 
@@ -69,6 +72,7 @@ export default function StationCard({
 
   const logoSource = flagsDictionary[data.brand];
   const hasPrices = localPrices.length > 0;
+  const badge = getBadgeInfo(data.lastUpdatedBy.likes_received ?? 0);
 
   return (
     <LocalCard style={[styles.card, {backgroundColor: colors.surface}]}>
@@ -85,7 +89,7 @@ export default function StationCard({
             <View style={styles.metaRow}>
               {rating !== undefined && rating !== null && (
                 <View style={styles.ratingInlineRow}>
-                  <FontAwesome name="star" size={12} color="#FFB300" />
+                  <FontAwesome6 name="star" size={12} color="#FFB300" iconStyle='solid'/>
                   <Text style={[styles.ratingText, { color: colors.textPrimary }]}>
                     {rating.toFixed(1)}
                   </Text>
@@ -96,7 +100,7 @@ export default function StationCard({
                 label={data.distance}
                 color={colors.primary + (isDark ? '22' : '12')}
                 textColor={colors.primary}
-                icon={<Feather name="navigation" size={11} color={colors.primary} />}
+                icon={<FontAwesome6 name="compass" size={11} color={colors.primary} iconStyle='solid' />}
               />
             </View>
 
@@ -120,7 +124,7 @@ export default function StationCard({
               accessibilityRole="button"
               accessibilityLabel="Abrir direções no mapa"
             >
-              <Feather name="map-pin" size={16} color={colors.primary} />
+              <FontAwesome6 name="map-location" size={16} color={colors.primary} iconStyle='solid'/>
             </TouchableOpacity>
           </View>
           
@@ -196,7 +200,7 @@ export default function StationCard({
                     accessibilityRole="button"
                     accessibilityLabel={`Curtir preço de ${item.fuelType}`}
                   >
-                    <Feather
+                    <FontAwesome6
                       name={item.isLiked ? 'heart' : 'thumbs-up'}
                       size={12}
                       color={item.isLiked ? colors.danger : colors.textSecondary}
@@ -233,7 +237,7 @@ export default function StationCard({
                   { backgroundColor: colors.primary + '20' },
                 ]}
               >
-                <Feather name="plus" size={18} color={colors.primary} />
+                <FontAwesome6 name="plus" size={18} color={colors.primary} iconStyle='solid' />
               </View>
               <View style={styles.noPriceTextContainer}>
                 <Text style={[styles.noPriceTitle, { color: colors.textPrimary }]}>
@@ -260,7 +264,7 @@ export default function StationCard({
               },
             ]}
           >
-            <Feather
+            <FontAwesome6
               name="user"
               size={11}
               color={colors.textSecondary}
@@ -270,19 +274,21 @@ export default function StationCard({
               Atualizado {formatarTempoDecorrido(data.lastUpdatedAt)}por{' '}
             </Text>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={styles.authorRow}>
               <Text style={[styles.authorText, { color: colors.textPrimary }]}>
                 {data.lastUpdatedBy.name}
               </Text>
-
-              {data.lastUpdatedBy.verified && (
-                <MaterialIcons
-                  name="verified"
-                  size={16}
-                  color={colors.primary}
-                  style={{ marginLeft: 3 }}
-                />
-              )}
+              
+              {badge.tier !== 'none' ? (
+                <View style={styles.authorBadge}>
+                  <FontAwesome6
+                    size={12}
+                    name={getBadgeInfo(data.lastUpdatedBy.likes_received ?? 0).iconName}
+                    color={getBadgeInfo(data.lastUpdatedBy.likes_received ?? 0).ringColor}
+                    iconStyle='solid'          
+                  />
+                </View>
+              ) : null}
             </View>
           </View>
         </TouchableOpacity>

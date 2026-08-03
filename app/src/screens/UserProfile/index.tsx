@@ -9,8 +9,10 @@ import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import Version from '../../components/Version';
+
 import UserCard from '../../components/UserCard';
+import ProgressBar from '../../components/ProgressBar';
+import Version from '../../components/Version';
 import UserUpdateHistory from '../../components/UserUpdateHistory';
 import { useUserProfile } from '../../components/UserCard/useUserProfile';
 import { useAppTheme } from '../../theme/ThemeProvider';
@@ -89,6 +91,7 @@ export default function UserProfile() {
         ) : token ? (
           <View>
             <UserCard userData={userData} />
+            <ProgressBar userData={userData} />
             {userData?.id ? <UserUpdateHistory userId={userData.id} /> : null}
           </View>
         ) : (
