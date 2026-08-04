@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import * as Location from 'expo-location';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useAuth } from '../contexts/AuthContext';
 import { StationCardProps } from '../components/StationCard';
@@ -81,7 +82,11 @@ export function useStations() {
             longitude = location.coords.longitude.toString();
           }
         }
-
+        
+        const storedRadius = await AsyncStorage.getItem('@search_radius_km');
+        const radiusKm =
+          storedRadius === '2' || storedRadius === '10' ? storedRadius : '5';
+        
         const baseUrl = normalizeApiBaseUrl(process.env.EXPO_PUBLIC_API_URL);
         const params = new URLSearchParams();
 
@@ -89,6 +94,9 @@ export function useStations() {
           params.set('lat', latitude);
           params.set('lng', longitude);
         }
+
+        params.set('radius_km', radiusKm);
+        params.set('page_size', '50');
 
         const query = params.toString();
         const requestUrl = query
