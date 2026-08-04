@@ -162,8 +162,6 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         padding: spacing.lg,
         borderRadius: radius.lg,
-        borderWidth: 1.5,
-        borderStyle: 'dashed',
         gap: spacing.md,
     },
     noPriceIconContainer: {

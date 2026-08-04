@@ -118,21 +118,6 @@ export function useUserProfile() {
     }
   }, [token, refreshUser, showToast]);
 
-  const handleMockLogin = useCallback(() => {
-    if (!__DEV__) return;
-
-    const mockGoogleAccessToken = '';
-
-    if (!mockGoogleAccessToken) {
-      showToast('Defina um token de teste antes de usar o login simulado.', 'info');
-      return;
-    }
-
-    exchangeGoogleToken(mockGoogleAccessToken).catch((error) => {
-      console.error('Erro no login simulado:', error);
-    });
-  }, [exchangeGoogleToken, showToast]);
-
   return {
     userData: user,
     token,
@@ -142,6 +127,5 @@ export function useUserProfile() {
     isInitializingAuth,
     handleLogout,
     handleRefreshProfile,
-    handleMockLogin,
   };
 }

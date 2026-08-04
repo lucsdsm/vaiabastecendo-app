@@ -9,6 +9,7 @@ import { Toast } from './src/components/Toast';
 import { AuthProvider, useAuth } from './src/contexts/AuthContext';
 import { FuelTypeProvider } from './src/contexts/FuelTypesContext';
 import { ToastProvider } from './src/contexts/ToastContext';
+
 import AddFuelLogScreen from './src/screens/AddFuelLog';
 import AddVehicleScreen from './src/screens/AddVehicle';
 import FuelLogScreen from './src/screens/FuelLog';
@@ -17,6 +18,8 @@ import PermissionScreen from './src/screens/PermissionScreen';
 import StationListScreen from './src/screens/StationList';
 import UpdatePriceScreen from './src/screens/UpdatePrice';
 import UserProfileScreen from './src/screens/UserProfile';
+import SettingsScreen from './src/screens/Settings';
+
 import { ThemeProvider, useAppTheme } from './src/theme/ThemeProvider';
 import { initDatabase } from './src/database';
 
@@ -29,6 +32,7 @@ type RootStackParamList = {
   FuelLog: undefined;
   AddVehicle: undefined;
   AddFuelLog: undefined;
+  Settings: undefined;
 };
 
 type AppNavigatorProps = {
@@ -89,6 +93,7 @@ function AppNavigator({
             <Stack.Screen name="UserProfile" component={UserProfileScreen} />
             <Stack.Screen name="UpdatePrice" component={UpdatePriceScreen} />
             <Stack.Screen name="FuelLog" component={FuelLogScreen} />
+            <Stack.Screen name="Settings" component={SettingsScreen} />
             <Stack.Screen name="AddVehicle" component={AddVehicleScreen} />
             <Stack.Screen name="AddFuelLog" component={AddFuelLogScreen} />
           </>

@@ -29,6 +29,7 @@ export const styles = StyleSheet.create({
         textAlign: 'left',
         fontSize: typography.size.xxl, 
         fontWeight: typography.weight.black,
+        padding: spacing.sm,
     },
     rightContent: {
         justifyContent: 'center',

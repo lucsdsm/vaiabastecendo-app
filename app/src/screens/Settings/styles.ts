@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { spacing, typography  } from '../../theme/tokens';
+import { spacing, typography, radius  } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
@@ -37,11 +37,18 @@ export const styles = StyleSheet.create({
     scrollContent: {
         flexGrow: 1,
     },
-    scrollContentGuest: {
-        flexGrow: 1,
-        justifyContent: 'center',
-    },
-    guestContainer: {
+    settingsButton: {
+        borderRadius: radius.md,
+        padding: spacing.md,
+        marginVertical: spacing.sm,
+        borderWidth: 1,
+        flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
+        gap: spacing.sm,
+    },
+    settingsButtonText: {
+        fontSize: typography.size.md,
+        fontWeight: typography.weight.bold,
     },
 });

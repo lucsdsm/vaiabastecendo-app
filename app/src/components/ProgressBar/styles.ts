@@ -6,8 +6,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     padding: spacing.md,
     overflow: 'hidden',
-    marginBottom: spacing.md,
-    borderRadius: radius.md,
+    borderRadius: radius.xl,
   },
   cardBody: {
     alignItems: 'center',

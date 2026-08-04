@@ -94,7 +94,7 @@ export default function ProgressBar({
       style={[
         styles.container,
         {
-          backgroundColor: colors.background,
+          backgroundColor: colors.surface,
         },
       ]}
     >
@@ -108,10 +108,12 @@ export default function ProgressBar({
           
         {badge.tier !== 'none' ? (
             <View style={[styles.badgePill, { backgroundColor: badge.trackColor }]}>
-                <FontAwesome6 name="medal" size={12} color={badge.ringColor} iconStyle='solid' />
+                
                 <Text style={[styles.badgePillText, { color: badge.ringColor }]}>
                     {badge.label}
                 </Text>
+
+                <FontAwesome6 name={badge.iconName} size={12} color={badge.ringColor} iconStyle='solid' />
             </View>
         ) : null}
 

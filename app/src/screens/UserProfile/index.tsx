@@ -4,15 +4,16 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Image,
 } from 'react-native';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-
 import UserCard from '../../components/UserCard';
 import ProgressBar from '../../components/ProgressBar';
+import Banner from '../../components/Banner';
 import Version from '../../components/Version';
 import UserUpdateHistory from '../../components/UserUpdateHistory';
 import { useUserProfile } from '../../components/UserCard/useUserProfile';
@@ -43,7 +44,6 @@ export default function UserProfile() {
     request,
     promptAsync,
     handleLogout,
-    handleMockLogin,
   } = useUserProfile();
 
   return (
@@ -80,10 +80,7 @@ export default function UserProfile() {
             </TouchableOpacity>
 
             <View style={styles.headerTitleContainer}>
-              <Text
-                style={[styles.headerTitle, { color: colors.textPrimary }]}
-                onLongPress={__DEV__ ? handleMockLogin : undefined}
-              >
+              <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
                 {user?.username || ''}
               </Text>
             </View>
@@ -107,6 +104,22 @@ export default function UserProfile() {
           <View>
             <UserCard userData={userData} />
             <ProgressBar userData={userData} />
+
+            <Banner
+                text="Contribua com a comunidade e se destaque!"
+                gradientColors={[colors.success, colors.success, colors.primary]}
+                logoElement={
+                  <Image
+                    source={require('../../../assets/images/user.png')}
+                    style={{
+                      width: 128,
+                      height: 128,
+                      resizeMode: 'contain',
+                    }}
+                  />
+                }
+              />
+            
             {userData?.id ? <UserUpdateHistory userId={userData.id} /> : null}
           </View>
         ) : (

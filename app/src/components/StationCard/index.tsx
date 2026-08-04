@@ -241,10 +241,10 @@ export default function StationCard({
               </View>
               <View style={styles.noPriceTextContainer}>
                 <Text style={[styles.noPriceTitle, { color: colors.textPrimary }]}>
-                  Sem preços cadastrados
+                  Sem preços cadastrados.
                 </Text>
                 <Text style={[styles.noPriceText, { color: colors.textSecondary }]}>
-                  Seja o primeiro a informar os preços!
+                  Clique aqui e informe os preços!
                 </Text>
               </View>
             </View>

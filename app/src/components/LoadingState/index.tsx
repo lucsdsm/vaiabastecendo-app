@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, Animated } from 'react-native';
+import { View, Text, Animated, Image } from 'react-native';
 
 import { styles } from './styles';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { iconsDictionary } from '../../utils/iconsDictionary';
+
+const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 interface LoadingStateProps {
   message?: string;
@@ -18,6 +20,9 @@ export default function LoadingState({
 
   const scaleAnim = useRef(new Animated.Value(0.96)).current;
   const opacityAnim = useRef(new Animated.Value(0.75)).current;
+  const imageSource = iconName && iconsDictionary[iconName]
+    ? iconsDictionary[iconName]
+    : iconsDictionary.logo;
 
   useEffect(() => {
     const animation = Animated.loop(
@@ -56,8 +61,9 @@ export default function LoadingState({
 
   return (
     <View style={styles.container}>
-      <Animated.Image
-        source={iconName ? iconsDictionary[iconName] : iconsDictionary.logo}
+      <AnimatedImage
+        source={imageSource}
+        resizeMode="contain"
         style={{
           width: 128,
           height: 128,

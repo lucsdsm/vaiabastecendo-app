@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
-import { useNavigation } from '@react-navigation/native';
 
 import { styles } from './styles';
 import { useHeader } from './useHeader';
@@ -15,8 +14,6 @@ export default function Header() {
     greeting,
     locationName,
   } = useHeader();
-
-  const navigation = useNavigation<any>();
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -42,26 +39,6 @@ export default function Header() {
         </View>
 
         <View style={styles.actionsContainer}>
-          <Pressable
-            style={({ pressed }) => [
-              styles.themeButton,
-              {
-                backgroundColor: colors.background + (isDark ? '14' : '0D'),
-                borderColor: colors.background + '40',
-              },
-              pressed && { opacity: 0.6 },
-            ]}
-            accessibilityRole="button"
-            accessibilityLabel="Acessar diário de bordo"
-            onPress={() => navigation.navigate('FuelLog')}
-          >
-            <FontAwesome6
-              name="car"
-              size={20}
-              iconStyle='solid'
-              color={colors.textSecondary}
-            />
-          </Pressable>
 
           <Pressable
             onPress={toggleTheme}
