@@ -26,8 +26,8 @@ export default function Settings() {
     const navigation = useNavigation<any>();
     const { isDark, toggleTheme } = useSettings();
 
-    const radiusValues: Array<2 | 4 | 6> = [2, 4, 6];
-    const [radiusKm, setRadiusKm] = React.useState<2 | 4 | 6>(4);
+    const radiusValues: Array<2 | 3 | 5> = [2, 3, 5];
+    const [radiusKm, setRadiusKm] = React.useState<2 | 3 | 5>(3);
     const sliderIndex = radiusValues.indexOf(radiusKm);
 
     React.useEffect(() => {
@@ -41,10 +41,10 @@ export default function Settings() {
                     return;
                 }
 
-                if (storedRadius === '2' || storedRadius === '4' || storedRadius === '6') {
-                    setRadiusKm(Number(storedRadius) as 2 | 4 | 6);
+                if (storedRadius === '2' || storedRadius === '3' || storedRadius === '5') {
+                    setRadiusKm(Number(storedRadius) as 2 | 3 | 5);
                 } else {
-                    setRadiusKm(4);
+                    setRadiusKm(3);
                 }
             } catch (error) {
                 console.warn('Erro ao carregar raio de busca:', error);
@@ -58,7 +58,7 @@ export default function Settings() {
         };
     }, []);
 
-    const handleSelectRadius = async (value: 2 | 4 | 6) => {
+    const handleSelectRadius = async (value: 2 | 3 | 5) => {
         try {
             setRadiusKm(value);
             await AsyncStorage.setItem('@search_radius_km', String(value));
@@ -158,8 +158,8 @@ export default function Settings() {
 
                         <View style={styles.sliderLabels}>
                             <Text style={[styles.sliderLabel, { color: colors.textSecondary }]}>2 km</Text>
-                            <Text style={[styles.sliderLabel, { color: colors.textSecondary }]}>4 km</Text>
-                            <Text style={[styles.sliderLabel, { color: colors.textSecondary }]}>6 km</Text>
+                            <Text style={[styles.sliderLabel, { color: colors.textSecondary }]}>3 km</Text>
+                            <Text style={[styles.sliderLabel, { color: colors.textSecondary }]}>5 km</Text>
                         </View>
                     </View>
                 </View>

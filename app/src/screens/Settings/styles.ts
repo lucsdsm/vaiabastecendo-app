@@ -58,8 +58,6 @@ export const styles = StyleSheet.create({
   },
 
   sliderCard: {
-    padding: 16,
-    borderRadius: 16,
     gap: 12,
   },
 

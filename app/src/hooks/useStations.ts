@@ -85,7 +85,7 @@ export function useStations() {
         
         const storedRadius = await AsyncStorage.getItem('@search_radius_km');
         const radiusKm =
-          storedRadius === '2' || storedRadius === '10' ? storedRadius : '5';
+          storedRadius === '2' || storedRadius === '3' ? storedRadius : '5';
         
         const baseUrl = normalizeApiBaseUrl(process.env.EXPO_PUBLIC_API_URL);
         const params = new URLSearchParams();
@@ -96,7 +96,7 @@ export function useStations() {
         }
 
         params.set('radius_km', radiusKm);
-        params.set('page_size', '50');
+        params.set('page_size', '200');
 
         const query = params.toString();
         const requestUrl = query
@@ -139,6 +139,7 @@ export function useStations() {
         });
 
         setStations(mappedStations);
+        console.log('Total de postos carregados:', mappedStations.length);
       } catch (error) {
         console.error('Erro ao buscar postos:', error);
         setError('Verifique sua conexão ou confirme com o suporte a disponibilidade da aplicação.');
