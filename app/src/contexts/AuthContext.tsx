@@ -46,6 +46,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isInitializingAuth, setIsInitializingAuth] = useState(true);
 
   const tokenRef = useRef<string | null>(null);
+  const refreshPromisesRef = useRef(new Map<string, Promise<AuthUser | null>>());
 
   useEffect(() => {
     tokenRef.current = token;
@@ -87,23 +88,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refreshUserWithRetry = useCallback(
     async (authToken: string) => {
-      const maxAttempts = 3;
-      const delayMs = 500;
+      const existingPromise = refreshPromisesRef.current.get(authToken);
 
-      for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-        const nextUser = await fetchCurrentUser(authToken);
-        const hasProfileData = Boolean(
-          nextUser.username || nextUser.first_name || nextUser.photo
-        );
-
-        if (hasProfileData || attempt === maxAttempts) {
-          return nextUser;
-        }
-
-        await new Promise((resolve) => setTimeout(resolve, delayMs));
+      if (existingPromise) {
+        return existingPromise;
       }
 
-      return null;
+      const refreshPromise = (async () => {
+        const maxAttempts = 3;
+        const delayMs = 500;
+
+        for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+          const nextUser = await fetchCurrentUser(authToken);
+          const hasProfileData = Boolean(
+            nextUser.username || nextUser.first_name || nextUser.photo
+          );
+
+          if (hasProfileData || attempt === maxAttempts) {
+            return nextUser;
+          }
+
+          await new Promise((resolve) => setTimeout(resolve, delayMs));
+        }
+
+        return null;
+      })();
+
+      refreshPromisesRef.current.set(authToken, refreshPromise);
+
+      try {
+        return await refreshPromise;
+      } finally {
+        refreshPromisesRef.current.delete(authToken);
+      }
     },
     [fetchCurrentUser]
   );
