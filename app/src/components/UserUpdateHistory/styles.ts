@@ -18,6 +18,9 @@ export const styles = StyleSheet.create({
   listContent: {
   },
 
+  loadingContent: {
+  },
+
   timelineRow: {
     flexDirection: 'row',
     alignItems: 'stretch',

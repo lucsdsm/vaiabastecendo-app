@@ -49,9 +49,9 @@ export function useToastAnimation() {
   function getToastStyle() {
     switch (toastState.type) {
       case 'success':
-        return { backgroundColor: colors.primary, icon: 'check-circle' };
+        return { backgroundColor: colors.primary, icon: 'circle-check' };
       case 'danger':
-        return { backgroundColor: colors.danger, icon: 'circle-exclamation' };
+        return { backgroundColor: colors.danger, icon: 'exclamation-triangle' };
       default:
         return { backgroundColor: colors.info, icon: 'circle-info' };
     }

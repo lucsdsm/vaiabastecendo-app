@@ -1,13 +1,16 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { StatusBar } from 'expo-status-bar';
 
-import Footer from '../../components/Footer';
 import StationCard from '../../components/StationCard';
 import Map from '../../components/Map';
 import { styles } from './styles';
 import { useMapScreen } from '../../components/Map/useMapScreen';
+
+import { useNavigation } from '@react-navigation/native';
+
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+
 
 /**
  * Tela de visualização em mapa com seleção de postos e card em sobreposição.
@@ -26,14 +29,31 @@ export default function MapScreen() {
     refetch,
   } = useMapScreen();
 
-  return (
-    <SafeAreaView
-      edges={['top']}
-      style={[styles.container, { backgroundColor: colors.background }]}
-    >
-      <StatusBar style={isDark ? 'light' : 'dark'} />
+  const navigation = useNavigation<any>();
 
+  return (
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.content}>
+        <Pressable
+          onPress={() => navigation.goBack()}
+          style={({ pressed }) => [
+            styles.fab,
+            {
+              backgroundColor: colors.surface,
+            },
+            pressed && { opacity: 0.6 },
+          ]}
+          accessibilityRole="button"
+          accessibilityLabel="Voltar"
+        >
+          <FontAwesome6
+            name="arrow-left"
+            size={20}
+            iconStyle='solid'
+            color={colors.primary}
+          />
+        </Pressable>
+      
         <Map
           stations={stations}
           initialRegion={initialRegion}
@@ -53,7 +73,6 @@ export default function MapScreen() {
         )}
       </View>
 
-      <Footer />
-    </SafeAreaView>
+    </View>
   );
 }

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { spacing, elevation } from '../../theme/tokens';
+import { spacing, elevation, radius } from '../../theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
@@ -8,6 +8,17 @@ export const styles = StyleSheet.create({
     content: {
         flex: 1,
         position: 'relative',
+    },
+    fab: {
+        position: 'absolute',
+        top: 25,
+        left: 10,
+        width: 45,
+        height: 45,
+        borderRadius: radius.pill,
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 5,
     },
     cardOverlay: {
         position: 'absolute',

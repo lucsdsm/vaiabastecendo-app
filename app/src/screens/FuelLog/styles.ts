@@ -15,7 +15,8 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: spacing.md,
         position: 'relative',
-        minHeight: 56,
+        minHeight: 69,
+        marginTop: spacing.md,
     },
     headerActionButton: {
         width: 40,
@@ -40,8 +41,8 @@ export const styles = StyleSheet.create({
     },
     fab: {
         position: 'absolute',
-        bottom: 30,
-        right: 24,
+        bottom: 100,
+        right: 30,
         width: 60,
         height: 60,
         borderRadius: 30,

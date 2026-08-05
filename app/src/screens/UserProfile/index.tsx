@@ -26,6 +26,7 @@ import LoadingState from '@components/LoadingState';
 import EmptyState from '@components/EmptyState';
 
 import Button from '../../components/Button';
+import Footer from '../../components/Footer';
 
 /**
  * Tela de perfil do usuário com autenticação, resumo da conta
@@ -51,7 +52,7 @@ export default function UserProfile() {
       edges={['top']}
       style={[styles.container, { backgroundColor: colors.background }]}>
 
-      {!token && styles.scrollContentGuest ? (
+      {/* {!token && styles.scrollContentGuest ? (
       <View style={styles.header}>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
@@ -60,7 +61,7 @@ export default function UserProfile() {
             <FontAwesome6 name="arrow-left" size={20} iconStyle='solid' color={colors.textPrimary} />
           </TouchableOpacity>
       </View>
-      ) : null}
+      ) : null} */}
     
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -142,6 +143,7 @@ export default function UserProfile() {
 
         <Version />
       </ScrollView>
+      <Footer />
     </SafeAreaView>
   );
 }

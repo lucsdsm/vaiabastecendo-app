@@ -4,7 +4,6 @@ import { spacing, typography, radius } from "../../theme/tokens";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: spacing.md,
   },
   content: {
     flex: 1,
@@ -15,8 +14,9 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: spacing.md,
+    paddingHorizontal: spacing.md,
     position: "relative",
+    marginTop: spacing.md,
   },
   headerActionButton: {
     width: 40,
@@ -26,6 +26,7 @@ export const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
+    marginHorizontal: spacing.md,
   },
   settingsButton: {
     borderRadius: radius.md,

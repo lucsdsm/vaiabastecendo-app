@@ -16,6 +16,7 @@ import { useSettings } from './useSettings';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
 import Version from '../../components/Version';
+import Footer from '../../components/Footer';
 
 /**
  * Tela de configurações do aplicativo.
@@ -162,9 +163,9 @@ export default function Settings() {
                         </View>
                     </View>
                 </View>
+                <Version />
             </ScrollView>
-
-            <Version />
+            <Footer />
         </SafeAreaView>
     );
 }

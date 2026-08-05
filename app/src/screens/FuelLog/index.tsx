@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { styles } from './styles';
 import { useFuelLog } from './useFuelLog';
@@ -8,9 +7,9 @@ import { VehicleDropdown } from '../../components/VehicleDropdown';
 import { FuelLogCard } from '../../components/FuelLogCard';
 import EmptyState from '@components/EmptyState';
 import LoadingState from '../../components/LoadingState';
+import Footer from '../../components/Footer';
 
 export default function FuelLogScreen() {
-    const insets = useSafeAreaInsets();
     const {
         colors,
         vehicles,
@@ -28,7 +27,7 @@ export default function FuelLogScreen() {
     } = useFuelLog();
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.background, paddingTop: insets.top }]}>
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
             
             <View style={styles.header}>
                 <TouchableOpacity onPress={goBack} style={styles.headerActionButton}>
@@ -108,10 +107,11 @@ export default function FuelLogScreen() {
                     onPress={handleAddFuelLog}
                     activeOpacity={0.8}
                 >
-                    <FontAwesome6 name="gas-pump" size={22} iconStyle='solid' color="#FFF" />
+                    <FontAwesome6 name="plus" size={22} iconStyle='solid' color="#FFF" />
                 </TouchableOpacity>
             )}
 
+            <Footer />
         </View>
     );
 }

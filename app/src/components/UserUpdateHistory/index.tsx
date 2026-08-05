@@ -38,15 +38,21 @@ export default function UserUpdateHistory({ userId }: UserUpdateHistoryProps) {
   if (loading) {
     return (
       <View style={styles.container}>
-        <LoadingState message='Carregando histórico...' iconName='history' />
+        {header}
+        <View style={styles.loadingContent}>
+          <LoadingState message='Carregando histórico...' iconName='history' />
+        </View>
       </View>
     );
   }
 
   if (!updates.length) {
     return (
-      <View style={ styles.container}>
-        <EmptyState title="Você ainda não tem um histórico de atualizações." message='Suas próximas contribuições aparecerão aqui com data, preço e posto.' iconName='fail' />
+      <View style={styles.container}>
+        {header}
+        <View style={styles.loadingContent}>
+          <EmptyState title="Você ainda não tem um histórico de atualizações." message='Suas próximas contribuições aparecerão aqui com data, preço e posto.' iconName='fail' />
+        </View>
       </View>
     );
   }
