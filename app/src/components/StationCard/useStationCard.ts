@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { useAppTheme } from '../../theme/ThemeProvider';
-import { useAuth } from '../../contexts/AuthContext';
-import { useToast } from '../../contexts/ToastContext';
+import { useAppTheme } from '@theme/ThemeProvider';
+import { useAuth } from '@contexts/AuthContext';
+import { useToast } from '@contexts/ToastContext';
 
 /**
  * Estrutura de dados para preços atuais exibidos no card e no modal do posto.

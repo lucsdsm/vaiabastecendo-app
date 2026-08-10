@@ -1,8 +1,11 @@
 import React from 'react';
 import { View, Text, Pressable } from 'react-native';
+
 import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
-import { styles } from './styles';
+
 import { useVersion } from './useVersion';
+
+import { styles } from './styles';
 
 export default function Version() {
     const { 
@@ -16,7 +19,7 @@ export default function Version() {
 
     return (
         <View style={styles.container}>
-            <Text style={[styles.appName, { color: colors.textPrimary }]}>
+            <Text style={[styles.name, { color: colors.textPrimary }]}>
                 Vai Abastecendo
             </Text>
             
@@ -25,11 +28,11 @@ export default function Version() {
             </Text>
 
             {/* Bloco de Redes Sociais / Contato */}
-            <View style={styles.socialContainer}>
+            <View style={styles.social}>
                 <Pressable
                     onPress={() => handleOpenLink('https://www.linkedin.com/in/lucas-eduardo-84485359/')}
                     style={({ pressed }) => [
-                        styles.socialButton, 
+                        styles.button, 
                         {
                             backgroundColor: colors.primary + (isDark ? '14' : '0D'),
                             borderColor: colors.primary + '40',
@@ -45,7 +48,7 @@ export default function Version() {
                 <Pressable
                     onPress={handleEmailSupport}
                     style={({ pressed }) => [
-                        styles.socialButton,
+                        styles.social,
                         {
                             backgroundColor: colors.primary + (isDark ? '14' : '0D'),
                             borderColor: colors.primary + '40',
@@ -59,7 +62,7 @@ export default function Version() {
                 </Pressable>
             </View>
             
-            <View style={styles.copyrightContainer}>
+            <View style={styles.copyright}>
                 <Text style={[styles.text, { color: colors.textSecondary }]}>
                     © {currentYear} Vai Abastecendo.
                 </Text>

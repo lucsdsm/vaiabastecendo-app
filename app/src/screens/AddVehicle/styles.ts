@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: spacing.md,
         paddingVertical: spacing.sm,
-        minHeight: 56,
+        minHeight: 55,
         position: 'relative',
     },
     headerActionButton: {

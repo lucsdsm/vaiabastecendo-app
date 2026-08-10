@@ -1,8 +1,10 @@
 import React, { useMemo } from 'react';
 import { View, Text, Image } from 'react-native';
+
+import { useAppTheme } from '@theme/ThemeProvider';
+
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 
-import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
 
 export interface UserCardData {
@@ -20,10 +22,7 @@ interface UserCardProps {
 }
 
 export default function UserCard({ userData }: UserCardProps) {
-  const { colors, isDark } = useAppTheme();
-
-  const totalRequired = 100;
-  const isVerified = userData?.verified;
+  const { colors } = useAppTheme();
 
   const displayName = useMemo(() => {
     const firstName = userData?.first_name?.trim() ?? '';
@@ -40,19 +39,15 @@ export default function UserCard({ userData }: UserCardProps) {
   const likesReceived = userData?.likes_received ?? 0;
   const likesGiven = userData?.likes_given ?? 0;
 
-  const percentage = useMemo(() => {
-    return Math.min(1, likesReceived / totalRequired);
-  }, [likesReceived, totalRequired]);
-
   return (
     <View style={styles.container}>
-      <View style={styles.profileSection}>
+      <View style={styles.section}>
         {userData?.photo ? (
           <Image source={{ uri: userData.photo }} style={styles.avatar} />
         ) : (
           <View
             style={[
-              styles.avatarPlaceholder,
+              styles.placeholder,
               { backgroundColor: colors.primary + '20' },
             ]}
           >
@@ -60,28 +55,28 @@ export default function UserCard({ userData }: UserCardProps) {
           </View>
         )}
 
-        <View style={styles.infoSection}>
-          <View style={styles.nameContainer}>
-            <Text style={[styles.usernameText, { color: colors.textPrimary }]}> 
+        <View style={styles.info}>
+          <View style={styles.name}>
+            <Text style={[styles.username, { color: colors.textPrimary }]}> 
               {displayName}
             </Text>
           </View>
 
-          <View style={styles.statsContainer}>
-            <View style={styles.statItem}>
-              <Text style={[styles.statNumber, { color: colors.textPrimary }]}> 
+          <View style={styles.stats}>
+            <View style={styles.item}>
+              <Text style={[styles.number, { color: colors.textPrimary }]}> 
                 {likesReceived}
               </Text>
-              <Text style={[styles.statLabel, { color: colors.textSecondary }]}> 
+              <Text style={[styles.label, { color: colors.textSecondary }]}> 
                 Recebidas
               </Text>
             </View>
 
-            <View style={styles.statItem}>
-              <Text style={[styles.statNumber, { color: colors.textPrimary }]}> 
+            <View style={styles.item}>
+              <Text style={[styles.number, { color: colors.textPrimary }]}> 
                 {likesGiven}
               </Text>
-              <Text style={[styles.statLabel, { color: colors.textSecondary }]}> 
+              <Text style={[styles.label, { color: colors.textSecondary }]}> 
                 Enviadas
               </Text>
             </View>

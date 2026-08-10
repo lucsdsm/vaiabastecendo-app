@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, Image, Animated } from 'react-native';
-import { styles } from './styles';
+
 import { useLoadingScreen } from './useLoadingScreen';
+
+import { styles } from './styles';
 
 interface LoadingScreenProps {
   onFinish: () => void;
@@ -9,7 +11,7 @@ interface LoadingScreenProps {
 }
 
 /**
- * Splash de carregamento inicial com fade-out ao finalizar a animacao.
+ * Splash de carregamento inicial com fade-out ao finalizar a animação.
 */
 export default function LoadingScreen({ onFinish, canFinish }: LoadingScreenProps) {
   const { colors, opacityAnim, rotateInterpolated } = useLoadingScreen(onFinish, canFinish);
@@ -30,26 +32,26 @@ export default function LoadingScreen({ onFinish, canFinish }: LoadingScreenProp
         </Text>
         <Text style={[styles.subtitle, { color: colors.textSecondary }]}>Ligando os motores...</Text>
 
-        <View style={styles.gaugeContainer}>
-          {/* Arco de Fundo do Medidor */}
-          <View style={[styles.gaugeBackground, { borderColor: colors.border }]} />
+        <View style={styles.gauge}>
+          {/* Arco de fundo do medidor */}
+          <View style={[styles.background, { borderColor: colors.border }]} />
           
-          {/* Marcadores E (Vazio) e F (Cheio) */}
-          <View style={styles.gaugeLabels}>
-            <Text style={[styles.labelText, { color: '#E74C3C' }]}>E</Text>
-            <Text style={[styles.labelText, { color: '#2ECC71' }]}>F</Text>
+          {/* Marcadores E (vazio) e F (cheio) */}
+          <View style={styles.labels}>
+            <Text style={[styles.label, { color: '#E74C3C' }]}>E</Text>
+            <Text style={[styles.label, { color: '#2ECC71' }]}>F</Text>
           </View>
 
-          {/* Eixo e Ponteiro Animado */}
+          {/* Eixo e ponteiro animado */}
           <Animated.View style={[
-            styles.needleWrapper,
+            styles.wrapper,
             { transform: [{ rotate: rotateInterpolated }] }
           ]}>
             <View style={[styles.needle, { backgroundColor: colors.primary }]} />
           </Animated.View>
 
           {/* Ponto central do ponteiro */}
-          <View style={[styles.needleCenter, { backgroundColor: colors.primary }]} />
+          <View style={[styles.center, { backgroundColor: colors.primary }]} />
         </View>
       </View>
     </Animated.View>

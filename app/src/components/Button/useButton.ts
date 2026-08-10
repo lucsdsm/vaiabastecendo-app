@@ -1,18 +1,23 @@
-import { useMemo } from 'react';
-import { useAppTheme } from '../../theme/ThemeProvider';
-import { styles } from './styles';
+import { useMemo } from "react";
+
+import { useAppTheme } from "@theme/ThemeProvider";
+
+import { styles } from "./styles";
 
 interface UseButtonParams {
   disabled?: boolean;
   loading?: boolean;
-  variant?: 'primary' | 'secondary' | 'ghost';
+  variant?: "primary" | "secondary" | "ghost";
   fullWidth?: boolean;
 }
 
+/**
+ * Hook para gerenciar o estado e estilos do botão.
+ */
 export function useButton({
   disabled = false,
   loading = false,
-  variant = 'primary',
+  variant = "primary",
   fullWidth = true,
 }: UseButtonParams) {
   const { colors, isDark } = useAppTheme();
@@ -23,39 +28,31 @@ export function useButton({
     const baseStyle: any[] = [styles.button];
 
     if (fullWidth) {
-      baseStyle.push(styles.fullWidth);
+      baseStyle.push(styles.full);
     }
 
-    if (variant === 'primary') {
+    if (variant === "primary") {
       baseStyle.push({
         backgroundColor: isDisabled
           ? isDark
-            ? 'rgba(255,255,255,0.10)'
-            : 'rgba(0,0,0,0.08)'
+            ? "rgba(255,255,255,0.10)"
+            : "rgba(0,0,0,0.08)"
           : colors.primary,
-        borderColor: isDisabled
-          ? 'transparent'
-          : colors.primary,
+        borderColor: isDisabled ? "transparent" : colors.primary,
       });
     }
 
-    if (variant === 'secondary') {
+    if (variant === "secondary") {
       baseStyle.push({
-        backgroundColor: isDark
-          ? colors.primary + '1A'
-          : colors.primary + '0D',
-        borderColor: isDark
-          ? colors.primary + '35'
-          : colors.primary + '40',
+        backgroundColor: isDark ? colors.primary + "1A" : colors.primary + "0D",
+        borderColor: isDark ? colors.primary + "35" : colors.primary + "40",
       });
     }
 
-    if (variant === 'ghost') {
+    if (variant === "ghost") {
       baseStyle.push({
-        backgroundColor: 'transparent',
-        borderColor: isDark
-          ? 'rgba(255,255,255,0.10)'
-          : 'rgba(0,0,0,0.08)',
+        backgroundColor: "transparent",
+        borderColor: isDark ? "rgba(255,255,255,0.10)" : "rgba(0,0,0,0.08)",
       });
     }
 
@@ -63,9 +60,9 @@ export function useButton({
   }, [colors, isDark, variant, isDisabled, fullWidth]);
 
   const textStyle = useMemo(() => {
-    if (variant === 'primary') {
+    if (variant === "primary") {
       return [
-        styles.buttonText,
+        styles.text,
         {
           color: isDisabled
             ? isDark
@@ -76,9 +73,9 @@ export function useButton({
       ];
     }
 
-    if (variant === 'secondary') {
+    if (variant === "secondary") {
       return [
-        styles.buttonText,
+        styles.text,
         {
           color: isDisabled
             ? isDark
@@ -90,37 +87,30 @@ export function useButton({
     }
 
     return [
-      styles.buttonText,
+      styles.text,
       {
-        color: isDisabled
-          ? colors.textSecondary
-          : colors.textPrimary,
+        color: isDisabled ? colors.textSecondary : colors.textPrimary,
       },
     ];
   }, [colors, isDark, variant, isDisabled]);
 
   const iconColor = useMemo(() => {
-  if (variant === 'primary') {
-    return isDisabled
-      ? isDark
-        ? colors.textSecondary
-        : colors.textPrimary
-      : colors.background;
-  }
+    if (variant === "primary") {
+      return isDisabled
+        ? isDark
+          ? colors.textSecondary
+          : colors.textPrimary
+        : colors.background;
+    }
 
-  if (variant === 'secondary') {
-    return isDisabled
-      ? colors.textSecondary
-      : colors.primary;
-  }
+    if (variant === "secondary") {
+      return isDisabled ? colors.textSecondary : colors.primary;
+    }
 
-  return isDisabled
-    ? colors.textSecondary
-    : colors.textPrimary;
-}, [colors, variant, isDisabled]);
+    return isDisabled ? colors.textSecondary : colors.textPrimary;
+  }, [colors, variant, isDisabled]);
 
-  const activityColor =
-    variant === 'primary' ? '#FFFFFF' : colors.primary;
+  const activityColor = variant === "primary" ? "#FFFFFF" : colors.primary;
 
   return {
     colors,

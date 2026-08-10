@@ -1,9 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import axios from 'axios';
-import { FuelType, useFuelTypes } from '../../contexts/FuelTypesContext';
-import { useToast } from '../../contexts/ToastContext';
-import { useAuth } from '../../contexts/AuthContext';
+
+import { FuelType, useFuelTypes } from '@contexts/FuelTypesContext';
+
+import { useToast } from '@contexts/ToastContext';
+
+import { useAuth } from '@contexts/AuthContext';
 
 export interface PrecoAtualResumo {
     type: string;

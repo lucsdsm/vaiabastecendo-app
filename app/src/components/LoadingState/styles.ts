@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
@@ -8,27 +9,9 @@ export const styles = StyleSheet.create({
         padding: 32,
         gap: 16,
     },
-
-    iconRing: {
-        width: 72,
-        height: 72,
-        borderRadius: 36,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 1.5,
-    },
-
-    iconCore: {
-        width: 52,
-        height: 52,
-        borderRadius: 26,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-
     message: {
-        fontSize: 14,
-        fontWeight: '500',
+        fontSize: typography.size.md,
+        fontWeight: typography.weight.bold,
         textAlign: 'center',
         letterSpacing: 0.1,
     },

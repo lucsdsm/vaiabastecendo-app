@@ -1,15 +1,20 @@
 import React from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text } from 'react-native';
+
 import { LineChart } from 'react-native-gifted-charts';
+
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
-import { styles } from './styles';
-import {
-  PriceHistoryTableProps,
-  usePriceHistoryTable,
-} from './usePriceHistoryTable';
+
+import { PriceHistoryTableProps, usePriceHistoryTable } from './usePriceHistoryTable';
+
 import LoadingState from '@components/LoadingState';
 import EmptyState from '@components/EmptyState';
 
+import { styles } from './styles';
+
+/**
+ * Componente para exibir o histórico de preços de um combustível em um gráfico.
+ */
 export default function PriceHistoryTable({
   stationId,
   selectedFuelName,
@@ -33,7 +38,7 @@ export default function PriceHistoryTable({
 
   if (loading) {
     return (
-      <View style={styles.loadingContainer}>
+      <View style={styles.loading}>
         <LoadingState message='Carregando histórico...' iconName='run' />
       </View>
     );
@@ -41,7 +46,7 @@ export default function PriceHistoryTable({
 
   if (!fuelName || chartData.length === 0 || !summary) {
     return (
-      <View style={[styles.loadingContainer, { flex: 1, justifyContent: 'center', alignItems: 'center' }]}>
+      <View style={[styles.loading, { flex: 1, justifyContent: 'center', alignItems: 'center' }]}>
         <EmptyState 
           title="Histórico indisponível" 
           message='Nenhum dado de histórico disponível.' 
@@ -61,11 +66,11 @@ export default function PriceHistoryTable({
       ]}
     >
       <View style={styles.header}>
-        <View style={styles.titleBlock}>
+        <View style={styles.title}>
           <Text style={[styles.eyebrow, { color: colors.textSecondary }]}>
             Histórico de preços
           </Text>
-          <Text style={[styles.fuelName, { color: colors.textPrimary }]}>
+          <Text style={[styles.fuel, { color: colors.textPrimary }]}>
             {fuelName}
           </Text>
         </View>
@@ -85,43 +90,43 @@ export default function PriceHistoryTable({
             },
           ]}
         >
-          <Text style={[styles.badgeText, { color: trendColor }]}>
+          <Text style={[styles.text, { color: trendColor }]}>
             {trendLabel}
           </Text>
         </View>
       </View>
 
-      <View style={styles.summaryRow}>
-        <View style={styles.summaryItem}>
-          <Text style={[styles.summaryLabel, { color: colors.textSecondary }]}>
+      <View style={styles.row}>
+        <View style={styles.item}>
+          <Text style={[styles.label, { color: colors.textSecondary }]}>
             Último preço
           </Text>
-          <Text style={[styles.summaryValue, { color: colors.textPrimary }]}>
+          <Text style={[styles.value, { color: colors.textPrimary }]}>
             {formatPrice(summary.latestPrice)}
           </Text>
         </View>
 
-        <View style={styles.summaryItem}>
-          <Text style={[styles.summaryLabel, { color: colors.textSecondary }]}>
+        <View style={styles.item}>
+          <Text style={[styles.label, { color: colors.textSecondary }]}>
             Registros
           </Text>
-          <Text style={[styles.summaryValue, { color: colors.textPrimary }]}>
+          <Text style={[styles.value, { color: colors.textPrimary }]}>
             {summary.records}
           </Text>
         </View>
 
-        <View style={styles.summaryItem}>
-          <Text style={[styles.summaryLabel, { color: colors.textSecondary }]}>
+        <View style={styles.item}>
+          <Text style={[styles.label, { color: colors.textSecondary }]}>
             Variação
           </Text>
-          <Text style={[styles.summaryValue, { color: trendColor }]}>
+          <Text style={[styles.value, { color: trendColor }]}>
             {summary.delta > 0 ? '+' : ''}
             {summary.delta.toFixed(2).replace('.', ',')}
           </Text>
         </View>
       </View>
 
-      <View style={styles.chartWrapper}>
+      <View style={styles.wrapper}>
         <LineChart
           data={chartData}
           width={screenWidth - 88}
@@ -184,10 +189,10 @@ export default function PriceHistoryTable({
                     },
                   ]}
                 >
-                  <Text style={[styles.tooltipPrice, { color: colors.textPrimary }]}>
+                  <Text style={[styles.price, { color: colors.textPrimary }]}>
                     {formatPrice(Number(item.value))}
                   </Text>
-                  <Text style={[styles.tooltipLabel, { color: colors.textSecondary }]}>
+                  <Text style={[styles.label, { color: colors.textSecondary }]}>
                     {item.label}
                   </Text>
                 </View>
@@ -207,9 +212,9 @@ export default function PriceHistoryTable({
           },
         ]}
       >
-        <View style={styles.footerHeader}>
+        <View style={styles.header}>
           <FontAwesome6 name="clock" size={12} iconStyle='solid' color={colors.textSecondary} />
-          <Text style={[styles.footerTitle, { color: colors.textSecondary }]}>
+          <Text style={[styles.title, { color: colors.textSecondary }]}>
             Últimas atualizações
           </Text>
         </View>
@@ -221,7 +226,7 @@ export default function PriceHistoryTable({
             <View
               key={item.id}
               style={[
-                styles.historyRow,
+                styles.row,
                 {
                   borderBottomColor: isDark
                     ? 'rgba(255,255,255,0.05)'
@@ -229,16 +234,16 @@ export default function PriceHistoryTable({
                 },
               ]}
             >
-              <View style={styles.historyMeta}>
-                <Text style={[styles.historyPrice, { color: colors.textPrimary }]}>
+              <View style={styles.meta}>
+                <Text style={[styles.price, { color: colors.textPrimary }]}>
                   {formatPrice(Number(item.price))}
                 </Text>
-                <Text style={[styles.historyInfo, { color: colors.textSecondary }]}>
+                <Text style={[styles.info, { color: colors.textSecondary }]}>
                   por {item.author}
                 </Text>
               </View>
 
-              <Text style={[styles.historyDate, { color: colors.textSecondary }]}>
+              <Text style={[styles.date, { color: colors.textSecondary }]}>
                 {formatDate(itemDate)}
               </Text>
             </View>

@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
-import { spacing, radius, typography, elevation, iconSize  } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
-    dropdownOverlay: {
+    overlay: {
         position: 'absolute',
         top: 80,
         left: 0,
@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
         bottom: 0,
         zIndex: 10,
     },
-    dropdownContent: {
+    content: {
         alignSelf: 'center',
         width: 240,
         maxHeight: 300,
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 1 },
         shadowRadius: 2,
     },
-    dropdownPointer: {
+    pointer: {
         position: 'absolute',
         top: -8,
         alignSelf: 'center',
@@ -36,24 +36,24 @@ export const styles = StyleSheet.create({
         borderLeftColor: 'transparent',
         borderRightColor: 'transparent',
     },
-    vehicleItem: {
+    item: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingVertical: spacing.md,
     },
-    vehicleItemText: {
+    text: {
         flex: 1,
         fontSize: 15,
         marginLeft: 12,
         fontWeight: '500',
     },
-    addVehicleModalButton: {
+    button: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
 
     },
-    addVehicleModalText: {
+    modal: {
         fontSize: 15,
         fontWeight: '600',
         marginLeft: 8,

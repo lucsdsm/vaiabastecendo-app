@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { radius, spacing, typography } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
     overlay: {
@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    alertCard: {
+    card: {
         width: '100%',
         maxWidth: 340,
         borderRadius: radius.xl,
@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 24,
     },
-    buttonContainer: {
+    holder: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         gap: 12,

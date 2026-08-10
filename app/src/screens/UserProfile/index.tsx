@@ -22,8 +22,8 @@ import { styles } from './styles';
 
 import { useAuth } from '../../contexts/AuthContext';
 
-import LoadingState from '@components/LoadingState';
-import EmptyState from '@components/EmptyState';
+import LoadingState from '../../components/LoadingState';
+import EmptyState from '../../components/EmptyState';
 
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';

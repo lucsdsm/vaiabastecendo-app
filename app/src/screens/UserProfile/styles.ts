@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         position: 'relative',
-        marginTop: spacing.md,     
+        minHeight: 55,    
     },
     headerActionButton: {
         width: 40,           

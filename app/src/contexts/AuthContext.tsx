@@ -1,13 +1,7 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+
 import axios from 'axios';
+
 import * as SecureStore from 'expo-secure-store';
 
 import { useToast } from './ToastContext';
@@ -38,6 +32,9 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
+/**
+ * Provider de contexto de autenticação. 
+ */
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { showToast } = useToast();
 

@@ -1,8 +1,8 @@
 import { Platform, StyleSheet } from 'react-native';
-import { radius, spacing, typography, elevation } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
-    localCardBase: {
+    base: {
         borderRadius: radius.xl,
         padding: spacing.lg,
     },
@@ -13,16 +13,16 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    badgeContent: {
+    content: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: spacing.xs,
     },
-    badgeIcon: {
+    icon: {
         alignItems: 'center',
         justifyContent: 'center',
     },
-    badgeText: {
+    text: {
         fontSize: typography.size.xs,
         fontWeight: typography.weight.semibold,
     },
@@ -35,15 +35,15 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-start',
     },
-    headerLeft: {
+    left: {
         flex: 1,
     },
-    headerRight: {
+    right: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: spacing.xs,
     },
-    logoContainer: {
+    container: {
         width: 40,
         height: 40,
         borderRadius: radius.sm,
@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    logoImage: {
+    image: {
         width: 32,
         height: 32,
         borderRadius: radius.sm,
@@ -62,13 +62,13 @@ export const styles = StyleSheet.create({
         fontWeight: typography.weight.bold,
         letterSpacing: typography.letterSpacing.normal,
     },
-    addressText: {
+    address: {
         fontSize: typography.size.xs,
-        fontWeight: typography.weight.regular,
+        fontWeight: typography.weight.semibold,
         lineHeight: 16,
         flex: 1,
     },
-    directionsButton: {
+    direction: {
         width: 40,
         height: 40,
         borderRadius: radius.md,
@@ -76,71 +76,63 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    metaRow: {
+    row: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: spacing.sm,
         marginBottom: 2,
     },
-    ratingInlineRow: {
+    inline: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: spacing.xs,
     },
-    ratingText: {
+    rating: {
         fontSize: typography.size.xs,
         fontWeight: typography.weight.bold,
     },
-    addressRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        minWidth: 0,
-        marginBottom: spacing.md,
-    },
-    priceContainer: {
-    },
-    pricesScrollContent: {
+    scroll: {
         gap: spacing.md,
         paddingRight: spacing.lg,
         flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    priceBlock: {
+    block: {
         width: 125,
     },
-    priceBadge: {
+    emblem: {
         borderRadius: radius.lg,
         padding: spacing.md,
         minHeight: 104,
         justifyContent: 'space-between',
     },
-    priceBadgeHeader: {
+    heading: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    fuelLabelContainer: {
+    fuel: {
         flex: 1,
         height: 35,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    fuelLabel: {
+    label: {
         fontSize: typography.size.sm,
         lineHeight: 18,
         fontWeight: typography.weight.semibold,
         letterSpacing: typography.letterSpacing.normal,
         textAlign: 'center',
     },
-    priceValue: {
+    value: {
         fontSize: typography.size.xxl,
         fontWeight: typography.weight.bold,
         letterSpacing: typography.letterSpacing.normal,
         textAlign: 'center',
         marginVertical: spacing.xs,
     },
-    likeButton: {
+    like: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
@@ -152,65 +144,41 @@ export const styles = StyleSheet.create({
         minHeight: 12,
         minWidth: 12,
     },
-    likeCount: {
+    count: {
         fontSize: typography.size.xs,
         fontWeight: typography.weight.semibold,
     },
 
-    noPriceContainer: {
+    noprice: {
         flexDirection: 'row',
         alignItems: 'center',
         padding: spacing.lg,
         borderRadius: radius.lg,
         gap: spacing.md,
     },
-    noPriceIconContainer: {
+    hero: {
         width: 36,
         height: 36,
         borderRadius: radius.md,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    noPriceTextContainer: {
+    words: {
         flex: 1,
     },
-    noPriceTitle: {
+    caption: {
         fontSize: typography.size.sm,
         fontWeight: typography.weight.semibold,
     },
-    noPriceText: {
+    message: {
         fontSize: typography.size.xs,
         lineHeight: 16,
         fontWeight: typography.weight.regular,
     },
-    updateInfo: {
+    info: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: spacing.lg,
-    },
-    updateIcon: {
-        marginRight: spacing.xs,
-    },
-    updateText: {
-        fontSize: typography.size.xs,
-        fontWeight: typography.weight.medium,
-    },
-    metaText: {
-        fontSize: typography.size.xs,
-        fontWeight: typography.weight.medium,
-    },
-    authorRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    authorText: {
-        fontSize: typography.size.xs,
-        fontWeight: typography.weight.semibold,
-    },
-    authorBadge: {
-        marginLeft: spacing.xs,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
+    }
 });

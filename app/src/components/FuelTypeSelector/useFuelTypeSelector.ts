@@ -1,5 +1,7 @@
-import { useAppTheme } from '../../theme/ThemeProvider';
-import { getReadableColor } from '../../utils/color';
+import { useAppTheme } from '@theme/ThemeProvider';
+
+import { getReadableColor } from '@utils/color';
+
 import { styles } from './styles';
 
 export type FuelType = {
@@ -14,8 +16,6 @@ export type FuelTypeSelectorSize = 'compact' | 'regular';
 interface UseFuelTypeSelectorParams {
     selectedFuel: number | null;
     onSelectFuel: (id: number) => void;
-    variant?: FuelTypeSelectorVariant;
-    size?: FuelTypeSelectorSize;
 }
 
 /**
@@ -24,8 +24,6 @@ interface UseFuelTypeSelectorParams {
 export function useFuelTypeSelector({
     selectedFuel,
     onSelectFuel,
-    variant = 'surface',
-    size = 'regular',
 }: UseFuelTypeSelectorParams) {
     const { colors, isDark } = useAppTheme();
 
@@ -41,20 +39,16 @@ export function useFuelTypeSelector({
             isSelected,
             accentColor,
             chipStyle: [
-                styles.chipBase,
-                size === 'compact' ? styles.chipCompact : styles.chipRegular,
+                styles.chip,
                 {
                     borderColor: isSelected ? accentColor : colors.border,
                     backgroundColor: isSelected
                         ? accentColor + (isDark ? '22' : '14')
-                        : variant === 'surface'
-                            ? colors.background
-                            : 'transparent',
+                        : colors.background,
                 },
             ],
             textStyle: [
-                styles.chipTextBase,
-                size === 'compact' ? styles.chipTextCompact : styles.chipTextRegular,
+                styles.text,
                 {
                     color: isSelected ? accentColor : colors.textSecondary,
                 },

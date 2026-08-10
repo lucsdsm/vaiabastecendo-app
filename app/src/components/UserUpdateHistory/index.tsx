@@ -5,14 +5,11 @@ import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import LoadingState from '../LoadingState';
 import EmptyState from '../EmptyState';
 
-import { getReadableColor } from '../../utils/color';
+import { getReadableColor } from '@utils/color';
 
-import { useAppTheme } from '../../theme/ThemeProvider';
+import { useAppTheme } from '@theme/ThemeProvider';
 import { styles } from './styles';
-import {
-  UserUpdateHistoryItem,
-  useUserUpdateHistory,
-} from './useUserUpdateHistory';
+import { UserUpdateHistoryItem, useUserUpdateHistory } from './useUserUpdateHistory';
 
 interface UserUpdateHistoryProps {
   userId?: number | null;
@@ -39,7 +36,7 @@ export default function UserUpdateHistory({ userId }: UserUpdateHistoryProps) {
     return (
       <View style={styles.container}>
         {header}
-        <View style={styles.loadingContent}>
+        <View style={styles.loading}>
           <LoadingState message='Carregando histórico...' iconName='history' />
         </View>
       </View>
@@ -50,7 +47,7 @@ export default function UserUpdateHistory({ userId }: UserUpdateHistoryProps) {
     return (
       <View style={styles.container}>
         {header}
-        <View style={styles.loadingContent}>
+        <View style={styles.loading}>
           <EmptyState title="Você ainda não tem um histórico de atualizações." message='Suas próximas contribuições aparecerão aqui com data, preço e posto.' iconName='fail' />
         </View>
       </View>
@@ -68,52 +65,52 @@ export default function UserUpdateHistory({ userId }: UserUpdateHistoryProps) {
     const isLast = index === updates.length - 1;
 
     return (
-      <View style={styles.timelineRow}>
-        <View style={styles.timelineColumn}>
+      <View style={styles.row}>
+        <View style={styles.column}>
           <View
             style={[
-              styles.timelineDot,
+              styles.dot,
               { backgroundColor: accentColor, borderColor: colors.surface },
             ]}
           />
           {!isLast ? (
-            <View style={[styles.timelineLine, {backgroundColor: colors.textSecondary + '40'}]}/>
+            <View style={[styles.line, {backgroundColor: colors.textSecondary + '40'}]}/>
           ) : null}
         </View>
 
         <View
-          style={[styles.itemCard, {backgroundColor: colors.surface}]}>
-          <View style={styles.itemTopRow}>
-            <View style={styles.itemTitleBlock}>
-              <Text style={[styles.stationName, { color: colors.textPrimary }]}>
+          style={[styles.item, {backgroundColor: colors.surface}]}>
+          <View style={styles.top}>
+            <View style={styles.title}>
+              <Text style={[styles.name, { color: colors.textPrimary }]}>
                 {item.station_name}
               </Text>
 
-              <View style={styles.metaRow}>
-                <Text style={[styles.fuelType, { color: accentColor }]}>
+              <View style={styles.meta}>
+                <Text style={[styles.fuel, { color: accentColor }]}>
                   {item.fuel_type}
                 </Text>
               </View>
             </View>
 
-            <View style={styles.priceBlock}>
-              <Text style={[styles.priceValue, { color: colors.textPrimary }]}>
+            <View style={styles.block}>
+              <Text style={[styles.value, { color: colors.textPrimary }]}>
                 {formatPrice(item.price)}
               </Text>
             </View>
           </View>
 
-          <View style={styles.itemFooter}>
-            <View style={styles.footerLeft}>
+          <View style={styles.footer}>
+            <View style={styles.left}>
               <FontAwesome6 name="clock" size={12} iconStyle='solid' color={colors.textSecondary} />
-              <Text style={[styles.footerText, { color: colors.textSecondary }]}>
+              <Text style={[styles.text, { color: colors.textSecondary }]}>
                 {formatDate(item.created_at)}
               </Text>
             </View>
 
-            <View style={styles.footerRight}>
+            <View style={styles.right}>
               <FontAwesome6 name="thumbs-up" size={12} iconStyle='solid' color={colors.textSecondary} />
-              <Text style={[styles.footerText, { color: colors.textSecondary }]}>
+              <Text style={[styles.text, { color: colors.textSecondary }]}>
                 {item.likes}
               </Text>
             </View>

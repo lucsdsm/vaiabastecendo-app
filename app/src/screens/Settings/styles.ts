@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: spacing.md,
     position: "relative",
-    marginTop: spacing.md,
+    minHeight: 55,
   },
   headerActionButton: {
     width: 40,

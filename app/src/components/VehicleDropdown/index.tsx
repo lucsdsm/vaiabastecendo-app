@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+
+import { useAppTheme } from '@theme/ThemeProvider';
+
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
-import { useAppTheme } from '../../theme/ThemeProvider'; // Ajuste o caminho
+
 import { styles } from './styles';
 
-// Tipagem básica (importe do seu service se preferir)
 interface Vehicle {
     id: string;
     name: string;
@@ -37,12 +39,11 @@ export function VehicleDropdown({
 
     return (
         <TouchableOpacity 
-            style={styles.dropdownOverlay} 
+            style={styles.overlay} 
             activeOpacity={1} 
-            onPress={onClose}
-        >
-            <View style={[styles.dropdownContent, { backgroundColor: colors.surface }]}>
-                <View style={[styles.dropdownPointer, { borderBottomColor: colors.surface }]} />
+            onPress={onClose}>
+            <View style={[styles.content, { backgroundColor: colors.surface }]}>
+                <View style={[styles.pointer, { borderBottomColor: colors.surface }]} />
 
                 <FlatList
                     data={vehicles}
@@ -53,17 +54,17 @@ export function VehicleDropdown({
 
                         return (
                             <TouchableOpacity 
-                                style={styles.vehicleItem}
+                                style={styles.item}
                                 onPress={() => {
                                     if (isSelected) {
-                                        onEditVehicle(item); // Se já está selecionado, edita
+                                        onEditVehicle(item);
                                     } else {
-                                        onSelectVehicle(item); // Se não, apenas seleciona
+                                        onSelectVehicle(item);
                                     }
                                 }}
                             >
                                 <FontAwesome6 name="car" size={16} iconStyle='solid' color={colors.textSecondary} />
-                                <Text style={[styles.vehicleItemText, { color: colors.textPrimary }]} numberOfLines={1}>
+                                <Text style={[styles.text, { color: colors.textPrimary }]} numberOfLines={1}>
                                     {item.name}
                                 </Text>
                                 {isSelected && (
@@ -75,11 +76,10 @@ export function VehicleDropdown({
                 />
 
                 <TouchableOpacity 
-                    style={styles.addVehicleModalButton}
-                    onPress={onAddVehicle}
-                >
+                    style={styles.button}
+                    onPress={onAddVehicle}>
                     <FontAwesome6 name="circle-plus" size={16} iconStyle='solid' color={colors.primary} />
-                    <Text style={[styles.addVehicleModalText, { color: colors.primary }]}>
+                    <Text style={[styles.modal, { color: colors.primary }]}>
                         Adicionar veículo
                     </Text>
                 </TouchableOpacity>

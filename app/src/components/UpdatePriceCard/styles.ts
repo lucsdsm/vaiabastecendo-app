@@ -1,18 +1,14 @@
 import { Platform, StyleSheet } from 'react-native';
-import { radius, spacing, typography, elevation } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: spacing.xl,
+        marginTop: spacing.md,
     },
-    section: {
-    },
-    cardShell: {
+    shell: {
         flex: 1,
         justifyContent: 'center',
-    },
-    cardContent: {
     },
     label: {
         fontSize: typography.size.xs + 1,
@@ -23,7 +19,7 @@ export const styles = StyleSheet.create({
         marginBottom: spacing.sm,
         marginTop: spacing.xl,
     },
-    inputContainer: {
+    wrapper: {
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius: radius.xl,
@@ -31,7 +27,7 @@ export const styles = StyleSheet.create({
         paddingHorizontal: spacing.xl,
         paddingVertical: spacing.sm,
     },
-    currencyPrefix: {
+    prefix: {
         fontSize: typography.size.lg,
         fontWeight: typography.weight.semibold,
         marginRight: spacing.sm,
@@ -43,7 +39,7 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         letterSpacing: -1,
     },
-    currencySuffix: {
+    suffix: {
         fontSize: typography.size.sm,
         fontWeight: typography.weight.medium,
         marginLeft: spacing.sm,

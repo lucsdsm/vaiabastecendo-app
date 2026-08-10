@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
+
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import * as AuthSession from 'expo-auth-session';
+
 import axios from 'axios';
 
-import { useAuth } from '../../contexts/AuthContext';
-import { useToast } from '../../contexts/ToastContext';
+import { useAuth } from '@contexts/AuthContext';
+
+import { useToast } from '@contexts/ToastContext';
 
 WebBrowser.maybeCompleteAuthSession();
 

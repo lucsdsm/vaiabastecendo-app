@@ -1,9 +1,9 @@
 import { Platform, StyleSheet } from 'react-native';
-import { radius, spacing, typography } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
-        zIndex: 10,
+        flex: 1,
     },
     content: {
         flexDirection: 'row',
@@ -12,49 +12,30 @@ export const styles = StyleSheet.create({
         marginHorizontal: spacing.sm,
         marginTop: spacing.md,
     },
-    titleContainer: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    greetingText: {
+    greeting: {
         fontSize: typography.size.sm,
         fontWeight: typography.weight.medium,
-        marginBottom: 2,
     },
     title: {
         fontSize: typography.size.xl,
         fontWeight: typography.weight.bold,
-        marginBottom: 4,
     },
-    locationRow: {
+    row: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 4,
+        gap: spacing.xs,
+        marginTop: spacing.xs,
     },
-    locationText: {
+    text: {
         fontSize: typography.size.xs,
         fontWeight: typography.weight.semibold,
     },
-    actionsContainer: {
+    actions: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: spacing.md, 
     },
-    iconButton: {
-        padding: spacing.xs,
-        position: 'relative',
-    },
-    notificationBadge: {
-        position: 'absolute',
-        top: 2,
-        right: 4,
-        width: 8,
-        height: 8,
-        borderRadius: radius.md,
-        borderWidth: 1.5,
-        borderColor: '#FFFFFF', 
-    },
-    themeButton: {
+    theme: {
         width: 40,
         height: 40,
         borderRadius: radius.md,

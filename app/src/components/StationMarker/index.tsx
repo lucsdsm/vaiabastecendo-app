@@ -1,10 +1,14 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
+
 import Mapbox from '@rnmapbox/maps';
-import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 
 import { StationCardProps } from '../StationCard';
-import { flagsDictionary } from '../../utils/flagsDictionary';
+
+import { flagsDictionary } from '@utils/flagsDictionary';
+
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+
 import { styles } from './styles';
 
 interface StationMarkerProps {
@@ -49,11 +53,10 @@ const StationMarker = memo(({
             coordinate={[Number(station.longitude), Number(station.latitude)]}
             anchor={{ x: 0.5, y: 0.5 }}
             onSelected={handlePress}
-            key={`${station.id}-${isSelected}-${renderVersion}`}
-        >
-            <View
-                style={[
-                    styles.markerCore,
+            key={`${station.id}-${isSelected}-${renderVersion}`}>
+            
+            <View style={[
+                    styles.marker,
                     {
                         width: isSelected ? 64 : 48,
                         height: isSelected ? 64 : 48,
@@ -72,10 +75,10 @@ const StationMarker = memo(({
                 {flagSource ? (
                     <Image
                         source={flagSource}
-                        style={isSelected ? styles.flagImage : styles.flagImageSmall}
+                        style={isSelected ? styles.image : styles.small}
                     />
                 ) : (
-                    <View style={styles.iconContainer}>
+                    <View style={styles.container}>
                         <FontAwesome6
                             name="gas-pump"
                             size={isSelected ? 32 : 24}

@@ -1,8 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
+
 import * as Location from 'expo-location';
 
-import { useAuth } from '../../contexts/AuthContext';
-import { useAppTheme } from '../../theme/ThemeProvider';
+import { useAuth } from '@contexts/AuthContext';
+import { useAppTheme } from '@theme/ThemeProvider';
+
+/**
+ * Hook para obter as informações do header.
+ */
 
 export function useHeader() {
   const { colors, toggleTheme, isDark } = useAppTheme();

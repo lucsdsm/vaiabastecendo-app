@@ -139,7 +139,6 @@ export function useStations() {
         });
 
         setStations(mappedStations);
-        console.log('Total de postos carregados:', mappedStations.length);
       } catch (error) {
         console.error('Erro ao buscar postos:', error);
         setError('Verifique sua conexão ou confirme com o suporte a disponibilidade da aplicação.');

@@ -1,23 +1,23 @@
 import { StyleSheet } from 'react-native';
-import { radius, spacing, typography } from '../../theme/tokens';   
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens'; 
 
 export const styles = StyleSheet.create({
-    markerCore: {
+    marker: {
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden', 
     },
-    iconContainer: {
+    container: {
         justifyContent: 'center',
         alignItems: 'center',
     },
-    flagImage: {
+    image: {
         width: 48,
         height: 48,
         borderRadius: radius.pill,
         resizeMode: 'contain',
     },
-    flagImageSmall: {
+    small: {
         width: 32,
         height: 32,
         borderRadius: radius.pill,

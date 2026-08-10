@@ -7,19 +7,22 @@ export const styles = StyleSheet.create({
     marginTop: spacing.sm,
     marginBottom: spacing.md,
   },
-  loadingContainer: {
+  loading: {
     justifyContent: 'center',
     alignItems: 'center',
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: spacing.md,
+    marginBottom: spacing.sm,
     gap: spacing.sm,
   },
-  titleBlock: {
+  title: {
     flex: 1,
+    fontSize: typography.size.xs,
+    fontWeight: typography.weight.semibold,
+    textTransform: 'uppercase',
+    letterSpacing: 0.4,
   },
   eyebrow: {
     fontSize: typography.size.xs,
@@ -28,7 +31,7 @@ export const styles = StyleSheet.create({
     letterSpacing: 0.6,
     marginBottom: 4,
   },
-  fuelName: {
+  fuel: {
     fontSize: typography.size.lg,
     fontWeight: typography.weight.bold,
   },
@@ -37,28 +40,29 @@ export const styles = StyleSheet.create({
     paddingVertical: 6,
     borderRadius: radius.pill,
   },
-  badgeText: {
+  text: {
     fontSize: typography.size.xs,
     fontWeight: typography.weight.semibold,
   },
-  summaryRow: {
+  row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: spacing.sm,
     marginBottom: spacing.md,
+    paddingVertical: spacing.xs,
   },
-  summaryItem: {
+  item: {
     flex: 1,
   },
-  summaryLabel: {
+  label: {
     fontSize: typography.size.xs,
     marginBottom: 4,
   },
-  summaryValue: {
+  value: {
     fontSize: typography.size.md,
     fontWeight: typography.weight.bold,
   },
-  chartWrapper: {
+  wrapper: {
     marginTop: spacing.xs,
     marginBottom: spacing.md,
     alignItems: 'center',
@@ -67,7 +71,7 @@ export const styles = StyleSheet.create({
     bottom: 2.5,
     width: 10,
     height: 10,
-    borderRadius: 999,
+    borderRadius: radius.pill,
     borderWidth: 2,
   },
   tooltip: {
@@ -78,43 +82,22 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: spacing.sm,
   },
-  tooltipPrice: {
+  price: {
     fontSize: typography.size.sm,
     fontWeight: typography.weight.bold,
-  },
-  tooltipLabel: {
-    fontSize: typography.size.xs,
-    marginTop: 2,
   },
   footer: {
     paddingTop: spacing.md,
   },
-  footerHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    marginBottom: spacing.sm,
-  },
-  footerTitle: {
-    fontSize: typography.size.xs,
-    fontWeight: typography.weight.semibold,
-    textTransform: 'uppercase',
-    letterSpacing: 0.4,
-  },
-  historyRow: {
-    paddingVertical: spacing.sm,
-  },
-  historyMeta: {
+  meta: {
     marginBottom: 2,
-  },
-  historyPrice: {
-    fontSize: typography.size.sm,
-    fontWeight: typography.weight.semibold,
-  },
-  historyInfo: {
+  }
+  ,
+  info: {
     fontSize: typography.size.xs,
   },
-  historyDate: {
+  date: {
     fontSize: typography.size.xs,
+    alignSelf: 'center',
   },
 });

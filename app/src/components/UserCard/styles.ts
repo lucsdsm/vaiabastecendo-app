@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { radius, spacing, typography } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         gap: spacing.xs,
     },
-    profileSection: {
+    section: {
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: spacing.md,
@@ -21,42 +21,39 @@ export const styles = StyleSheet.create({
         height: 86,
         borderRadius: radius.pill,
     },
-    avatarPlaceholder: {
+    placeholder: {
         width: 86,
         height: 86,
         borderRadius: radius.pill,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    infoSection: {
+    info: {
         flex: 1,
         marginLeft: spacing.xl,
         justifyContent: 'center',
     },
-    nameContainer: {
+    name: {
         flexDirection: 'row',
         alignItems: 'center',
     },
-    verifiedIcon: {
-        marginLeft: spacing.xs,
-    },
-    usernameText: {
+    username: {
         fontSize: typography.size.lg,
         fontWeight: typography.weight.bold,
         marginBottom: spacing.xs, 
     },
-    statsContainer: {
+    stats: {
         flexDirection: 'row',
         gap: spacing.xxl,
     },
-    statItem: {
+    item: {
         alignItems: 'flex-start',
     },
-    statNumber: {
+    number: {
         fontSize: typography.size.lg,
         fontWeight: typography.weight.bold,
     },
-    statLabel: {
+    label: {
         fontSize: typography.size.xs,
         marginTop: 2,
     },

@@ -1,10 +1,13 @@
 import React, { useMemo } from 'react';
 import { View, Text } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
+
+import { getBadgeInfo } from '@utils/badgeRules';
+
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 
-import { useAppTheme } from '../../theme/ThemeProvider';
-import { getBadgeInfo } from '../../utils/badgeRules';
+import { useAppTheme } from '@theme/ThemeProvider';
+
 import { styles } from './styles';
 
 export interface ProgressBarData {
@@ -20,7 +23,6 @@ interface ProgressBarProps {
 function BadgeRing({
   progress,
   progressText,
-  ringColor,
   trackColor,
   size = 88,
   strokeWidth = 7,
@@ -41,7 +43,7 @@ function BadgeRing({
   const center = size / 2;
 
   return (
-    <View style={[styles.ringWrap, { width: size, height: size }]}>
+    <View style={[styles.wrapper, { width: size, height: size }]}>
       <Svg width={size} height={size}>
         <Circle
           cx={center}
@@ -67,12 +69,12 @@ function BadgeRing({
         />
       </Svg>
 
-        <View style={styles.ringCenter}>
-            <Text style={[styles.ringPercent, { color: colors.textPrimary }]}>
+        <View style={styles.center}>
+            <Text style={[styles.percent, { color: colors.textPrimary }]}>
                 {Math.round(normalized * 100)}%
             </Text>
 
-            <Text style={[styles.ringCount, { color: colors.textSecondary }]}>
+            <Text style={[styles.count, { color: colors.textSecondary }]}>
                 {progressText}
             </Text>
         </View>
@@ -82,7 +84,6 @@ function BadgeRing({
 
 export default function ProgressBar({
   userData,
-  showAuthorBadge = true,
 }: ProgressBarProps) {
   const { colors, isDark } = useAppTheme();
 
@@ -92,13 +93,8 @@ export default function ProgressBar({
   return (
     <View
       style={[
-        styles.container,
-        {
-          backgroundColor: colors.surface,
-        },
-      ]}
-    >
-      <View style={styles.cardBody}>
+        styles.container, {backgroundColor: colors.surface}]}>
+      <View style={styles.card}>
         <BadgeRing
           progress={badge.progress}
           ringColor={badge.ringColor}
@@ -107,9 +103,9 @@ export default function ProgressBar({
         />
           
         {badge.tier !== 'none' ? (
-            <View style={[styles.badgePill, { backgroundColor: badge.trackColor }]}>
+            <View style={[styles.badge, { backgroundColor: badge.trackColor }]}>
                 
-                <Text style={[styles.badgePillText, { color: badge.ringColor }]}>
+                <Text style={[styles.text, { color: badge.ringColor }]}>
                     {badge.label}
                 </Text>
 
@@ -119,12 +115,12 @@ export default function ProgressBar({
 
         <View style={styles.meta}>
             {badge.tier !== 'esmeralda' ? (
-                <Text style={[styles.helpText, { color: colors.textSecondary }]}>
+                <Text style={[styles.help, { color: colors.textSecondary }]}>
                     Receba mais {badge.remaining} reações para obter o selo {badge.nextLabel}.
                     Continue contribuindo para evoluir sua reputação na comunidade.
                 </Text>
             ) : (
-                <Text style={[styles.helpText, { color: colors.textSecondary }]}>
+                <Text style={[styles.help, { color: colors.textSecondary }]}>
                     Parabéns! Você atingiu o nível máximo de reputação na comunidade.
                 </Text>
             )}

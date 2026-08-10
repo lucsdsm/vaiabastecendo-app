@@ -1,11 +1,14 @@
-export const spacing = {
-    xs: 4,
-    sm: 8,
-    md: 12,
-    lg: 16,
-    xl: 20,
-    xxl: 24,
-    xxxl: 32,
+export const elevation = {
+    low: 2,
+    mid: 6,
+    high: 10,
+};
+
+export const iconSize = {
+    sm: 16,
+    md: 20,
+    lg: 24,
+    xl: 28,
 };
 
 export const radius = {
@@ -14,6 +17,16 @@ export const radius = {
     lg: 16,
     xl: 24,
     pill: 999,
+};
+
+export const spacing = {
+    xs: 4,
+    sm: 8,
+    md: 12,
+    lg: 16,
+    xl: 20,
+    xxl: 24,
+    xxxl: 32,
 };
 
 export const typography = {
@@ -40,16 +53,3 @@ export const typography = {
         wide: 0.3,
     },
 } as const;
-
-export const elevation = {
-    low: 2,
-    mid: 6,
-    high: 10,
-};
-
-export const iconSize = {
-    sm: 16,
-    md: 20,
-    lg: 24,
-    xl: 28,
-};

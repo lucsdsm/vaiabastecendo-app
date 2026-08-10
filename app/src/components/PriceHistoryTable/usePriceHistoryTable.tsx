@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Dimensions, View } from 'react-native';
 
-import { useAppTheme } from '../../theme/ThemeProvider';
-import { useStationHistory } from '../../hooks/useStationHistory';
+import { useStationHistory } from '@hooks/useStationHistory';
+
+import { useAppTheme } from '@theme/ThemeProvider';
+
 import { styles } from './styles';
 
 export interface HistoryItem {

@@ -1,10 +1,13 @@
 import { Alert, Linking } from 'react-native';
+
 import Constants from 'expo-constants';
-import { useAppTheme } from '../../theme/ThemeProvider';
-import { useToast } from '../../contexts/ToastContext';
+
+import { useToast } from '@contexts/ToastContext';
+
+import { useAppTheme } from '@theme/ThemeProvider';
 
 export function useVersion() {
-    const { colors, toggleTheme, isDark } = useAppTheme();
+    const { colors, isDark } = useAppTheme();
     const { showToast } = useToast();
     
     const currentYear = new Date().getFullYear();

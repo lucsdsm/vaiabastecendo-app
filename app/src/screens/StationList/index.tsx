@@ -10,6 +10,7 @@ import StationCard from '../../components/StationCard';
 import EmptyState from '../../components/EmptyState';
 import LoadingState from '../../components/LoadingState';
 import Banner from '../../components/Banner';
+import StationFilterSelector from '../../components/StationFilter';
 import { styles } from './styles';
 import { useStationList } from './useStationList';
 
@@ -26,6 +27,20 @@ export default function StationListScreen() {
   } = useStationList();
 
   const route = useRoute<any>();
+  const [selectedFilter, setSelectedFilter] = React.useState<string>('all');
+
+  const filterOptions = [
+    { label: 'Todos', value: 'all' },
+    { label: 'Com preço', value: 'with_prices' },
+  ];
+
+  const filteredStations = React.useMemo(() => {
+    if (selectedFilter === 'all') return stations;
+    if (selectedFilter === 'with_prices') {
+      return stations.filter((station) => station.currentPrices?.length > 0);
+    }
+    return stations;
+  }, [stations, selectedFilter]);
 
   useEffect(() => {
     if (!route.params?.refreshKey) {
@@ -53,6 +68,16 @@ export default function StationListScreen() {
             />
           }
         />
+
+        <View>
+          <StationFilterSelector
+            options={filterOptions}
+            selectedFilter={selectedFilter}
+            onSelectFilter={setSelectedFilter}
+            variant="surface"
+            size="regular"
+          />
+        </View>
       </>
     );
   }
@@ -68,11 +93,7 @@ export default function StationListScreen() {
     }
 
     if (shouldShowErrorCard) {
-      return (
-        <EmptyState
-          iconName="fail"
-        />
-      );
+      return <EmptyState iconName="fail" />;
     }
 
     return (
@@ -93,7 +114,7 @@ export default function StationListScreen() {
 
       <View style={styles.content}>
         <FlatList
-          data={stations}
+          data={filteredStations}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <StationCard data={item} onRefresh={refetch} />
@@ -111,7 +132,7 @@ export default function StationListScreen() {
           }
           contentContainerStyle={[
             styles.listContainer,
-            stations.length === 0 && { flexGrow: 1 },
+            filteredStations.length === 0 && { flexGrow: 1 },
           ]}
           showsVerticalScrollIndicator={false}
         />

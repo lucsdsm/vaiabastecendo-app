@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
         paddingVertical: spacing.xl,
         opacity: 0.6, 
     },
-    appName: {
+    name: {
         fontSize: typography.size.sm,
         fontWeight: typography.weight.bold,
     },
@@ -16,14 +16,14 @@ export const styles = StyleSheet.create({
         fontSize: typography.size.xs,
         fontWeight: typography.weight.medium,
     },
-    socialContainer: {
+    social: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         gap: 16,
         marginVertical: spacing.sm,    
     },
-    socialButton: {
+    button: {
         width: 40,
         height: 40,
         borderRadius: radius.md,
@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    copyrightContainer: {
+    copyright: {
         alignItems: 'center',
         justifyContent: 'center',
     },

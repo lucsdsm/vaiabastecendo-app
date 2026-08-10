@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { radius, spacing, typography } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
   button: {
@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  fullWidth: {
+  full: {
     width: '50%',
     alignSelf: 'center',
   },
@@ -21,11 +21,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: spacing.sm,
   },
-  iconLeft: {
+  icon: {
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonText: {
+  text: {
     fontSize: typography.size.sm,
     fontWeight: typography.weight.semibold,
     letterSpacing: 0.2,

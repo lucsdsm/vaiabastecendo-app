@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, Animated, Image } from 'react-native';
 
+import { iconsDictionary } from '@utils/iconsDictionary';
+
+import { useAppTheme } from '@theme/ThemeProvider';
+
 import { styles } from './styles';
-import { useAppTheme } from '../../theme/ThemeProvider';
-import { iconsDictionary } from '../../utils/iconsDictionary';
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 

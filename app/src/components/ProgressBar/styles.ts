@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { radius, spacing, typography } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
   container: {
@@ -8,32 +8,32 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: radius.xl,
   },
-  cardBody: {
+  card: {
     alignItems: 'center',
     justifyContent: 'center',
     gap: spacing.sm,
   },
-  ringWrap: {
+  wrapper: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  ringCenter: {
+  center: {
     position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 1,
   },
-  ringCount: {
+  count: {
     fontSize: typography.size.xs,
     fontWeight: typography.weight.medium,
     lineHeight: 14,
   },
-  ringPercent: {
+  percent: {
     fontSize: typography.size.md,
     fontWeight: typography.weight.bold,
     lineHeight: 20,
   },
-  badgePill: {
+  badge: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 5,
     borderRadius: radius.pill,
   },
-  badgePillText: {
+  text: {
     fontSize: typography.size.xs,
     fontWeight: typography.weight.bold,
   },
@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
     fontWeight: typography.weight.medium,
     textAlign: 'center',
   },
-  helpText: {
+  help: {
     fontSize: typography.size.xs,
     lineHeight: 16,
     textAlign: 'center',

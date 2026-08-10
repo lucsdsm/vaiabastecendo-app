@@ -1,5 +1,5 @@
 import { Platform, StyleSheet } from 'react-native';
-import { radius, spacing, typography, elevation } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
@@ -13,19 +13,8 @@ export const styles = StyleSheet.create({
         paddingHorizontal: spacing.sm,
         borderRadius: radius.lg,
         zIndex: 9999,
-        ...Platform.select({
-            ios: {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 8 },
-                shadowOpacity: 0.12,
-                shadowRadius: 24,
-            },
-            android: {
-                elevation: elevation.low,
-            },
-        }),
     },
-    iconContainer: {
+    icon: {
         width: 36,
         height: 36,
         borderRadius: radius.md,
@@ -33,7 +22,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    textContainer: {
+    text: {
         flex: 1,
         marginLeft: spacing.sm,
     },

@@ -8,7 +8,7 @@ import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
 import { useAddVehicle } from './useAddVehicle';
-import { CustomAlert } from '../../components/Alert';
+import { Alert } from '../../components/Alert';
 
 export default function AddVehicleScreen() {
     const { colors, isDark } = useAppTheme();
@@ -23,7 +23,6 @@ export default function AddVehicleScreen() {
 
     return (
         <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
-            
             <View style={styles.header}>
                 <TouchableOpacity onPress={goBack} style={styles.headerActionButton}>
                     <FontAwesome6 name="arrow-left" size={20} iconStyle='solid' color={colors.textPrimary} />
@@ -116,7 +115,7 @@ export default function AddVehicleScreen() {
                             </View>
                         </View>
 
-                        <CustomAlert 
+                        <Alert 
                             visible={isAlertVisible}
                             title="Atenção!"
                             message="Tem certeza que deseja excluir este veículo? Todos os registros de abastecimento associados a ele também serão removidos."

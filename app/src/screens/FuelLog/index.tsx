@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { styles } from './styles';
 import { useFuelLog } from './useFuelLog';
@@ -27,7 +28,7 @@ export default function FuelLogScreen() {
     } = useFuelLog();
 
     return (
-        <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
             
             <View style={styles.header}>
                 <TouchableOpacity onPress={goBack} style={styles.headerActionButton}>
@@ -112,6 +113,6 @@ export default function FuelLogScreen() {
             )}
 
             <Footer />
-        </View>
+        </SafeAreaView>
     );
 }

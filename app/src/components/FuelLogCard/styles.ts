@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { radius, spacing } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
     card: {
@@ -13,11 +13,11 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         padding: spacing.md,
     },
-    headerLeft: {
+    left: {
         flexDirection: 'row',
         alignItems: 'center',
     },
-    iconContainer: {
+    icon: {
         width: 32,
         height: 32,
         borderRadius: radius.sm,
@@ -25,39 +25,39 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         marginRight: 10,
     },
-    fuelType: {
+    fuel: {
         fontSize: 16,
-        fontWeight: 'bold',
+        fontWeight: typography.weight.bold,
     },
-    dateText: {
+    date: {
         fontSize: 13,
-        fontWeight: '500',
+        fontWeight: typography.weight.medium,
     },
-    metricsContainer: {
+    container: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: spacing.md,
         paddingBottom: spacing.md,
     },
-    metricBlock: {
+    block: {
         flex: 1,
     },
-    metricDivider: {
+    divider: {
         width: 1,
         height: '80%',
         alignSelf: 'center',
         marginHorizontal: spacing.sm,
         opacity: 0.5,
     },
-    metricLabel: {
+    label: {
         fontSize: 11,
         textTransform: 'uppercase',
         letterSpacing: 0.5,
         marginBottom: 4,
     },
-    metricValue: {
+    value: {
         fontSize: 16,
-        fontWeight: 'bold',
+        fontWeight: typography.weight.bold,
     },
     footer: {
         flexDirection: 'row',
@@ -65,9 +65,8 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: spacing.md,
         paddingVertical: spacing.sm,
-        borderTopWidth: 1,
     },
-    footerRightGroup: {
+    right: {
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap', 
@@ -75,24 +74,20 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         gap: spacing.sm, 
     },
-    distanceText: {
+    distance: {
         fontSize: 12,
         marginTop: 2,
         opacity: 0.7,
         marginLeft: 18,
     },
-    odometerContainer: {
+    odometer: {
         flexShrink: 0, 
         marginRight: spacing.sm,
         justifyContent: 'center',
     },
-    odometerRow: {
+    row: {
         flexDirection: 'row',
         alignItems: 'center',
-    },
-    footerText: {
-        fontSize: 13,
-        fontWeight: '600',
     },
     badge: {
         flexDirection: 'row',
@@ -100,9 +95,11 @@ export const styles = StyleSheet.create({
         paddingHorizontal: spacing.sm,
         paddingVertical: spacing.xs,
         borderRadius: 12,
+        fontSize: 12,
+        fontWeight: typography.weight.bold,
     },
-    badgeText: {
+    text: {
         fontSize: 11,
-        fontWeight: 'bold',
+        fontWeight: typography.weight.bold,
     },
 });

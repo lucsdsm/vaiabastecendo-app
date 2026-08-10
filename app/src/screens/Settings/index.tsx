@@ -68,10 +68,7 @@ export default function Settings() {
     };
 
     return (
-        <SafeAreaView
-            edges={['top']}
-            style={[styles.container, { backgroundColor: colors.background }]}
-        >
+        <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={styles.header}>
                 <TouchableOpacity
                     onPress={() => navigation.goBack()}

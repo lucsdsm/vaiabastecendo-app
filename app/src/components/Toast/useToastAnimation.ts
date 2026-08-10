@@ -2,8 +2,9 @@ import { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useToast } from '../../contexts/ToastContext';
-import { useAppTheme } from '../../theme/ThemeProvider';
+import { useToast } from '@contexts/ToastContext';
+
+import { useAppTheme } from '@theme/ThemeProvider';
 
 /**
  * Controla animação e aparência visual do toast.

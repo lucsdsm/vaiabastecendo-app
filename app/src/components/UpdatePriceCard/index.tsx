@@ -1,9 +1,12 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, TextInput, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
-import { useAppTheme } from '../../theme/ThemeProvider';
-import { styles } from './styles';
+
 import FuelTypeSelector from '../FuelTypeSelector';
-import { FuelType } from '../../contexts/FuelTypesContext';
+
+import { FuelType } from '@contexts/FuelTypesContext';
+
+import { useAppTheme } from '@theme/ThemeProvider';
+import { styles } from './styles';
 
 interface UpdatePriceCardProps {
     fuelTypes: FuelType[];
@@ -23,31 +26,27 @@ export default function UpdatePriceCard({
     const { colors } = useAppTheme();
 
     const content = (
-        <View style={[styles.cardContent, { backgroundColor: colors.background }]}>
-            <View style={styles.section}>
+        <View style={[{ backgroundColor: colors.background }]}>
+            <View style={styles.container}>
                 <FuelTypeSelector
                     label="Combustível"
                     fuelTypes={fuelTypes}
                     selectedFuel={selectedFuel}
                     onSelectFuel={setSelectedFuel}
-                    variant="surface"
-                    size="compact"
-                    showCheckIcon={true}
-                />
+                    showCheckIcon={true}/>
             </View>
 
-            <View style={styles.section}>
+            <View style={styles.container}>
                 <Text style={[styles.label, { color: colors.textSecondary }]}>Preço por litro</Text>
                 <View
                     style={[
-                        styles.inputContainer,
+                        styles.wrapper,
                         {
                             backgroundColor: colors.background,
                             borderColor: colors.primary + '40',
                         },
-                    ]}
-                >
-                    <Text style={[styles.currencyPrefix, { color: colors.textSecondary }]}>R$</Text>
+                    ]}>
+                    <Text style={[styles.prefix, { color: colors.textSecondary }]}>R$</Text>
                     <TextInput
                         style={[styles.input, { color: colors.textPrimary }]}
                         placeholder="0,00"
@@ -56,7 +55,7 @@ export default function UpdatePriceCard({
                         value={price}
                         onChangeText={handlePriceChange}
                     />
-                    <Text style={[styles.currencySuffix, { color: colors.textSecondary }]}>/L</Text>
+                    <Text style={[styles.suffix, { color: colors.textSecondary }]}>/L</Text>
                 </View>
             </View>
         </View>
@@ -67,7 +66,7 @@ export default function UpdatePriceCard({
             behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             style={[styles.container]}
         >
-            <TouchableOpacity activeOpacity={1} onPress={Keyboard.dismiss} style={styles.cardShell}>
+            <TouchableOpacity activeOpacity={1} onPress={Keyboard.dismiss} style={styles.shell}>
                 {content}
             </TouchableOpacity>
         </KeyboardAvoidingView>

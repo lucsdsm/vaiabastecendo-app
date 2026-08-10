@@ -1,10 +1,13 @@
 import React from 'react';
 import { Modal, View, Text, TouchableWithoutFeedback } from 'react-native';
-import { useAppTheme } from '../../theme/ThemeProvider';
-import { styles } from './styles'
-import Button from '../Button';
 
-interface CustomAlertProps {
+import Button from '@components/Button';
+
+import { useAppTheme } from '../../theme/ThemeProvider';
+
+import { styles } from './styles'
+
+interface AlertProps {
     visible: boolean;
     title: string;
     message: string;
@@ -15,7 +18,10 @@ interface CustomAlertProps {
     onConfirm: () => void;
 }
 
-export function CustomAlert({
+/**
+ * Componente de alerta personalizado que exibe uma modal com título, mensagem e botões de ação.
+ */
+export function Alert({
     visible,
     title,
     message,
@@ -24,43 +30,25 @@ export function CustomAlert({
     isDestructive = false,
     onCancel,
     onConfirm,
-}: CustomAlertProps) {
+}: AlertProps) {
     const { colors } = useAppTheme();
 
     return (
-        <Modal
-            visible={visible}
-            transparent={true}
-            animationType="fade"
-            onRequestClose={onCancel}
-        >
+        <Modal visible={visible} transparent={true} animationType="fade" onRequestClose={onCancel}>
             <TouchableWithoutFeedback onPress={onCancel}>
                 <View style={styles.overlay}>
                     <TouchableWithoutFeedback>
-                        <View style={[styles.alertCard, { backgroundColor: colors.background }]}>
-                            
+                        <View style={[styles.card, { backgroundColor: colors.background }]}>                            
                             <Text style={[styles.title, { color: colors.textPrimary }]}>
                                 {title}
-                            </Text>
-                            
+                            </Text>                            
                             <Text style={[styles.message, { color: colors.textSecondary }]}>
                                 {message}
                             </Text>
-
-                            <View style={styles.buttonContainer}>
-                                <Button
-                                    title={cancelText}
-                                    onPress={onCancel}
-                                    variant="ghost"
-                                />
-
-                                <Button
-                                    title={confirmText}
-                                    onPress={onConfirm}
-                                    variant="primary"
-                                />
+                            <View style={styles.holder}>
+                                <Button title={cancelText} onPress={onCancel} variant="ghost"/>
+                                <Button title={confirmText} onPress={onConfirm} variant="primary"/>
                             </View>
-
                         </View>
                     </TouchableWithoutFeedback>
                 </View>

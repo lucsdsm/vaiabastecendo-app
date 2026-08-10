@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { radius, spacing, typography } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
@@ -12,18 +12,18 @@ export const styles = StyleSheet.create({
         overflow: 'hidden',
         position: 'relative',
     },
-    gradientWrapper: {
+    gradient: {
         width: '150%',
     },
-    leftContent: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    contentWrapper: {
+    content: {
         flexDirection: 'row',
         alignItems: 'center', 
         justifyContent: 'space-between',
         width: '100%',
+    },
+    left: {
+        flex: 1,
+        justifyContent: 'center',
     },
     text: {
         textAlign: 'left',
@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
         fontWeight: typography.weight.black,
         padding: spacing.sm,
     },
-    rightContent: {
+    right: {
         justifyContent: 'center',
         alignItems: 'flex-end',
     },

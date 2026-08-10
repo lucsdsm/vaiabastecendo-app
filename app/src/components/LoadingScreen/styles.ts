@@ -1,23 +1,11 @@
 import { Platform, StyleSheet } from 'react-native';
-import { radius, spacing, typography } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
         justifyContent: 'center',
         alignItems: 'center',
-        zIndex: 999,
-        ...Platform.select({
-            android: {
-                elevation: 999,
-            },
-            ios: {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 0 },
-                shadowOpacity: 0.1,
-                shadowRadius: 0,
-            },
-        }),
     },
     content: {
         alignItems: 'center',
@@ -38,7 +26,7 @@ export const styles = StyleSheet.create({
         marginBottom: spacing.xxl,
         textAlign: 'center',
     },
-    gaugeContainer: {
+    gauge: {
         width: 200,
         height: 115,
         overflow: 'hidden',
@@ -46,7 +34,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         marginTop: spacing.md,
     },
-    gaugeBackground: {
+    background: {
         width: 200,
         height: 200, 
         borderRadius: 100,
@@ -55,18 +43,18 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
     },
-    gaugeLabels: {
+    labels: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: 160,
         position: 'absolute',
         bottom: 0,
     },
-    labelText: {
+    label: {
         fontSize: typography.size.md,
         fontWeight: typography.weight.bold,
     },
-    needleWrapper: {
+    wrapper: {
         width: 200,
         height: 200, 
         position: 'absolute',
@@ -80,7 +68,7 @@ export const styles = StyleSheet.create({
         borderRadius: 3,
         marginTop: 15,
     },
-    needleCenter: {
+    center: {
         width: 20,
         height: 20,
         borderRadius: 10,

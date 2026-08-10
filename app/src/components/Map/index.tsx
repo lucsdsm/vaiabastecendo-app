@@ -1,10 +1,14 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { View } from 'react-native';
+
 import Mapbox from '@rnmapbox/maps';
 
-import { useAppTheme } from '../../theme/ThemeProvider';
 import { StationCardProps } from '../StationCard';
+
 import StationMarker from '../StationMarker';
+
+import { useAppTheme } from '@theme/ThemeProvider';
+
 import { styles } from './styles';
 
 Mapbox.setAccessToken(

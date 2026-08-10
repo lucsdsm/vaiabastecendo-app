@@ -1,12 +1,8 @@
 import React, { cloneElement } from 'react';
-import {
-  ActivityIndicator,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 
 import { useButton } from './useButton';
+
 import { styles } from './styles';
 
 export interface ButtonProps {
@@ -19,6 +15,9 @@ export interface ButtonProps {
   fullWidth?: boolean;
 }
 
+/**
+ * Componente de botão personalizado que exibe um botão com diferentes variantes, estados de carregamento e ícones opcionais.
+ */
 export default function Button({
   title,
   onPress,
@@ -52,7 +51,11 @@ export default function Button({
         <ActivityIndicator size="small" color={activityColor} />
       ) : (
         <View style={styles.content}>
-          {iconLeft ? <View style={styles.iconLeft}>{cloneElement(iconLeft, { color: iconColor })}</View> : null}
+          {iconLeft ? (
+            <View style={styles.left}>
+              {cloneElement(iconLeft, { color: iconColor })}
+            </View>
+          ) : null}
           <Text style={textStyle}>{title}</Text>
         </View>
       )}

@@ -32,7 +32,7 @@ export default function MapScreen() {
   const navigation = useNavigation<any>();
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.content}>
         <Pressable
           onPress={() => navigation.goBack()}
@@ -73,6 +73,6 @@ export default function MapScreen() {
         )}
       </View>
 
-    </View>
+    </SafeAreaView>
   );
 }

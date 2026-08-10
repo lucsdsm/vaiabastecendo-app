@@ -1,14 +1,25 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, TextInput, Keyboard, ScrollView, KeyboardAvoidingView, Platform, Switch } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
-import { useAppTheme } from '../../theme/ThemeProvider';
-import { styles } from './styles';
-import { useAddFuelLog } from './useAddFuelLog';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import { CustomAlert } from '../../components/Alert';
-import FuelTypeSelector from '../../components/FuelTypeSelector';
 
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { useAddFuelLog } from './useAddFuelLog';
+
+import { Alert } from '@components/Alert';
+
+import FuelTypeSelector from '@components/FuelTypeSelector';
+
+import { useAppTheme } from '@theme/ThemeProvider';
+
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+
+import { styles } from './styles';
+
+/**
+ * Tela para adicionar um novo registro de abastecimento.
+ */
 export default function AddFuelLogScreen() {
     const { colors, isDark } = useAppTheme();
     
@@ -120,8 +131,6 @@ export default function AddFuelLogScreen() {
                                 fuelTypes={fuelTypes}
                                 selectedFuel={selectedFuel}
                                 onSelectFuel={setSelectedFuel}
-                                variant="transparent"
-                                size="regular"
                             />
                         </View>
 
@@ -185,7 +194,7 @@ export default function AddFuelLogScreen() {
                             />
                         </View>
 
-                        <CustomAlert
+                        <Alert
                             visible={isAlertVisible}
                             title="Atenção!"
                             message="Tem certeza que deseja excluir este abastecimento?"
