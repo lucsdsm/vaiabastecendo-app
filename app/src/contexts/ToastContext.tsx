@@ -1,49 +1,77 @@
-import React, { createContext, useCallback, useContext, useState } from 'react';
+import React, { createContext, ReactNode, useCallback, useContext, useState, useMemo } from 'react';
 
-export type ToastType = 'success' | 'danger' | 'info';
+export type ToastType = 'success' | 'danger' | 'info' | 'confirm';
 
-export interface ToastState {
-  message: string;
-  type: ToastType;
+interface ToastState {
   visible: boolean;
+  type: ToastType;
+  title?: string;
+  message: string;
+  duration: number;
+  confirmText?: string;
+  onConfirm?: () => void;
 }
 
-interface ToastContextValue {
+interface ShowToastOptions {
+  type?: ToastType;
+  title?: string;
+  duration?: number;
+  confirmText?: string;
+  onConfirm?: () => void;
+}
+
+interface ToastContextData {
   toastState: ToastState;
-  showToast: (message: string, type?: ToastType) => void;
+  showToast: (message: string, options?: ShowToastOptions) => void;
   hideToast: () => void;
 }
 
-const ToastContext = createContext<ToastContextValue | undefined>(undefined);
+const DEFAULT_TOAST_STATE: ToastState = {
+  visible: false,
+  type: 'info',
+  message: '',
+  duration: 3000,
+};
+
+const ToastContext = createContext<ToastContextData | undefined>(undefined);
 
 /**
  * Provedor global de notificações toast.
  * Mantém um estado único para mensagens de feedback da aplicação.
  */
-export function ToastProvider({ children }: { children: React.ReactNode }) {
-  const [toastState, setToastState] = useState<ToastState>({
-    message: '',
-    type: 'info',
-    visible: false,
-  });
+export function ToastProvider({ children }: { children: ReactNode }) {
+  const [toastState, setToastState] = useState<ToastState>(DEFAULT_TOAST_STATE);
 
-  const showToast = useCallback((message: string, type: ToastType = 'info') => {
-    setToastState({
-      message,
-      type,
-      visible: true,
-    });
-  }, []);
+  const showToast = useCallback(
+    (message: string, options: ShowToastOptions = {}) => {
+      setToastState({
+        visible: true,
+        type: options.type ?? 'info',
+        title: options.title,
+        message,
+        duration: options.duration ?? 3000,
+        confirmText: options.confirmText,
+        onConfirm: options.onConfirm,
+      });
+    },
+    []
+  );
 
   const hideToast = useCallback(() => {
-    setToastState((previousState) => ({
-      ...previousState,
-      visible: false,
-    }));
+    setToastState(DEFAULT_TOAST_STATE);
   }, []);
 
+  const value = useMemo(
+    () => ({
+      toastState,
+      showToast,
+      hideToast,
+    }),
+    [hideToast, showToast, toastState]
+  );
+
   return (
-    <ToastContext.Provider value={{ toastState, showToast, hideToast }}>
+    <ToastContext.Provider value={value}>
       {children}
     </ToastContext.Provider>
   );

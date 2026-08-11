@@ -8,7 +8,6 @@ import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { useAppTheme } from '../../theme/ThemeProvider';
 import { styles } from './styles';
 import { useAddVehicle } from './useAddVehicle';
-import { Alert } from '../../components/Alert';
 
 export default function AddVehicleScreen() {
     const { colors, isDark } = useAppTheme();
@@ -18,7 +17,7 @@ export default function AddVehicleScreen() {
         tankCapacity, setTankCapacity,
         loading, isFormValid,
         handleSave, goBack,
-        isEditing, isAlertVisible, requestDelete, confirmDelete, cancelDelete
+        isEditing, requestDelete, confirmDelete
     } = useAddVehicle();
 
     return (
@@ -114,17 +113,6 @@ export default function AddVehicleScreen() {
                                 <Text style={[styles.currencySuffix, { color: colors.textSecondary }]}>Litros</Text>
                             </View>
                         </View>
-
-                        <Alert 
-                            visible={isAlertVisible}
-                            title="Atenção!"
-                            message="Tem certeza que deseja excluir este veículo? Todos os registros de abastecimento associados a ele também serão removidos."
-                            confirmText="Excluir"
-                            isDestructive={true}
-                            onConfirm={confirmDelete}
-                            onCancel={cancelDelete}
-                        />
-
                     </TouchableOpacity>
                 </ScrollView>
             </KeyboardAvoidingView>

@@ -17,7 +17,6 @@ export function useAddVehicle() {
     const [plate, setPlate] = useState(vehicleToEdit?.plate || '');
     const [tankCapacity, setTankCapacity] = useState(vehicleToEdit?.tank_capacity?.toString() || '');
     const [loading, setLoading] = useState(false);
-    const [isAlertVisible, setIsAlertVisible] = useState(false);
 
     const parseCapacity = (text: string) => parseFloat(text.replace(',', '.'));
 
@@ -43,30 +42,64 @@ export function useAddVehicle() {
             navigation.goBack();
         } catch (error) {
             console.error('Erro ao salvar veículo:', error);
-            showToast('Não foi possível salvar o veículo. Tente novamente.', 'danger');
+            showToast('Não foi possível salvar o veículo. Tente novamente.', {
+                title: 'Erro',
+                type: 'danger',
+            });
         } finally {
             setLoading(false);
         }
     };
 
     const requestDelete = () => {
-        if (!isEditing || !vehicleToEdit?.id) return;
-        setIsAlertVisible(true);
+      if (!isEditing || !vehicleToEdit?.id) {
+        return;
+      }
+
+      showToast(
+        "Toque em “Excluir” nos próximos 5 segundos para confirmar. Esta ação não poderá ser desfeita.",
+        {
+          title: "Excluir veículo?",
+          type: "danger",
+          duration: 5000,
+          confirmText: "Excluir",
+          onConfirm: () => {
+            try {
+              deleteVehicle(vehicleToEdit.id);
+
+              showToast("O veículo foi excluído com sucesso.", {
+                title: "Veículo excluído",
+                type: "success",
+              });
+
+              navigation.goBack();
+            } catch (error) {
+              console.error("Erro ao excluir veículo:", error);
+
+              showToast(
+                "Não foi possível excluir o veículo. Tente novamente.",
+                {
+                  title: "Erro ao excluir",
+                  type: "danger",
+                },
+              );
+            }
+          },
+        },
+      );
     };
 
     const confirmDelete = () => {
-        setIsAlertVisible(false);
         try {
             deleteVehicle(vehicleToEdit.id);
             navigation.goBack();
         } catch (error) {
             console.error('Erro ao excluir veículo:', error);
-            showToast('Não foi possível excluir o veículo. Tente novamente.', 'danger');
+            showToast('Não foi possível excluir o veículo. Tente novamente.',{
+                title: 'Erro',
+                type: 'danger',
+            });
         }
-    };
-
-    const cancelDelete = () => {
-        setIsAlertVisible(false);
     };
 
     return {
@@ -77,7 +110,7 @@ export function useAddVehicle() {
         handleSave,
         colors, isDark,
         isEditing,
-        isAlertVisible, requestDelete, confirmDelete, cancelDelete,
+        requestDelete, confirmDelete,
         goBack: () => navigation.goBack()
     };
 }

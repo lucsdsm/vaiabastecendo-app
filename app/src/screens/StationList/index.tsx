@@ -74,8 +74,6 @@ export default function StationListScreen() {
             options={filterOptions}
             selectedFilter={selectedFilter}
             onSelectFilter={setSelectedFilter}
-            variant="surface"
-            size="regular"
           />
         </View>
       </>

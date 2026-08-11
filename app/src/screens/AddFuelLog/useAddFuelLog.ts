@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useToast } from '../../contexts/ToastContext';
+import { useToast } from '@contexts/ToastContext';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useFuelTypes } from '../../contexts/FuelTypesContext';
-import { addFuelLog, updateFuelLog, getVehicleLogs, deleteFuelLog } from '../../database/logService';
+import { useFuelTypes } from '@contexts/FuelTypesContext';
+import { addFuelLog, updateFuelLog, getVehicleLogs, deleteFuelLog } from '@database/logService';
 
 export function useAddFuelLog() {
     const navigation = useNavigation();
@@ -24,8 +24,6 @@ export function useAddFuelLog() {
 
     const { fuelTypes, refreshFuelTypes, isLoading: isFuelLoading } = useFuelTypes();
     const [selectedFuel, setSelectedFuel] = useState<number | null>(null);
-
-    const [isAlertVisible, setIsAlertVisible] = useState(false);
 
     useEffect(() => {
         if (fuelTypes.length === 0 && !isFuelLoading) {
@@ -69,22 +67,50 @@ export function useAddFuelLog() {
     };
 
     const requestDelete = () => {
-        if (!isEditing || !logToEdit?.id) return;
-        setIsAlertVisible(true);
+      if (!isEditing || !logToEdit?.id) {
+        return;
+      }
+
+      showToast(
+        "Toque em “Excluir” nos próximos 5 segundos para confirmar. Esta ação não poderá ser desfeita.",
+        {
+          title: "Excluir abastecimento?",
+          type: "danger",
+          duration: 5000,
+          confirmText: "Excluir",
+          onConfirm: () => {
+            try {
+              deleteFuelLog(logToEdit.id);
+
+              showToast("O abastecimento foi excluído com sucesso.", {
+                title: "Abastecimento excluído",
+                type: "success",
+              });
+
+              navigation.goBack();
+            } catch (error) {
+              console.error("Erro ao excluir abastecimento:", error);
+
+              showToast(
+                "Não foi possível excluir o abastecimento. Tente novamente.",
+                {
+                  title: "Erro ao excluir",
+                  type: "danger",
+                },
+              );
+            }
+          },
+        },
+      );
     };
     
     const confirmDelete = () => {
-        setIsAlertVisible(false);
         try {
             deleteFuelLog(logToEdit.id);
             navigation.goBack();
         } catch (error) {
             console.error("Erro ao excluir abastecimento:", error);
         }
-    };
-    
-    const cancelDelete = () => {
-        setIsAlertVisible(false);
     };
 
     const isFormValid = 
@@ -110,7 +136,10 @@ export function useAddFuelLog() {
         today.setHours(23, 59, 59, 999);
 
         if (date > today) {
-            showToast("Data inválida. A data do abastecimento não pode ser no futuro.", "danger");
+            showToast("Data inválida. A data do abastecimento não pode ser no futuro.", {
+                title: "Erro",
+                type: "danger",
+            });
             return;
         }
 
@@ -121,11 +150,17 @@ export function useAddFuelLog() {
             const pastDateStr = pastDate.toISOString().split('T')[0];
 
             if (dateStr > pastDateStr && currentOdo <= pastLog.odometer) {
-                showToast(`Erro no Odômetro. O odômetro não pode ser menor ou igual a ${pastLog.odometer} km, que foi registrado em ${pastDate.toLocaleDateString('pt-BR')}.`, "danger");
+                showToast(`Erro no Odômetro. O odômetro não pode ser menor ou igual a ${pastLog.odometer} km, que foi registrado em ${pastDate.toLocaleDateString('pt-BR')}.`, {
+                    title: "Erro",
+                    type: "danger",
+                });
                 return;
             }
             if (dateStr < pastDateStr && currentOdo >= pastLog.odometer) {
-                showToast(`Erro no Odômetro. Para esta data, o odômetro deve ser menor que ${pastLog.odometer} km, que foi registrado em ${pastDate.toLocaleDateString('pt-BR')}.`, "danger");
+                showToast(`Erro no Odômetro. Para esta data, o odômetro deve ser menor que ${pastLog.odometer} km, que foi registrado em ${pastDate.toLocaleDateString('pt-BR')}.`, {
+                    title: "Erro",
+                    type: "danger",
+                });
                 return;
             }
         }
@@ -171,7 +206,7 @@ export function useAddFuelLog() {
         date, setDate,
         showDatePicker, setShowDatePicker,
         isFormValid, handleSave, isEditing,
-        isAlertVisible, requestDelete, confirmDelete, cancelDelete,
+        requestDelete, confirmDelete, cancelDelete,
         goBack: () => navigation.goBack()
     };
 }

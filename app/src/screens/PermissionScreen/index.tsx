@@ -42,9 +42,15 @@ export default function PermissionScreen({ onPermissionGranted }: PermissionScre
     setCanAskAgain(canAskAgainResult);
 
     if (!canAskAgainResult) {
-      showToast('Permissão de localização bloqueada. Habilite manualmente nas configurações do dispositivo.', 'danger');
+      showToast('Permissão de localização bloqueada. Habilite manualmente nas configurações do dispositivo.', {
+        title: 'Erro',
+        type: 'danger',
+      });
     } else {
-      showToast('Permissão de localização negada. Por favor, habilite nas configurações.', 'danger');
+      showToast('Permissão de localização negada. Por favor, habilite nas configurações.', {
+        title: 'Erro',
+        type: 'danger',
+      });
     }
   };
 

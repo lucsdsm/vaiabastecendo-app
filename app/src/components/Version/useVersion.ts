@@ -1,4 +1,4 @@
-import { Alert, Linking } from 'react-native';
+import { Linking } from 'react-native';
 
 import Constants from 'expo-constants';
 
@@ -21,10 +21,10 @@ export function useVersion() {
         try {
             await Linking.openURL(url);
         } catch (error) {
-            Alert.alert(
-            'Erro',
-            'Não foi possível abrir o aplicativo de e-mail neste dispositivo.'
-            );
+            showToast('Não foi possível abrir o aplicativo de e-mail neste dispositivo.', {
+                title: 'Erro',
+                type: 'danger',
+            });
         }
     };
 
@@ -34,7 +34,10 @@ export function useVersion() {
         if (supported) {
             await Linking.openURL(url);
         } else {
-            showToast('Não foi possível abrir o link.', 'danger');
+            showToast('Não foi possível abrir o link.', {
+                title: 'Erro',
+                type: 'danger',
+            });
         }
     };
 

@@ -94,18 +94,27 @@ export function useUpdatePriceCard({
     const handleUpdate = useCallback(
         async (fuelId: number | null, fuelPrice: string) => {
             if (!fuelId || !fuelPrice) {
-                showToast('Selecione o combustível e informe um preço.', 'danger');
+                showToast('Selecione o combustível e informe um preço.', {
+                    title: 'Campos obrigatórios',
+                    type: 'danger',
+                });
                 return;
             }
 
             const numericPrice = parsePriceToNumber(fuelPrice);
             if (Number.isNaN(numericPrice) || numericPrice <= 0) {
-                showToast('Informe um preço válido maior que zero.', 'danger');
+                showToast('Informe um preço válido maior que zero.', {
+                    title: 'Preço inválido',
+                    type: 'danger',
+                });
                 return;
             }
 
             if (numericPrice < 1 || numericPrice > 15) {
-                showToast('Informe um preço real de mercado (entre R$ 1,00 e R$ 15,00).', 'info');
+                showToast('Informe um preço real de mercado (entre R$ 1,00 e R$ 15,00).', {
+                    title: 'Preço fora do intervalo',
+                    type: 'info',
+                });
                 return;
             }
 
@@ -122,7 +131,10 @@ export function useUpdatePriceCard({
                     const limiteInferior = precoAnterior * 0.7;
 
                     if (numericPrice > limiteSuperior || numericPrice < limiteInferior) {
-                        showToast(`Valor suspeito. O preço atual é R$ ${precoAnterior.toFixed(2)}.`, 'info');
+                        showToast(`Valor suspeito. O preço atual é R$ ${precoAnterior.toFixed(2)}.`, {
+                            title: 'Preço suspeito',
+                            type: 'info',
+                        });
                         return;
                     }
                 }
@@ -144,17 +156,29 @@ export function useUpdatePriceCard({
 
                 setPrice('');
                 onSuccess();
-                showToast('Preço atualizado com sucesso!', 'success');
+                showToast('Preço atualizado com sucesso!', {
+                    title: 'Sucesso',
+                    type: 'success',
+                });
             } catch (error: any) {
                 console.error('Erro da API:', error.response?.data || error.message);
 
                 const erroBackend = error.response?.data;
                 if (erroBackend?.preco) {
-                    showToast(erroBackend.preco[0], 'danger');
+                    showToast(erroBackend.preco[0], {
+                        title: 'Erro ao atualizar preço',
+                        type: 'danger',
+                    });
                 } else if (error.response?.status === 401 || error.response?.status === 403) {
-                    showToast('Sessão expirada. Faça login novamente.', 'danger');
+                    showToast('Sessão expirada. Faça login novamente.', {
+                        title: 'Erro de autenticação',
+                        type: 'danger',
+                    });
                 } else {
-                    showToast('Não foi possível atualizar o preço. Tente novamente.', 'danger');
+                    showToast('Não foi possível atualizar o preço. Tente novamente.', {
+                        title: 'Erro de atualização',
+                        type: 'danger',
+                    });
                 }
             } finally {
                 setLoading(false);

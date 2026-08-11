@@ -5,7 +5,7 @@ import * as Location from 'expo-location';
 import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 
 import LoadingScreen from './src/components/LoadingScreen';
-import { Toast } from './src/components/Toast';
+import { ActionToast } from './src/components/Toast';
 import { AuthProvider, useAuth } from './src/contexts/AuthContext';
 import { FuelTypeProvider } from './src/contexts/FuelTypesContext';
 import { ToastProvider } from './src/contexts/ToastContext';
@@ -175,7 +175,7 @@ export default function App() {
               <AppContent />
             </FuelTypeProvider>
           </AuthProvider>
-          <Toast />
+          <ActionToast />
         </ToastProvider>
       </ThemeProvider>
     </SafeAreaProvider>

@@ -147,14 +147,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       try {
         await refreshUserWithRetry(nextToken);
-        showToast('Login realizado com sucesso.', 'success');
+        showToast('Login realizado com sucesso.', {
+          title: 'Sucesso',
+          type: 'success',
+        });
       } catch (error) {
         await SecureStore.deleteItemAsync(AUTH_TOKEN_STORAGE_KEY);
         tokenRef.current = null;
         setToken(null);
         setUser(null);
         console.error('Falha ao carregar o perfil após o login:', error);
-        showToast('Não foi possível concluir o login.', 'danger');
+        showToast('Não foi possível concluir o login.', {
+          title: 'Erro',
+          type: 'danger',
+        });
         throw error;
       }
     },
@@ -166,7 +172,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     tokenRef.current = null;
     setToken(null);
     setUser(null);
-    showToast('Você saiu da sua conta.', 'info');
+    showToast('Você saiu da sua conta.', {
+      title: 'Saiu',
+      type: 'info',
+    });
   }, [showToast]);
 
   const updateUser = useCallback((nextUser: AuthUser | null) => {

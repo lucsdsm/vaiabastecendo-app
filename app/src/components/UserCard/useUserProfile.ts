@@ -51,14 +51,20 @@ export function useUserProfile() {
         const apiToken = response.data?.key;
 
         if (!apiToken) {
-          showToast('O backend não retornou um token de autenticação.', 'danger');
+          showToast('O servidor não retornou um token de autenticação.', {
+            title: 'Erro',
+            type: 'danger',
+          });
           return;
         }
 
         await signIn(apiToken);
       } catch (error) {
         console.error('Erro na autenticação com o backend:', error);
-        showToast('Não foi possível validar seu login.', 'danger');
+        showToast('Não foi possível validar seu login.', {
+          title: 'Erro',
+          type: 'danger',
+        });
       } finally {
         setIsLoading(false);
       }
@@ -74,7 +80,10 @@ export function useUserProfile() {
       if (googleToken) {
         exchangeGoogleToken(googleToken);
       } else {
-        showToast('Google não retornou token de autenticação.', 'danger');
+        showToast('Google não retornou token de autenticação.', {
+          title: 'Erro',
+          type: 'danger',
+        });
       }
 
       return;
@@ -82,12 +91,18 @@ export function useUserProfile() {
 
     if (response?.type === 'error') {
       console.error('Erro no login com Google:', response);
-      showToast('Não foi possível concluir o login com Google.', 'danger');
+      showToast('Não foi possível concluir o login com Google.', {
+        title: 'Erro',
+        type: 'danger',
+      });
       return;
     }
 
     if (response?.type === 'dismiss') {
-      showToast('Login cancelado.', 'info');
+      showToast('Login cancelado.', {
+        title: 'Cancelado',
+        type: 'info',
+      });
     }
   }, [response, exchangeGoogleToken, showToast]);
 
@@ -115,7 +130,10 @@ export function useUserProfile() {
       await refreshUser();
     } catch (error) {
       console.error('Erro ao atualizar os dados do perfil:', error);
-      showToast('Não foi possível atualizar o perfil.', 'danger');
+      showToast('Não foi possível atualizar o perfil.', {
+        title: 'Erro',
+        type: 'danger',
+      });
     } finally {
       setIsLoading(false);
     }

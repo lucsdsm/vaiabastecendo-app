@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useAddFuelLog } from './useAddFuelLog';
 
-import { Alert } from '@components/Alert';
+import { ActionToast } from '@components/Toast';
 
 import FuelTypeSelector from '@components/FuelTypeSelector';
 
@@ -32,7 +32,7 @@ export default function AddFuelLogScreen() {
         fuelTypes, selectedFuel, setSelectedFuel,
         date, setDate,
         showDatePicker, setShowDatePicker,
-        isAlertVisible, requestDelete, confirmDelete, cancelDelete,
+        requestDelete, confirmDelete, cancelDelete,
         isFormValid, isEditing, handleSave, goBack
     } = useAddFuelLog();
 
@@ -194,15 +194,7 @@ export default function AddFuelLogScreen() {
                             />
                         </View>
 
-                        <Alert
-                            visible={isAlertVisible}
-                            title="Atenção!"
-                            message="Tem certeza que deseja excluir este abastecimento?"
-                            confirmText="Excluir"
-                            isDestructive={true}
-                            onConfirm={confirmDelete}
-                            onCancel={cancelDelete}
-                        />
+                        
 
                     </TouchableOpacity>
                 </ScrollView>

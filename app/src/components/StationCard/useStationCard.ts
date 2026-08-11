@@ -216,7 +216,10 @@ export function useStationCard(data: StationCardProps, onRefresh: () => void) {
 
     Linking.openURL(url).catch((error) => {
       console.error('Erro ao abrir o mapa:', error);
-      showToast('Não foi possível abrir o mapa.', 'danger');
+      showToast('Não foi possível abrir o mapa.', {
+        type: 'danger',
+        title: 'Erro ao abrir o mapa',
+      });
     });
   }
 
@@ -226,7 +229,10 @@ export function useStationCard(data: StationCardProps, onRefresh: () => void) {
    */
   function handleOpenUpdateModal() {
     if (!token) {
-      showToast('Faça login para atualizar os preços.', 'info');
+      showToast('Faça login para atualizar os preços.', {
+        type: 'info',
+        title: 'Login necessário',
+      });
       return;
     }
 
@@ -244,7 +250,10 @@ export function useStationCard(data: StationCardProps, onRefresh: () => void) {
    */
   async function handleToggleLike(priceUpdateId: number) {
     if (!token) {
-      showToast('Faça login para reagir a essa informação.', 'info');
+      showToast('Faça login para reagir a essa informação.', {
+        title: 'Login necessário',
+        type: 'info',
+      });
       return;
     }
 
@@ -276,7 +285,10 @@ export function useStationCard(data: StationCardProps, onRefresh: () => void) {
       try {
         await persistOwnReaction(priceUpdateId, nextLikedState);
       } catch (error) {
-        showToast('Não foi possível salvar sua reação local.', 'danger');
+        showToast('Não foi possível salvar sua reação local.', {
+          type: 'danger',
+          title: 'Erro ao salvar reação',
+        });
 
         setLocalPrices((prevPrices) =>
           prevPrices.map((item) =>
@@ -327,7 +339,10 @@ export function useStationCard(data: StationCardProps, onRefresh: () => void) {
       onRefresh();
     } catch (error) {
       console.error('Erro ao reagir à atualização:', error);
-      showToast('Erro ao enviar sua reação. Tente novamente.', 'danger');
+      showToast('Erro ao enviar sua reação. Tente novamente.', {
+        type: 'danger',
+        title: 'Erro ao enviar reação',
+      });
       setLocalPrices(previousPrices);
     }
   }
