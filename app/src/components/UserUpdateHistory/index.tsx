@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlatList, Text, View } from 'react-native';
-import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+
+import { UserUpdateHistoryItem, useUserUpdateHistory } from './useUserUpdateHistory';
 
 import LoadingState from '../LoadingState';
 import EmptyState from '../EmptyState';
@@ -8,8 +9,11 @@ import EmptyState from '../EmptyState';
 import { getReadableColor } from '@utils/color';
 
 import { useAppTheme } from '@theme/ThemeProvider';
+
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+
 import { styles } from './styles';
-import { UserUpdateHistoryItem, useUserUpdateHistory } from './useUserUpdateHistory';
+
 
 interface UserUpdateHistoryProps {
   userId?: number | null;
@@ -21,7 +25,7 @@ interface UserUpdateHistoryProps {
  */
 export default function UserUpdateHistory({ userId }: UserUpdateHistoryProps) {
   const { colors, isDark } = useAppTheme();
-  const { updates, loading, summary, formatPrice, formatDate, getFuelAccent } =
+  const { updates, loading, formatPrice, formatDate } =
     useUserUpdateHistory({ enabled: true });
 
   const header = (
@@ -36,9 +40,7 @@ export default function UserUpdateHistory({ userId }: UserUpdateHistoryProps) {
     return (
       <View style={styles.container}>
         {header}
-        <View style={styles.loading}>
-          <LoadingState message='Carregando histórico...' iconName='history' />
-        </View>
+        <LoadingState message='Carregando histórico...' iconName='history' />
       </View>
     );
   }
@@ -47,9 +49,7 @@ export default function UserUpdateHistory({ userId }: UserUpdateHistoryProps) {
     return (
       <View style={styles.container}>
         {header}
-        <View style={styles.loading}>
-          <EmptyState title="Você ainda não tem um histórico de atualizações." message='Suas próximas contribuições aparecerão aqui com data, preço e posto.' iconName='fail' />
-        </View>
+        <EmptyState title="Você ainda não tem um histórico de atualizações." message='Suas próximas contribuições aparecerão aqui com data, preço e posto.' iconName='fail' />
       </View>
     );
   }
@@ -130,7 +130,6 @@ export default function UserUpdateHistory({ userId }: UserUpdateHistoryProps) {
         keyExtractor={(item) => String(item.id)}
         renderItem={renderItem}
         scrollEnabled={false}
-        contentContainerStyle={styles.listContent}
         ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
       />
     </View>

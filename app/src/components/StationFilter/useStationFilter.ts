@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useAppTheme } from '../../theme/ThemeProvider';
+import { useAppTheme } from '@theme/ThemeProvider';
 import { styles } from './styles';
 
 export type StationFilterSelectorVariant = 'surface' | 'primary' | 'ghost';

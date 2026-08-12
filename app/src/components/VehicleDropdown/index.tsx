@@ -24,6 +24,9 @@ interface VehicleDropdownProps {
     onEditVehicle: (vehicle: Vehicle) => void;
 }
 
+/**
+ * Componente para exibir um dropdown com os veículos do usuário.
+ */
 export function VehicleDropdown({
     isVisible,
     vehicles,
@@ -38,9 +41,9 @@ export function VehicleDropdown({
     if (!isVisible) return null;
 
     return (
-        <TouchableOpacity 
-            style={styles.overlay} 
-            activeOpacity={1} 
+        <TouchableOpacity
+            style={styles.overlay}
+            activeOpacity={1}
             onPress={onClose}>
             <View style={[styles.content, { backgroundColor: colors.surface }]}>
                 <View style={[styles.pointer, { borderBottomColor: colors.surface }]} />
@@ -53,7 +56,7 @@ export function VehicleDropdown({
                         const isSelected = selectedVehicle?.id === item.id;
 
                         return (
-                            <TouchableOpacity 
+                            <TouchableOpacity
                                 style={styles.item}
                                 onPress={() => {
                                     if (isSelected) {
@@ -75,7 +78,7 @@ export function VehicleDropdown({
                     }}
                 />
 
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.button}
                     onPress={onAddVehicle}>
                     <FontAwesome6 name="circle-plus" size={16} iconStyle='solid' color={colors.primary} />

@@ -1,11 +1,10 @@
 import { Platform, StyleSheet } from 'react-native';
-import { radius, spacing, typography, elevation } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -15,19 +14,19 @@ export const styles = StyleSheet.create({
         minHeight: 55,
         position: 'relative',
     },
-    headerActionButton: {
+    action: {
         width: 40,
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 2,
     },
-    headerRightActions: {
+    right: {
         flexDirection: 'row',
         alignItems: 'center',
         zIndex: 2,
     },
-    headerTitleContainer: {
+    wrapper: {
         position: 'absolute',
         left: 50,  
         right: 90,
@@ -37,15 +36,15 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         zIndex: 1,
     },
-    headerTitle: {
+    title: {
         fontSize: typography.size.xl,
         fontWeight: typography.weight.bold,
     },
 
-    scrollContent: {
+    scroll: {
         flexGrow: 1,
     },
-    cardContent: {
+    content: {
         paddingHorizontal: spacing.lg,
         paddingBottom: spacing.xl,
         flex: 1,
@@ -61,7 +60,7 @@ export const styles = StyleSheet.create({
         marginBottom: spacing.sm,
         marginLeft: spacing.sm,
     },
-    inputContainer: {
+    input: {
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius: radius.lg,
@@ -69,13 +68,13 @@ export const styles = StyleSheet.create({
         paddingHorizontal: spacing.md,
         paddingVertical: 4,
     },
-    textInput: {
+    text: {
         flex: 1,
         fontSize: typography.size.lg,
         fontWeight: typography.weight.bold,
         paddingVertical: spacing.md,
     },
-    numberInput: {
+    number: {
         flex: 1,
         fontSize: typography.size.hero + 4,
         fontWeight: typography.weight.bold,
@@ -83,22 +82,9 @@ export const styles = StyleSheet.create({
         paddingVertical: spacing.md,
         letterSpacing: -1,
     },
-    currencySuffix: {
+    suffix: {
         fontSize: typography.size.sm,
         fontWeight: typography.weight.medium,
         marginLeft: spacing.sm,
-    },
-    button: {
-        borderRadius: radius.lg,
-        paddingVertical: 18,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'row',
-        gap: spacing.sm,
-    },
-    buttonText: {
-        fontSize: typography.size.md,
-        fontWeight: typography.weight.bold,
-        letterSpacing: -0.2,
     },
 });

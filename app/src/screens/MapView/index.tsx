@@ -2,14 +2,16 @@ import React from 'react';
 import { View, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import StationCard from '../../components/StationCard';
-import Map from '../../components/Map';
-import { styles } from './styles';
-import { useMapScreen } from '../../components/Map/useMapScreen';
+import { useMapScreen } from '@components/Map/useMapScreen';
 
-import { useNavigation } from '@react-navigation/native';
+import Map from '@components/Map';
+
+import StationCard from '@components/StationCard';
 
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+import { styles } from './styles';
+
+import { useNavigation } from '@react-navigation/native';
 
 
 /**
@@ -50,8 +52,7 @@ export default function MapScreen() {
             name="arrow-left"
             size={20}
             iconStyle='solid'
-            color={colors.primary}
-          />
+            color={colors.primary}/>
         </Pressable>
       
         <Map
@@ -65,8 +66,8 @@ export default function MapScreen() {
         />
 
         {selectedStation && (
-          <View style={styles.cardOverlay} pointerEvents="box-none">
-            <View style={styles.cardWrapper}>
+          <View style={styles.overlay} pointerEvents="box-none">
+            <View style={styles.wrapper}>
               <StationCard data={selectedStation} onRefresh={refetch} />
             </View>
           </View>

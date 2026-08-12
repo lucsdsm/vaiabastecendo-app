@@ -1,5 +1,5 @@
-import { useAppTheme } from '../../theme/ThemeProvider';
-import { useStations } from '../../hooks/useStations';
+import { useAppTheme } from '@theme/ThemeProvider';
+import { useStations } from '@hooks/useStations';
 
 /**
  * Reúne estado de tema e dados da lista principal de postos.

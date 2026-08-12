@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   full: {
-    width: '50%',
+    width: '100%',
     alignSelf: 'center',
   },
   content: {

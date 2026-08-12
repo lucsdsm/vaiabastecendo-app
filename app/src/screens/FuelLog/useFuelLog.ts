@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { addFuelLog, getVehicleLogs, getVehicles, Vehicle } from '../../database/logService'; 
-import { useAppTheme } from '../../theme/ThemeProvider';
-import { FuelLog } from '../../database/logService';
+import { addFuelLog, getVehicleLogs, getVehicles, Vehicle } from '@database/logService'; 
+import { useAppTheme } from '@theme/ThemeProvider';
+import { FuelLog } from '@database/logService';
 
 export function useFuelLog() {
     const { colors } = useAppTheme();

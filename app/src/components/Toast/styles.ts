@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
 
   card: {
     overflow: 'hidden',
-    borderRadius: radius.lg,
+    borderRadius: radius.md,
     paddingTop: spacing.md,
     paddingHorizontal: spacing.md,
     paddingBottom: spacing.sm,
@@ -26,12 +26,13 @@ export const styles = StyleSheet.create({
     gap: spacing.md,
   },
 
-  icon: {
-    width: iconSize.lg,
-    height: iconSize.lg,
-    borderRadius: radius.md,
+  container: {
+    width: 32,
+    height: 32,
+    borderRadius: radius.pill,
     alignItems: 'center',
     justifyContent: 'center',
+    flexShrink: 0,
   },
 
   content: {
@@ -55,22 +56,22 @@ export const styles = StyleSheet.create({
 
   actions: {
     marginTop: spacing.sm,
-    alignItems: 'flex-end',
+    marginHorizontal: -spacing.md,
+    marginBottom: -spacing.sm,
   },
 
   action: {
-    minHeight: iconSize.lg,
-    paddingHorizontal: spacing.md,
-    borderRadius: radius.md,
+    width: '100%',
+    minHeight: 48,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: spacing.md,
   },
 
-  text: {
+  actionText: {
     fontSize: typography.size.xs + 1,
     fontWeight: typography.weight.bold,
-    color: '#FFFFFF',
+    letterSpacing: 0.2,
+    textTransform: 'uppercase',
   },
 
   track: {
@@ -79,10 +80,12 @@ export const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 4,
-    backgroundColor: 'rgba(0, 0, 0, 0.08)',
+    overflow: 'hidden',
+    zIndex: 1,
   },
 
   bar: {
     height: '100%',
+    width: '100%',
   },
 });

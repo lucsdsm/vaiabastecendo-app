@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { createVehicle, updateVehicle, deleteVehicle } from '../../database/logService';
-import { useAppTheme } from '../../theme/ThemeProvider';
-import { useToast } from '../../contexts/ToastContext';
+import { createVehicle, updateVehicle, deleteVehicle } from '@database/logService';
+import { useAppTheme } from '@theme/ThemeProvider';
+import { useToast } from '@contexts/ToastContext';
 
 export function useAddVehicle() {
     const navigation = useNavigation();

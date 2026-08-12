@@ -4,7 +4,6 @@ import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens'
 export const styles = StyleSheet.create({
     container: {
         width: '100%',
-        marginTop: spacing.sm,
     },
     row: {
         flexDirection: 'row',

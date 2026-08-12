@@ -1,14 +1,23 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
-import { styles } from './styles';
+
 import { useFuelLog } from './useFuelLog';
-import { VehicleDropdown } from '../../components/VehicleDropdown';
-import { FuelLogCard } from '../../components/FuelLogCard';
+
+import { VehicleDropdown } from '@components/VehicleDropdown';
+import { FuelLogCard } from '@components/FuelLogCard';
+
 import EmptyState from '@components/EmptyState';
-import LoadingState from '../../components/LoadingState';
-import Footer from '../../components/Footer';
+import LoadingState from '@components/LoadingState';
+import Footer from '@components/Footer';
+
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+
+import { styles } from './styles';
+
+/**
+ * Tela de histórico de abastecimentos.
+ */
 
 export default function FuelLogScreen() {
     const {
@@ -31,17 +40,15 @@ export default function FuelLogScreen() {
         <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
             
             <View style={styles.header}>
-                <TouchableOpacity onPress={goBack} style={styles.headerActionButton}>
+                <TouchableOpacity onPress={goBack} style={styles.action}>
                     <FontAwesome6 name="arrow-left" size={20} iconStyle='solid' color={colors.textPrimary} />
                 </TouchableOpacity>
             
-                
                 <TouchableOpacity 
-                    style={styles.headerTitleContainer} 
+                    style={styles.wrapper} 
                     onPress={toggleModal}
-                    activeOpacity={0.7}
-                >
-                    <Text style={[styles.headerTitle, { color: colors.textPrimary }]} numberOfLines={1}>
+                    activeOpacity={0.7}>
+                    <Text style={[styles.title, { color: colors.textPrimary }]} numberOfLines={1}>
                         {selectedVehicle ? selectedVehicle.name : 'Selecionar veículo'}
                     </Text>
                     <FontAwesome6 
@@ -106,8 +113,7 @@ export default function FuelLogScreen() {
                 <TouchableOpacity 
                     style={[styles.fab, { backgroundColor: colors.primary }]}
                     onPress={handleAddFuelLog}
-                    activeOpacity={0.8}
-                >
+                    activeOpacity={0.8}>
                     <FontAwesome6 name="plus" size={22} iconStyle='solid' color="#FFF" />
                 </TouchableOpacity>
             )}

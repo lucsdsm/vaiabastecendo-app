@@ -1,5 +1,5 @@
 import React, { cloneElement } from 'react';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity, View, DimensionValue } from 'react-native';
 
 import { useButton } from './useButton';
 
@@ -12,7 +12,7 @@ export interface ButtonProps {
   loading?: boolean;
   variant?: 'primary' | 'secondary' | 'ghost';
   iconLeft?: React.ReactElement;
-  fullWidth?: boolean;
+  width?: DimensionValue;
 }
 
 /**
@@ -25,7 +25,7 @@ export default function Button({
   loading = false,
   variant = 'primary',
   iconLeft,
-  fullWidth = true,
+  width = '100%',
 }: ButtonProps) {
   const {
     isDisabled,
@@ -37,7 +37,7 @@ export default function Button({
     disabled,
     loading,
     variant,
-    fullWidth,
+    width,
   });
 
   return (
@@ -50,10 +50,12 @@ export default function Button({
       {loading ? (
         <ActivityIndicator size="small" color={activityColor} />
       ) : (
-        <View style={styles.content}>
+        <View style={[styles.content]}>
           {iconLeft ? (
-            <View style={styles.left}>
-              {cloneElement(iconLeft, { color: iconColor })}
+            <View style={styles.icon}>
+              {cloneElement(iconLeft as React.ReactElement<{ color?: string }>, {
+                color: iconColor,
+              })}
             </View>
           ) : null}
           <Text style={textStyle}>{title}</Text>

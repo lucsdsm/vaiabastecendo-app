@@ -2,9 +2,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Location from 'expo-location';
 
-import { useAppTheme } from '../../theme/ThemeProvider';
+import { useAppTheme } from '@theme/ThemeProvider';
 import { StationCardProps } from '../StationCard';
-import { useStations } from '../../hooks/useStations';
+import { useStations } from '@hooks/useStations';
 
 interface MapRegion {
   latitude: number;

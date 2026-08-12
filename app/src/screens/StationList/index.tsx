@@ -1,19 +1,26 @@
 import React, { useEffect } from 'react';
 import { FlatList, Image, RefreshControl, View } from 'react-native';
+
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { useRoute } from '@react-navigation/native';
 
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
-import StationCard from '../../components/StationCard';
-import EmptyState from '../../components/EmptyState';
-import LoadingState from '../../components/LoadingState';
-import Banner from '../../components/Banner';
-import StationFilterSelector from '../../components/StationFilter';
+import EmptyState from '@components/EmptyState';
+import LoadingState from '@components/LoadingState';
+import Header from '@components/Header';
+import Banner from '@components/Banner';
+import Footer from '@components/Footer';
+import StationCard from '@components/StationCard';
+import StationFilterSelector from '@components/StationFilter';
+
 import { styles } from './styles';
+
 import { useStationList } from './useStationList';
 
+/**
+ * Tela de listagem de postos.
+ */
 export default function StationListScreen() {
   const {
     colors,
@@ -21,7 +28,6 @@ export default function StationListScreen() {
     stations,
     isLoading,
     isRefreshing,
-    error,
     refetch,
     shouldShowErrorCard,
   } = useStationList();
@@ -59,7 +65,7 @@ export default function StationListScreen() {
           gradientColors={[colors.primary, colors.primary, colors.success]}
           logoElement={
             <Image
-              source={require('../../../assets/images/two.png')}
+              source={require('@assets/images/two.png')}
               style={{
                 width: 128,
                 height: 128,
@@ -73,8 +79,7 @@ export default function StationListScreen() {
           <StationFilterSelector
             options={filterOptions}
             selectedFilter={selectedFilter}
-            onSelectFilter={setSelectedFilter}
-          />
+            onSelectFilter={setSelectedFilter}/>
         </View>
       </>
     );
@@ -85,8 +90,7 @@ export default function StationListScreen() {
       return (
         <LoadingState
           message="Buscando postos próximos..."
-          iconName="run"
-        />
+          iconName="run"/>
       );
     }
 
@@ -98,16 +102,14 @@ export default function StationListScreen() {
       <EmptyState
         title="Nenhum posto encontrado."
         message="Ainda não há postos cadastrados no sistema. Puxe para baixo para atualizar!"
-        iconName="looking"
-      />
+        iconName="looking"/>
     );
   }
 
   return (
     <SafeAreaView
       edges={['top']}
-      style={[styles.container, { backgroundColor: colors.background }]}
-    >
+      style={[styles.container, { backgroundColor: colors.background }]}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
 
       <View style={styles.content}>
@@ -129,7 +131,6 @@ export default function StationListScreen() {
             />
           }
           contentContainerStyle={[
-            styles.listContainer,
             filteredStations.length === 0 && { flexGrow: 1 },
           ]}
           showsVerticalScrollIndicator={false}

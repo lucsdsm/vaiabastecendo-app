@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { radius, spacing, typography } from '../../theme/tokens';
+import { radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
@@ -15,25 +15,25 @@ export const styles = StyleSheet.create({
         gap: spacing.md,
         minHeight: 55,
     },
-    backButton: {
+    back: {
         width: 40,
         height: 40,
         borderRadius: radius.pill,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    headerTextContainer: {
+    text: {
         flex: 1,
     },
-    headerTitle: {
+    title: {
         fontSize: typography.size.lg,
         fontWeight: typography.weight.bold,
     },
-    headerSubtitle: {
+    subtitle: {
         fontSize: typography.size.sm,
         marginTop: 2,
     },
-    headerSpacer: {
+    spacer: {
         width: 40,
         height: 40,
     },

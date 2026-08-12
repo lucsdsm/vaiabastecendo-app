@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { radius, spacing, typography } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
@@ -13,14 +13,14 @@ export const styles = StyleSheet.create({
         minHeight: 56,
         position: 'relative',
     },
-    headerActionButton: {
+    actions: {
         width: 40,
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 2,
     },
-    headerTitleContainer: {
+    wrapper: {
         position: 'absolute',
         left: 60,
         right: 60,
@@ -30,16 +30,11 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         zIndex: 1,
     },
-    headerTitle: {
+    title: {
         fontSize: typography.size.xl,
         fontWeight: typography.weight.bold,
     },
-        headerRightActions: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        zIndex: 2,
-    },
-    cardContent: {
+    content: {
         paddingHorizontal: spacing.lg,
         paddingBottom: spacing.xl,
     },
@@ -58,7 +53,7 @@ export const styles = StyleSheet.create({
         marginBottom: spacing.sm,
         marginLeft: spacing.sm,
     },
-    inputContainer: {
+    input: {
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius: radius.lg,
@@ -66,7 +61,7 @@ export const styles = StyleSheet.create({
         paddingHorizontal: spacing.md,
         paddingVertical: 4,
     },
-    textInput: {
+    text: {
         flex: 1,
         fontSize: typography.size.lg,
         fontWeight: typography.weight.bold,
@@ -82,7 +77,7 @@ export const styles = StyleSheet.create({
         fontWeight: typography.weight.medium,
         marginLeft: spacing.xs,
     },
-    switchContainer: {
+    frame: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -90,16 +85,16 @@ export const styles = StyleSheet.create({
         padding: spacing.md,
         borderRadius: radius.lg,
     },
-    switchTextContainer: {
+    word: {
         flex: 1,
         paddingRight: spacing.md,
     },
-    switchTitle: {
+    head: {
         fontSize: typography.size.md,
         fontWeight: typography.weight.bold,
         marginBottom: 2,
     },
-    switchDesc: {
+    desc: {
         fontSize: typography.size.xs,
         lineHeight: 16,
     },

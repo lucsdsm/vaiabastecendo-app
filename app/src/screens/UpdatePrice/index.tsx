@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
-import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useAppTheme } from '../../theme/ThemeProvider';
-import UpdatePriceCard from '../../components/UpdatePriceCard';
-import PriceHistoryTable from '../../components/PriceHistoryTable';
-import { PrecoAtualResumo, useUpdatePriceCard } from '../../components/UpdatePriceCard/useUpdatePriceCard';
+import { useNavigation, useRoute } from '@react-navigation/native';
+
+import UpdatePriceCard from '@components/UpdatePriceCard';
+import PriceHistoryTable from '@components/PriceHistoryTable';
+import { PrecoAtualResumo, useUpdatePriceCard } from '@components/UpdatePriceCard/useUpdatePriceCard';
+
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+
+import { useAppTheme } from '@theme/ThemeProvider';
+
 import { styles } from './styles';
 
 type UpdatePriceRouteParams = {
@@ -16,6 +20,9 @@ type UpdatePriceRouteParams = {
     currentPrices: PrecoAtualResumo[];
 };
 
+/**
+ * Tela de atualização de preço.
+ */
 export default function UpdatePriceScreen() {
     const { colors } = useAppTheme();
     const navigation = useNavigation();
@@ -53,13 +60,14 @@ export default function UpdatePriceScreen() {
     return (
         <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.back}>
                     <FontAwesome6 name="arrow-left" size={20} iconStyle='solid' color={colors.textPrimary} />
                 </TouchableOpacity>
 
-                <View style={styles.headerTextContainer}>
-                    <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>Atualizar preço</Text>
-                    <Text style={[styles.headerSubtitle, { color: colors.textSecondary }]} numberOfLines={1}>
+
+                <View style={styles.text}>
+                    <Text style={[styles.title, { color: colors.textPrimary }]}>Atualizar preço</Text>
+                    <Text style={[styles.subtitle, { color: colors.textSecondary }]} numberOfLines={1}>
                         {stationName}
                     </Text>
                 </View>
@@ -68,7 +76,7 @@ export default function UpdatePriceScreen() {
                     onPress={() => handleUpdate(selectedFuel, price)}
                     disabled={!isFormValid || loading}
                     style={[
-                        styles.backButton,
+                        styles.back,
                         { opacity: !isFormValid || loading ? 0.35 : 1, alignItems: 'center', justifyContent: 'center' },
                     ]}
                     activeOpacity={0.7}

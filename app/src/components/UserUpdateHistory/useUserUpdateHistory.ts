@@ -40,6 +40,10 @@ type ProfileResponse = {
   history?: ProfileHistoryItem[];
 };
 
+/**
+ * Hook para buscar o histórico de atualizações do usuário.
+ */
+
 export function useUserUpdateHistory({ enabled = true }: UseUserUpdateHistoryParams) {
   const { token } = useAuth();
 

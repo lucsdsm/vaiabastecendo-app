@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { spacing, typography  } from '../../theme/tokens';
+import { spacing, typography  } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
@@ -17,32 +17,32 @@ export const styles = StyleSheet.create({
         position: 'relative',
         minHeight: 55,    
     },
-    headerActionButton: {
+    action: {
         width: 40,           
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 2,            
     },
-    headerTitleContainer: {
+    wrapper: {
         ...StyleSheet.absoluteFillObject,
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 1,
     },
-    headerTitle: {
+    title: {
         fontSize: typography.size.xl,
         fontWeight: typography.weight.bold,
     },
-    scrollContent: {
+    scroll: {
         flexGrow: 1,
         marginHorizontal: spacing.md,
     },
-    scrollContentGuest: {
+    guest: {
         flexGrow: 1,
         justifyContent: 'center',
         marginHorizontal: spacing.md,
     },
-    guestContainer: {
+    body: {
         alignItems: 'center',
     },
 });

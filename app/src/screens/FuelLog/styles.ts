@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
-import { spacing, radius, typography, elevation, iconSize  } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-     content: {
+    content: {
         flex: 1,
         marginHorizontal: spacing.lg,
     },
@@ -17,13 +17,13 @@ export const styles = StyleSheet.create({
         position: 'relative',
         minHeight: 55,
     },
-    headerActionButton: {
+    action: {
         width: 40,
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 2,
     },
-    headerTitleContainer: {
+    wrapper: {
         position: 'absolute',
         left: 60,
         right: 60,
@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         zIndex: 1,
     },
-    headerTitle: {
+    title: {
         fontSize: typography.size.xl,
         fontWeight: 'bold',
     },

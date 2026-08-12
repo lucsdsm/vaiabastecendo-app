@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { View, Linking } from 'react-native';
-import * as Location from 'expo-location';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import EmptyState from '../../components/EmptyState';
 
-import { useAppTheme } from '../../theme/ThemeProvider';
-import { styles } from './styles';
-import { useToast } from '../../contexts/ToastContext';
+import * as Location from 'expo-location';
 
-import Button from '../../components/Button';
+import { useToast } from '@contexts/ToastContext';
+
+import EmptyState from '@components/EmptyState';
+
+import Button from '@components/Button';
+
+import { useAppTheme } from '@theme/ThemeProvider';
+
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+
+import { styles } from './styles';
 
 interface PermissionScreenProps {
   onPermissionGranted: () => void;
 }
 
+/**
+ * Tela de permissão de localização.
+ */
 export default function PermissionScreen({ onPermissionGranted }: PermissionScreenProps) {
   const { colors } = useAppTheme();
   const { showToast } = useToast();

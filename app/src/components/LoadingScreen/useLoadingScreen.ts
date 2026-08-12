@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Animated, Easing } from 'react-native';
 
-import { useAppTheme } from '../../theme/ThemeProvider';
+import { useAppTheme } from '@theme/ThemeProvider';
 
 /**
  * Controla as animacoes de progresso e fade-out da tela de carregamento.

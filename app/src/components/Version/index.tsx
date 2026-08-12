@@ -7,6 +7,9 @@ import { useVersion } from './useVersion';
 
 import { styles } from './styles';
 
+/**
+ * Componente para exibir informações sobre a versão do aplicativo.
+ */
 export default function Version() {
     const { 
         colors, 

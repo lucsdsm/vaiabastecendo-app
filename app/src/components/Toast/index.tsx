@@ -26,10 +26,11 @@ export function ActionToast() {
 
   const isConfirmation = Boolean(toastState.onConfirm);
 
-  const progressWidth = progress.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0%', '100%'],
-  });
+  const progressColor = isConfirmation ? backgroundColor : accentColor;
+
+  const progressTrackColor = isConfirmation
+    ? `${backgroundColor}45`
+    : `${accentColor}1A`;
 
   return (
     <Animated.View
@@ -45,15 +46,15 @@ export function ActionToast() {
         <View style={styles.row}>
           <View
             style={[
-              styles.icon,
+              styles.container,
               { backgroundColor: `${accentColor}1A` },
             ]}
           >
             <FontAwesome6
               name={icon as any}
-              size={16}
               iconStyle="solid"
-              style={[styles.icon, { color: accentColor }]}
+              color={accentColor}
+              size={18}
             />
           </View>
 
@@ -82,29 +83,48 @@ export function ActionToast() {
                 },
               ]}
             >
-              <Text style={[styles.text, { color: backgroundColor }]}>
+              <Text style={[styles.actionText, { color: backgroundColor }]}>
                 {toastState.confirmText ?? 'Confirmar'}
               </Text>
+
+              <View
+                style={[
+                  styles.track,
+                  { backgroundColor: progressTrackColor },
+                ]}
+              >
+                <Animated.View
+                  style={[
+                    styles.bar,
+                    {
+                      backgroundColor: progressColor,
+                      transformOrigin: 'left center',
+                      transform: [{ scaleX: progress }],
+                    },
+                  ]}
+                />
+              </View>
             </Pressable>
           </View>
-        ) : null}
-
-        <View
-          style={[
-            styles.track,
-            { backgroundColor: `${accentColor}1A` },
-          ]}
-        >
-          <Animated.View
+        ) : (
+          <View
             style={[
-              styles.bar,
-              {
-                width: progressWidth,
-                backgroundColor: accentColor,
-              },
+              styles.track,
+              { backgroundColor: `${accentColor}1A` },
             ]}
-          />
-        </View>
+          >
+            <Animated.View
+              style={[
+                styles.bar,
+                {
+                  backgroundColor: accentColor,
+                  transformOrigin: 'left center',
+                  transform: [{ scaleX: progress }],
+                },
+              ]}
+            />
+          </View>
+        )}
       </View>
     </Animated.View>
   );

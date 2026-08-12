@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-    ScrollView,
-    Text,
-    TouchableOpacity,
-    View,
-    Pressable,
-} from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { useNavigation } from '@react-navigation/native';
@@ -13,10 +7,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Slider from '@react-native-community/slider';
 
 import { useSettings } from './useSettings';
-import { useAppTheme } from '../../theme/ThemeProvider';
+import { useAppTheme } from '@theme/ThemeProvider';
 import { styles } from './styles';
-import Version from '../../components/Version';
-import Footer from '../../components/Footer';
+import Button from '@components/Button';
+import Version from '@components/Version';
+import Footer from '@components/Footer';
 
 /**
  * Tela de configurações do aplicativo.
@@ -24,7 +19,14 @@ import Footer from '../../components/Footer';
 export default function Settings() {
     const { colors } = useAppTheme();
     const navigation = useNavigation<any>();
-    const { isDark, toggleTheme } = useSettings();
+    const { 
+        isDark, 
+        toggleTheme, 
+        isExporting, 
+        isImporting, 
+        handleExportBackup, 
+        handleImportBackup 
+    } = useSettings();
 
     const radiusValues: Array<2 | 3 | 5> = [2, 3, 5];
     const [radiusKm, setRadiusKm] = React.useState<2 | 3 | 5>(3);
@@ -72,7 +74,7 @@ export default function Settings() {
             <View style={styles.header}>
                 <TouchableOpacity
                     onPress={() => navigation.goBack()}
-                    style={styles.headerActionButton}
+                    style={styles.actions}
                     accessibilityRole="button"
                     accessibilityLabel="Voltar"
                 >
@@ -87,50 +89,31 @@ export default function Settings() {
 
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.scrollContent}
-            >
+                contentContainerStyle={styles.scroll}>
                 <View style={styles.section}>
                     {/* Tema */}
-                    <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+                    <Text style={[styles.title, { color: colors.textPrimary }]}>
                         Tema do aplicativo
                     </Text>
-                    <Pressable
-                        onPress={toggleTheme}
-                        style={({ pressed }) => [
-                            styles.settingsButton,
-                            {
-                                backgroundColor: colors.primary + (isDark ? '14' : '0D'),
-                                borderColor: colors.primary + '40',
-                            },
-                            pressed && { opacity: 0.6 },
-                        ]}
-                        accessibilityRole="button"
-                        accessibilityLabel="Alternar tema"
-                    >
-                        <Text style={[styles.settingsButtonText, { color: colors.textPrimary }]}>
-                            Tem atual: {isDark ? 'Escuro' : 'Claro'}
-                        </Text>
 
-                        <FontAwesome6
-                            name={isDark ? 'moon' : 'sun'}
-                            size={20}
-                            iconStyle="solid"
-                            color={colors.primary}
-                        />
-                    </Pressable>
+                    <Button
+                        title={isDark ? 'Tema atual: Escuro' : 'Tema atual: Claro'}
+                        onPress={toggleTheme}
+                        iconLeft={isDark ? <FontAwesome6 name="moon" size={16} iconStyle='solid'/> : <FontAwesome6 name="sun" size={16} iconStyle='solid'/>}
+                        variant="secondary"
+                    />
 
                     {/* Raio de busca */}
-            
-                    <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+                    <Text style={[styles.title, { color: colors.textPrimary }]}>
                         Raio de busca
                     </Text>
 
-                    <Text style={[styles.sectionDescription, { color: colors.textSecondary }]}>
+                    <Text style={[styles.description, { color: colors.textSecondary }]}>
                         Escolha a distância usada para buscar postos próximos da sua localização.
                     </Text>
 
-                    <View style={styles.sliderCard}>
-                        <Text style={[styles.sliderValue, { color: colors.textPrimary }]}>
+                    <View style={styles.card}>
+                        <Text style={[styles.value, { color: colors.textPrimary }]}>
                         {radiusKm} km
                         </Text>
 
@@ -153,12 +136,37 @@ export default function Settings() {
                             thumbTintColor={colors.primary}
                         />
 
-                        <View style={styles.sliderLabels}>
-                            <Text style={[styles.sliderLabel, { color: colors.textSecondary }]}>2 km</Text>
-                            <Text style={[styles.sliderLabel, { color: colors.textSecondary }]}>3 km</Text>
-                            <Text style={[styles.sliderLabel, { color: colors.textSecondary }]}>5 km</Text>
+                        <View style={styles.labels}>
+                            <Text style={[styles.label, { color: colors.textSecondary }]}>2 km</Text>
+                            <Text style={[styles.label, { color: colors.textSecondary }]}>3 km</Text>
+                            <Text style={[styles.label, { color: colors.textSecondary }]}>5 km</Text>
                         </View>
                     </View>
+
+                    <Text style={[styles.title, { color: colors.textPrimary }]}>
+                        Dados do diário
+                    </Text>
+
+                    <Text style={[styles.description, { color: colors.textSecondary }]}>
+                        Faça backup ou restaure os dados do diário de abastecimento.
+                    </Text>
+
+                    <Button
+                        title={isExporting ? 'Exportando...' : 'Exportar dados'}
+                        onPress={handleExportBackup}
+                        disabled={isExporting || isImporting}
+                        loading={isExporting}
+                        iconLeft={<FontAwesome6 name="file-export" size={16} iconStyle='solid'/>}
+                        variant="secondary"
+                    />
+                    <Button
+                        title={isImporting ? 'Importando...' : 'Importar dados'}
+                        onPress={handleImportBackup}
+                        disabled={isExporting || isImporting}
+                        loading={isImporting}
+                        iconLeft={<FontAwesome6 name="file-import" size={16} iconStyle='solid'/>}
+                        variant="secondary"
+                    />
                 </View>
                 <Version />
             </ScrollView>

@@ -6,6 +6,9 @@ import { useToast } from '@contexts/ToastContext';
 
 import { useAppTheme } from '@theme/ThemeProvider';
 
+/**
+ * Hook para obter informações sobre a versão do aplicativo.
+ */
 export function useVersion() {
     const { colors, isDark } = useAppTheme();
     const { showToast } = useToast();

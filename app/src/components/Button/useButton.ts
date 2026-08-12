@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { DimensionValue, StyleProp, ViewStyle } from 'react-native';
 
 import { useAppTheme } from "@theme/ThemeProvider";
 
@@ -8,7 +9,7 @@ interface UseButtonParams {
   disabled?: boolean;
   loading?: boolean;
   variant?: "primary" | "secondary" | "ghost";
-  fullWidth?: boolean;
+  width?: DimensionValue;
 }
 
 /**
@@ -18,17 +19,20 @@ export function useButton({
   disabled = false,
   loading = false,
   variant = "primary",
-  fullWidth = true,
+  width = '100%',
 }: UseButtonParams) {
   const { colors, isDark } = useAppTheme();
 
   const isDisabled = disabled || loading;
 
   const containerStyle = useMemo(() => {
-    const baseStyle: any[] = [styles.button];
+    const baseStyle: StyleProp<ViewStyle>[] = [
+      styles.button,
+      { width },
+    ];
 
-    if (fullWidth) {
-      baseStyle.push(styles.full);
+    if (width) {
+      baseStyle.push({ width });
     }
 
     if (variant === "primary") {
@@ -57,7 +61,7 @@ export function useButton({
     }
 
     return baseStyle;
-  }, [colors, isDark, variant, isDisabled, fullWidth]);
+  }, [colors, isDark, variant, isDisabled, width]);
 
   const textStyle = useMemo(() => {
     if (variant === "primary") {
@@ -120,5 +124,6 @@ export function useButton({
     textStyle,
     iconColor,
     activityColor,
+    width,
   };
 }

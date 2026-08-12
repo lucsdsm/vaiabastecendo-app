@@ -1,9 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useToast } from '@contexts/ToastContext';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { useFuelTypes } from '@contexts/FuelTypesContext';
+
 import { addFuelLog, updateFuelLog, getVehicleLogs, deleteFuelLog } from '@database/logService';
 
+import { useToast } from '@contexts/ToastContext';
+
+import { useNavigation, useRoute } from '@react-navigation/native';
+
+import { useFuelTypes } from '@contexts/FuelTypesContext';
+
+/**
+ * Hook para gerenciar o formulário de adição de registro de abastecimento.
+ */
 export function useAddFuelLog() {
     const navigation = useNavigation();
     const route = useRoute<any>();
@@ -103,15 +110,6 @@ export function useAddFuelLog() {
         },
       );
     };
-    
-    const confirmDelete = () => {
-        try {
-            deleteFuelLog(logToEdit.id);
-            navigation.goBack();
-        } catch (error) {
-            console.error("Erro ao excluir abastecimento:", error);
-        }
-    };
 
     const isFormValid = 
         vehicleId && 
@@ -205,8 +203,7 @@ export function useAddFuelLog() {
         fuelTypes, selectedFuel, setSelectedFuel,
         date, setDate,
         showDatePicker, setShowDatePicker,
-        isFormValid, handleSave, isEditing,
-        requestDelete, confirmDelete, cancelDelete,
+        isFormValid, handleSave, requestDelete, isEditing,
         goBack: () => navigation.goBack()
     };
 }

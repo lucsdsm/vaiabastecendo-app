@@ -1,44 +1,48 @@
 import React from 'react';
-import { 
-    View, Text, TouchableOpacity, TextInput, 
-    Keyboard, ScrollView, KeyboardAvoidingView, Platform 
-} from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Keyboard, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
-import { useAppTheme } from '../../theme/ThemeProvider';
-import { styles } from './styles';
+
 import { useAddVehicle } from './useAddVehicle';
 
+import { useAppTheme } from '@theme/ThemeProvider';
+
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+
+import { styles } from './styles';
+
+/**
+ * Exibe o formulário para adicionar um novo veículo.
+ */
 export default function AddVehicleScreen() {
-    const { colors, isDark } = useAppTheme();
+    const { colors } = useAppTheme();
     const {
         name, setName,
         plate, setPlate,
         tankCapacity, setTankCapacity,
         loading, isFormValid,
         handleSave, goBack,
-        isEditing, requestDelete, confirmDelete
+        isEditing, requestDelete
     } = useAddVehicle();
 
     return (
         <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>
             <View style={styles.header}>
-                <TouchableOpacity onPress={goBack} style={styles.headerActionButton}>
+                <TouchableOpacity onPress={goBack} style={styles.header}>
                     <FontAwesome6 name="arrow-left" size={20} iconStyle='solid' color={colors.textPrimary} />
                 </TouchableOpacity>
                 
-                <View style={styles.headerTitleContainer}>
-                    <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
+                <View style={styles.wrapper}>
+                    <Text style={[styles.title, { color: colors.textPrimary }]}>
                         {isEditing ? 'Editar veículo' : 'Novo veículo'}
                     </Text>
                 </View>
 
                 {/* Bloco de ações na direita */}
-                <View style={styles.headerRightActions}>
+                <View style={styles.right}>
                     {isEditing && (
                         <TouchableOpacity 
                             onPress={requestDelete} 
-                            style={styles.headerActionButton}
+                            style={styles.action}
                             activeOpacity={0.7}
                         >
                             <FontAwesome6 name="trash" size={20} iconStyle='solid' color={colors.textPrimary} />
@@ -49,7 +53,7 @@ export default function AddVehicleScreen() {
                         onPress={handleSave} 
                         disabled={!isFormValid || loading}
                         style={[
-                            styles.headerActionButton, 
+                            styles.action, 
                             { opacity: !isFormValid || loading ? 0.35 : 1 }
                         ]}
                         activeOpacity={0.7}
@@ -66,15 +70,15 @@ export default function AddVehicleScreen() {
                 <ScrollView 
                     showsVerticalScrollIndicator={false}
                     keyboardShouldPersistTaps="handled"
-                    contentContainerStyle={styles.scrollContent}
+                    contentContainerStyle={styles.scroll}
                 >
-                    <TouchableOpacity activeOpacity={1} onPress={Keyboard.dismiss} style={styles.cardContent}>
+                    <TouchableOpacity activeOpacity={1} onPress={Keyboard.dismiss} style={styles.content}>
                         
                         <View style={styles.section}>
                             <Text style={[styles.label, { color: colors.textSecondary }]}>Nome do Veículo</Text>
-                            <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.primary + '40' }]}>
+                            <View style={[styles.input, { backgroundColor: colors.background, borderColor: colors.primary + '40' }]}>
                                 <TextInput
-                                    style={[styles.textInput, { color: colors.textPrimary }]}
+                                    style={[styles.text, { color: colors.textPrimary }]}
                                     placeholder="Ex: Chevrolet Corsa Classic 2011"
                                     placeholderTextColor={colors.textSecondary + '60'}
                                     value={name}
@@ -86,9 +90,9 @@ export default function AddVehicleScreen() {
 
                         <View style={styles.section}>
                             <Text style={[styles.label, { color: colors.textSecondary }]}>Placa (Opcional)</Text>
-                            <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.primary + '40' }]}>
+                            <View style={[styles.input, { backgroundColor: colors.background, borderColor: colors.primary + '40' }]}>
                                 <TextInput
-                                    style={[styles.textInput, { color: colors.textPrimary }]}
+                                    style={[styles.text, { color: colors.textPrimary }]}
                                     placeholder="Ex: ABC-1234"
                                     placeholderTextColor={colors.textSecondary + '60'}
                                     value={plate}
@@ -101,16 +105,16 @@ export default function AddVehicleScreen() {
 
                         <View style={styles.section}>
                             <Text style={[styles.label, { color: colors.textSecondary }]}>Capacidade do Tanque</Text>
-                            <View style={[styles.inputContainer, { backgroundColor: colors.background, borderColor: colors.primary + '40' }]}>
+                            <View style={[styles.input, { backgroundColor: colors.background, borderColor: colors.primary + '40' }]}>
                                 <TextInput
-                                    style={[styles.numberInput, { color: colors.textPrimary }]}
+                                    style={[styles.number, { color: colors.textPrimary }]}
                                     placeholder="0"
                                     placeholderTextColor={colors.textSecondary + '60'}
                                     keyboardType="numeric"
                                     value={tankCapacity}
                                     onChangeText={setTankCapacity}
                                 />
-                                <Text style={[styles.currencySuffix, { color: colors.textSecondary }]}>Litros</Text>
+                                <Text style={[styles.suffix, { color: colors.textSecondary }]}>Litros</Text>
                             </View>
                         </View>
                     </TouchableOpacity>

@@ -1,32 +1,29 @@
 import React from 'react';
-import {
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-} from 'react-native';
-import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { ScrollView, Text, TouchableOpacity, View, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import UserCard from '../../components/UserCard';
-import ProgressBar from '../../components/ProgressBar';
-import Banner from '../../components/Banner';
-import Version from '../../components/Version';
-import UserUpdateHistory from '../../components/UserUpdateHistory';
-import { useUserProfile } from '../../components/UserCard/useUserProfile';
-import { useAppTheme } from '../../theme/ThemeProvider';
+import { useNavigation } from '@react-navigation/native';
+
+import { useUserProfile } from '@components/UserCard/useUserProfile';
+
+import { useAppTheme } from '@theme/ThemeProvider';
+
+import { useAuth } from '@contexts/AuthContext';
+
+import Button from '@components/Button';
+import Footer from '@components/Footer';
+import LoadingState from '@components/LoadingState';
+import EmptyState from '@components/EmptyState';
+import UserCard from '@components/UserCard';
+import ProgressBar from '@components/ProgressBar';
+import Banner from '@components/Banner';
+import Version from '@components/Version';
+import UserUpdateHistory from '@components/UserUpdateHistory';
+
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
+import { FontAwesome5 } from '@expo/vector-icons';
+
 import { styles } from './styles';
-
-import { useAuth } from '../../contexts/AuthContext';
-
-import LoadingState from '../../components/LoadingState';
-import EmptyState from '../../components/EmptyState';
-
-import Button from '../../components/Button';
-import Footer from '../../components/Footer';
 
 /**
  * Tela de perfil do usuário com autenticação, resumo da conta
@@ -51,23 +48,12 @@ export default function UserProfile() {
     <SafeAreaView
       edges={['top']}
       style={[styles.container, { backgroundColor: colors.background }]}>
-
-      {/* {!token && styles.scrollContentGuest ? (
-      <View style={styles.header}>
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={styles.headerActionButton}
-          >
-            <FontAwesome6 name="arrow-left" size={20} iconStyle='solid' color={colors.textPrimary} />
-          </TouchableOpacity>
-      </View>
-      ) : null} */}
     
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[
-          styles.scrollContent,
-          !token && styles.scrollContentGuest,
+          styles.scroll,
+          !token && styles.guest,
         ]}
       >
 
@@ -75,13 +61,13 @@ export default function UserProfile() {
           <View style={styles.header}>
             <TouchableOpacity
               onPress={() => navigation.goBack()}
-              style={styles.headerActionButton}
+              style={styles.action}
             >
               <FontAwesome6 name="arrow-left" size={20} iconStyle='solid' color={colors.textPrimary} />
             </TouchableOpacity>
 
-            <View style={styles.headerTitleContainer}>
-              <Text style={[styles.headerTitle, { color: colors.textPrimary }]}>
+            <View style={styles.wrapper}>
+              <Text style={[styles.title, { color: colors.textPrimary }]}>
                 {user?.username || ''}
               </Text>
             </View>
@@ -89,12 +75,12 @@ export default function UserProfile() {
             {token ? (
               <TouchableOpacity
                 onPress={handleLogout}
-                style={styles.headerActionButton}
+                style={styles.action}
               >
                 <FontAwesome6 name="arrow-right-to-bracket" size={20} iconStyle='solid' color={colors.textPrimary} />
               </TouchableOpacity>
             ) : (
-              <View style={styles.headerActionButton} />
+              <View style={styles.action} />
             )}
           </View>
         ) : null}
@@ -111,7 +97,7 @@ export default function UserProfile() {
                 gradientColors={[colors.success, colors.success, colors.primary]}
                 logoElement={
                   <Image
-                    source={require('../../../assets/images/user.png')}
+                    source={require('@assets/images/user.png')}
                     style={{
                       width: 128,
                       height: 128,
@@ -124,7 +110,7 @@ export default function UserProfile() {
             {userData?.id ? <UserUpdateHistory userId={userData.id} /> : null}
           </View>
         ) : (
-          <View style={styles.guestContainer}>
+          <View style={styles.body}>
             <EmptyState
               iconName="user"
               title="Seu perfil"
@@ -136,7 +122,8 @@ export default function UserProfile() {
               onPress={() => promptAsync()}
               disabled={!request}
               variant="secondary"
-              iconLeft={<FontAwesome5 name="google" size={16} color="#FFF" />}
+              iconLeft={<FontAwesome5 name="google" size={16} />}
+              width={'50%'}
             />
           </View>
         )}

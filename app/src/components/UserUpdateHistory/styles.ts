@@ -5,20 +5,12 @@ export const styles = StyleSheet.create({
   container: {
     overflow: 'hidden',
   },
-
   header: {
     marginBottom: spacing.md,
   },
-
   eyebrow: {
     fontSize: typography.size.sm,
     fontWeight: typography.weight.bold,
-  },
-
-  list: {
-  },
-
-  loading: {
   },
 
   row: {

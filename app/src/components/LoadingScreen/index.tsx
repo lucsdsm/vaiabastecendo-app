@@ -23,7 +23,7 @@ export default function LoadingScreen({ onFinish, canFinish }: LoadingScreenProp
     ]}>
       <View style={styles.content}>
         <Image 
-          source={require('../../../assets/logo.png')} 
+          source={require('@assets/logo.png')} 
           style={styles.logo} 
           resizeMode="contain"
         />

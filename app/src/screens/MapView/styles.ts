@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { spacing, elevation, radius } from '../../theme/tokens';
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
     container: {
@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         zIndex: 5,
     },
-    cardOverlay: {
+    overlay: {
         position: 'absolute',
         bottom: 10,
         left: 0,
@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
         paddingBottom: spacing.md,
         justifyContent: 'flex-end', 
     },
-    cardWrapper: {
+    wrapper: {
         elevation: elevation.low,
     }
 });

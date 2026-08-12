@@ -48,8 +48,10 @@ export function deleteFuelLog(id: string) {
 }
 
 export function deleteVehicle(id: string) {
-    db.runSync(`DELETE FROM vehicles WHERE id = ?`, [id]);
+  db.withTransactionSync(() => {
     db.runSync(`DELETE FROM logs WHERE vehicle_id = ?`, [id]);
+    db.runSync(`DELETE FROM vehicles WHERE id = ?`, [id]);
+  });
 }
 
 export function getVehicles(): Vehicle[] {

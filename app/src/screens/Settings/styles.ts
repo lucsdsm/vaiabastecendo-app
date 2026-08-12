@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { spacing, typography, radius } from "../../theme/tokens";
+import { elevation, iconSize, radius, spacing, typography } from '@theme/tokens';
 
 export const styles = StyleSheet.create({
   container: {
@@ -18,78 +18,51 @@ export const styles = StyleSheet.create({
     position: "relative",
     minHeight: 55,
   },
-  headerActionButton: {
+  actions: {
     width: 40,
     alignItems: "center",
     justifyContent: "center",
     zIndex: 2,
   },
-  scrollContent: {
+  scroll: {
     flexGrow: 1,
     marginHorizontal: spacing.md,
   },
-  settingsButton: {
-    borderRadius: radius.md,
-    padding: spacing.md,
-    marginVertical: spacing.sm,
-    borderWidth: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: spacing.sm,
-  },
-  settingsButtonText: {
-    fontSize: typography.size.md,
-    fontWeight: typography.weight.semibold,
-  },
   section: {
-    marginTop: spacing.md,
     gap: 10,
+    flex: 1
   },
-
-  sectionTitle: {
+  title: {
     fontSize: typography.size.md,
     fontWeight: typography.weight.bold,
+    marginTop: spacing.sm
   },
-
-  sectionDescription: {
+  description: {
     fontSize: 13,
     lineHeight: 18,
   },
-
-  sliderCard: {
+  card: {
     gap: 12,
   },
-
   slider: {
     width: "100%",
     height: 40,
   },
-
-  sliderValue: {
+  value: {
     fontSize: 18,
     fontWeight: "700",
     textAlign: "center",
   },
-
-  sliderLabels: {
+  labels: {
     flexDirection: "row",
     justifyContent: "space-between",
   },
-
-  sliderLabel: {
+  label: {
     fontSize: 12,
     fontWeight: "600",
   },
-
-  radiusContainer: {
+  radius: {
     flexDirection: "row",
     gap: 8,
-  },
-
-  radiusButton: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
