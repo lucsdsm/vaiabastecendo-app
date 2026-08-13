@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Linking } from 'react-native';
+
 import { useNavigation } from '@react-navigation/native';
+import { RootNavigationProp } from "@navigation/types";
 
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -69,7 +71,7 @@ function getOwnReactionStorageKey(userId?: number | null) {
  */
 export function useStationCard(data: StationCardProps, onRefresh: () => void) {
   const { colors, isDark } = useAppTheme();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<RootNavigationProp>();
 
   const { token, user } = useAuth();
   const { showToast } = useToast();

@@ -12,6 +12,7 @@ import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { styles } from './styles';
 
 import { useNavigation } from '@react-navigation/native';
+import { RootNavigationProp } from "@navigation/types";
 
 
 /**
@@ -31,7 +32,7 @@ export default function MapScreen() {
     refetch,
   } = useMapScreen();
 
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<RootNavigationProp>();
 
   return (
     <SafeAreaView edges={['top']} style={[styles.container, { backgroundColor: colors.background }]}>

@@ -5,8 +5,8 @@ export const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingVertical: spacing.xl,
-        opacity: 0.6, 
+        paddingVertical: spacing.md,
+        opacity: 0.6,
     },
     name: {
         fontSize: typography.size.sm,

@@ -19,6 +19,7 @@ import StationListScreen from './src/screens/StationList';
 import UpdatePriceScreen from './src/screens/UpdatePrice';
 import UserProfileScreen from './src/screens/UserProfile';
 import SettingsScreen from './src/screens/Settings';
+import PrivacyTermsScreen from './src/screens/PrivacyTerms';
 
 import { ThemeProvider, useAppTheme } from './src/theme/ThemeProvider';
 import { initDatabase } from './src/database';
@@ -73,7 +74,7 @@ function AppNavigator({
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
-          animation: 'none',
+          animation: 'default',
           contentStyle: { backgroundColor: colors.background },
         }}
       >
@@ -96,6 +97,7 @@ function AppNavigator({
             <Stack.Screen name="Settings" component={SettingsScreen} />
             <Stack.Screen name="AddVehicle" component={AddVehicleScreen} />
             <Stack.Screen name="AddFuelLog" component={AddFuelLogScreen} />
+            <Stack.Screen name="PrivacyTerms" component={PrivacyTermsScreen} />
           </>
         )}
       </Stack.Navigator>

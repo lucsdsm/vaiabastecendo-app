@@ -1,4 +1,5 @@
 import { useNavigation, useNavigationState } from "@react-navigation/native";
+import { RootNavigationProp } from "@navigation/types";
 import { useAppTheme } from "@theme/ThemeProvider";
 
 /**
@@ -6,7 +7,7 @@ import { useAppTheme } from "@theme/ThemeProvider";
  */
 export function useFooter() {
   const { colors } = useAppTheme();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation<RootNavigationProp>();
 
   const activeRoute = useNavigationState(
     (state) => state?.routes[state.index]?.name || "StationList",

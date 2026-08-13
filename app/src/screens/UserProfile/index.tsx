@@ -3,6 +3,7 @@ import { ScrollView, Text, TouchableOpacity, View, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useNavigation } from '@react-navigation/native';
+import { RootNavigationProp } from '@navigation/types';
 
 import { useUserProfile } from '@components/UserCard/useUserProfile';
 
@@ -31,7 +32,7 @@ import { styles } from './styles';
  */
 export default function UserProfile() {
   const { colors } = useAppTheme();
-  const navigation = useNavigation();
+  const navigation = useNavigation<RootNavigationProp>();
 
   const { user } = useAuth();
 
@@ -125,6 +126,12 @@ export default function UserProfile() {
               iconLeft={<FontAwesome5 name="google" size={16} />}
               width={'50%'}
             />
+
+            <View style={styles.privacy}>
+              <Text style={[styles.text, { color: colors.textSecondary }]}>
+                Ao fazer login, você concorda com nossos <Text onPress={() => {navigation.navigate('PrivacyTerms')}} style={[styles.text, { color: colors.primary, textDecorationLine: 'underline' }]}>Termos de Serviço</Text> e <Text onPress={() => {navigation.navigate('PrivacyTerms')}} style={[styles.text, { color: colors.primary, textDecorationLine: 'underline' }]}>Política de Privacidade</Text>.
+              </Text>
+            </View>
           </View>
         )}
 

@@ -71,7 +71,7 @@ export default function PermissionScreen({ onPermissionGranted }: PermissionScre
         <EmptyState
           iconName="needgps"
           title="Precisamos da sua localização"
-          message="Para mostrar os postos e preços atualizados perto de você, o Vai Abastecendo precisa acessar a localização do seu dispositivo."
+          message="Usamos sua localização aproximada ou precisa para listar os postos próximos."
         />
 
       <View style={styles.footer}>

@@ -1,8 +1,10 @@
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View, Pressable } from 'react-native';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import { useNavigation } from '@react-navigation/native';
+import { RootNavigationProp } from "@navigation/types";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Slider from '@react-native-community/slider';
 
@@ -18,7 +20,7 @@ import Footer from '@components/Footer';
  */
 export default function Settings() {
     const { colors } = useAppTheme();
-    const navigation = useNavigation<any>();
+    const navigation = useNavigation<RootNavigationProp>();
     const { 
         isDark, 
         toggleTheme, 
@@ -151,6 +153,7 @@ export default function Settings() {
                         Faça backup ou restaure os dados do diário de abastecimento.
                     </Text>
 
+                    {/* Botões de exportação e importação de dados */}
                     <Button
                         title={isExporting ? 'Exportando...' : 'Exportar dados'}
                         onPress={handleExportBackup}
@@ -167,6 +170,24 @@ export default function Settings() {
                         iconLeft={<FontAwesome6 name="file-import" size={16} iconStyle='solid'/>}
                         variant="secondary"
                     />
+
+                    <Text style={[styles.title, { color: colors.textPrimary }]}>
+                        Termos de uso
+                    </Text>
+                    
+                    <Button
+                        title="Termos de serviço"
+                        onPress={() => navigation.navigate('PrivacyTerms')}
+                        iconLeft={<FontAwesome6 name="file-contract" size={16} iconStyle='solid'/>}
+                        variant="secondary"
+                    />
+                    <Button
+                        title="Política de privacidade"
+                        onPress={() => navigation.navigate('PrivacyTerms')}
+                        iconLeft={<FontAwesome6 name="shield-halved" size={16} iconStyle='solid'/>}
+                        variant="secondary"
+                    />
+
                 </View>
                 <Version />
             </ScrollView>

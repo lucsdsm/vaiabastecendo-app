@@ -45,4 +45,14 @@ export const styles = StyleSheet.create({
     body: {
         alignItems: 'center',
     },
+    privacy: {
+        flex: 1,
+        alignItems: 'center',
+        marginHorizontal: spacing.md,
+        marginTop: spacing.md,
+    },
+    text: {
+        textAlign: 'center',
+        fontWeight: typography.weight.regular,
+    },
 });

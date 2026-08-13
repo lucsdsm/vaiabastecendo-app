@@ -1,12 +1,16 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { RootNavigationProp } from "@navigation/types";
+
 import { addFuelLog, getVehicleLogs, getVehicles, Vehicle } from '@database/logService'; 
+
 import { useAppTheme } from '@theme/ThemeProvider';
+
 import { FuelLog } from '@database/logService';
 
 export function useFuelLog() {
     const { colors } = useAppTheme();
-    const navigation = useNavigation<any>();
+    const navigation = useNavigation<RootNavigationProp>();
     
     const [isInitializing, setIsInitializing] = useState(true);
     const [vehicles, setVehicles] = useState<Vehicle[]>([]);
